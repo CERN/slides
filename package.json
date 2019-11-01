@@ -73,7 +73,7 @@
     "fontfaceobserver": "2.1.0",
     "history": "4.9.0",
     "hoist-non-react-statics": "3.3.0",
-    "immer": "3.0.0",
+    "immer": "^5.0.0",
     "intl": "1.2.5",
     "invariant": "2.2.4",
     "ip": "1.1.5",
@@ -90,6 +90,9 @@
     "redux-saga": "1.0.2",
     "reselect": "4.0.0",
     "sanitize.css": "8.0.0",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.1",
+    "spectacle": "^5.7.1",
     "styled-components": "4.2.0"
   },
   "devDependencies": {

@@ -1,0 +1,11 @@
+.settings {
+  display: flex;
+  /* position: absolute; */
+}
+
+
+.lastitem {
+  top: auto;
+  bottom: 0;
+  position: absolute;
+}
