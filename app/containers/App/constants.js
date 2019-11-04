@@ -8,3 +8,6 @@
  * Follow this format:
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
+
+// export const ADD_SLIDE = 'iPresent-2/Presentation/ADD_SLIDE';
+// export const REMOVE_SLIDE = 'iPresent-2/Presentation/REMOVE_SLIDE';

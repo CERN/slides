@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Slide } from 'spectacle';
+import { Slide, Text } from 'spectacle';
 import PropTypes from 'prop-types';
 // import ReactQuill from 'react-quill';
 // import 'react-quill/dist/quill.snow.css';
@@ -17,7 +17,8 @@ function MySlide({ content, id }) {
   // const onAddText = () => {
   //     setTextArray([...textArray, <MyText />])
   // }
-  return <Slide id={id}>{content.slide.textArray[0]}</Slide>;
+  const presentText = textArray => textArray;
+  return <Slide id={id}>{presentText(content.textArray)}</Slide>;
 }
 
 MySlide.propTypes = {

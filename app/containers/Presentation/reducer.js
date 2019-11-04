@@ -13,34 +13,33 @@ import { ADD_SLIDE, REMOVE_SLIDE } from './constants';
 export const initialState = {
   DeckOfSlides: [
     {
-      slide: {
-        textArray: ["That's the first Slide"],
-        imageArray: [],
-      },
+      currentText: 0,
+      textArray: ["That's the first Slide"],
+      imageArray: [],
     },
   ],
   currentSlide: 0,
 };
 
+/* eslint-disable default-case, no-param-reassign */
 const PresentationReducer = (state = initialState, action) =>
   produce(state, draft => {
-    console.log("let's seeee ", action.type);
-    // eslint-disable-next-line default-case
     switch (action.type) {
       case ADD_SLIDE:
-        draft.currentSlide = state.currentSlide + 1;
-        draft.DeckOfSlides.push({
-          slide: { textArray: ["That's a new slide"], imageArray: [] },
+        draft.currentSlide = action.id + 1;
+        draft.DeckOfSlides.splice(draft.currentSlide, 0, {
+          currentText: 0,
+          textArray: [`That's `, action.id, ` Slide`],
+          imageArray: [],
         });
-        // draft.DeckOfSlides = state.DeckOfSlides.splice(
-        //   action.id,
-        //   0,
-        //   'new data',
-        // ); // check again may not be working
-        // console.log('afterrrrrrr', draft);
         break;
       case REMOVE_SLIDE:
-        draft.DeckOfSlides.splice(action.id, 1); // check again may not be working
+        draft.currentSlide -= 1;
+        draft.DeckOfSlides.splice(action.id, 1);
+        break;
+      case ADD_TEXT:
+        break;
+      case REMOVE_TEXT:
         break;
     }
   });

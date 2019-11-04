@@ -18,7 +18,7 @@ import { Grid } from 'semantic-ui-react';
 import { Deck, Slide, Image, Text } from 'spectacle';
 import { makeSelectDeckOfSlides, makeSelectCurrentSlide } from './selectors';
 
-import { addSlide, removeSlide } from './actions';
+import { addSlide, removeSlide, addText, removeText } from './actions';
 import SideBar from '../../components/SideBar';
 import MySlide from '../../components/MySlide';
 // import { makeSelectUsername } from './selectors';
@@ -32,22 +32,19 @@ export function Presentation({
   currentSlide,
   onAddSlide,
   onRemoveSlide,
+  onAddText,
+  onRemoveText,
 }) {
   useInjectReducer({ key, reducer });
-
-  // const presentationProps = {
-  //   DeckOfSlides,
-  //   currentSlide,
-  // };
   const onAddText = () => {
-    console.log('add text called');
+    onAddText(currentSlide, 0);
   };
 
   const addingSlide = () => {
-    console.log('einai h adding ', currentSlide);
     onAddSlide(currentSlide);
     // change current to the next
   };
+
 
   return (
     <div>
@@ -82,6 +79,8 @@ Presentation.propTypes = {
   currentSlide: PropTypes.number,
   onAddSlide: PropTypes.func,
   onRemoveSlide: PropTypes.func,
+  onAddText: PropTypes.func,
+  onRemoveText: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -92,7 +91,9 @@ const mapStateToProps = createStructuredSelector({
 export function mapDispatchToProps(dispatch) {
   return {
     onAddSlide: id => dispatch(addSlide(id)),
-    onRemoveSlide: id => dispatch(id),
+    onRemoveSlide: id => dispatch(removeSlide(id)),
+    onAddText: (id, textId) => dispatch(addText(id, textdId)),
+    onRemoveText: (id, textId) => despatch(removeText(id, textId)),
   };
 }
 
