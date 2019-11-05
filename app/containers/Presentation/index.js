@@ -21,7 +21,6 @@ import { makeSelectDeckOfSlides, makeSelectCurrentSlide } from './selectors';
 import { addSlide, removeSlide, addText, removeText } from './actions';
 import SideBar from '../../components/SideBar';
 import MySlide from '../../components/MySlide';
-// import { makeSelectUsername } from './selectors';
 import reducer from './reducer';
 import './styles.css';
 
@@ -36,10 +35,6 @@ export function Presentation({
   onRemoveText,
 }) {
   useInjectReducer({ key, reducer });
-  const onAddText = () => {
-    onAddText(currentSlide, 0);
-  };
-
   const addingSlide = () => {
     onAddSlide(currentSlide);
     // change current to the next
@@ -92,8 +87,8 @@ export function mapDispatchToProps(dispatch) {
   return {
     onAddSlide: id => dispatch(addSlide(id)),
     onRemoveSlide: id => dispatch(removeSlide(id)),
-    onAddText: (id, textId) => dispatch(addText(id, textdId)),
-    onRemoveText: (id, textId) => despatch(removeText(id, textId)),
+    onAddText: () => dispatch(addText()),
+    onRemoveText: (id, textId) => dispatch(removeText(id, textId)),
   };
 }
 

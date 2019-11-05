@@ -15,7 +15,7 @@
  *    }
  */
 
-import { ADD_SLIDE, REMOVE_SLIDE, ADD_TEXT } from './constants';
+import { ADD_SLIDE, REMOVE_SLIDE, ADD_TEXT, REMOVE_TEXT, ADD_DATA } from './constants';
 
 /**
  * Adds a New Slide
@@ -48,15 +48,38 @@ export function removeSlide(id) {
 /**
  * Adds text to slide
  *
- * @param  {number} id The current id of the slide so i can put text inside
- * @param  {number} textId The id of the text after which I will put the new text
  *
  * @return {object} An action object with a type of ADD_TEXT
  */
-export function addText(id, textId) {
+export function addText() {
   return {
     type: ADD_TEXT,
+  };
+}
+
+/**
+ * Removes text to slide
+ *
+ * @param  {number} id The id of the text to be removed
+ *
+ * @return {object} An action object with a type of REMOVE_TEXT
+ */
+export function removeText() {
+  return {
+    type: REMOVE_TEXT,
     id,
-    textId,
+  };
+}
+
+/**
+ * Adds text to slide
+ * @param  {string} data
+ *
+ * @return {object} An action object with a type of ADD_DATA
+ */
+export function addData(data) {
+  return {
+    type: ADD_DATA,
+    data
   };
 }

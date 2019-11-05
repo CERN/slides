@@ -12,3 +12,5 @@
 export const ADD_SLIDE = 'iPresent-2/Presentation/ADD_SLIDE';
 export const REMOVE_SLIDE = 'iPresent-2/Presentation/REMOVE_SLIDE';
 export const ADD_TEXT = 'iPresent-2/Presentation/ADD_TEXT';
+export const REMOVE_TEXT = 'iPresent-2/Presentation/REMOVE_TEXT';
+export const ADD_DATA = 'iPresent-2/Presentation/ADD_DATA';

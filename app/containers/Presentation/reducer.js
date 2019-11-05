@@ -7,14 +7,14 @@
  *
  */
 import produce from 'immer';
-import { ADD_SLIDE, REMOVE_SLIDE } from './constants';
+import { ADD_SLIDE, REMOVE_SLIDE, ADD_TEXT, REMOVE_TEXT, ADD_DATA } from './constants';
 
 // The initial state of the App
 export const initialState = {
   DeckOfSlides: [
     {
       currentText: 0,
-      textArray: ["That's the first Slide"],
+      textArray: [{ id: 0, data: "That's the first Slide" }],
       imageArray: [],
     },
   ],
@@ -38,8 +38,13 @@ const PresentationReducer = (state = initialState, action) =>
         draft.DeckOfSlides.splice(action.id, 1);
         break;
       case ADD_TEXT:
+        draft.DeckOfSlides[draft.currentSlide].textArray.push({ id: draft.DeckOfSlides[draft.currentSlide].currentText, data: "That's a new Text box" });
+        draft.DeckOfSlides[draft.currentSlide].currentText += 1;
         break;
       case REMOVE_TEXT:
+        break;
+      case ADD_DATA:
+        draft.DeckOfSlides[draft.currentSlide].textArray[draft.DeckOfSlides[draft.currentSlide].currentText].data = action.data;
         break;
     }
   });
