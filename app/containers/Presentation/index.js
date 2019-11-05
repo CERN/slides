@@ -20,7 +20,7 @@ import { makeSelectDeckOfSlides, makeSelectCurrentSlide } from './selectors';
 
 import { addSlide, removeSlide, addText, removeText } from './actions';
 import SideBar from '../../components/SideBar';
-import MySlide from '../../components/MySlide';
+import MySlide from './MySlide';
 import reducer from './reducer';
 import './styles.css';
 
@@ -35,11 +35,6 @@ export function Presentation({
   onRemoveText,
 }) {
   useInjectReducer({ key, reducer });
-  const addingSlide = () => {
-    onAddSlide(currentSlide);
-    // change current to the next
-  };
-
 
   return (
     <div>
@@ -51,9 +46,10 @@ export function Presentation({
         <Grid className="grid">
           <Grid.Column width={1}>
             <SideBar
-              addSlide={addingSlide}
+              addSlide={onAddSlide}
               removeSlide={onRemoveSlide}
               addText={onAddText}
+              removeText={onRemoveText}
             />
           </Grid.Column>
           <Grid.Column width={15}>
@@ -85,10 +81,10 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onAddSlide: id => dispatch(addSlide(id)),
-    onRemoveSlide: id => dispatch(removeSlide(id)),
+    onAddSlide: () => dispatch(addSlide()),
+    onRemoveSlide: () => dispatch(removeSlide()),
     onAddText: () => dispatch(addText()),
-    onRemoveText: (id, textId) => dispatch(removeText(id, textId)),
+    onRemoveText: () => dispatch(removeText()),
   };
 }
 

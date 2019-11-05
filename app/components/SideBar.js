@@ -2,7 +2,7 @@ import React from 'react';
 import { Menu, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
-function ContentEditBar({ addSlide, removeSlide, addText }) {
+function ContentEditBar({ addSlide, removeSlide, addText, removeText }) {
   return (
     <Menu vertical inverted icon="labeled">
       <Menu.Item name="AddSlide" onClick={addSlide}>
@@ -17,6 +17,10 @@ function ContentEditBar({ addSlide, removeSlide, addText }) {
         <Icon name="pencil alternate" />
         Add Text
       </Menu.Item>
+      <Menu.Item name="RemoveText" onClick={removeText}>
+        <Icon name="trash" />
+        Remove Text
+      </Menu.Item>
     </Menu>
   );
 }
@@ -27,4 +31,5 @@ ContentEditBar.propTypes = {
   addSlide: PropTypes.func.isRequired,
   removeSlide: PropTypes.func.isRequired,
   addText: PropTypes.func.isRequired,
+  removeText: PropTypes.func.isRequired,
 };

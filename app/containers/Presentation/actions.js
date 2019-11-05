@@ -15,33 +15,36 @@
  *    }
  */
 
-import { ADD_SLIDE, REMOVE_SLIDE, ADD_TEXT, REMOVE_TEXT, ADD_DATA } from './constants';
+import {
+  ADD_SLIDE,
+  REMOVE_SLIDE,
+  ADD_TEXT,
+  REMOVE_TEXT,
+  ADD_DATA,
+  CHANGE_SLIDE,
+} from './constants';
 
 /**
  * Adds a New Slide
  *
- * @param  {number} id The current id of the slide so i can put it after
  *
  * @return {object} An action object with a type of ADD_SLIDE
  */
-export function addSlide(id) {
+export function addSlide() {
   return {
     type: ADD_SLIDE,
-    id,
   };
 }
 
 /**
  * Removes a Slide
  *
- * @param  {number} id The new text of the input field
  *
  * @return {object} An action object with a type of REMOVE_SLIDE
  */
-export function removeSlide(id) {
+export function removeSlide() {
   return {
     type: REMOVE_SLIDE,
-    id,
   };
 }
 
@@ -60,14 +63,12 @@ export function addText() {
 /**
  * Removes text to slide
  *
- * @param  {number} id The id of the text to be removed
  *
  * @return {object} An action object with a type of REMOVE_TEXT
  */
 export function removeText() {
   return {
     type: REMOVE_TEXT,
-    id,
   };
 }
 
@@ -80,6 +81,19 @@ export function removeText() {
 export function addData(data) {
   return {
     type: ADD_DATA,
-    data
+    data,
+  };
+}
+
+/**
+ * Adds text to slide
+ * @param  {number} id
+ *
+ * @return {object} An action object with a type of CHANGE_SLIDE
+ */
+export function changeSlide(id) {
+  return {
+    type: CHANGE_SLIDE,
+    id,
   };
 }
