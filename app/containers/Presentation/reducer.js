@@ -31,6 +31,7 @@ export const initialState = {
 /* eslint-disable default-case, no-param-reassign */
 const PresentationReducer = (state = initialState, action) =>
   produce(state, draft => {
+    // eslint-disable-next-line no-console
     console.log(
       'the current slide is: ',
       draft.currentSlide,
@@ -50,11 +51,12 @@ const PresentationReducer = (state = initialState, action) =>
       case REMOVE_SLIDE:
         if (draft.currentSlide > 0) {
           draft.DeckOfSlides.splice(draft.currentSlide, 1);
+          // eslint-disable-next-line no-alert
         } else alert('Not possible to remove the only slide');
         break;
       case ADD_TEXT:
         draft.DeckOfSlides[draft.currentSlide].textArray.push({
-          id: draft.DeckOfSlides[draft.currentSlide].currentText,
+          id: draft.DeckOfSlides[draft.currentSlide].currentText + 1,
           data: "That's a new Text box",
         });
         draft.DeckOfSlides[draft.currentSlide].currentText += 1;
@@ -66,6 +68,7 @@ const PresentationReducer = (state = initialState, action) =>
             1,
           );
           draft.DeckOfSlides[draft.currentSlide].currentText -= 1;
+          // eslint-disable-next-line no-alert
         } else alert("There aren't any text to remove");
         break;
       case ADD_DATA:

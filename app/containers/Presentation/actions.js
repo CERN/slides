@@ -21,7 +21,6 @@ import {
   ADD_TEXT,
   REMOVE_TEXT,
   ADD_DATA,
-  CHANGE_SLIDE,
 } from './constants';
 
 /**
@@ -81,18 +80,5 @@ export function addData(data) {
   return {
     type: ADD_DATA,
     data,
-  };
-}
-
-/**
- * Adds text to slide
- * @param  {number} id
- *
- * @return {object} An action object with a type of CHANGE_SLIDE
- */
-export function changeSlide(id) {
-  return {
-    type: CHANGE_SLIDE,
-    id,
   };
 }

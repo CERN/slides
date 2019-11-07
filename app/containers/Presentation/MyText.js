@@ -1,28 +1,29 @@
-import React, { useState, memo } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { createStructuredSelector } from 'reselect';
+
 import { Rnd } from 'react-rnd';
-import CKEditor from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import CKEditor from '@ckeditor/ckeditor5-react';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-import { useInjectReducer } from 'utils/injectReducer';
-
-import { makeSelectDeckOfSlides, makeSelectCurrentSlide } from './selectors';
+import { Input } from 'semantic-ui-react';
+import { selectDeckOfSlides, selectCurrentSlide } from './selectors';
 import { addData } from './actions';
-import reducer from './reducer';
 
-const key = 'text-component';
-
-export function Presentation({ DeckOfSlides, currentSlide, onAddData }) {
-  useInjectReducer({ key, reducer });
+export function MyText({ DeckOfSlides, currentSlide, onAddData }) {
   const style = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     border: 'solid 1px blue',
     background: 'transparent',
+  };
+  const [text, setText] = useState(
+    DeckOfSlides[currentSlide].textArray[0].data,
+  );
+  const onChangeFunc = evt => {
+    setText(evt.target.value);
+    onAddData(evt.target.value);
   };
   return (
     <Rnd
@@ -35,38 +36,35 @@ export function Presentation({ DeckOfSlides, currentSlide, onAddData }) {
       }}
       bounds="parent"
     >
-      <Input transparent placeholder="Type something...">
-        {/* <CKEditor type="inline" data="<p>This is a CKEditor 5 WYSIWYG editor instance created by ️⚛️ React.</p>" />, */}
-      </Input>
-      >
+      <Input
+        transparent
+        // placeholder="Type something..."
+        value={text}
+        onChange={onChangeFunc}
+      />
+      {/* <CKEditor type="inline" data="<p>This is a CKEditor 5 WYSIWYG editor instance created by ️⚛️ React.</p>" />, */}
+
       {/* <ReactQuill value={text} onChange={handleChange} modules={modules} formats={formats} placeholder="Type your text here" /> */}
     </Rnd>
   );
 }
 
-Presentation.propTypes = {
+MyText.propTypes = {
   DeckOfSlides: PropTypes.array,
   currentSlide: PropTypes.number,
   onAddData: PropTypes.func,
 };
 
-const mapStateToProps = createStructuredSelector({
-  DeckOfSlides: makeSelectDeckOfSlides(),
-  currentSlide: makeSelectCurrentSlide(),
-});
-
 export function mapDispatchToProps(dispatch) {
   return {
-    onAddData: id => dispatch(addData()),
+    onAddData: data => dispatch(addData(data)),
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
+export default connect(
+  state => ({
+    DeckOfSlides: selectDeckOfSlides(state),
+    currentSlide: selectCurrentSlide(state),
+  }),
   mapDispatchToProps,
-);
-
-export default compose(
-  withConnect,
-  memo,
-)(Presentation);
+)(MyText);

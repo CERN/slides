@@ -4,42 +4,28 @@
  * This is the first thing users see of our App, at the '/' route
  */
 
-import React, { useState, memo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 
 import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { createStructuredSelector } from 'reselect';
-
-// import { useInjectReducer } from 'utils/injectReducer';
 
 import { Grid } from 'semantic-ui-react';
-import { Deck, Slide, Image, Text, GoToAction } from 'spectacle';
-import { selectCurrentSlide, selectDeckOfSlides } from './selectors';
+import { Deck } from 'spectacle';
+import { selectDeckOfSlides } from './selectors';
 
-import {
-  addSlide,
-  removeSlide,
-  addText,
-  removeText,
-  changeSlide,
-} from './actions';
+import { addSlide, removeSlide, addText, removeText } from './actions';
 import SideBar from '../../components/SideBar';
 import MySlide from './MySlide';
-import reducer from './reducer';
 import './styles.css';
 
 export function Presentation({
   DeckOfSlides,
-  currentSlide,
   onAddSlide,
   onRemoveSlide,
   onAddText,
   onRemoveText,
 }) {
-  // useInjectReducer({ key, reducer });
-
   return (
     <div>
       <Helmet>
@@ -63,7 +49,7 @@ export function Presentation({
               progress="number"
             >
               {DeckOfSlides.map((item, id) => (
-                <MySlide content={item} id={id} />
+                <MySlide id={id} />
               ))}
             </Deck>
           </Grid.Column>
@@ -75,7 +61,6 @@ export function Presentation({
 
 Presentation.propTypes = {
   DeckOfSlides: PropTypes.array,
-  currentSlide: PropTypes.number,
   onAddSlide: PropTypes.func,
   onRemoveSlide: PropTypes.func,
   onAddText: PropTypes.func,
@@ -94,7 +79,6 @@ export function mapDispatchToProps(dispatch) {
 export default connect(
   state => ({
     DeckOfSlides: selectDeckOfSlides(state),
-    currentSlide: selectCurrentSlide(state),
   }),
   mapDispatchToProps,
 )(Presentation);

@@ -170,4 +170,7 @@ Stoiber. For more information see `LICENSE.md`.
 
 ## TODO :
   * Add application to OpenShift
-  *Actual Development
+  * Actual Development
+    * Fix Frontend of moving text (data is saved correctly in redux)
+    * how to render the array of texts
+    * I will make myText an independent container to handle all text to be rendered
