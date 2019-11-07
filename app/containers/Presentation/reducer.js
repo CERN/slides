@@ -74,10 +74,6 @@ const PresentationReducer = (state = initialState, action) =>
         ].data = action.data;
         break;
       case CHANGE_SLIDE:
-        console.log(
-          '--- change slide --- ',
-          action.payload.location.hash.substr(2),
-        );
         draft.currentSlide = Number(action.payload.location.hash.substr(2));
         break;
     }
