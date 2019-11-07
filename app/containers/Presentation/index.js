@@ -12,19 +12,23 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
-import { useInjectReducer } from 'utils/injectReducer';
+// import { useInjectReducer } from 'utils/injectReducer';
 
 import { Grid } from 'semantic-ui-react';
-import { Deck, Slide, Image, Text } from 'spectacle';
-import { makeSelectDeckOfSlides, makeSelectCurrentSlide } from './selectors';
+import { Deck, Slide, Image, Text, GoToAction } from 'spectacle';
+import { selectCurrentSlide, selectDeckOfSlides } from './selectors';
 
-import { addSlide, removeSlide, addText, removeText } from './actions';
+import {
+  addSlide,
+  removeSlide,
+  addText,
+  removeText,
+  changeSlide,
+} from './actions';
 import SideBar from '../../components/SideBar';
 import MySlide from './MySlide';
 import reducer from './reducer';
 import './styles.css';
-
-const key = 'presentation';
 
 export function Presentation({
   DeckOfSlides,
@@ -34,13 +38,13 @@ export function Presentation({
   onAddText,
   onRemoveText,
 }) {
-  useInjectReducer({ key, reducer });
+  // useInjectReducer({ key, reducer });
 
   return (
     <div>
       <Helmet>
-        <title>iPresent-2</title>
-        <meta name="Presentation" content="iPresent-2" />
+        <title>iPresent</title>
+        <meta name="Presentation" content="iPresent" />
       </Helmet>
       <div className="presentation">
         <Grid className="grid">
@@ -53,7 +57,11 @@ export function Presentation({
             />
           </Grid.Column>
           <Grid.Column width={15}>
-            <Deck transition={['zoom', 'slide']} transitionDuration={500}>
+            <Deck
+              transition={['zoom', 'slide']}
+              transitionDuration={500}
+              progress="number"
+            >
               {DeckOfSlides.map((item, id) => (
                 <MySlide content={item} id={id} />
               ))}
@@ -74,26 +82,19 @@ Presentation.propTypes = {
   onRemoveText: PropTypes.func,
 };
 
-const mapStateToProps = createStructuredSelector({
-  DeckOfSlides: makeSelectDeckOfSlides(),
-  currentSlide: makeSelectCurrentSlide(),
-});
-
 export function mapDispatchToProps(dispatch) {
   return {
-    onAddSlide: () => dispatch(addSlide()),
+    onAddSlide: id => dispatch(addSlide(id)),
     onRemoveSlide: () => dispatch(removeSlide()),
     onAddText: () => dispatch(addText()),
     onRemoveText: () => dispatch(removeText()),
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
+export default connect(
+  state => ({
+    DeckOfSlides: selectDeckOfSlides(state),
+    currentSlide: selectCurrentSlide(state),
+  }),
   mapDispatchToProps,
-);
-
-export default compose(
-  withConnect,
-  memo,
 )(Presentation);

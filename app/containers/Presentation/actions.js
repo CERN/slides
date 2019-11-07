@@ -27,7 +27,6 @@ import {
 /**
  * Adds a New Slide
  *
- *
  * @return {object} An action object with a type of ADD_SLIDE
  */
 export function addSlide() {

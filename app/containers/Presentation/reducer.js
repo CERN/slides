@@ -21,7 +21,7 @@ export const initialState = {
   DeckOfSlides: [
     {
       currentText: 0,
-      textArray: [{ id: 0, data: "That's the first Slide" }],
+      textArray: [{ id: 0, data: "That's 0 Slide" }],
       imageArray: [],
     },
   ],
@@ -31,18 +31,26 @@ export const initialState = {
 /* eslint-disable default-case, no-param-reassign */
 const PresentationReducer = (state = initialState, action) =>
   produce(state, draft => {
+    console.log(
+      'the current slide is: ',
+      draft.currentSlide,
+      'action : ',
+      action,
+    );
     switch (action.type) {
       case ADD_SLIDE:
-        draft.DeckOfSlides.splice(draft.currentSlide, 0, {
+        draft.DeckOfSlides.splice(draft.currentSlide + 1, 0, {
           currentText: 0,
-          textArray: [{ id: 0, data: `That's ${draft.currentSlide} Slide` }],
+          textArray: [
+            { id: 0, data: `That's ${draft.currentSlide + 1} Slide` },
+          ],
           imageArray: [],
         });
-        draft.currentSlide += 1;
         break;
       case REMOVE_SLIDE:
-        draft.DeckOfSlides.splice(draft.currentSlide, 1);
-        draft.currentSlide -= 1;
+        if (draft.currentSlide > 0) {
+          draft.DeckOfSlides.splice(draft.currentSlide, 1);
+        } else alert('Not possible to remove the only slide');
         break;
       case ADD_TEXT:
         draft.DeckOfSlides[draft.currentSlide].textArray.push({
@@ -52,11 +60,13 @@ const PresentationReducer = (state = initialState, action) =>
         draft.DeckOfSlides[draft.currentSlide].currentText += 1;
         break;
       case REMOVE_TEXT:
-        draft.DeckOfSlides[draft.currentSlide].textArray.splice(
-          draft.DeckOfSlides[draft.currentSlide].currentText,
-          1,
-        );
-        draft.DeckOfSlides[draft.currentSlide].currentText -= 1;
+        if (draft.DeckOfSlides[draft.currentSlide].currentText >= 0) {
+          draft.DeckOfSlides[draft.currentSlide].textArray.splice(
+            draft.DeckOfSlides[draft.currentSlide].currentText,
+            1,
+          );
+          draft.DeckOfSlides[draft.currentSlide].currentText -= 1;
+        } else alert("There aren't any text to remove");
         break;
       case ADD_DATA:
         draft.DeckOfSlides[draft.currentSlide].textArray[
@@ -64,7 +74,11 @@ const PresentationReducer = (state = initialState, action) =>
         ].data = action.data;
         break;
       case CHANGE_SLIDE:
-        draft.currentSlide = action.id;
+        console.log(
+          '--- change slide --- ',
+          action.payload.location.hash.substr(2),
+        );
+        draft.currentSlide = Number(action.payload.location.hash.substr(2));
         break;
     }
   });

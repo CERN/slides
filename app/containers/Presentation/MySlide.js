@@ -5,44 +5,50 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
-import { makeSelectDeckOfSlides, makeSelectCurrentSlide } from './selectors';
+import { selectDeckOfSlides, selectCurrentSlide } from './selectors';
 
-import { changeSlide } from './actions';
 import reducer from './reducer';
 
-const key = 'myslide';
+function MySlide({ content, id }) {
+  // useInjectReducer({ key, reducer });
 
-function MySlide({ content, id, onChangeSlide }) {
-  useInjectReducer({ key, reducer });
+  // because the
 
-  console.log('...... it is : ', content, id);
-  onChangeSlide(id);
-  const presentTexts = textArray =>
-    textArray.map(elem => <Text>{elem.data}</Text>);
-  const presentImages = imageArray => imageArray;
-  const present = () =>
-    // first run through the text array
-    // run through the image array
-    presentTexts(content.textArray).concat(presentImages(content.imageArray));
-
-  return <Slide id={id}>{present()}</Slide>;
+  // const presentTexts = textArray =>
+  //   textArray.map(elem => <Text>{elem.data}</Text>);
+  // const presentImages = imageArray => imageArray;
+  // const present = () =>
+  //   // first run through the text array
+  //   // run through the image array
+  //   presentTexts(content.textArray).concat(presentImages(content.imageArray));
+  console.log('content is : ', content);
+  return (
+    <Slide id={id}>
+      {content.textArray.map(elem => (
+        <Text>{elem.data}</Text>
+      ))}
+    </Slide>
+  );
 }
 
 MySlide.propTypes = {
   content: PropTypes.object.isRequired,
   id: PropTypes.number.isRequired,
-  onChangeSlide: PropTypes.func,
+  // currentSlide: PropTypes.number,
 };
 
-export function mapDispatchToProps(dispatch) {
-  return {
-    onChangeSlide: id => dispatch(changeSlide(id)),
-  };
-}
+// const mapStateToProps = state => ({
+//   DeckOfSlides: selectDeckOfSlides(state),
+//   currentSlide: selectCurrentSlide(state),
+// });
 
-const withConnect = connect(mapDispatchToProps);
+// export function mapDispatchToProps(dispatch) {
+//   return {
+//   };
+// }
 
-export default compose(
-  withConnect,
-  memo,
-)(MySlide);
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps,
+// )(MySlide);
+export default MySlide;
