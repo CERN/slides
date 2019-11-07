@@ -43,8 +43,8 @@ export function Presentation({
   return (
     <div>
       <Helmet>
-        <title>iPresent</title>
-        <meta name="Presentation" content="iPresent" />
+        <title>Slides</title>
+        <meta name="Presentation" content="Slides" />
       </Helmet>
       <div className="presentation">
         <Grid className="grid">
