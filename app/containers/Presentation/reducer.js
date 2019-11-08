@@ -32,12 +32,6 @@ export const initialState = {
 const PresentationReducer = (state = initialState, action) =>
   produce(state, draft => {
     // eslint-disable-next-line no-console
-    console.log(
-      'the current slide is: ',
-      draft.currentSlide,
-      'action : ',
-      action,
-    );
     switch (action.type) {
       case ADD_SLIDE:
         draft.DeckOfSlides.splice(draft.currentSlide + 1, 0, {
@@ -49,7 +43,7 @@ const PresentationReducer = (state = initialState, action) =>
         });
         break;
       case REMOVE_SLIDE:
-        if (draft.currentSlide > 0) {
+        if (draft.DeckOfSlides.length > 1) {
           draft.DeckOfSlides.splice(draft.currentSlide, 1);
           // eslint-disable-next-line no-alert
         } else alert('Not possible to remove the only slide');
@@ -72,9 +66,8 @@ const PresentationReducer = (state = initialState, action) =>
         } else alert("There aren't any text to remove");
         break;
       case ADD_DATA:
-        draft.DeckOfSlides[draft.currentSlide].textArray[
-          draft.DeckOfSlides[draft.currentSlide].currentText
-        ].data = action.data;
+        draft.DeckOfSlides[draft.currentSlide].textArray[action.id].data =
+          action.data;
         break;
       case CHANGE_SLIDE:
         draft.currentSlide = Number(action.payload.location.hash.substr(2));

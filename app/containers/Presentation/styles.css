@@ -3,7 +3,7 @@
   width: 100%;
   height: 100%;
   padding-left: 2em;
-  color: darkred;
+  color: white;
   display: flex;
   justify-content: center;
   background-color: black;
@@ -27,4 +27,10 @@
 
 .center {
   position: absolute;
+}
+
+.text-style:hover {
+  /* border: 'solid 1px blue'; */
+  border-color: #66afe9;
+  box-shadow: 0 0 8px rgb(0, 140, 255);
 }

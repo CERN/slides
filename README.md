@@ -172,5 +172,5 @@ Stoiber. For more information see `LICENSE.md`.
   * Add application to OpenShift
   * Actual Development
     * Fix Frontend of moving text (data is saved correctly in redux)
-    * how to render the array of texts
     * I will make myText an independent container to handle all text to be rendered
+    * Fix when slide is rendered and when i delete or add a slide fire an action to move to this slide

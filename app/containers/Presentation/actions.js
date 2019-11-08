@@ -61,7 +61,6 @@ export function addText() {
 /**
  * Removes text to slide
  *
- *
  * @return {object} An action object with a type of REMOVE_TEXT
  */
 export function removeText() {
@@ -72,13 +71,15 @@ export function removeText() {
 
 /**
  * Adds text to slide
+ * @param  {number} id
  * @param  {string} data
  *
  * @return {object} An action object with a type of ADD_DATA
  */
-export function addData(data) {
+export function addData(id, data) {
   return {
     type: ADD_DATA,
+    id,
     data,
   };
 }

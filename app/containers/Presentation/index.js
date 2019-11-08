@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 
 import { Grid } from 'semantic-ui-react';
 import { Deck } from 'spectacle';
+import createTheme from 'spectacle/lib/themes/default';
 import { selectDeckOfSlides } from './selectors';
 
 import { addSlide, removeSlide, addText, removeText } from './actions';
@@ -26,6 +27,20 @@ export function Presentation({
   onAddText,
   onRemoveText,
 }) {
+  const theme = createTheme(
+    {
+      primary: '#1C4587',
+      secondary: '#1C4587',
+    },
+    {
+      primary: 'Helvetica',
+      secondary: {
+        name: 'Droid Serif',
+        googleFont: true,
+        styles: ['400', '700i'],
+      },
+    },
+  );
   return (
     <div>
       <Helmet>
@@ -46,7 +61,8 @@ export function Presentation({
             <Deck
               transition={['zoom', 'slide']}
               transitionDuration={500}
-              progress="number"
+              // progress="number"
+              theme={theme}
             >
               {DeckOfSlides.map((item, id) => (
                 <MySlide id={id} />
