@@ -21,6 +21,8 @@ import {
   ADD_TEXT,
   REMOVE_TEXT,
   ADD_DATA,
+  CHANGE_POSITION,
+  CHANGE_SLIDE,
 } from './constants';
 
 /**
@@ -81,5 +83,34 @@ export function addData(id, data) {
     type: ADD_DATA,
     id,
     data,
+  };
+}
+
+/**
+ * Changes position to slide
+ * @param  {number} id
+ * @param  {object} position
+ *
+ * @return {object} An action object with a type of CHANGE_POSITION
+ */
+export function changePosition(id, position) {
+  return {
+    type: CHANGE_POSITION,
+    id,
+    position,
+  };
+}
+
+/**
+ * Changes slide
+ * @param  {string} direction
+ *
+ * @return {object} An action object with a type of CHANGE_SLIDE
+ */
+
+export function changeSlide(direction) {
+  return {
+    type: CHANGE_SLIDE,
+    direction,
   };
 }

@@ -14,6 +14,7 @@ import {
   REMOVE_TEXT,
   ADD_DATA,
   CHANGE_SLIDE,
+  CHANGE_POSITION,
 } from './constants';
 
 // The initial state of the App
@@ -21,7 +22,13 @@ export const initialState = {
   DeckOfSlides: [
     {
       currentText: 0,
-      textArray: [{ id: 0, data: "That's 0 Slide" }],
+      textArray: [
+        {
+          id: 0,
+          data: "That's 0 Slide",
+          position: { width: '500px', height: '70px', x: 253, y: -65 },
+        },
+      ],
       imageArray: [],
     },
   ],
@@ -37,7 +44,11 @@ const PresentationReducer = (state = initialState, action) =>
         draft.DeckOfSlides.splice(draft.currentSlide + 1, 0, {
           currentText: 0,
           textArray: [
-            { id: 0, data: `That's ${draft.currentSlide + 1} Slide` },
+            {
+              id: 0,
+              data: `That's ${draft.currentSlide + 1} Slide`,
+              position: { width: '500px', height: '70px', x: 1, y: 1 },
+            },
           ],
           imageArray: [],
         });
@@ -51,7 +62,8 @@ const PresentationReducer = (state = initialState, action) =>
       case ADD_TEXT:
         draft.DeckOfSlides[draft.currentSlide].textArray.push({
           id: draft.DeckOfSlides[draft.currentSlide].currentText + 1,
-          data: "That's a new Text box",
+          data: 'Type Something...',
+          position: { width: '500px', height: '70px', x: 253, y: -65 },
         });
         draft.DeckOfSlides[draft.currentSlide].currentText += 1;
         break;
@@ -68,6 +80,13 @@ const PresentationReducer = (state = initialState, action) =>
       case ADD_DATA:
         draft.DeckOfSlides[draft.currentSlide].textArray[action.id].data =
           action.data;
+        break;
+      case CHANGE_POSITION:
+        // const { width, height, x, y } = action.position;
+        // const obj = { width, height, x, y };
+        // console.log9('.... obj: ', obj);
+        draft.DeckOfSlides[draft.currentSlide].textArray[action.id].position =
+          action.position;
         break;
       case CHANGE_SLIDE:
         draft.currentSlide = Number(action.payload.location.hash.substr(2));

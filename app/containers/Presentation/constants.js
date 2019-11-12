@@ -14,4 +14,6 @@ export const REMOVE_SLIDE = 'Slides/Presentation/REMOVE_SLIDE';
 export const ADD_TEXT = 'Slides/Presentation/ADD_TEXT';
 export const REMOVE_TEXT = 'Slides/Presentation/REMOVE_TEXT';
 export const ADD_DATA = 'Slides/Presentation/ADD_DATA';
+export const CHANGE_POSITION = 'Slides/Presentation/CHANGE_POSITION';
+
 export const CHANGE_SLIDE = '@@router/LOCATION_CHANGE';

@@ -13,9 +13,14 @@ import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
 import { Deck } from 'spectacle';
 import createTheme from 'spectacle/lib/themes/default';
-import { selectDeckOfSlides } from './selectors';
-
-import { addSlide, removeSlide, addText, removeText } from './actions';
+import { selectDeckOfSlides, selectCurrentSlide } from './selectors';
+import {
+  addSlide,
+  removeSlide,
+  addText,
+  removeText,
+  changeSlide,
+} from './actions';
 import SideBar from '../../components/SideBar';
 import MySlide from './MySlide';
 import './styles.css';
@@ -26,21 +31,19 @@ export function Presentation({
   onRemoveSlide,
   onAddText,
   onRemoveText,
+  // onChangeSlide,
+  // currentSlide,
 }) {
-  const theme = createTheme(
-    {
-      primary: '#1C4587',
-      secondary: '#1C4587',
-    },
-    {
-      primary: 'Helvetica',
-      secondary: {
-        name: 'Droid Serif',
-        googleFont: true,
-        styles: ['400', '700i'],
-      },
-    },
-  );
+  const addingSlide = () => {
+    onAddSlide();
+    // onChangeSlide('+1');
+    // history.push('/#/'.concat(currentSlide + 1));
+  };
+
+  const theme = createTheme({
+    primary: '#1C4587',
+    secondary: '#1C4587',
+  });
   return (
     <div>
       <Helmet>
@@ -51,7 +54,7 @@ export function Presentation({
         <Grid className="grid">
           <Grid.Column width={1}>
             <SideBar
-              addSlide={onAddSlide}
+              addSlide={addingSlide}
               removeSlide={onRemoveSlide}
               addText={onAddText}
               removeText={onRemoveText}
@@ -65,7 +68,7 @@ export function Presentation({
               theme={theme}
             >
               {DeckOfSlides.map((item, id) => (
-                <MySlide id={id} />
+                <MySlide key={item} id={id} />
               ))}
             </Deck>
           </Grid.Column>
@@ -81,6 +84,8 @@ Presentation.propTypes = {
   onRemoveSlide: PropTypes.func,
   onAddText: PropTypes.func,
   onRemoveText: PropTypes.func,
+  // onChangeSlide: PropTypes.func,
+  // currentSlide: PropTypes.number,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -89,12 +94,14 @@ export function mapDispatchToProps(dispatch) {
     onRemoveSlide: () => dispatch(removeSlide()),
     onAddText: () => dispatch(addText()),
     onRemoveText: () => dispatch(removeText()),
+    onChangeSlide: direction => dispatch(changeSlide(direction)),
   };
 }
 
 export default connect(
   state => ({
     DeckOfSlides: selectDeckOfSlides(state),
+    currentSlide: selectCurrentSlide(state),
   }),
   mapDispatchToProps,
 )(Presentation);

@@ -10,7 +10,7 @@ export function MyText({ DeckOfSlides, currentSlide }) {
     <div>
       {DeckOfSlides[currentSlide] &&
         DeckOfSlides[currentSlide].textArray.map(elem => (
-          <TextComponent textArrayEntry={elem.id} />
+          <TextComponent key={elem.id} textArrayEntry={elem.id} />
         ))}
     </div>
   );
