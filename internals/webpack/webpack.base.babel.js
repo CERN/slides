@@ -78,9 +78,6 @@ module.exports = options => ({
                 // enabled: true,
                 // progressive: true,
               },
-              gifsicle: {
-                interlaced: false,
-              },
               optipng: {
                 optimizationLevel: 7,
               },

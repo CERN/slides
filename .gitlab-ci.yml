@@ -1,35 +1,36 @@
 variables:
   NAMESPACE_DEV: slides
-  OPENSHIFT_SERVER_DEV: https://openshift-dev.cern.ch
+  OPENSHIFT_SERVER_DEV: https://openshift.cern.ch
   BUILD_ENV_DEV: staging
-  APP_NAME: Slides
+  APP_NAME: slides
   DEV_TAG: dev
 
 stages:
-  - test
+  # - test
   - build
   - build_docker
   - deploy
 
 .before_npm: &before_npm_def
   before_script:
-    - apk add git
-    - npm install -g yarn
-    - yarn install
+    - apk add --update git bash lcms2-dev libpng-dev gcc g++ make autoconf automake && rm -rf /var/cache/apk/*
+    - npm install
 
-test:
-  stage: test
-  image: node:12-alpine
-  <<: *before_npm_def
-  script:
-    - yarn test a
+
+
+# test:
+#   stage: test
+#   image: node:12-alpine
+#   <<: *before_npm_def
+#   script:
+#     - yarn test a
 
 .build_template: &build_definition
   stage: build
   image: node:12-alpine
   <<: *before_npm_def
   script:
-    - npx env-cmd -f .env.${BUILD_ENV} npm run build
+    - npm run build
   artifacts:
     paths:
       - build
@@ -38,16 +39,15 @@ test:
   stage: build_docker
   tags:
     - docker-image-build
-  script: "echo building $CI_REGISTRY_IMAGE for users-portal" # No empty scripts are allowed
+  script: "echo building $CI_REGISTRY_IMAGE for slides" # No empty scripts are allowed
 
 .deploy_template: &deploy_definition
   stage: deploy
   image: gitlab-registry.cern.ch/paas-tools/openshift-client:latest
   script:
-    - LOWERCASE_PATH=$(echo ${CI_PROJECT_PATH} | awk '{ print tolower($0) } ')
     # Adding || true to disable the error message when the image already exists
-    - oc import-image ${APP_NAME} --from="gitlab-registry.cern.ch/${LOWERCASE_PATH}:${TAG}" --confirm --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE} || true
-    - oc tag "gitlab-registry.cern.ch/${LOWERCASE_PATH}:${TAG}" "${APP_NAME}:latest" --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE}
+    - oc import-image ${APP_NAME} --from="gitlab-registry.cern.ch/authoring/slides/slides:${TAG}" --confirm --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE} || true
+    - oc tag "gitlab-registry.cern.ch/authoring/slides/slides:${TAG}" "${APP_NAME}:latest" --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE}
 
 build_dev:
   <<: *build_definition
