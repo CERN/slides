@@ -26,13 +26,20 @@ export const initialState = {
         {
           id: 0,
           data: "That's 0 Slide",
-          position: { width: '500px', height: '70px', x: 253, y: -65 },
+          position: initialPosition,
         },
       ],
       imageArray: [],
     },
   ],
   currentSlide: 0,
+};
+
+const initialPosition = {
+  width: '500px',
+  height: '70px',
+  x: 400,
+  y: 250,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -47,7 +54,7 @@ const PresentationReducer = (state = initialState, action) =>
             {
               id: 0,
               data: `That's ${draft.currentSlide + 1} Slide`,
-              position: { width: '500px', height: '70px', x: 1, y: 1 },
+              position: initialPosition,
             },
           ],
           imageArray: [],
@@ -63,7 +70,7 @@ const PresentationReducer = (state = initialState, action) =>
         draft.DeckOfSlides[draft.currentSlide].textArray.push({
           id: draft.DeckOfSlides[draft.currentSlide].currentText + 1,
           data: 'Type Something...',
-          position: { width: '500px', height: '70px', x: 253, y: -65 },
+          position: initialPosition,
         });
         draft.DeckOfSlides[draft.currentSlide].currentText += 1;
         break;
