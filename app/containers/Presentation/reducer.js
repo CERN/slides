@@ -17,13 +17,6 @@ import {
   CHANGE_POSITION,
 } from './constants';
 
-const initialPosition = () => ({
-  width: '500px',
-  height: '70px',
-  x: 400,
-  y: 250,
-});
-
 // The initial state of the App
 export const initialState = {
   DeckOfSlides: [
@@ -33,7 +26,12 @@ export const initialState = {
         {
           id: 0,
           data: "That's 0 Slide",
-          position: initialPosition,
+          position: {
+            width: '500px',
+            height: '70px',
+            x: 400,
+            y: 250,
+          },
         },
       ],
       imageArray: [],
@@ -54,7 +52,12 @@ const PresentationReducer = (state = initialState, action) =>
             {
               id: 0,
               data: `That's ${draft.currentSlide + 1} Slide`,
-              position: initialPosition,
+              position: {
+                width: '500px',
+                height: '70px',
+                x: 400,
+                y: 250,
+              },
             },
           ],
           imageArray: [],
@@ -70,7 +73,12 @@ const PresentationReducer = (state = initialState, action) =>
         draft.DeckOfSlides[draft.currentSlide].textArray.push({
           id: draft.DeckOfSlides[draft.currentSlide].currentText + 1,
           data: 'Type Something...',
-          position: initialPosition,
+          position: {
+            width: '500px',
+            height: '70px',
+            x: 400,
+            y: 250,
+          },
         });
         draft.DeckOfSlides[draft.currentSlide].currentText += 1;
         break;

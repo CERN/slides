@@ -72,20 +72,19 @@ export function TextComponent({
     setPosition(posi);
     onChangePosition(textArrayEntry, posi);
   };
+  // {/* <div left={`${position.x}px`} top={`${position.y}px`}> */ }
+  // {/* </div> */}
 
   return (
     <div ref={node} onDoubleClick={onDoubleClick}>
       {textEdit ? (
-        <div left={`${position.x}px`} top={`${position.y}px`}>
-          <CKEditor data={text} type="inline" onChange={onChangeFunc} />
-        </div>
+        <CKEditor data={text} type="inline" onChange={onChangeFunc} />
       ) : (
-        <div left={`${position.x}px`} top={`${position.y}px`}>
           <Rnd
             className="text-style"
             style={style}
             size={{ width: position.width, height: position.height }}
-            // position={{ x: position.x, y: position.y }}
+            position={{ x: position.x, y: position.y }}
             onDragStop={(e, d) => {
               console.log('..........', d.x, d.y);
               onDragStop({
@@ -108,8 +107,7 @@ export function TextComponent({
           >
             {ReactHtmlParser(text)}
           </Rnd>
-        </div>
-      )}
+        )}
     </div>
   );
 }
