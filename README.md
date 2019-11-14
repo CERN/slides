@@ -174,5 +174,3 @@ Stoiber. For more information see `LICENSE.md`.
     * store and fetch position of text component
     * Fix when slide is rendered and when i delete or add a slide fire an action to move to this slide
     * exact route to change location when adding deleting slides
-    * event.preventDefault() evrytime in click handlers
-    * investigate why it is so slow

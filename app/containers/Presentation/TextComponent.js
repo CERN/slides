@@ -9,8 +9,7 @@ import CKEditor from 'ckeditor4-react';
 import { selectDeckOfSlides, selectCurrentSlide } from './selectors';
 import { addData, changePosition } from './actions';
 import './styles.css';
-
-// change current text when i should
+import ReactHtmlParser from 'react-html-parser';
 export function TextComponent({
   DeckOfSlides,
   currentSlide,
@@ -24,6 +23,7 @@ export function TextComponent({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    // position: 'absolute',
   };
   // single-double click handlers
   const [textEdit, setTextEdit] = useState(false);
@@ -76,35 +76,39 @@ export function TextComponent({
   return (
     <div ref={node} onDoubleClick={onDoubleClick}>
       {textEdit ? (
-        <CKEditor data={text} type="inline" onChange={onChangeFunc} />
+        <div left={`${position.x}px`} top={`${position.y}px`}>
+          <CKEditor data={text} type="inline" onChange={onChangeFunc} />
+        </div>
       ) : (
-        <Rnd
-          className="text-style"
-          style={style}
-          size={{ width: position.width, height: position.height }}
-          position={{ x: position.x, y: position.y }}
-          onDragStop={(e, d) => {
-            console.log('..........', d.x, d.y);
-            onDragStop({
-              width: position.width,
-              height: position.height,
-              x: d.x,
-              y: d.y,
-            });
-          }}
-          onResizeStop={(e, dir, ref, delta, posi) => {
-            onDragStop({
-              width: ref.style.width,
-              height: ref.style.height,
-              ...posi,
-            });
-          }}
-          minWidth={500}
-          minHeight={70}
-          bounds="body"
-        >
-          {text}
-        </Rnd>
+        <div left={`${position.x}px`} top={`${position.y}px`}>
+          <Rnd
+            className="text-style"
+            style={style}
+            size={{ width: position.width, height: position.height }}
+            // position={{ x: position.x, y: position.y }}
+            onDragStop={(e, d) => {
+              console.log('..........', d.x, d.y);
+              onDragStop({
+                width: position.width,
+                height: position.height,
+                x: d.x,
+                y: d.y,
+              });
+            }}
+            onResizeStop={(e, dir, ref, delta, posi) => {
+              onDragStop({
+                width: ref.style.width,
+                height: ref.style.height,
+                ...posi,
+              });
+            }}
+            minWidth={500}
+            minHeight={70}
+            bounds="body"
+          >
+            {ReactHtmlParser(text)}
+          </Rnd>
+        </div>
       )}
     </div>
   );

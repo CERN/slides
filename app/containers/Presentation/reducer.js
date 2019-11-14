@@ -17,12 +17,12 @@ import {
   CHANGE_POSITION,
 } from './constants';
 
-const initialPosition = {
+const initialPosition = () => ({
   width: '500px',
   height: '70px',
   x: 400,
   y: 250,
-};
+});
 
 // The initial state of the App
 export const initialState = {
