@@ -17,6 +17,13 @@ import {
   CHANGE_POSITION,
 } from './constants';
 
+const initialPosition = {
+  width: '500px',
+  height: '70px',
+  x: 400,
+  y: 250,
+};
+
 // The initial state of the App
 export const initialState = {
   DeckOfSlides: [
@@ -33,13 +40,6 @@ export const initialState = {
     },
   ],
   currentSlide: 0,
-};
-
-const initialPosition = {
-  width: '500px',
-  height: '70px',
-  x: 400,
-  y: 250,
 };
 
 /* eslint-disable default-case, no-param-reassign */

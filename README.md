@@ -169,10 +169,8 @@ This project is licensed under the MIT license, Copyright (c) 2019 Maximilian
 Stoiber. For more information see `LICENSE.md`.
 
 ## TODO :
-  * Add application to OpenShift
   * Actual Development
     * Fix Frontend of moving text (data is saved correctly in redux)
-    * I will make myText an independent container to handle all text to be rendered
     * store and fetch position of text component
     * Fix when slide is rendered and when i delete or add a slide fire an action to move to this slide
     * exact route to change location when adding deleting slides
