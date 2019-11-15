@@ -39,7 +39,6 @@ export function addSlide() {
 /**
  * Removes a Slide
  *
- *
  * @return {object} An action object with a type of REMOVE_SLIDE
  */
 export function removeSlide() {

@@ -4,7 +4,7 @@
  * This is the first thing users see of our App, at the '/' route
  */
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 
@@ -44,7 +44,7 @@ export function Presentation({
     onRemoveSlide();
     if (currentSlide === 0) {
       // window.location = `#/${1}`;
-      // window.location = `#/${0}`;
+      window.location = `#/${0}`;
     } else window.location = `#/${currentSlide - 1}`;
   };
 
@@ -57,10 +57,6 @@ export function Presentation({
   useEffect(() => {
     window.slideCount = deck.current.props.children.length;
   });
-
-  useEffect(() => {
-    console.log('changed ', DeckOfSlides.length);
-  }, [DeckOfSlides.length]);
 
   return (
     <div>
@@ -109,7 +105,7 @@ Presentation.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onAddSlide: id => dispatch(addSlide(id)),
+    onAddSlide: () => dispatch(addSlide()),
     onRemoveSlide: () => dispatch(removeSlide()),
     onAddText: () => dispatch(addText()),
     onRemoveText: () => dispatch(removeText()),

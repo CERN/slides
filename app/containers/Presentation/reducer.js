@@ -99,7 +99,7 @@ const PresentationReducer = (state = initialState, action) =>
       case CHANGE_POSITION:
         // const { width, height, x, y } = action.position;
         // const obj = { width, height, x, y };
-        // console.log9('.... obj: ', obj);
+        // console.log('.... obj: ', obj);
         draft.DeckOfSlides[draft.currentSlide].textArray[action.id].position =
           action.position;
         break;
