@@ -4,7 +4,7 @@
  * This is the first thing users see of our App, at the '/' route
  */
 
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 
@@ -32,18 +32,36 @@ export function Presentation({
   onAddText,
   onRemoveText,
   // onChangeSlide,
-  // currentSlide,
+  currentSlide,
 }) {
+  const deck = useRef();
   const addingSlide = () => {
     onAddSlide();
-    // onChangeSlide('+1');
-    // history.push('/#/'.concat(currentSlide + 1));
+    window.location = `#/${currentSlide + 1}`; // because slides here are starting from 1
+  };
+
+  const removingSlide = () => {
+    onRemoveSlide();
+    if (currentSlide === 0) {
+      // window.location = `#/${1}`;
+      // window.location = `#/${0}`;
+    } else window.location = `#/${currentSlide - 1}`;
   };
 
   const theme = createTheme({
     primary: '#1C4587',
     secondary: '#1C4587',
   });
+
+  // use this hook to be able to move to next previous slide in adding removing slides
+  useEffect(() => {
+    window.slideCount = deck.current.props.children.length;
+  });
+
+  useEffect(() => {
+    console.log('changed ', DeckOfSlides.length);
+  }, [DeckOfSlides.length]);
+
   return (
     <div>
       <Helmet>
@@ -55,13 +73,14 @@ export function Presentation({
           <Grid.Column width={1}>
             <SideBar
               addSlide={addingSlide}
-              removeSlide={onRemoveSlide}
+              removeSlide={removingSlide}
               addText={onAddText}
               removeText={onRemoveText}
             />
           </Grid.Column>
           <Grid.Column width={15}>
             <Deck
+              ref={deck}
               transition={['zoom', 'slide']}
               transitionDuration={500}
               // progress="number"
@@ -85,7 +104,7 @@ Presentation.propTypes = {
   onAddText: PropTypes.func,
   onRemoveText: PropTypes.func,
   // onChangeSlide: PropTypes.func,
-  // currentSlide: PropTypes.number,
+  currentSlide: PropTypes.number,
 };
 
 export function mapDispatchToProps(dispatch) {

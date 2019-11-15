@@ -172,5 +172,3 @@ Stoiber. For more information see `LICENSE.md`.
   * Actual Development
     * Fix Frontend of moving text (data is saved correctly in redux)
     * store and fetch position of text component
-    * Fix when slide is rendered and when i delete or add a slide fire an action to move to this slide
-    * exact route to change location when adding deleting slides

@@ -23,7 +23,7 @@ export function TextComponent({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    // position: 'absolute',
+    position: 'absolute',
   };
   // single-double click handlers
   const [textEdit, setTextEdit] = useState(false);
