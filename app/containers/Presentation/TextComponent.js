@@ -23,7 +23,7 @@ export function TextComponent({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'absolute',
+    // position: 'absolute',
   };
   // single-double click handlers
   const [textEdit, setTextEdit] = useState(false);
@@ -68,15 +68,21 @@ export function TextComponent({
     };
   }, []);
 
-  const onDragStop = posi => {
+  const onDragStop = (evt, posi) => {
+    evt.preventDefault();
     setPosition(posi);
     onChangePosition(textArrayEntry, posi);
+    const { offsetTop } = node.current;
+    console.log('offsetTop: ', offsetTop);
   };
   // {/* <div left={`${position.x}px`} top={`${position.y}px`}> */ }
   // {/* </div> */}
-
   return (
-    <div ref={node} onDoubleClick={onDoubleClick}>
+    <div
+      ref={node}
+      onDoubleClick={onDoubleClick}
+      // style={{ top: position.x, left: position.y }}
+    >
       {textEdit ? (
         <CKEditor
           // this is to prevent an error with the editor that multiple instances of the editor exists
@@ -90,19 +96,23 @@ export function TextComponent({
         <Rnd
           className="text-style"
           style={style}
+          // default={position}
           size={{ width: position.width, height: position.height }}
           position={{ x: position.x, y: position.y }}
           onDragStop={(e, d) => {
-            console.log('..........', d.x, d.y);
-            onDragStop({
+            console.log('..........', position.x, d.x, 'y :', position.y, d.y);
+            // setPosition({});
+            onDragStop(e, {
               width: position.width,
               height: position.height,
               x: d.x,
               y: d.y,
             });
+            // d.y is going up when i drag down
+            // d.x is going up when i drag left
           }}
           onResizeStop={(e, dir, ref, delta, posi) => {
-            onDragStop({
+            onDragStop(e, {
               width: ref.style.width,
               height: ref.style.height,
               ...posi,
