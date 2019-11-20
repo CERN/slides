@@ -59,26 +59,30 @@ function ThemeSelector({ readyFunc }) {
           <Header className="white" size="large">
             Start your Presentation
           </Header>
-          <Form size="large" className="spacing">
+          <Form size="large">
             <Segment>
               <Input
+                className="spacing"
                 placeholder="Presentation Title"
                 fluid
                 onChange={settingTitle}
               />
               <Input
+                className="spacing"
                 label="slides.web.cern.ch/"
                 fluid
                 placeholder="URL"
                 onChange={settingURL}
               />
               <Select
+                className="spacing"
                 placeholder="Select Theme"
                 fluid
                 options={themeOptions}
                 onChange={settingTheme}
               />
               <TextArea
+                className="spacing"
                 placeholder="What is your Presentation about?"
                 onChange={settingDescription}
               />

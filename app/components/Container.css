@@ -31,9 +31,5 @@
 }
 
 .spacing {
-  margin-bottom: 3em !important;
-}
-
-.spacing:last-child {
-  margin-bottom: 0 !important;
+  margin-bottom: 0.5em !important;
 }

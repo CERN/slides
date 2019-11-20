@@ -174,3 +174,4 @@ Stoiber. For more information see `LICENSE.md`.
     * store and fetch position of text component
     * When application starts, open a window to define title, theme (cern themes from codimd)
     * Define kind of slides like title, text bullets, title text, title image, image etc
+    * Nikos uploaded css for the cern themes
