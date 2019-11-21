@@ -175,3 +175,4 @@ Stoiber. For more information see `LICENSE.md`.
     * When application starts, open a window to define title, theme (cern themes from codimd)
     * Define kind of slides like title, text bullets, title text, title image, image etc
     * Nikos uploaded css for the cern themes
+    * TODO: FIX CSS !

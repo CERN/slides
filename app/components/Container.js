@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './Container.css';
-import { Grid } from 'semantic-ui-react';
 import Settings from './Settings';
 import Presentation from '../containers/Presentation/index';
 import ThemeSelector from './ThemeSelector';
@@ -29,14 +28,12 @@ function Container() {
     <div>
       {ready ? (
         <div className="Container">
-          <Grid className="grid">
-            <Grid.Column width={1}>
-              <Settings />
-            </Grid.Column>
-            <Grid.Column width={15}>
-              <Presentation />
-            </Grid.Column>
-          </Grid>
+          <div className="settings">
+            <Settings />
+          </div>
+          <div className="presentation">
+            <Presentation />
+          </div>
         </div>
       ) : (
         <div className="ThemeSelector">

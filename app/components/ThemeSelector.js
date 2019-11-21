@@ -13,6 +13,7 @@ import {
 } from 'semantic-ui-react';
 import img from '../images/CERN-Logo.png';
 import './Container.css';
+import preloader from '../utils/preloader';
 
 const themeOptions = [
   {
@@ -35,7 +36,19 @@ const themeOptions = [
     text: 'CERN 4',
     value: 'CERN 4',
   },
+  {
+    key: 'CERN 5',
+    text: 'CERN 5',
+    value: 'CERN 5',
+  },
+  {
+    key: 'CERN 6',
+    text: 'CERN 6',
+    value: 'CERN 6',
+  },
 ];
+
+preloader(img);
 
 function ThemeSelector({ readyFunc }) {
   const [title, setTitle] = useState('New Presentation');
@@ -50,10 +63,9 @@ function ThemeSelector({ readyFunc }) {
   const settingTheme = (e, { value }) => setTheme(value);
   const settingDescription = (e, { value }) => setDescription(value);
 
-  // have to add spacing between the elements with css em
   return (
     <div>
-      <Grid textAlign="center" style={{ height: '100vh' }}>
+      <Grid classname="grid" textAlign="center">
         <Grid.Column style={{ maxWidth: 500 }}>
           <Image src={img} size="medium" centered />
           <Header className="white" size="large">

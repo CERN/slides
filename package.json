@@ -65,6 +65,8 @@
   },
   "dependencies": {
     "@babel/polyfill": "7.4.3",
+    "@emotion/core": "^10.0.22",
+    "@emotion/styled": "^10.0.23",
     "chalk": "^2.4.2",
     "ckeditor4-react": "^1.0.0",
     "compression": "1.7.4",

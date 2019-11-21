@@ -2,12 +2,13 @@ import React from 'react';
 import { Slide } from 'spectacle';
 import PropTypes from 'prop-types';
 import MyText from './MyText';
+import StandardSlide from '../../theming/StandardSlide';
 
 function MySlide({ id }) {
   return (
-    <Slide id={id}>
+    <StandardSlide id={id}>
       <MyText />
-    </Slide>
+    </StandardSlide>
   );
 }
 

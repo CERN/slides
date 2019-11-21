@@ -24,6 +24,7 @@ import {
 import SideBar from '../../components/SideBar';
 import MySlide from './MySlide';
 import './styles.css';
+import getTheme from '../../theming/theme';
 
 export function Presentation({
   DeckOfSlides,
@@ -48,10 +49,8 @@ export function Presentation({
     } else window.location = `#/${currentSlide - 1}`;
   };
 
-  const theme = createTheme({
-    primary: '#1C4587',
-    secondary: '#1C4587',
-  });
+  const themeConf = getTheme();
+  const theme = createTheme(themeConf.themeConfig, themeConf.fontConfig);
 
   // use this hook to be able to move to next previous slide in adding removing slides
   useEffect(() => {
@@ -59,35 +58,33 @@ export function Presentation({
   });
 
   return (
-    <div>
+    <div className="grid">
       <Helmet>
         <title>Slides</title>
         <meta name="Presentation" content="Slides" />
       </Helmet>
-      <div className="presentation">
-        <Grid className="grid">
-          <Grid.Column width={1}>
-            <SideBar
-              addSlide={addingSlide}
-              removeSlide={removingSlide}
-              addText={onAddText}
-              removeText={onRemoveText}
-            />
-          </Grid.Column>
-          <Grid.Column width={15}>
-            <Deck
-              ref={deck}
-              transition={['zoom', 'slide']}
-              transitionDuration={500}
-              // progress="number"
-              theme={theme}
-            >
-              {DeckOfSlides.map((item, id) => (
-                <MySlide key={item} id={id} />
-              ))}
-            </Deck>
-          </Grid.Column>
-        </Grid>
+      <div className="sidebar">
+        <SideBar
+          addSlide={addingSlide}
+          removeSlide={removingSlide}
+          addText={onAddText}
+          removeText={onRemoveText}
+        />
+      </div>
+      <div className="deck">
+        <Deck
+          ref={deck}
+          transition={['zoom', 'slide']}
+          transitionDuration={500}
+          theme={theme}
+          progress="number"
+          showFullscreenControl={false}
+        // controls={false} // show or hide the move buttons
+        >
+          {DeckOfSlides.map((item, id) => (
+            <MySlide key={item} id={id} />
+          ))}
+        </Deck>
       </div>
     </div>
   );

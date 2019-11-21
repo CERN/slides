@@ -1,22 +1,23 @@
 .Container {
-  position: absolute;
-  height: 100%;
+  height: 100vh;
   width: 100%;
   background-color: black;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  display: inline-block;
 }
 
-.grid {
-  position: absolute;
+.settings {
+  position: relative;
+  width: 3%;
   height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  float: left;
+  background-color: #1B1C1D;
+}
+
+.presentation {
+  position: relative;
+  width: 97%;
+  height: 100%;
+  float: right;
 }
 
 .ThemeSelector {
@@ -32,4 +33,10 @@
 
 .spacing {
   margin-bottom: 0.5em !important;
+}
+
+.grid {
+  background-color: #0053A1 !important;
+  height: 100vh;
+  /* text-align: center; */
 }
