@@ -10,6 +10,7 @@ import {
   Input,
   Select,
   TextArea,
+  Icon,
 } from 'semantic-ui-react';
 import img from '../images/CERN-Logo.png';
 import './Container.css';
@@ -65,7 +66,7 @@ function ThemeSelector({ readyFunc }) {
 
   return (
     <div>
-      <Grid classname="grid" textAlign="center">
+      <Grid className="grid" textAlign="center">
         <Grid.Column style={{ maxWidth: 500 }}>
           <Image src={img} size="medium" centered />
           <Header className="white" size="large">
@@ -98,8 +99,16 @@ function ThemeSelector({ readyFunc }) {
                 placeholder="What is your Presentation about?"
                 onChange={settingDescription}
               />
-              <Button color="green" size="large" onClick={clickHandler}>
-                Let's Go!
+              <Button
+                color="green"
+                size="large"
+                onClick={clickHandler}
+                animated
+              >
+                <Button.Content visible>Let's GO!</Button.Content>
+                <Button.Content hidden>
+                  <Icon name="arrow right" />
+                </Button.Content>
               </Button>
             </Segment>
           </Form>

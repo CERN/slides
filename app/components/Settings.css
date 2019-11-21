@@ -3,3 +3,8 @@
   bottom: 0;
   position: absolute;
 }
+
+.content-edit-bar {
+  height: 100%;
+  background-color: black;
+}

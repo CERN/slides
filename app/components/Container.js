@@ -24,6 +24,7 @@ function Container() {
     setDescription(selectedDescription);
   };
   // do actual job with the data, pass them to Presentation to do things
+  // align in the middle vertically and ...
   return (
     <div>
       {ready ? (
@@ -36,10 +37,10 @@ function Container() {
           </div>
         </div>
       ) : (
-        <div className="ThemeSelector">
-          <ThemeSelector readyFunc={readyFunc} />
-        </div>
-      )}
+          <div className="ThemeSelector">
+            <ThemeSelector readyFunc={readyFunc} />
+          </div>
+        )}
     </div>
   );
 }

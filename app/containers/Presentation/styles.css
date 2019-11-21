@@ -6,18 +6,24 @@
 }
 
 .sidebar {
-  position: relative;
-  width: 5%;
+  width: 6% !important;
   height: 100%;
-  float: left;
-  background-color: black;
+  text-align: center;
 }
 
 .deck {
-  position: relative;
-  width: 95%;
+  width: 94% !important;
   height: 100%;
-  float: right;
+}
+
+.ui.grid>.column:not(.row) {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.ui.grid>.column:not(.row) {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .down {
@@ -30,7 +36,6 @@
 }
 
 .text-style:hover {
-  /* border: 'solid 1px blue'; */
   border-color: #66afe9;
   box-shadow: 0 0 8px rgb(0, 140, 255);
 }

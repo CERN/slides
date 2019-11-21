@@ -10,7 +10,7 @@ import { Helmet } from 'react-helmet';
 
 import { connect } from 'react-redux';
 
-import { Grid } from 'semantic-ui-react';
+import { Grid, GridColumn } from 'semantic-ui-react';
 import { Deck } from 'spectacle';
 import createTheme from 'spectacle/lib/themes/default';
 import { selectDeckOfSlides, selectCurrentSlide } from './selectors';
@@ -63,29 +63,31 @@ export function Presentation({
         <title>Slides</title>
         <meta name="Presentation" content="Slides" />
       </Helmet>
-      <div className="sidebar">
-        <SideBar
-          addSlide={addingSlide}
-          removeSlide={removingSlide}
-          addText={onAddText}
-          removeText={onRemoveText}
-        />
-      </div>
-      <div className="deck">
-        <Deck
-          ref={deck}
-          transition={['zoom', 'slide']}
-          transitionDuration={500}
-          theme={theme}
-          progress="number"
-          showFullscreenControl={false}
-        // controls={false} // show or hide the move buttons
-        >
-          {DeckOfSlides.map((item, id) => (
-            <MySlide key={item} id={id} />
-          ))}
-        </Deck>
-      </div>
+      <Grid>
+        <GridColumn className="sidebar">
+          <SideBar
+            addSlide={addingSlide}
+            removeSlide={removingSlide}
+            addText={onAddText}
+            removeText={onRemoveText}
+          />
+        </GridColumn>
+        <GridColumn className="deck">
+          <Deck
+            ref={deck}
+            transition={['zoom', 'slide']}
+            transitionDuration={500}
+            theme={theme}
+            progress="number"
+            showFullscreenControl={false}
+            // controls={false} // show or hide the move buttons
+          >
+            {DeckOfSlides.map((item, id) => (
+              <MySlide key={item} id={id} />
+            ))}
+          </Deck>
+        </GridColumn>
+      </Grid>
     </div>
   );
 }

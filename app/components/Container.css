@@ -38,5 +38,8 @@
 .grid {
   background-color: #0053A1 !important;
   height: 100vh;
-  /* text-align: center; */
+}
+
+.ui.grid {
+  margin: 0 !important;
 }
