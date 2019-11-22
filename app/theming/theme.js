@@ -6,7 +6,6 @@ import cernLogo from '../images/CERN-Logo.png';
 // You can swap out primary/secondary according to purpose
 const getTheme = (primary, secondary, tertiary, selectionTheme) => {
   if (selectionTheme === undefined) return {};
-  console.log('selected theme is : ', selectionTheme);
   return {
     // Defined as usual, like in spectacle-boilerplate
     images: {

@@ -28,7 +28,7 @@ function NewText() {
       <Input transparent placeholder="Type something...">
         {/* <CKEditor type="inline" data="<p>This is a CKEditor 5 WYSIWYG editor instance created by ️⚛️ React.</p>" />, */}
       </Input>
-      >
+
       {/* <ReactQuill value={text} onChange={handleChange} modules={modules} formats={formats} placeholder="Type your text here" /> */}
     </Rnd>
   );

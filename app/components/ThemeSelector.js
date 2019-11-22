@@ -53,14 +53,12 @@ preloader(img);
 
 function ThemeSelector({ readyFunc }) {
   const [title, setTitle] = useState('New Presentation');
-  const [url, setURL] = useState(title);
   const [theme, setTheme] = useState('');
   const [description, setDescription] = useState('');
 
-  const clickHandler = () => readyFunc(title, url, theme, description);
+  const clickHandler = () => readyFunc(title, theme, description);
 
   const settingTitle = (e, { value }) => setTitle(value);
-  const settingURL = (e, { value }) => setURL(value);
   const settingTheme = (e, { value }) => setTheme(value);
   const settingDescription = (e, { value }) => setDescription(value);
 
@@ -79,13 +77,6 @@ function ThemeSelector({ readyFunc }) {
                 placeholder="Presentation Title"
                 fluid
                 onChange={settingTitle}
-              />
-              <Input
-                className="spacing"
-                label="slides.web.cern.ch/"
-                fluid
-                placeholder="URL"
-                onChange={settingURL}
               />
               <Select
                 className="spacing"

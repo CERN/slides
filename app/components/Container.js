@@ -3,28 +3,23 @@ import './Container.css';
 import Settings from './Settings';
 import Presentation from '../containers/Presentation/index';
 import ThemeSelector from './ThemeSelector';
+import history from '../utils/history';
 
 function Container() {
   const [ready, setReady] = useState(false);
   const [title, setTitle] = useState('New Presentation');
-  const [url, setURL] = useState(title);
   const [theme, setTheme] = useState('');
   const [description, setDescription] = useState('');
 
-  const readyFunc = (
-    selectedTitle,
-    selectedUrl,
-    selectedTheme,
-    selectedDescription,
-  ) => {
+  const readyFunc = (selectedTitle, selectedTheme, selectedDescription) => {
     setReady(true);
     setTitle(selectedTitle);
-    setURL(selectedUrl);
     setTheme(selectedTheme);
     setDescription(selectedDescription);
+    // set the url
+    // username will be the one I get after his authentication
+    history.push(`/username/${selectedTitle}/edit/`);
   };
-  // do actual job with the data, pass them to Presentation to do things
-  // align in the middle vertically and ...
   return (
     <div>
       {ready ? (
@@ -35,7 +30,6 @@ function Container() {
           <div className="presentation">
             <Presentation
               title={title}
-              url={url}
               theme={theme}
               description={description}
             />

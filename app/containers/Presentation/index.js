@@ -35,7 +35,6 @@ export function Presentation({
   // onChangeSlide,
   currentSlide,
   title,
-  url,
   theme,
   description,
 }) {
@@ -84,7 +83,7 @@ export function Presentation({
             theme={myTheme}
             progress="number"
             showFullscreenControl={false}
-          // controls={false} // show or hide the move buttons
+            // controls={false} // show or hide the move buttons
           >
             {DeckOfSlides.map((item, id) => (
               <MySlide key={item} id={id} />
@@ -105,7 +104,6 @@ Presentation.propTypes = {
   // onChangeSlide: PropTypes.func,
   currentSlide: PropTypes.number,
   title: PropTypes.string,
-  url: PropTypes.string,
   theme: PropTypes.string,
   description: PropTypes.string,
 };
