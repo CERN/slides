@@ -33,14 +33,19 @@ function Container() {
             <Settings />
           </div>
           <div className="presentation">
-            <Presentation />
+            <Presentation
+              title={title}
+              url={url}
+              theme={theme}
+              description={description}
+            />
           </div>
         </div>
       ) : (
-          <div className="ThemeSelector">
-            <ThemeSelector readyFunc={readyFunc} />
-          </div>
-        )}
+        <div className="ThemeSelector">
+          <ThemeSelector readyFunc={readyFunc} />
+        </div>
+      )}
     </div>
   );
 }

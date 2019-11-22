@@ -34,6 +34,10 @@ export function Presentation({
   onRemoveText,
   // onChangeSlide,
   currentSlide,
+  title,
+  url,
+  theme,
+  description,
 }) {
   const deck = useRef();
   const addingSlide = () => {
@@ -49,8 +53,8 @@ export function Presentation({
     } else window.location = `#/${currentSlide - 1}`;
   };
 
-  const themeConf = getTheme();
-  const theme = createTheme(themeConf.themeConfig, themeConf.fontConfig);
+  const themeConf = getTheme('primary', 'secondary', 'tertiary', theme);
+  const myTheme = createTheme(themeConf.themeConfig, themeConf.fontConfig);
 
   // use this hook to be able to move to next previous slide in adding removing slides
   useEffect(() => {
@@ -60,8 +64,8 @@ export function Presentation({
   return (
     <div className="grid">
       <Helmet>
-        <title>Slides</title>
-        <meta name="Presentation" content="Slides" />
+        <title>Edit: {title}</title>
+        <meta name="Presentation" content={description} />
       </Helmet>
       <Grid>
         <GridColumn className="sidebar">
@@ -77,10 +81,10 @@ export function Presentation({
             ref={deck}
             transition={['zoom', 'slide']}
             transitionDuration={500}
-            theme={theme}
+            theme={myTheme}
             progress="number"
             showFullscreenControl={false}
-            // controls={false} // show or hide the move buttons
+          // controls={false} // show or hide the move buttons
           >
             {DeckOfSlides.map((item, id) => (
               <MySlide key={item} id={id} />
@@ -100,6 +104,10 @@ Presentation.propTypes = {
   onRemoveText: PropTypes.func,
   // onChangeSlide: PropTypes.func,
   currentSlide: PropTypes.number,
+  title: PropTypes.string,
+  url: PropTypes.string,
+  theme: PropTypes.string,
+  description: PropTypes.string,
 };
 
 export function mapDispatchToProps(dispatch) {
