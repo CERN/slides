@@ -52,7 +52,7 @@ export function Presentation({
     } else window.location = `#/${currentSlide - 1}`;
   };
 
-  const themeConf = getTheme('primary', 'secondary', 'tertiary', theme);
+  const themeConf = getTheme(theme);
   const myTheme = createTheme(themeConf.themeConfig, themeConf.fontConfig);
 
   // use this hook to be able to move to next previous slide in adding removing slides

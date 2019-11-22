@@ -177,3 +177,5 @@ Stoiber. For more information see `LICENSE.md`.
     * Nikos uploaded css for the cern themes
     * TODO: FIX CSS !  done
     * give parameters to presentation and change title , url etc
+    * why the cern logo doesn't appear in my slide
+    * store theme in the store and get configurations from there from the standard slide

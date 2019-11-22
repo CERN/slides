@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 import MyText from './MyText';
 import StandardSlide from '../../theming/StandardSlide';
 
+const StandardSlideTemplate = StandardSlide();
+
 function MySlide({ id }) {
   return (
-    <StandardSlide id={id}>
-      <MyText />
-    </StandardSlide>
+    <StandardSlideTemplate>
+      <MyText id={id} />
+    </StandardSlideTemplate>
   );
 }
 
