@@ -1,17 +1,18 @@
-import cernLogo from '../images/CERN-Logo.png';
+// import logoPrimaryColor from '../images/cern-vector-logo.svg';
+// import logoPrimaryColor from '../images/PNG/Logo-Outline-web-White@200.png';
 // const logoSecondaryColor = require("../assets/logo-secondary-color.png");
 // const logoPrimaryMono = require("../assets/logo-primary-mono.png");
-// const logoPrimaryColor = require("../assets/logo-primary-color.png");
+const logoPrimaryColor = require('../images/PNG/Logo-Outline-web-White@100.png');
 
-const getTheme = selectionTheme => {
-  if (selectionTheme === undefined) return {};
-  return {
+// if (selectionTheme === undefined) return {};
+const getTheme = selectionTheme =>
+  selectionTheme !== undefined && {
     // Defined as usual, like in spectacle-boilerplate
     images: {
-      cernLogo,
+      // cernLogo,
       // logoSecondaryColor,
       // logoPrimaryMono,
-      // logoPrimaryColor
+      logoPrimaryColor,
     },
     // These can be mapped to slide props: {...theme.slideDefaults}
     slideDefaults: {
@@ -21,10 +22,10 @@ const getTheme = selectionTheme => {
     },
     // Renders your logo in the bottom left corner
     logoSettings: {
-      bgImage: cernLogo,
-      bgSize: '300px',
+      bgImage: logoPrimaryColor,
+      bgSize: '2em',
       bgRepeat: 'no-repeat',
-      bgPosition: '3% 97%',
+      bgPosition: '1% 99%',
     },
     headingDefaults: {
       caps: true,
@@ -35,15 +36,13 @@ const getTheme = selectionTheme => {
     // Create a deck theme: createTheme(themeConfig, fontConfig)
     themeConfig: {
       primary: '#0053A1',
-      secondary: 'white',
-      tertiary: '#066e8a',
-      quaternary: '#008080',
+      secondary: '#0053A1',
+      tertiary: 'black',
+      quaternary: 'white',
     },
     fontConfig: {
       primary: 'Montserrat',
       secondary: 'Helvetica',
     },
   };
-};
-
 export default getTheme;

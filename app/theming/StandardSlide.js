@@ -3,7 +3,7 @@ import { Slide } from 'spectacle';
 import PropTypes from 'prop-types';
 import getTheme from './theme';
 
-const theme = getTheme();
+const theme = getTheme('blabla');
 
 export default () =>
   class extends Component {
@@ -17,7 +17,7 @@ export default () =>
           {...theme.slideDefaults}
           {...theme.logoSettings}
           {...this.props}
-          textColor="secondary"
+          textColor="primary"
         >
           {React.Children.map(this.props.children, child => {
             switch (child.type.displayName) {
