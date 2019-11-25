@@ -2,7 +2,7 @@
 // import logoPrimaryColor from '../images/PNG/Logo-Outline-web-White@200.png';
 // const logoSecondaryColor = require("../assets/logo-secondary-color.png");
 // const logoPrimaryMono = require("../assets/logo-primary-mono.png");
-const logoPrimaryColor = require('../images/PNG/Logo-Outline-web-White@100.png');
+const logoPrimaryColor = require('../images/PNG/Logo-Outline-web-White@200.png');
 
 // if (selectionTheme === undefined) return {};
 const getTheme = selectionTheme =>
@@ -23,9 +23,9 @@ const getTheme = selectionTheme =>
     // Renders your logo in the bottom left corner
     logoSettings: {
       bgImage: logoPrimaryColor,
-      bgSize: '2em',
+      bgSize: '4em',
       bgRepeat: 'no-repeat',
-      bgPosition: '1% 99%',
+      bgPosition: '3% 97%',
     },
     headingDefaults: {
       caps: true,
