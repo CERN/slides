@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Rnd } from 'react-rnd';
 import CKEditor from 'ckeditor4-react';
 import ReactHtmlParser from 'react-html-parser';
-import { Text } from 'spectacle';
+import { Text, Heading } from 'spectacle';
 // import onClickOutside from 'react-onclickoutside';
 import { selectDeckOfSlides, selectCurrentSlide } from './selectors';
 import { addData, changePosition } from './actions';
@@ -122,7 +122,7 @@ export function TextComponent({
           minHeight={70}
           bounds="body"
         >
-          <Text>{ReactHtmlParser(text)}</Text>
+          {ReactHtmlParser(text)}
         </Rnd>
       )}
     </div>

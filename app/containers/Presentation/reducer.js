@@ -15,6 +15,7 @@ import {
   ADD_DATA,
   CHANGE_SLIDE,
   CHANGE_POSITION,
+  SET_THEME,
 } from './constants';
 
 // The initial state of the App
@@ -38,6 +39,7 @@ export const initialState = {
     },
   ],
   currentSlide: 0,
+  theme: '',
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -106,6 +108,8 @@ const PresentationReducer = (state = initialState, action) =>
       case CHANGE_SLIDE:
         draft.currentSlide = Number(action.payload.location.hash.substr(2));
         break;
+      case SET_THEME:
+        draft.theme = action.theme;
     }
   });
 

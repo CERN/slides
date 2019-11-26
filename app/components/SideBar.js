@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import './Settings.css';
+import './SideBar.css';
 
 function ContentEditBar({ addSlide, removeSlide, addText, removeText }) {
   return (

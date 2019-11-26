@@ -176,6 +176,9 @@ Stoiber. For more information see `LICENSE.md`.
     * Define kind of slides like title, text bullets, title text, title image, image etc
     * Nikos uploaded css for the cern themes
     * TODO: FIX CSS !  done
-    * give parameters to presentation and change title , url etc
-    * why the cern logo doesn't appear in my slide
+    * give parameters to presentation and change title , url etc done
+    * why the cern logo doesn't appear in my slide :+1:
     * store theme in the store and get configurations from there from the standard slide
+    * when i theme, I need a standard slide, a intro and an ending one
+    * fix theming put standard slides intro and finish and push them in redux store
+    * check spectacle editor

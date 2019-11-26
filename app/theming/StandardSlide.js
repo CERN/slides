@@ -3,7 +3,7 @@ import { Slide } from 'spectacle';
 import PropTypes from 'prop-types';
 import getTheme from './theme';
 
-const theme = getTheme('blabla');
+const theme = getTheme('');
 
 export default () =>
   class extends Component {
@@ -17,17 +17,17 @@ export default () =>
           {...theme.slideDefaults}
           {...theme.logoSettings}
           {...this.props}
-          textColor="primary"
+          textColor="tertiary"
         >
           {React.Children.map(this.props.children, child => {
             switch (child.type.displayName) {
               case 'Heading':
                 return React.cloneElement(child, {
-                  textColor: 'primary',
+                  textColor: 'tertiary',
                 });
               case 'Text':
                 return React.cloneElement(child, {
-                  textColor: 'primary',
+                  textColor: 'tertiary',
                 });
               default:
                 return child;

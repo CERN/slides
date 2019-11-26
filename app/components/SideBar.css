@@ -1,0 +1,8 @@
+.content-edit-bar {
+  height: 100%;
+  background-color: black;
+}
+
+.ui.inverted.menu {
+  background: transparent !important;
+}

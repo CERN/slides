@@ -4,7 +4,7 @@
   position: absolute;
 }
 
-.content-edit-bar {
-  height: 100%;
-  background-color: black;
+.settings {
+  position: relative;
+  max-width: 2.5em;
 }

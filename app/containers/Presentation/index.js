@@ -20,6 +20,7 @@ import {
   addText,
   removeText,
   changeSlide,
+  setTheme,
 } from './actions';
 import SideBar from '../../components/SideBar';
 import MySlide from './MySlide';
@@ -51,8 +52,9 @@ export function Presentation({
       window.location = `#/${0}`;
     } else window.location = `#/${currentSlide - 1}`;
   };
-
+  console.log('--> theme is ', theme);
   const themeConf = getTheme(theme);
+  console.log('theme conf---> ', themeConf);
   const myTheme = createTheme(themeConf.themeConfig, themeConf.fontConfig);
 
   // use this hook to be able to move to next previous slide in adding removing slides
@@ -115,6 +117,7 @@ export function mapDispatchToProps(dispatch) {
     onAddText: () => dispatch(addText()),
     onRemoveText: () => dispatch(removeText()),
     onChangeSlide: direction => dispatch(changeSlide(direction)),
+    onSetTheme: theme => dispatch(setTheme(theme)),
   };
 }
 

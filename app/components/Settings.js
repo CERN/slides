@@ -15,8 +15,7 @@ const Item = (item, description) => (
 
 function Settings() {
   return (
-    // <div className="settings">
-    <Menu inverted vertical fluid icon="labeled">
+    <Menu inverted vertical fluid icon="labeled" className="settings">
       {Item('eye', 'Preview (^F)')}
       {Item('undo', 'Undo (Ctrl+Z)')}
       {Item('check', 'Latest Changes Are Saved')}
@@ -36,7 +35,6 @@ function Settings() {
         <Icon name="content" />
       </Menu.Item>
     </Menu>
-    // </div>
   );
 }
 

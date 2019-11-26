@@ -23,6 +23,7 @@ import {
   ADD_DATA,
   CHANGE_POSITION,
   CHANGE_SLIDE,
+  SET_THEME,
 } from './constants';
 
 /**
@@ -111,5 +112,19 @@ export function changeSlide(direction) {
   return {
     type: CHANGE_SLIDE,
     direction,
+  };
+}
+
+/**
+ * Changes theme
+ * @param  {string} theme
+ *
+ * @return {object} An action object with a type of SET_THEME
+ */
+
+export function setTheme(theme) {
+  return {
+    type: SET_THEME,
+    theme,
   };
 }
