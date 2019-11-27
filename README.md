@@ -182,3 +182,4 @@ Stoiber. For more information see `LICENSE.md`.
     * when i theme, I need a standard slide, a intro and an ending one
     * fix theming put standard slides intro and finish and push them in redux store
     * check spectacle editor
+        * PUT CODE FROM SPECTACLE EDITOR TO MY PROJECT

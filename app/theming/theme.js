@@ -224,3 +224,8 @@ const defineTheming = selectionTheme => {
 
 const getTheme = selectionTheme => defineTheming(selectionTheme);
 export default getTheme;
+
+/*
+THEMES THAT HAVE STARTING SLIDE:
+  * CERN 3,4,5
+*/

@@ -109,6 +109,7 @@ const PresentationReducer = (state = initialState, action) =>
         draft.currentSlide = Number(action.payload.location.hash.substr(2));
         break;
       case SET_THEME:
+        // now that the theme is set, push first and last slide in the deck if the theming requires it
         draft.theme = action.theme;
     }
   });

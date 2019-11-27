@@ -56,11 +56,9 @@ export function Presentation({
       window.location = `#/${0}`;
     } else window.location = `#/${currentSlide - 1}`;
   };
-  console.log('--> theme is ', theme);
-  const themeConf = getTheme(theme);
-  console.log('theme conf---> ', themeConf);
-  const myTheme = createTheme(themeConf.themeConfig, themeConf.fontConfig);
-
+  const themeObj = getTheme(theme);
+  const myTheme = createTheme(themeObj.themeConfig, themeObj.fontConfig);
+  // now make the check if it is cern 3,4,5 then add intro and end slide
   // use this hook to be able to move to next previous slide in adding removing slides
   useEffect(() => {
     window.slideCount = deck.current.props.children.length;
@@ -89,7 +87,7 @@ export function Presentation({
             theme={myTheme}
             progress="number"
             showFullscreenControl={false}
-            // controls={false} // show or hide the move buttons
+          // controls={false} // show or hide the move buttons
           >
             {DeckOfSlides.map((item, id) => (
               <MySlide key={item} id={id} />
