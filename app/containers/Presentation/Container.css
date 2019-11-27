@@ -30,16 +30,3 @@
 .ui.header.white {
   color: white;
 }
-
-.spacing {
-  margin-bottom: 0.5em !important;
-}
-
-.grid {
-  background-color: #0053A1 !important;
-  height: 100vh;
-}
-
-.ui.grid {
-  margin: 0 !important;
-}

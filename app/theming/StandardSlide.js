@@ -3,19 +3,18 @@ import { Slide } from 'spectacle';
 import PropTypes from 'prop-types';
 import getTheme from './theme';
 
-const theme = getTheme('');
-
-export default () =>
+export default theme =>
   class extends Component {
     static propTypes = {
       children: PropTypes.object.isRequired,
     };
 
     render() {
+      const themeObj = getTheme(theme);
       return (
         <Slide
-          {...theme.slideDefaults}
-          {...theme.logoSettings}
+          {...themeObj.slideDefaults}
+          {...themeObj.logoSettings}
           {...this.props}
           textColor="tertiary"
         >

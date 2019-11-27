@@ -1,4 +1,5 @@
 const logoPrimaryColor = require('../images/PNG/Logo-Outline-web-White@200.png');
+const logoITDEP = require('../images/logoITdep.png');
 
 const defaultTheme = {
   // Defined as usual, like in spectacle-boilerplate
@@ -64,7 +65,6 @@ const defineTheming = selectionTheme => {
           secondary: 'sans-serif',
         },
       };
-    // break;
     case 'CERN 2':
       return {
         ...defaultTheme,
@@ -87,7 +87,6 @@ const defineTheming = selectionTheme => {
           secondary: 'serif',
         },
       };
-    // break;
     case 'CERN 3':
       return {
         ...defaultTheme,
@@ -99,9 +98,9 @@ const defineTheming = selectionTheme => {
         },
         logoSettings: {
           bgImage: logoPrimaryColor,
-          bgSize: '4em',
+          bgSize: '3em',
           bgRepeat: 'no-repeat',
-          bgPosition: '3% 97%',
+          bgPosition: '2% 98%',
         },
         headingDefaults: {
           caps: true,
@@ -120,13 +119,104 @@ const defineTheming = selectionTheme => {
           secondary: 'serif',
         },
       };
-    // break;
     case 'CERN 4':
-      break;
+      // this one need a blue stripe in the bottom part as background
+      return {
+        ...defaultTheme,
+        images: {
+          // cernLogo,
+          // logoSecondaryColor,
+          // logoPrimaryMono,
+          logoPrimaryColor,
+        },
+        logoSettings: {
+          bgImage: logoPrimaryColor,
+          bgSize: '4em',
+          bgRepeat: 'no-repeat',
+          bgPosition: '2% 98%',
+        },
+        headingDefaults: {
+          caps: true,
+          textColor: '#5c5c5c',
+          size: '3.77em',
+          margin: '0 0 15px 0',
+        },
+        themeConfig: {
+          primary: '#343434',
+          secondary: 'white',
+          tertiary: '#93a1a1',
+          quaternary: 'white', // color of slides number
+        },
+        fontConfig: {
+          primary: 'PT Sans',
+          secondary: 'sans-serif',
+        },
+      };
     case 'CERN 5':
-      break;
+      // this one has blue numbers in the right bottom and a picture in the left bottom
+      return {
+        ...defaultTheme,
+        images: {
+          // cernLogo,
+          // logoSecondaryColor,
+          // logoPrimaryMono,
+          logoITDEP,
+        },
+        logoSettings: {
+          bgImage: logoITDEP,
+          bgSize: '18em',
+          bgRepeat: 'no-repeat',
+          bgPosition: '2% 98%',
+        },
+        headingDefaults: {
+          caps: true,
+          textColor: '#5c5c5c',
+          size: '3.77em',
+          margin: '0 0 15px 0',
+        },
+        themeConfig: {
+          primary: '#343434',
+          secondary: 'white',
+          tertiary: '#93a1a1',
+          quaternary: '#2299ee', // color of slides number
+        },
+        fontConfig: {
+          primary: 'PT Sans',
+          secondary: 'sans-serif',
+        },
+      };
     case 'CERN 6':
-      break;
+      return {
+        ...defaultTheme,
+        images: {
+          // cernLogo,
+          // logoSecondaryColor,
+          // logoPrimaryMono,
+          logoITDEP,
+        },
+        logoSettings: {
+          bgImage: logoITDEP,
+          bgSize: '18em',
+          bgRepeat: 'no-repeat',
+          bgPosition: '2% 98%',
+        },
+        headingDefaults: {
+          caps: true,
+          textColor: '#5c5c5c',
+          size: '3.77em',
+          margin: '0 0 15px 0',
+        },
+        themeConfig: {
+          primary: '#343434',
+          secondary: 'white',
+          tertiary: '#93a1a1',
+          quaternary: '#2299ee', // color of slides number
+        },
+        fontConfig: {
+          primary: 'PT Sans',
+          secondary: 'sans-serif',
+        },
+      };
     default:
       return defaultTheme;
   }

@@ -13,14 +13,17 @@ import { connect } from 'react-redux';
 import { Grid, GridColumn } from 'semantic-ui-react';
 import { Deck } from 'spectacle';
 import createTheme from 'spectacle/lib/themes/default';
-import { selectDeckOfSlides, selectCurrentSlide } from './selectors';
+import {
+  selectDeckOfSlides,
+  selectCurrentSlide,
+  selectTheme,
+} from './selectors';
 import {
   addSlide,
   removeSlide,
   addText,
   removeText,
   changeSlide,
-  setTheme,
 } from './actions';
 import SideBar from '../../components/SideBar';
 import MySlide from './MySlide';
@@ -40,6 +43,7 @@ export function Presentation({
   description,
 }) {
   const deck = useRef();
+  // check if it works the same with history
   const addingSlide = () => {
     onAddSlide();
     window.location = `#/${currentSlide + 1}`; // because slides here are starting from 1
@@ -117,7 +121,6 @@ export function mapDispatchToProps(dispatch) {
     onAddText: () => dispatch(addText()),
     onRemoveText: () => dispatch(removeText()),
     onChangeSlide: direction => dispatch(changeSlide(direction)),
-    onSetTheme: theme => dispatch(setTheme(theme)),
   };
 }
 
@@ -125,6 +128,7 @@ export default connect(
   state => ({
     DeckOfSlides: selectDeckOfSlides(state),
     currentSlide: selectCurrentSlide(state),
+    theme: selectTheme(state),
   }),
   mapDispatchToProps,
 )(Presentation);

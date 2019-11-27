@@ -13,7 +13,7 @@ import {
   Icon,
 } from 'semantic-ui-react';
 import img from '../images/CERN-Logo.png';
-import './Container.css';
+import './ThemeSelector.css';
 import preloader from '../utils/preloader';
 
 const themeOptions = [
