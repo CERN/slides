@@ -39,3 +39,7 @@
   border-color: #66afe9;
   box-shadow: 0 0 8px rgb(0, 140, 255);
 }
+
+.text-box {
+  padding-top: 5;
+}

@@ -1,0 +1,25 @@
+.content {
+  border: none;
+  margin: 0;
+  outline: none;
+  resize: none;
+  display: inline-block;
+  text-decoration: inherit;
+}
+
+.content:focus {
+  cursor: text;
+  min-width: 30px;
+  box-shadow: 0 0 4px 1px #447bdc;
+}
+
+.content li {
+  list-style: inherit;
+}
+
+.quote {
+  border-left-width: 0.05em;
+  border-left-style: solid;
+  border-left-color: inherit;
+  padding-left: 0.5em;
+}

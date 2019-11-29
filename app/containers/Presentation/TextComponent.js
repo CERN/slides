@@ -17,13 +17,13 @@ export function TextComponent({
   textArrayEntry,
   onChangePosition,
 }) {
-  const node = useRef();
+  const node = useRef(null);
 
   const style = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    // position: 'absolute',
+    position: 'absolute',
   };
   // single-double click handlers
   const [textEdit, setTextEdit] = useState(false);
@@ -66,17 +66,18 @@ export function TextComponent({
     return () => {
       document.removeEventListener('mousedown', handleClick);
     };
-  }, []);
+  });
 
-  const onDragStop = (evt, posi) => {
+  const onHandlePosition = (evt, posi) => {
     evt.preventDefault();
     setPosition(posi);
     onChangePosition(textArrayEntry, posi);
-    const { offsetTop } = node.current;
-    console.log('offsetTop: ', offsetTop);
+    // const { offsetTop } = node.current;
+    // console.log('offsetTop: ', offsetTop);
   };
   // {/* <div left={`${position.x}px`} top={`${position.y}px`}> */ }
   // {/* </div> */}
+  console.log('twra position issssssssssss', position);
   return (
     <div
       ref={node}
@@ -96,13 +97,13 @@ export function TextComponent({
         <Rnd
           className="text-style"
           style={style}
-          // default={position}
+          default={position}
           size={{ width: position.width, height: position.height }}
           position={{ x: position.x, y: position.y }}
           onDragStop={(e, d) => {
-            console.log('..........', position.x, d.x, 'y :', position.y, d.y);
+            // console.log('..........', e, d);
             // setPosition({});
-            onDragStop(e, {
+            onHandlePosition(e, {
               width: position.width,
               height: position.height,
               x: d.x,
@@ -112,7 +113,7 @@ export function TextComponent({
             // d.x is going up when i drag left
           }}
           onResizeStop={(e, dir, ref, delta, posi) => {
-            onDragStop(e, {
+            onHandlePosition(e, {
               width: ref.style.width,
               height: ref.style.height,
               ...posi,
