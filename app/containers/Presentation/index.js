@@ -67,7 +67,7 @@ export function Presentation({
   return (
     <div className="grid">
       <Helmet>
-        <title>Edi: {title}</title>
+        <title>Edit: {title}</title>
         <meta name="Presentation" content={description} />
       </Helmet>
       <Grid>
@@ -87,7 +87,7 @@ export function Presentation({
             theme={myTheme}
             progress="number"
             showFullscreenControl={false}
-          // controls={false} // show or hide the move buttons
+            // controls={false} // show or hide the move buttons
           >
             {DeckOfSlides.map((item, id) => (
               <MySlide key={item} id={id} />

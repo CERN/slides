@@ -45,9 +45,12 @@ export function TextComponent({
   };
 
   const onDoubleClick = evt => {
-    evt.preventDefault();
-    // setTextMove(false);
-    setTextEdit(true);
+    // evt.preventDefault();
+    if (node.current.contains(evt.target)) {
+      // inside click
+      // then edit
+      setTextEdit(true);
+    }
   };
 
   const handleClick = e => {
@@ -60,13 +63,13 @@ export function TextComponent({
     setTextEdit(false);
   };
 
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClick);
+  // useEffect(() => {
+  //   document.addEventListener('mousedown', handleClick);
 
-    return () => {
-      document.removeEventListener('mousedown', handleClick);
-    };
-  });
+  //   return () => {
+  //     document.removeEventListener('mousedown', handleClick);
+  //   };
+  // });
 
   const onHandlePosition = (evt, posi) => {
     evt.preventDefault();
@@ -77,11 +80,11 @@ export function TextComponent({
   };
   // {/* <div left={`${position.x}px`} top={`${position.y}px`}> */ }
   // {/* </div> */}
-  console.log('twra position issssssssssss', position);
+  // console.log('twra position issssssssssss', position);
   return (
     <div
       ref={node}
-      onDoubleClick={onDoubleClick}
+      // onDoubleClick={onDoubleClick}
       // style={{ top: position.x, left: position.y }}
     >
       {textEdit ? (
@@ -97,31 +100,31 @@ export function TextComponent({
         <Rnd
           className="text-style"
           style={style}
-          default={position}
+          // default={position}
           size={{ width: position.width, height: position.height }}
           position={{ x: position.x, y: position.y }}
-          onDragStop={(e, d) => {
-            // console.log('..........', e, d);
-            // setPosition({});
-            onHandlePosition(e, {
-              width: position.width,
-              height: position.height,
-              x: d.x,
-              y: d.y,
-            });
-            // d.y is going up when i drag down
-            // d.x is going up when i drag left
-          }}
-          onResizeStop={(e, dir, ref, delta, posi) => {
-            onHandlePosition(e, {
-              width: ref.style.width,
-              height: ref.style.height,
-              ...posi,
-            });
-          }}
+          // onDragStop={(e, d) => {
+          //   onHandlePosition(e, {
+          //     width: position.width,
+          //     height: position.height,
+          //     x: d.x,
+          //     y: d.y,
+          //   });
+          //   // d.y is going up when i drag down
+          //   // d.x is going up when i drag left
+          // }}
+          // onResizeStop={(e, dir, ref, delta, posi) => {
+          //   // on resize this works as a charm
+          //   onHandlePosition(e, {
+          //     width: ref.style.width,
+          //     height: ref.style.height,
+          //     ...posi,
+          //   });
+          // }}
           minWidth={500}
           minHeight={70}
           bounds="body"
+          onDoubleClick={onDoubleClick}
         >
           {ReactHtmlParser(text)}
         </Rnd>
