@@ -67,7 +67,7 @@ export function Presentation({
   return (
     <div className="grid">
       <Helmet>
-        <title>Edit: {title}</title>
+        <title>Edi: {title}</title>
         <meta name="Presentation" content={description} />
       </Helmet>
       <Grid>
