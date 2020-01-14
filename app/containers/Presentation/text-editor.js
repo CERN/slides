@@ -1,38 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
+import { connect } from 'react-redux';
 import { Editor } from '@tinymce/tinymce-react';
+import { addData } from './actions';
+import { selectCurrentTextArray } from './selectors';
 
-export default function TextEditor({ initialContent, textUpdateFunction }) {
-  const handleEditorChange = e => {
-    console.log('Content was updated:', e.target.getContent());
-    textUpdateFunction(e.target.getContent());
+function TextEditor({ textArrayEntry, currentTextArray, onAddData }) {
+  const onChange = content => {
+    console.log('onChange', content);
   };
 
   return (
-    <Editor
-      initialValue={initialContent}
-      init={{
-        height: 500,
-        menubar: false,
-        plugins: [
-          'advlist autolink lists link image charmap print preview anchor',
-          'searchreplace visualblocks code fullscreen',
-          'insertdatetime media table paste code help wordcount',
+    <ReactSummernote
+      value=""
+      options={{
+        lang: 'en-EN',
+        height: 350,
+        dialogsInBody: true,
+        toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'underline', 'clear']],
+          ['fontname', ['fontname']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['table', ['table']],
+          ['insert', ['link', 'picture', 'video']],
+          ['view', ['fullscreen', 'codeview']],
         ],
-        toolbar:
-          'undo redo | formatselect | bold italic backcolor | \
-             alignleft aligncenter alignright alignjustify | \
-             bullist numlist outdent indent | removeformat | help',
       }}
-      onChange={handleEditorChange}
+      onChange={onChange}
     />
   );
 }
 
 TextEditor.propTypes = {
-  initialContent: PropTypes.string,
-  textUpdateFunction: PropTypes.func,
+  textArrayEntry: PropTypes.number,
+  currentTextArray: PropTypes.array,
+  onAddData: PropTypes.func,
 };
 
+export function mapDispatchToProps(dispatch) {
+  return {
+    onAddData: (id, data) => dispatch(addData(id, data)),
+  };
+}
+
+export default connect(
+  state => ({
+    currentTextArray: selectCurrentTextArray(state),
+  }),
+  mapDispatchToProps,
+)(TextEditor);
+
 // transparent background , another editor, send back only when clicked outside the area only then update the text
+// try again with ckeditor , or React Draft WYSIWYG, dante2 dante2 seems promising
