@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MyText from './MyText';
+import MyImage from './MyImage';
 import StandardSlide from '../../theming/StandardSlide';
 import { selectTheme } from './selectors';
 
@@ -11,6 +12,7 @@ function MySlide({ id, theme }) {
   return (
     <StandardSlideTemplate>
       <MyText id={id} />
+      <MyImage id={id} />
     </StandardSlideTemplate>
   );
 }

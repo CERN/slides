@@ -1,104 +1,46 @@
+// import happy from '../../assets/happy.jpg';
+
+// export default function ImageComponent() {
+//   console.log('kalesthka???');
+//   return <Image src={happy} width={800} />;
+// }
+/// needs work
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Image } from 'spectacle';
 import { Rnd } from 'react-rnd';
-import CKEditor from 'ckeditor4-react';
-import ReactHtmlParser from 'react-html-parser';
 import {
   selectDeckOfSlides,
   selectCurrentSlide,
-  selectCurrentTextArray,
-  selectEditMode,
+  selectCurrentImageArray,
 } from './selectors';
 import { addData, changePosition, toggleEditMode } from './actions';
 import './styles.css';
-export function TextComponent({
+export function ImageComponent({
   DeckOfSlides,
   currentSlide,
-  onAddData,
-  textArrayEntry,
-  onChangePosition,
-  currentTextArray,
-  onToggleEditMode,
-  editMode,
+  imageArrayEntry,
+  currentImageArray,
 }) {
-  const node = useRef();
-  const style = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-  };
-  // const [textEdit, textEdit =  = useState(false);
-  // text's content
-  const [text, setText] = useState(currentTextArray[textArrayEntry].data);
-  // text's position
-  const pos = currentTextArray[textArrayEntry].position;
+
+    const imageLocation = currentImageArray[imageArrayEntry].location;
+    import image from imageLocation;
+  const pos = currentImageArray[imageArrayEntry].position;
   const [position, setPosition] = useState({
     width: pos.width,
     height: pos.height,
     x: pos.x,
     y: pos.y,
   });
-  const onChangeFunc = evt => {
-    setText(evt.editor.getData());
-  };
-
-  const onDoubleClick = evt => {
-    evt.preventDefault();
-    console.log('double clicki');
-    if (node.current.contains(evt.target)) {
-      // inside click
-      // then edit
-      console.log('mpainw?!');
-      onChangePosition(textArrayEntry, position);
-      onToggleEditMode();
-    }
-  };
-
-  const handleClick = e => {
-    if (node.current.contains(e.target)) {
-      // inside click
-      // then move
-      return;
-    }
-    // outside click
-    console.log('outside clicki');
-    onAddData(textArrayEntry, text);
-    onToggleEditMode();
-  };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClick);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClick);
-    };
-  });
-  // i have to unsubscribe the component when the other component is being rendered
 
   const onHandlePosition = (evt, posi) => {
     evt.preventDefault();
     setPosition(posi);
   };
 
-  console.log('textedit is ', editMode, text);
   return (
-    <div
-      ref={node}
-      // style={{ top: position.x, left: position.y }}
-      // onClick={handleClicks}
-    >
-      {editMode ? (
-        <CKEditor
-          // this is to prevent an error with the editor that multiple instances of the editor exists
-          // eslint-disable-next-line no-return-assign
-          onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
-          data={text}
-          type="inline"
-          onChange={onChangeFunc}
-        />
-      ) : (
+
         <Rnd
           className="text-style"
           style={style}
@@ -127,14 +69,13 @@ export function TextComponent({
           bounds="body"
           onDoubleClick={onDoubleClick}
         >
-          {ReactHtmlParser(text)}
+          <Image src={happy} width={800} />
         </Rnd>
-      )}
-    </div>
+
   );
 }
 
-TextComponent.propTypes = {
+ImageComponent.propTypes = {
   DeckOfSlides: PropTypes.array,
   currentSlide: PropTypes.number,
   onAddData: PropTypes.func,
@@ -161,4 +102,4 @@ export default connect(
     editMode: selectEditMode(state),
   }),
   mapDispatchToProps,
-)(TextComponent);
+)(ImageComponent);

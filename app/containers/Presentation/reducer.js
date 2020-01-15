@@ -24,6 +24,7 @@ export const initialState = {
   DeckOfSlides: [
     {
       currentText: 0,
+      currentImage: 0,
       textArray: [
         {
           id: 0,
@@ -36,7 +37,18 @@ export const initialState = {
           },
         },
       ],
-      imageArray: [],
+      imageArray: [
+        {
+          id: 0,
+          location: '../../assets/happy.jpg',
+          position: {
+            width: '800px',
+            height: '70px',
+            x: 500,
+            y: 250,
+          },
+        },
+      ],
     },
   ],
   currentSlide: 0,
