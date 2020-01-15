@@ -24,6 +24,7 @@ import {
   CHANGE_POSITION,
   CHANGE_SLIDE,
   SET_THEME,
+  TOGGLE_EDIT_MODE,
 } from './constants';
 
 /**
@@ -126,5 +127,17 @@ export function setTheme(theme) {
   return {
     type: SET_THEME,
     theme,
+  };
+}
+
+/**
+ * Toggles edit mode
+ *
+ * @return {object} An action object with a type of TOGGLE_EDIT_MODE
+ */
+
+export function toggleEditMode() {
+  return {
+    type: TOGGLE_EDIT_MODE,
   };
 }

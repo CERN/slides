@@ -16,5 +16,6 @@ export const REMOVE_TEXT = 'Slides/Presentation/REMOVE_TEXT';
 export const ADD_DATA = 'Slides/Presentation/ADD_DATA';
 export const CHANGE_POSITION = 'Slides/Presentation/CHANGE_POSITION';
 export const SET_THEME = 'Slides/Presentation/SET_THEME';
+export const TOGGLE_EDIT_MODE = 'Slides/Presentation/TOGGLE_EDIT_MODE';
 
 export const CHANGE_SLIDE = '@@router/LOCATION_CHANGE';

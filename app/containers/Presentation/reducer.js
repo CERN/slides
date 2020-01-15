@@ -16,6 +16,7 @@ import {
   CHANGE_SLIDE,
   CHANGE_POSITION,
   SET_THEME,
+  TOGGLE_EDIT_MODE,
 } from './constants';
 
 // The initial state of the App
@@ -40,6 +41,7 @@ export const initialState = {
   ],
   currentSlide: 0,
   theme: '',
+  textEditMode: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -108,6 +110,10 @@ const PresentationReducer = (state = initialState, action) =>
       case SET_THEME:
         // now that the theme is set, push first and last slide in the deck if the theming requires it
         draft.theme = action.theme;
+        break;
+      case TOGGLE_EDIT_MODE:
+        draft.textEditMode = !draft.textEditMode;
+        break;
     }
   });
 

@@ -1,19 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import ContentEditable from 'react-contenteditable';
 import { Rnd } from 'react-rnd';
 import CKEditor from 'ckeditor4-react';
 import ReactHtmlParser from 'react-html-parser';
-import { Text, Heading } from 'spectacle';
-import TextEditor from './text-editor';
-// import onClickOutside from 'react-onclickoutside';
 import {
   selectDeckOfSlides,
   selectCurrentSlide,
   selectCurrentTextArray,
+  selectEditMode,
 } from './selectors';
-import { addData, changePosition } from './actions';
+import { addData, changePosition, toggleEditMode } from './actions';
 import './styles.css';
 export function TextComponent({
   DeckOfSlides,
@@ -22,6 +19,8 @@ export function TextComponent({
   textArrayEntry,
   onChangePosition,
   currentTextArray,
+  onToggleEditMode,
+  editMode,
 }) {
   const node = useRef();
   const style = {
@@ -30,23 +29,19 @@ export function TextComponent({
     justifyContent: 'center',
     // position: 'absolute',
   };
-  // single-double click handlers
-  const [textEdit, setTextEdit] = useState(false);
+  // const [textEdit, textEdit =  = useState(false);
   // text's content
   const [text, setText] = useState(currentTextArray[textArrayEntry].data);
   // text's position
-  // const text = currentTextArray[textArrayEntry].data;
   const pos = currentTextArray[textArrayEntry].position;
-  const clickTimeout = null;
   const [position, setPosition] = useState({
     width: pos.width,
     height: pos.height,
     x: pos.x,
     y: pos.y,
   });
-  const onChangeFunc = input => {
-    setText(input);
-    // onAddData(textArrayEntry, input);
+  const onChangeFunc = evt => {
+    setText(evt.editor.getData());
   };
 
   const onDoubleClick = evt => {
@@ -57,7 +52,7 @@ export function TextComponent({
       // then edit
       console.log('mpainw?!');
       onChangePosition(textArrayEntry, position);
-      setTextEdit(true);
+      onToggleEditMode();
     }
   };
 
@@ -70,7 +65,7 @@ export function TextComponent({
     // outside click
     console.log('outside clicki');
     onAddData(textArrayEntry, text);
-    setTextEdit(false);
+    onToggleEditMode();
   };
 
   useEffect(() => {
@@ -87,18 +82,18 @@ export function TextComponent({
     setPosition(posi);
   };
 
+  console.log('textedit is ', editMode, text);
   return (
     <div
       ref={node}
-      // onDoubleClick={onDoubleClick}
       // style={{ top: position.x, left: position.y }}
       // onClick={handleClicks}
     >
-      {textEdit ? (
+      {editMode ? (
         <CKEditor
           // this is to prevent an error with the editor that multiple instances of the editor exists
           // eslint-disable-next-line no-return-assign
-          // onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
+          onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
           data={text}
           type="inline"
           onChange={onChangeFunc}
@@ -146,12 +141,15 @@ TextComponent.propTypes = {
   textArrayEntry: PropTypes.number,
   onChangePosition: PropTypes.func,
   currentTextArray: PropTypes.array,
+  onToggleEditMode: PropTypes.func,
+  editMode: PropTypes.bool,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     onAddData: (id, data) => dispatch(addData(id, data)),
     onChangePosition: (id, position) => dispatch(changePosition(id, position)),
+    onToggleEditMode: () => dispatch(toggleEditMode()),
   };
 }
 
@@ -160,15 +158,7 @@ export default connect(
     DeckOfSlides: selectDeckOfSlides(state),
     currentSlide: selectCurrentSlide(state),
     currentTextArray: selectCurrentTextArray(state),
+    editMode: selectEditMode(state),
   }),
   mapDispatchToProps,
 )(TextComponent);
-
-// <CKEditor
-//           // this is to prevent an error with the editor that multiple instances of the editor exists
-//           // eslint-disable-next-line no-return-assign
-//           onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
-//           data={text}
-//           type="inline"
-//           onChange={onChangeFunc}
-//         />
