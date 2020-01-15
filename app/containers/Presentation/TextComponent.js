@@ -24,7 +24,6 @@ export function TextComponent({
   currentTextArray,
 }) {
   const node = useRef();
-  const rndRef = useRef();
   const style = {
     display: 'flex',
     alignItems: 'center',
@@ -38,7 +37,7 @@ export function TextComponent({
   // text's position
   // const text = currentTextArray[textArrayEntry].data;
   const pos = currentTextArray[textArrayEntry].position;
-  let clickTimeout = null;
+  const clickTimeout = null;
   const [position, setPosition] = useState({
     width: pos.width,
     height: pos.height,
@@ -47,17 +46,19 @@ export function TextComponent({
   });
   const onChangeFunc = input => {
     setText(input);
-    onAddData(textArrayEntry, input);
+    // onAddData(textArrayEntry, input);
   };
 
   const onDoubleClick = evt => {
     evt.preventDefault();
     console.log('double clicki');
-    // if (node.current.contains(evt.target)) {
-    // inside click
-    // then edit
-    setTextEdit(true);
-    // }
+    if (node.current.contains(evt.target)) {
+      // inside click
+      // then edit
+      console.log('mpainw?!');
+      onChangePosition(textArrayEntry, position);
+      setTextEdit(true);
+    }
   };
 
   const handleClick = e => {
@@ -67,54 +68,23 @@ export function TextComponent({
       return;
     }
     // outside click
+    console.log('outside clicki');
+    onAddData(textArrayEntry, text);
     setTextEdit(false);
   };
 
-  // useEffect(() => {
-  //   document.addEventListener('mousedown', handleClick);
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClick);
 
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClick);
-  //   };
-  // });
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+    };
+  });
   // i have to unsubscribe the component when the other component is being rendered
-  const handleClicks = e => {
-    if (clickTimeout !== null) {
-      console.log('double click executes');
-      if (!textEdit) setTextEdit(true);
-      clearTimeout(clickTimeout);
-      clickTimeout = null;
-    } else {
-      console.log('single click');
-      handleClick(e);
-      clickTimeout = setTimeout(() => {
-        console.log('first click executes ');
-        clearTimeout(clickTimeout);
-        clickTimeout = null;
-      }, 2000);
-    }
-  };
+
   const onHandlePosition = (evt, posi) => {
     evt.preventDefault();
-    onChangePosition(textArrayEntry, posi);
     setPosition(posi);
-    // const { offsetTop } = node.current;
-    // console.log('offsetTop: ', offsetTop);
-  };
-  // {/* <div left={`${position.x}px`} top={`${position.y}px`}> */ }
-  // {/* </div> */}
-  const nodeClick = e => {
-    console.log('nodeclick////');
-    if (rndRef.current.contains(e.target)) {
-      // inside click
-      console.log('click sto rnd');
-
-      // then move
-      return;
-    }
-    console.log('click ston editor');
-    // outside click
-    setTextEdit(false);
   };
 
   return (
@@ -122,39 +92,45 @@ export function TextComponent({
       ref={node}
       // onDoubleClick={onDoubleClick}
       // style={{ top: position.x, left: position.y }}
-      onClick={handleClicks}
+      // onClick={handleClicks}
     >
       {textEdit ? (
-        <TextEditor initialContent={text} textUpdateFunction={onChangeFunc} />
+        <CKEditor
+          // this is to prevent an error with the editor that multiple instances of the editor exists
+          // eslint-disable-next-line no-return-assign
+          // onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
+          data={text}
+          type="inline"
+          onChange={onChangeFunc}
+        />
       ) : (
         <Rnd
-          ref={rndRef}
           className="text-style"
           style={style}
           // default={position}
           size={{ width: position.width, height: position.height }}
           position={{ x: position.x, y: position.y }}
-          // onDragStop={(e, d) => {
-          //   onHandlePosition(e, {
-          //     width: position.width,
-          //     height: position.height,
-          //     x: d.x,
-          //     y: d.y,
-          //   });
-          //   //   // d.y is going up when i drag down
-          //   //   // d.x is going up when i drag left
-          // }}
-          // onResizeStop={(e, direction, ref, delta, posi) => {
-          //   onHandlePosition(e, {
-          //     width: ref.style.width,
-          //     height: ref.style.height,
-          //     ...posi,
-          //   });
-          // }}
+          onDragStop={(e, d) => {
+            onHandlePosition(e, {
+              width: position.width,
+              height: position.height,
+              x: d.x,
+              y: d.y,
+            });
+            //   // d.y is going up when i drag down
+            //   // d.x is going up when i drag left
+          }}
+          onResizeStop={(e, direction, ref, delta, posi) => {
+            onHandlePosition(e, {
+              width: ref.style.width,
+              height: ref.style.height,
+              ...posi,
+            });
+          }}
           minWidth={500}
           minHeight={70}
           bounds="body"
-          // onClick={e => handleClicks(e)}
+          onDoubleClick={onDoubleClick}
         >
           {ReactHtmlParser(text)}
         </Rnd>

@@ -1,35 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Editor } from '@tinymce/tinymce-react';
 import { addData } from './actions';
 import { selectCurrentTextArray } from './selectors';
 
 function TextEditor({ textArrayEntry, currentTextArray, onAddData }) {
-  const onChange = content => {
-    console.log('onChange', content);
+  console.log('editorrrrrrrrrrrr', textArrayEntry, currentTextArray);
+  const [value, setValue] = useState(currentTextArray[textArrayEntry].data);
+  const handleChange = event => {
+    setValue(event.target.value);
   };
 
-  return (
-    <ReactSummernote
-      value=""
-      options={{
-        lang: 'en-EN',
-        height: 350,
-        dialogsInBody: true,
-        toolbar: [
-          ['style', ['style']],
-          ['font', ['bold', 'underline', 'clear']],
-          ['fontname', ['fontname']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['table', ['table']],
-          ['insert', ['link', 'picture', 'video']],
-          ['view', ['fullscreen', 'codeview']],
-        ],
-      }}
-      onChange={onChange}
-    />
-  );
+  return <textarea value={value} onChange={handleChange} />;
 }
 
 TextEditor.propTypes = {
