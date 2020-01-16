@@ -2,8 +2,14 @@ import React from 'react';
 import { Menu, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import './SideBar.css';
+import Image from '../containers/Presentation/components/image';
+// when i render SideBar onClick they will render something in the middle
 
-function ContentEditBar({ addSlide, removeSlide, addText, removeText }) {
+function SideBar({ addSlide, removeSlide, addText, removeText }) {
+  const uploadImage = () => {
+    console.log('paththikaaaaaaaa');
+    return <Image />;
+  };
   return (
     <div className="content-edit-bar">
       <Menu vertical inverted icon="labeled">
@@ -23,14 +29,18 @@ function ContentEditBar({ addSlide, removeSlide, addText, removeText }) {
           <Icon name="trash" />
           Remove Text
         </Menu.Item>
+        <Menu.Item name="UploadImage" onClick={uploadImage}>
+          <Icon name="image outline" />
+          Add Image
+        </Menu.Item>
       </Menu>
     </div>
   );
 }
 
-export default ContentEditBar;
+export default SideBar;
 
-ContentEditBar.propTypes = {
+SideBar.propTypes = {
   addSlide: PropTypes.func.isRequired,
   removeSlide: PropTypes.func.isRequired,
   addText: PropTypes.func.isRequired,
