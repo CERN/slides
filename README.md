@@ -183,3 +183,10 @@ Stoiber. For more information see `LICENSE.md`.
     * fix theming put standard slides intro and finish and push them in redux store
     * check spectacle editor
         * PUT CODE FROM SPECTACLE EDITOR TO MY PROJECT
+# What I have to do:
+* Fix the code so everything communicates with actions and selectors in redux store
+* Store presentation as zip or json
+* Store images in a folder and in the json have the path to the image
+* should i store in redux also?Or only in files/folders and read from there (maybe 2nd)
+* Delete useless packages
+* now that I have the example presentation I don't need to read it or do anything I have to start it and run it in parallel inside my app, and my app has to write the files which the renderer will serve as a spectacle presentation

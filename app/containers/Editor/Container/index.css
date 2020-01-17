@@ -1,0 +1,48 @@
+.container {
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+  background-color: black;
+  display: table;
+  /* display: inline-block; */
+}
+
+.settings {
+  width: 3%;
+  height: 100vh;
+  float: left;
+  background-color: #1B1C1D;
+  display: table-row;
+}
+
+.sidebar {
+  width: 5%;
+  height: 100vh;
+  float: left;
+  background-color: black;
+  display: table-row;
+}
+
+.canvas {
+  width: 92%;
+  height: 100vh;
+  float: left;
+  background-color: #0053A1;
+  display: table-row;
+}
+
+.themeSelector {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #0053A1;
+  text-align: center;
+}
+
+.inside {
+  display: inline-block;
+}
+
+.ui.header.white {
+  color: white;
+}

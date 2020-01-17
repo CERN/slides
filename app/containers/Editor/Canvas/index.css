@@ -1,0 +1,43 @@
+/* .grid {
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  display: inline-block;
+} */
+
+/* .sidebar {
+  width: 6% !important;
+  height: 100%;
+  text-align: center;
+} */
+
+.deck {
+  /* left: 3; */
+}
+
+/* .ui.grid>.column:not(.row) {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.ui.grid>.column:not(.row) {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+} */
+
+.down {
+  bottom: 0;
+  position: absolute;
+}
+
+.center {
+  position: absolute;
+}
+
+.text-box {
+  padding-top: 5;
+}
+
+.editor-style {
+  padding-top: 2em;
+}

@@ -1,0 +1,10 @@
+.lastitem {
+  top: auto;
+  bottom: 0;
+  position: absolute;
+}
+
+/* .settings {
+  position: relative;
+  max-width: 2.5em;
+} */
