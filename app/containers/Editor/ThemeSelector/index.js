@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import {
   Button,
   Form,
-  Grid,
   Header,
   Image,
   Segment,

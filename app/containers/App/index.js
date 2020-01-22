@@ -11,7 +11,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import Container from '../Presentation/Container';
+import Container from '../Editor/Container';
 
 import GlobalStyle from '../../global-styles';
 

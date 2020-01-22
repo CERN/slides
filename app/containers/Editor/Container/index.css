@@ -3,32 +3,32 @@
   width: 100%;
   margin: 0;
   background-color: black;
-  display: table;
+  /* display: table; */
   /* display: inline-block; */
 }
 
 .settings {
-  width: 3%;
+  width: 4% !important;
   height: 100vh;
-  float: left;
+  /* float: left; */
   background-color: #1B1C1D;
-  display: table-row;
+  /* display: table-row; */
 }
 
 .sidebar {
-  width: 5%;
+  width: 6% !important;
   height: 100vh;
-  float: left;
+  /* float: left; */
   background-color: black;
-  display: table-row;
+  /* display: table-row; */
 }
 
 .canvas {
-  width: 92%;
+  width: 90% !important;
   height: 100vh;
-  float: left;
+  /* float: left; */
   background-color: #0053A1;
-  display: table-row;
+  /* display: table-row; */
 }
 
 .themeSelector {

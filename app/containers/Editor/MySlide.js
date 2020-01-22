@@ -4,26 +4,27 @@ import { connect } from 'react-redux';
 import MyText from './components/text';
 import MyImage from './components/image/MyImage';
 import StandardSlide from '../../theming/StandardSlide';
-import { selectTheme } from './redux-store/selectors';
+import { selectTheme, selectCurrentSlide } from './redux-store/selectors';
 
-function MySlide({ id, theme }) {
+function MySlide({ theme, currentSlide }) {
   const StandardSlideTemplate = StandardSlide(theme);
   return (
     <StandardSlideTemplate>
-      <MyText id={id} />
+      <MyText id={currentSlide} />
       {/* <MyImage id={id} /> */}
     </StandardSlideTemplate>
   );
 }
 
 MySlide.propTypes = {
-  id: PropTypes.number.isRequired,
   theme: PropTypes.string.isRequired,
+  currentSlide: PropTypes.number.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     theme: selectTheme(state),
+    currentSlide: selectCurrentSlide(state),
   };
 }
 export default connect(

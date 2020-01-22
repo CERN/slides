@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './index.css';
+import { Grid, GridColumn } from 'semantic-ui-react';
 import Settings from '../Settings';
 import Canvas from '../Canvas';
 import SideBar from '../SideBar';
@@ -15,15 +16,17 @@ export default function Container() {
     <div>
       {ready ? (
         <div className="container">
-          <div className="settings">
-            <Settings />
-          </div>
-          <div className="sidebar">
-            <SideBar />
-          </div>
-          <div className="canvas">
-            <Canvas />
-          </div>
+          <Grid>
+            <GridColumn className="settings">
+              <Settings />
+            </GridColumn>
+            <GridColumn className="sidebar">
+              <SideBar />
+            </GridColumn>
+            <GridColumn className="canvas">
+              <Canvas />
+            </GridColumn>
+          </Grid>
         </div>
       ) : (
         <div className="themeSelector">
@@ -35,3 +38,10 @@ export default function Container() {
     </div>
   );
 }
+
+//  <div className="settings">
+//           </div>
+//           <div className="sidebar">
+//           </div>
+//           <div className="canvas">
+//           </div>

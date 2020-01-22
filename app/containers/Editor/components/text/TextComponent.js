@@ -5,8 +5,6 @@ import { Rnd } from 'react-rnd';
 import CKEditor from 'ckeditor4-react';
 import ReactHtmlParser from 'react-html-parser';
 import {
-  selectDeckOfSlides,
-  selectCurrentSlide,
   selectCurrentTextArray,
   selectEditMode,
 } from '../../redux-store/selectors';
@@ -17,8 +15,6 @@ import {
 } from '../../redux-store/actions';
 import './index.css';
 export function TextComponent({
-  DeckOfSlides,
-  currentSlide,
   onAddData,
   textArrayEntry,
   onChangePosition,
@@ -139,8 +135,6 @@ export function TextComponent({
 }
 
 TextComponent.propTypes = {
-  DeckOfSlides: PropTypes.array,
-  currentSlide: PropTypes.number,
   onAddData: PropTypes.func,
   textArrayEntry: PropTypes.number,
   onChangePosition: PropTypes.func,
@@ -159,8 +153,6 @@ export function mapDispatchToProps(dispatch) {
 
 export default connect(
   state => ({
-    DeckOfSlides: selectDeckOfSlides(state),
-    currentSlide: selectCurrentSlide(state),
     currentTextArray: selectCurrentTextArray(state),
     editMode: selectEditMode(state),
   }),
