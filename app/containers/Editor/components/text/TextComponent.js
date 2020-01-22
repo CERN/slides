@@ -46,11 +46,10 @@ export function TextComponent({
 
   const onDoubleClick = evt => {
     evt.preventDefault();
-    console.log('double clicki');
     if (node.current.contains(evt.target)) {
       // inside click
       // then edit
-      console.log('mpainw?!');
+      console.log('double click');
       onChangePosition(textArrayEntry, position);
       onToggleEditMode(true);
     }
