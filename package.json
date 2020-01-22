@@ -99,6 +99,7 @@
     "react-redux": "7.0.2",
     "react-rnd": "^10.1.4",
     "react-router-dom": "5.0.0",
+    "react-tinymce": "^0.7.0",
     "redux": "4.0.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-saga": "1.0.2",

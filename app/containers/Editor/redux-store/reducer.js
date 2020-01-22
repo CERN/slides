@@ -129,7 +129,7 @@ const PresentationReducer = (state = initialState, action) =>
         draft.theme = action.theme;
         break;
       case TOGGLE_EDIT_MODE:
-        draft.textEditMode = !draft.textEditMode;
+        draft.textEditMode = action.edit;
         break;
       case SET_TITLE:
         draft.title = action.title;

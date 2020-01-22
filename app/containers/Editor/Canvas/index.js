@@ -40,10 +40,8 @@ function Canvas({ title, theme, description, DeckOfSlides }) {
           theme={myTheme}
           progress="number"
           showFullscreenControl={false}
-          // contentWidth="90px"
           // controls={false} // show or hide the move buttons
         >
-          {/* <MySlide /> */}
           {DeckOfSlides.map(item => (
             <MySlide key={item} />
           ))}

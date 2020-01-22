@@ -139,9 +139,10 @@ export function setTheme(theme) {
  * @return {object} An action object with a type of TOGGLE_EDIT_MODE
  */
 
-export function toggleEditMode() {
+export function toggleEditMode(edit) {
   return {
     type: TOGGLE_EDIT_MODE,
+    edit,
   };
 }
 

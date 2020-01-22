@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Rnd } from 'react-rnd';
-import CKEditor from 'ckeditor4-react';
+// import CKEditor from 'ckeditor4-react';
 import ReactHtmlParser from 'react-html-parser';
+import TextEditor from './TextEditor';
 import {
   selectCurrentTextArray,
   selectEditMode,
@@ -29,7 +30,6 @@ export function TextComponent({
     justifyContent: 'center',
     position: 'absolute',
   };
-  // const [textEdit, textEdit =  = useState(false);
   // text's content
   const [text, setText] = useState(currentTextArray[textArrayEntry].data);
   // text's position
@@ -40,8 +40,8 @@ export function TextComponent({
     x: pos.x,
     y: pos.y,
   });
-  const onChangeFunc = evt => {
-    setText(evt.editor.getData());
+  const onChangeFunc = input => {
+    setText(input);
   };
 
   const onDoubleClick = evt => {
@@ -52,7 +52,7 @@ export function TextComponent({
       // then edit
       console.log('mpainw?!');
       onChangePosition(textArrayEntry, position);
-      onToggleEditMode();
+      onToggleEditMode(true);
     }
   };
 
@@ -65,7 +65,7 @@ export function TextComponent({
     // outside click
     console.log('outside clicki');
     onAddData(textArrayEntry, text);
-    onToggleEditMode();
+    onToggleEditMode(false);
   };
 
   useEffect(() => {
@@ -90,14 +90,7 @@ export function TextComponent({
       // onClick={handleClicks}
     >
       {editMode ? (
-        <CKEditor
-          // this is to prevent an error with the editor that multiple instances of the editor exists
-          // eslint-disable-next-line no-return-assign
-          onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
-          data={text}
-          type="inline"
-          onChange={onChangeFunc}
-        />
+        <TextEditor onChange={onChangeFunc} initialData={text} />
       ) : (
         <Rnd
           className="text-style"
@@ -147,7 +140,7 @@ export function mapDispatchToProps(dispatch) {
   return {
     onAddData: (id, data) => dispatch(addData(id, data)),
     onChangePosition: (id, position) => dispatch(changePosition(id, position)),
-    onToggleEditMode: () => dispatch(toggleEditMode()),
+    onToggleEditMode: edit => dispatch(toggleEditMode(edit)),
   };
 }
 
@@ -158,3 +151,12 @@ export default connect(
   }),
   mapDispatchToProps,
 )(TextComponent);
+
+//  <CKEditor
+//           // this is to prevent an error with the editor that multiple instances of the editor exists
+//           // eslint-disable-next-line no-return-assign
+//           onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
+//           data={text}
+//           type="inline"
+//           onChange={onChangeFunc}
+//         />
