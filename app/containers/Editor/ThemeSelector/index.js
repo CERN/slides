@@ -86,7 +86,7 @@ function ThemeSelector({
   const settingDescription = (e, { value }) => setDes(value);
 
   return (
-    <div>
+    <div className="theme-selector">
       <Image src={img} size="medium" centered />
       <Header className="white" size="large">
         Start your Presentation

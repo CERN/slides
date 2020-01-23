@@ -2,8 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Rnd } from 'react-rnd';
-// import CKEditor from 'ckeditor4-react';
-import ReactHtmlParser from 'react-html-parser';
 import TextEditor from './TextEditor';
 import {
   selectCurrentTextArray,
@@ -119,7 +117,7 @@ export function TextComponent({
           bounds="body"
           onDoubleClick={onDoubleClick}
         >
-          {ReactHtmlParser(text)}
+          <div dangerouslySetInnerHTML={{ __html: text }} />
         </Rnd>
       )}
     </div>

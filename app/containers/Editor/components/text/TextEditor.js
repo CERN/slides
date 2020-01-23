@@ -1,29 +1,73 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Editor } from '@tinymce/tinymce-react';
+import CKEditor from 'ckeditor4-react';
 import './TextEditor.css';
 
 export default function TextEditor({ onChange, initialData }) {
-  const handleEditorChange = e => {
-    console.log(e.target.getContent());
-    onChange(e.target.getContent());
+  const handleEditorChange = evt => {
+    console.log(evt.editor.getData());
+    onChange(evt.editor.getData());
   };
   return (
-    <Editor
-      initialValue={initialData}
-      init={{
-        height: 500,
-        menubar: false,
-        plugins: [
-          'advlist autolink lists link image charmap print preview anchor',
-          'searchreplace visualblocks code fullscreen',
-          'insertdatetime media table paste code help wordcount',
+    <CKEditor
+      // this is to prevent an error with the editor that multiple instances of the editor exists
+      // eslint-disable-next-line no-return-assign
+      onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
+      data={initialData}
+      config={{
+        toolbar: [
+          {
+            name: 'clipboard',
+            items: [
+              'Cut',
+              'Copy',
+              'Paste',
+              'PasteText',
+              'PasteFromWord',
+              '-',
+              'Undo',
+              'Redo',
+            ],
+          },
+          {
+            name: 'basicstyles',
+            items: [
+              'Bold',
+              'Italic',
+              'Underline',
+              'Strike',
+              'Subscript',
+              'Superscript',
+              '-',
+              'CopyFormatting',
+              'RemoveFormat',
+            ],
+          },
+          {
+            name: 'paragraph',
+            items: [
+              'NumberedList',
+              'BulletedList',
+              '-',
+              'Blockquote',
+              'CreateDiv',
+              '-',
+              'JustifyLeft',
+              'JustifyCenter',
+              'JustifyRight',
+              'JustifyBlock',
+              '-',
+              'BidiLtr',
+              'BidiRtl',
+              'Language',
+            ],
+          },
+          { name: 'links', items: ['Link', 'Unlink'] },
+          { name: 'styles', items: ['Styles', 'Format', 'Font', 'FontSize'] },
+          { name: 'colors', items: ['TextColor', 'BGColor'] },
         ],
-        toolbar:
-          'undo redo | formatselect | bold italic backcolor | \
-             alignleft aligncenter alignright alignjustify | \
-             bullist numlist outdent indent | removeformat | help',
       }}
+      // type="inline"
       onChange={handleEditorChange}
     />
   );

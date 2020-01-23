@@ -92,7 +92,6 @@
     "react-dom": "16.8.6",
     "react-draggable": "^4.2.0",
     "react-helmet": "6.0.0-beta",
-    "react-html-parser": "^2.0.2",
     "react-intl": "2.8.0",
     "react-moveable": "^0.16.6",
     "react-notify-toast": "^0.5.1",
