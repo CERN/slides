@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Rnd } from 'react-rnd';
+import { Text } from 'spectacle';
 import TextEditor from './TextEditor';
 import {
   selectCurrentTextArray,
@@ -21,7 +22,7 @@ export function TextComponent({
   onToggleEditMode,
   editMode,
 }) {
-  const node = useRef();
+  const node = useRef(null);
   const style = {
     display: 'flex',
     alignItems: 'center',
@@ -43,26 +44,28 @@ export function TextComponent({
   };
 
   const onDoubleClick = evt => {
-    evt.preventDefault();
+    // evt.preventDefault();
     if (node.current.contains(evt.target)) {
       // inside click
       // then edit
       console.log('double click');
       onChangePosition(textArrayEntry, position);
-      onToggleEditMode(true);
+      onToggleEditMode(textArrayEntry, true);
     }
   };
 
   const handleClick = e => {
     if (node.current.contains(e.target)) {
       // inside click
+      // node.current.focus();
       // then move
       return;
     }
     // outside click
     console.log('outside clicki');
+    // node.current.blur();
     onAddData(textArrayEntry, text);
-    onToggleEditMode(false);
+    onToggleEditMode(textArrayEntry, false);
   };
 
   useEffect(() => {
@@ -137,7 +140,7 @@ export function mapDispatchToProps(dispatch) {
   return {
     onAddData: (id, data) => dispatch(addData(id, data)),
     onChangePosition: (id, position) => dispatch(changePosition(id, position)),
-    onToggleEditMode: edit => dispatch(toggleEditMode(edit)),
+    onToggleEditMode: (id, edit) => dispatch(toggleEditMode(id, edit)),
   };
 }
 
@@ -148,12 +151,3 @@ export default connect(
   }),
   mapDispatchToProps,
 )(TextComponent);
-
-//  <CKEditor
-//           // this is to prevent an error with the editor that multiple instances of the editor exists
-//           // eslint-disable-next-line no-return-assign
-//           onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
-//           data={text}
-//           type="inline"
-//           onChange={onChangeFunc}
-//         />

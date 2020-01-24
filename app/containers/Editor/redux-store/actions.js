@@ -28,6 +28,7 @@ import {
   SET_TITLE,
   SET_DESCRIPTION,
   ADD_IMAGE,
+  IMAGE_UPLOAD_REQUEST,
 } from './constants';
 
 /**
@@ -139,9 +140,10 @@ export function setTheme(theme) {
  * @return {object} An action object with a type of TOGGLE_EDIT_MODE
  */
 
-export function toggleEditMode(edit) {
+export function toggleEditMode(id, edit) {
   return {
     type: TOGGLE_EDIT_MODE,
+    id,
     edit,
   };
 }
@@ -160,8 +162,16 @@ export function setDescription(description) {
   };
 }
 
-export function addImage() {
+export function addImage(src) {
   return {
     type: ADD_IMAGE,
+    src,
+  };
+}
+
+export function uploadImageRequest(request) {
+  return {
+    type: IMAGE_UPLOAD_REQUEST,
+    request,
   };
 }

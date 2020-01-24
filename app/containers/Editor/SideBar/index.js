@@ -8,7 +8,7 @@ import {
   removeSlide,
   addText,
   removeText,
-  addImage,
+  uploadImageRequest,
 } from '../redux-store/actions';
 import { selectCurrentSlide } from '../redux-store/selectors';
 import './index.css';
@@ -75,7 +75,7 @@ function mapDispatchToProps(dispatch) {
     onRemoveSlide: () => dispatch(removeSlide()),
     onAddText: () => dispatch(addText()),
     onRemoveText: () => dispatch(removeText()),
-    onAddImage: () => dispatch(addImage()),
+    onAddImage: () => dispatch(uploadImageRequest(1)),
   };
 }
 

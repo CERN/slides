@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Notifications, { notify } from 'react-notify-toast';
 import Spinner from './Spinner';
 import Images from './Images';
+import uploadImages from './UploadImages';
+import { uploadImageRequest } from '../../redux-store/actions';
+import { selectPendingImageUploadRequests } from '../../redux-store/selectors';
+
 // import { API_URL } from './config';
 import './index.css';
 
@@ -10,12 +16,16 @@ const toastColor = {
   text: '#fff',
 };
 
-export default function Image() {
+// make the upload image functionality tomorrow
+// https://github.com/LukasMarx/react-file-upload
+
+export function MyImage({ onImageRequest, uploadRequests }) {
   const [uploading, setUploading] = useState(false);
   let images = [];
   const toast = notify.createShowQueue();
 
   const onChange = e => {
+    console.log('eimai st6hn onchange');
     const errs = [];
     const files = Array.from(e.target.files);
 
@@ -48,7 +58,8 @@ export default function Image() {
     // after all tests passed, start uploading
 
     setUploading(true);
-
+    uploadImages(files);
+    onImageRequest();
     // upload
     // fetch(`${API_URL}/image-upload`, {
     //   method: 'POST',
@@ -71,6 +82,13 @@ export default function Image() {
     //     });
     //   });
   };
+
+  useEffect(
+    e => {
+      if (uploadRequests === 1) onChange(e);
+    },
+    [uploadRequests],
+  );
 
   const filter = id => images.filter(i => i.public_id !== id);
 
@@ -102,3 +120,21 @@ export default function Image() {
     </div>
   );
 }
+
+MyImage.propTypes = {
+  onImageRequest: PropTypes.func,
+  uploadRequests: PropTypes.number,
+};
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onImageRequest: () => dispatch(uploadImageRequest(-1)),
+  };
+}
+
+export default connect(
+  state => ({
+    uploadRequests: selectPendingImageUploadRequests(state),
+  }),
+  mapDispatchToProps,
+)(MyImage);

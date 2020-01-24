@@ -79,6 +79,7 @@
     "express": "4.16.4",
     "express-form-data": "^2.0.10",
     "fontfaceobserver": "2.1.0",
+    "formidable": "^1.2.1",
     "history": "4.9.0",
     "hoist-non-react-statics": "3.3.0",
     "immer": "^5.2.1",

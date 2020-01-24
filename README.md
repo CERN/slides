@@ -191,3 +191,4 @@ Stoiber. For more information see `LICENSE.md`.
 * Delete useless packages
 * now that I have the example presentation I don't need to read it or do anything I have to start it and run it in parallel inside my app, and my app has to write the files which the renderer will serve as a spectacle presentation
 * make a file which reads redux and writes out files to be read from the presenter, presenter will take a spectacle-project presentation and play it
+* in text editor colored texts etc is not working

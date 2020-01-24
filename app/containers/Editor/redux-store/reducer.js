@@ -20,6 +20,7 @@ import {
   SET_TITLE,
   SET_DESCRIPTION,
   ADD_IMAGE,
+  IMAGE_UPLOAD_REQUEST,
 } from './constants';
 
 // The initial state of the App
@@ -32,6 +33,7 @@ export const initialState = {
         {
           id: 0,
           data: "That's 0 Slide",
+          edit: false,
           position: {
             width: '500px',
             height: '70px',
@@ -43,7 +45,7 @@ export const initialState = {
       imageArray: [
         {
           id: 0,
-          location: '../../assets/happy.jpg',
+          src: '../../assets/happy.jpg',
           position: {
             width: '800px',
             height: '70px',
@@ -54,11 +56,11 @@ export const initialState = {
       ],
     },
   ],
+  pendingImageUploadRequests: 0,
   currentSlide: 0,
   theme: '',
   title: 'New Presentation',
   description: '',
-  textEditMode: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -103,6 +105,19 @@ const PresentationReducer = (state = initialState, action) =>
         });
         draft.DeckOfSlides[draft.currentSlide].currentText += 1;
         break;
+      case ADD_IMAGE:
+        draft.DeckOfSlides[draft.currentSlide].imageArray.push({
+          id: draft.DeckOfSlides[draft.currentSlide].currentImage + 1,
+          src: action.src,
+          position: {
+            width: '500px',
+            height: '70px',
+            x: 400,
+            y: 250,
+          },
+        });
+        draft.DeckOfSlides[draft.currentSlide].currentImage += 1;
+        break;
       case REMOVE_TEXT:
         if (draft.DeckOfSlides[draft.currentSlide].currentText >= 0) {
           draft.DeckOfSlides[draft.currentSlide].textArray.splice(
@@ -129,7 +144,8 @@ const PresentationReducer = (state = initialState, action) =>
         draft.theme = action.theme;
         break;
       case TOGGLE_EDIT_MODE:
-        draft.textEditMode = action.edit;
+        draft.DeckOfSlides[draft.currentSlide].textArray[action.id].edit =
+          action.edit;
         break;
       case SET_TITLE:
         draft.title = action.title;
@@ -137,8 +153,9 @@ const PresentationReducer = (state = initialState, action) =>
       case SET_DESCRIPTION:
         draft.description = action.description;
         break;
-      case ADD_IMAGE:
+      case IMAGE_UPLOAD_REQUEST:
         console.log('User wants to upload an image');
+        draft.pendingImageUploadRequests += action.request;
         break;
     }
   });

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import MyText from './components/text';
-import MyImage from './components/image/MyImage';
+import MyImage from './components/image';
 import StandardSlide from '../../theming/StandardSlide';
 import { selectTheme, selectCurrentSlide } from './redux-store/selectors';
 
@@ -10,8 +10,8 @@ function MySlide({ theme, currentSlide }) {
   const StandardSlideTemplate = StandardSlide(theme);
   return (
     <StandardSlideTemplate>
-      <MyText id={currentSlide} />
-      {/* <MyImage id={id} /> */}
+      {/* <MyText id={currentSlide} /> */}
+      <MyImage />
     </StandardSlideTemplate>
   );
 }

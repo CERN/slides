@@ -17,12 +17,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Image } from 'spectacle';
-import { selectCurrentImageArray } from '../../redux-store/selectors';
+import {
+  selectCurrentImageArray,
+  selectCurrentImageSrc,
+} from '../../redux-store/selectors';
 
-function ImageLoader({ currentImageArray }) {
-  const images = currentImageArray.map(elem => elem.location);
-  console.log('images aareee', images);
-  return <div />;
+function ImageLoader({ currentImageArray, currentImg }) {
+  console.log('ImageLoader issssss', currentImg);
+  return currentImg;
 }
 
 ImageLoader.propTypes = {
@@ -32,6 +34,7 @@ ImageLoader.propTypes = {
 export default connect(
   state => ({
     currentImageArray: selectCurrentImageArray(state),
+    currentImg: selectCurrentImageSrc(state),
   }),
   null,
 )(ImageLoader);
