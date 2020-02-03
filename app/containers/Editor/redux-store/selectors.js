@@ -26,8 +26,8 @@ const selectCurrentImageSrc = state =>
     state.global.DeckOfSlides[state.global.currentSlide].currentImage
   ].src;
 
-const selectPendingImageUploadRequests = state =>
-  state.global.pendingImageUploadRequests;
+const selectPendingImageUploadRequest = state =>
+  state.global.pendingImageUploadRequest;
 
 export {
   selectDeckOfSlides,
@@ -42,5 +42,5 @@ export {
   selectCurrentTextData,
   selectCurrentImage,
   selectCurrentImageSrc,
-  selectPendingImageUploadRequests,
+  selectPendingImageUploadRequest,
 };

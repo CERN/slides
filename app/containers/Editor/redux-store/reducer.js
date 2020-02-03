@@ -56,7 +56,7 @@ export const initialState = {
       ],
     },
   ],
-  pendingImageUploadRequests: 0,
+  pendingImageUploadRequest: false,
   currentSlide: 0,
   theme: '',
   title: 'New Presentation',
@@ -154,8 +154,12 @@ const PresentationReducer = (state = initialState, action) =>
         draft.description = action.description;
         break;
       case IMAGE_UPLOAD_REQUEST:
-        console.log('User wants to upload an image');
-        draft.pendingImageUploadRequests += action.request;
+        console.log(
+          'User',
+          action.request ? 'wants' : "doesn't want",
+          'to upload an image',
+        );
+        draft.pendingImageUploadRequest = action.request;
         break;
     }
   });

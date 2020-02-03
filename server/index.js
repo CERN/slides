@@ -1,9 +1,8 @@
 /* eslint consistent-return:0 import/order:0 */
 const express = require('express');
-const upload = require('./upload');
 const cors = require('cors');
 const logger = require('./logger');
-
+const multer = require('multer');
 const argv = require('./argv');
 const port = require('./port');
 const setup = require('./middlewares/frontendMiddleware');
@@ -16,14 +15,28 @@ const { resolve } = require('path');
 const app = express();
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
-const corsOptions = {
-  origin: '*',
-  optionsSuccessStatus: 200,
-};
-app.use(cors(corsOptions));
 
-app.post('/upload', upload);
-
+app.use(cors());
+const storage = multer.diskStorage({
+  destination(req, file, cb) {
+    cb(null, 'public');
+  },
+  filename(req, file, cb) {
+    cb(null, `${Date.now()}-${file.name}`);
+  },
+});
+const upload = multer({ storage }).array('file');
+app.post('/upload', (req, res) => {
+  upload(req, res, err => {
+    if (err instanceof multer.MulterError) {
+      return res.status(500).json(err);
+    }
+    if (err) {
+      return res.status(500).json(err);
+    }
+    return res.status(200).send(req.file);
+  });
+});
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
   outputPath: resolve(process.cwd(), 'build'),

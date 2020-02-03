@@ -75,7 +75,7 @@ function mapDispatchToProps(dispatch) {
     onRemoveSlide: () => dispatch(removeSlide()),
     onAddText: () => dispatch(addText()),
     onRemoveText: () => dispatch(removeText()),
-    onAddImage: () => dispatch(uploadImageRequest(1)),
+    onAddImage: () => dispatch(uploadImageRequest(true)),
   };
 }
 

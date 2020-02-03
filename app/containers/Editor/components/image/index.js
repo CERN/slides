@@ -5,7 +5,7 @@ import Spinner from './Spinner';
 import Images from './Images';
 import Upload from './Uploader/Upload';
 import { uploadImageRequest } from '../../redux-store/actions';
-import { selectPendingImageUploadRequests } from '../../redux-store/selectors';
+import { selectPendingImageUploadRequest } from '../../redux-store/selectors';
 
 // import { API_URL } from './config';
 import './index.css';
@@ -15,7 +15,7 @@ import './index.css';
 
 // I will render the current Images
 // I will render the Uploader component
-export function MyImage({ onImageRequest, uploadRequests }) {
+export function MyImage({ uploadRequest }) {
   const [uploading, setUploading] = useState(false);
   const images = [];
 
@@ -26,8 +26,8 @@ export function MyImage({ onImageRequest, uploadRequests }) {
   // };
 
   // useEffect(() => {
-  //   if (uploadRequests === 1) onChange();
-  // }, [uploadRequests]);
+  //   if (uploadRequest === 1) onChange();
+  // }, [uploadRequest]);
 
   // const filter = id => images.filter(i => i.public_id !== id);
 
@@ -56,19 +56,12 @@ export function MyImage({ onImageRequest, uploadRequests }) {
 }
 
 MyImage.propTypes = {
-  onImageRequest: PropTypes.func,
-  uploadRequests: PropTypes.number,
+  uploadRequest: PropTypes.bool,
 };
-
-function mapDispatchToProps(dispatch) {
-  return {
-    onImageRequest: () => dispatch(uploadImageRequest(-1)),
-  };
-}
 
 export default connect(
   state => ({
-    uploadRequests: selectPendingImageUploadRequests(state),
+    uploadRequest: selectPendingImageUploadRequest(state),
   }),
-  mapDispatchToProps,
+  null,
 )(MyImage);
