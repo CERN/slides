@@ -2,10 +2,11 @@ import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { connect } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import PropTypes from 'prop-types';
-import { Button } from 'semantic-ui-react';
+import { Button, Icon } from 'semantic-ui-react';
 import axios, { post } from 'axios';
 
 import { uploadImageRequest } from '../../../redux-store/actions';
+import './Dropzone.css';
 
 const thumbsContainer = {
   display: 'flex',
@@ -126,16 +127,25 @@ export function Dropzone({ onImageRequest, bull }) {
     files.forEach(file => URL.revokeObjectURL(file.preview));
     onImageRequest();
   };
-  // make it focused
+
+  const onCancelHandler = e => {
+    e.preventDefault();
+    onImageRequest();
+  };
 
   return (
-    <div>
+    <div className="dropzone">
       <div {...getRootProps({ style })}>
         <input {...getInputProps()} />
         <p>Drag 'n' drop some files here, or click to select files</p>
       </div>
       <aside style={thumbsContainer}>{thumbs}</aside>
-      <Button color="green" content="Upload" onClick={onClickHandler} />
+      <Button color="red" onClick={onCancelHandler}>
+        <Icon name="remove" /> Cancel
+      </Button>
+      <Button color="green" onClick={onClickHandler}>
+        <Icon name="checkmark" /> Upload
+      </Button>
     </div>
   );
 }

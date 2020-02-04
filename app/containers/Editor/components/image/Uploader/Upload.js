@@ -8,8 +8,6 @@ import { Modal } from 'semantic-ui-react';
 import Dropzone from './Dropzone';
 import { selectPendingImageUploadRequest } from '../../../redux-store/selectors';
 
-import './Upload.css';
-
 // check where can i store the images
 export function Upload({ uploadRequest }) {
   const [uploading, setUploading] = useState(uploadRequest);
@@ -19,7 +17,7 @@ export function Upload({ uploadRequest }) {
 
   return (
     <Modal dimmer="blurring" open={uploading}>
-      <Modal.Header>Select a Photo</Modal.Header>
+      <Modal.Header>Upload an Image</Modal.Header>
       <Modal.Content>
         <Dropzone />
       </Modal.Content>
