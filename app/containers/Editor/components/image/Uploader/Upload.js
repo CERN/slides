@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button, Progress, Icon, Message } from 'semantic-ui-react';
+// import { Button, Progress, Icon, Message } from 'semantic-ui-react';
+import { Modal } from 'semantic-ui-react';
+
 // import Notifications, { notify } from 'react-notify-toast';
 import Dropzone from './Dropzone';
 import { selectPendingImageUploadRequest } from '../../../redux-store/selectors';
@@ -15,9 +17,14 @@ export function Upload({ uploadRequest }) {
     setUploading(uploadRequest);
   }, [uploadRequest]);
 
-  // I do this and include redux
-
-  return <div className="Upload">{uploading && <Dropzone />}</div>;
+  return (
+    <Modal dimmer="blurring" open={uploading}>
+      <Modal.Header>Select a Photo</Modal.Header>
+      <Modal.Content>
+        <Dropzone />
+      </Modal.Content>
+    </Modal>
+  );
 }
 
 Upload.propTypes = {

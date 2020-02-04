@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { connect } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import PropTypes from 'prop-types';
 import { Button } from 'semantic-ui-react';
-import axios from 'axios';
+import axios, { post } from 'axios';
 
 import { uploadImageRequest } from '../../../redux-store/actions';
 
@@ -64,7 +64,8 @@ const acceptStyle = {
 const rejectStyle = {
   borderColor: '#ff1744',
 };
-export function Dropzone({ onImageRequest }) {
+export function Dropzone({ onImageRequest, bull }) {
+  // console.log('state: ', bull);
   const [files, setFiles] = useState([]);
   const {
     getRootProps,
@@ -94,16 +95,6 @@ export function Dropzone({ onImageRequest }) {
     </div>
   ));
 
-  // useEffect(
-  //   () => () => {
-  //     // Make sure to revoke the data uris to avoid memory leaks
-  //     files.forEach(file => URL.revokeObjectURL(file.preview));
-  //     onImageRequest();
-  //     // now i got some files?
-  //   },
-  //   [files],
-  // );
-
   const style = useMemo(
     () => ({
       ...baseStyle,
@@ -114,24 +105,24 @@ export function Dropzone({ onImageRequest }) {
     [isDragActive, isDragReject],
   );
 
-  const onClickHandler = () => {
+  const filesUpload = () => {
+    const url = 'http://localhost:3000/upload';
+    const formData = new FormData();
+    files.forEach(f => formData.append('file', f));
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    };
+    return post(url, formData, config);
+  };
+
+  const onClickHandler = e => {
+    e.preventDefault(); // Stop form submit
     // now i got some files
-    const data = new FormData();
-    // files.forEach(f => data.append('file', f));
-    console.log('files is /////////////', files);
-    for (let x = 0; x < files.length; x++) {
-      data.append('file', files[x]);
-    }
-    console.log('data is /////////////', data);
-    axios
-      .post('http://localhost:3000/upload', data, {
-        // receive two parameter endpoint url ,form data
-      })
-      .then(res => {
-        // then print response status
-        console.log(res.statusText);
-      });
-    // Make sure to revoke the data uris to avoid memory leaks
+    filesUpload().then(response => {
+      console.log('The response is: ', response.data);
+    });
     files.forEach(file => URL.revokeObjectURL(file.preview));
     onImageRequest();
   };
@@ -160,6 +151,8 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-  null,
+  state => ({
+    bull: JSON.stringify(state),
+  }),
   mapDispatchToProps,
 )(Dropzone);

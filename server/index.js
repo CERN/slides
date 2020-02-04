@@ -2,39 +2,38 @@
 const express = require('express');
 const cors = require('cors');
 const logger = require('./logger');
-const multer = require('multer');
 const argv = require('./argv');
 const port = require('./port');
+const { resolve } = require('path');
 const setup = require('./middlewares/frontendMiddleware');
+const uploadsFolder =
+  process.env.UPLOADS_FOLDER || resolve(__dirname, '..', 'Presentation');
 const isDev = process.env.NODE_ENV !== 'production';
 const ngrok =
   (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel
     ? require('ngrok')
     : false;
-const { resolve } = require('path');
+const fileUpload = require('express-fileupload');
 const app = express();
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
 
 app.use(cors());
-const storage = multer.diskStorage({
-  destination(req, file, cb) {
-    cb(null, 'public');
-  },
-  filename(req, file, cb) {
-    cb(null, `${Date.now()}-${file.name}`);
-  },
-});
-const upload = multer({ storage }).array('file');
+app.use(fileUpload());
+// Upload Endpoint
 app.post('/upload', (req, res) => {
-  upload(req, res, err => {
-    if (err instanceof multer.MulterError) {
-      return res.status(500).json(err);
-    }
+  if (req.files === null) {
+    return res.status(400).json({ msg: 'No file uploaded' });
+  }
+
+  const { file } = req.files;
+  file.mv(resolve(uploadsFolder, file.name), err => {
     if (err) {
-      return res.status(500).json(err);
+      console.error(err);
+      return res.status(500).send(err);
     }
-    return res.status(200).send(req.file);
+
+    res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
   });
 });
 // In production we need to pass these values in instead of relying on webpack

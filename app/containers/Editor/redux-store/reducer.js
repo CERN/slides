@@ -21,6 +21,8 @@ import {
   SET_DESCRIPTION,
   ADD_IMAGE,
   IMAGE_UPLOAD_REQUEST,
+  LOAD_PRESENTATION,
+  SAVE_PRESENTATION,
 } from './constants';
 
 // The initial state of the App
@@ -160,6 +162,17 @@ const PresentationReducer = (state = initialState, action) =>
           'to upload an image',
         );
         draft.pendingImageUploadRequest = action.request;
+        break;
+      case LOAD_PRESENTATION:
+        // get the json from the action
+        // set the state using:
+
+        // const newState = JSON.parse(action.stateString);
+        // Object.keys(newState["global"]).map(s => {
+        //   draft[s] = newState[s];
+        // })
+        break;
+      case SAVE_PRESENTATION:
         break;
     }
   });
