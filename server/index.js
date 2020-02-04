@@ -27,13 +27,18 @@ app.post('/upload', (req, res) => {
   }
 
   const { file } = req.files;
-  file.mv(resolve(uploadsFolder, file.name), err => {
+  const imageNameToStore = `${file.md5}-${file.name}`;
+  console.log('SERVER === hash is //// ', imageNameToStore);
+  file.mv(resolve(uploadsFolder, imageNameToStore), err => {
     if (err) {
       console.error(err);
       return res.status(500).send(err);
     }
 
-    res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
+    res.json({
+      fileName: imageNameToStore,
+      filePath: `/uploads/${imageNameToStore}`,
+    });
   });
 });
 // In production we need to pass these values in instead of relying on webpack
