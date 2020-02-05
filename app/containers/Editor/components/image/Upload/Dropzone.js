@@ -5,9 +5,10 @@ import PropTypes from 'prop-types';
 import { Button, Icon } from 'semantic-ui-react';
 import axios, { post } from 'axios';
 
+import BMF from 'browser-md5-file';
 import { uploadImageRequest, addImage } from '../../../redux-store/actions';
 import './Dropzone.css';
-import BMF from 'browser-md5-file';
+
 // Add notification and check System
 
 const thumbsContainer = {
@@ -125,14 +126,13 @@ export function Dropzone({ onImageRequest, onAddImage }) {
     // now i got some files
     // Upload Files in the server
     filesUpload().then(response => {
-      console.log('The response is: ', response.data);
+      console.log('The response is: ', response);
     });
     // Save images in Redux Store
     // find md5 of the file and append name
     files.forEach(f => {
       const bmf = new BMF();
       bmf.md5(f, (err, hash) => {
-        console.log('DROPZONE === md5 string:', hash);
         onAddImage(`${hash}-${f.name}`);
       });
     });
@@ -152,7 +152,7 @@ export function Dropzone({ onImageRequest, onAddImage }) {
     <div className="dropzone">
       <div {...getRootProps({ style })}>
         <input {...getInputProps()} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <p>Drag 'n' drop an Image here, or click to select from files</p>
       </div>
       <aside style={thumbsContainer}>{thumbs}</aside>
       <Button color="red" onClick={onCancelHandler}>

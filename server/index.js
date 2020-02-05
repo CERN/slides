@@ -1,4 +1,5 @@
 /* eslint consistent-return:0 import/order:0 */
+require('dotenv-flow').config();
 const express = require('express');
 const cors = require('cors');
 const logger = require('./logger');
@@ -6,8 +7,8 @@ const argv = require('./argv');
 const port = require('./port');
 const { resolve } = require('path');
 const setup = require('./middlewares/frontendMiddleware');
-const uploadsFolder =
-  process.env.UPLOADS_FOLDER || resolve(__dirname, '..', 'Presentation');
+const uploadsFolder = process.env.UPLOADS_FOLDER;
+// const publicFolder = process.env.PUBLIC_FOLDER;
 const isDev = process.env.NODE_ENV !== 'production';
 const ngrok =
   (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel
@@ -28,7 +29,6 @@ app.post('/upload', (req, res) => {
 
   const { file } = req.files;
   const imageNameToStore = `${file.md5}-${file.name}`;
-  console.log('SERVER === hash is //// ', imageNameToStore);
   file.mv(resolve(uploadsFolder, imageNameToStore), err => {
     if (err) {
       console.error(err);
@@ -37,10 +37,11 @@ app.post('/upload', (req, res) => {
 
     res.json({
       fileName: imageNameToStore,
-      filePath: `/uploads/${imageNameToStore}`,
+      filePath: resolve(uploadsFolder, imageNameToStore),
     });
   });
 });
+
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
   outputPath: resolve(process.cwd(), 'build'),

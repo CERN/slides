@@ -29,6 +29,8 @@ const selectCurrentImageSrc = state =>
 const selectPendingImageUploadRequest = state =>
   state.global.pendingImageUploadRequest;
 
+const selectAssetsPath = state => state.global.assetsPath;
+
 export {
   selectDeckOfSlides,
   selectCurrentSlide,
@@ -43,4 +45,5 @@ export {
   selectCurrentImage,
   selectCurrentImageSrc,
   selectPendingImageUploadRequest,
+  selectAssetsPath,
 };

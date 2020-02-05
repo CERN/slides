@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Spinner from './Spinner';
 import Images from './Images';
-import Upload from './Uploader/Upload';
+import Upload from './Upload';
 import { uploadImageRequest } from '../../redux-store/actions';
 import { selectPendingImageUploadRequest } from '../../redux-store/selectors';
 
@@ -16,8 +15,8 @@ import './index.css';
 // I will render the current Images
 // I will render the Uploader component
 export function MyImage({ uploadRequest }) {
-  const [uploading, setUploading] = useState(false);
-  const images = [];
+  // const [uploading, setUploading] = useState(false);
+  // const images = [];
 
   // const onChange = () => {
   //   console.log('eimai sthn onchange');
@@ -52,7 +51,12 @@ export function MyImage({ uploadRequest }) {
   //   }
   // };
 
-  return <Upload />;
+  return (
+    <div>
+      <Upload />
+      <Images />
+    </div>
+  );
 }
 
 MyImage.propTypes = {

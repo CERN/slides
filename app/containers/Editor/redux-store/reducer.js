@@ -47,7 +47,7 @@ export const initialState = {
       imageArray: [
         {
           id: 0,
-          src: '../../assets/happy.jpg',
+          src: 'happy.jpg',
           position: {
             width: '800px',
             height: '70px',
@@ -58,6 +58,7 @@ export const initialState = {
       ],
     },
   ],
+  assetsPath: 'home/aristofanis/Desktop/Slides/public/static/images',
   pendingImageUploadRequest: false,
   currentSlide: 0,
   theme: '',

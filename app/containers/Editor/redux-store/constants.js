@@ -21,5 +21,7 @@ export const SET_TITLE = 'Slides/Presentation/SET_TITLE';
 export const SET_DESCRIPTION = 'Slides/Presentation/SET_DESCRIPTION';
 export const ADD_IMAGE = 'Slides/Presentation/ADD_IMAGE';
 export const IMAGE_UPLOAD_REQUEST = 'Slides/Presentation/IMAGE_UPLOAD_REQUEST';
+export const LOAD_PRESENTATION = 'Slides/Presentation/LOAD_PRESENTATION';
+export const SAVE_PRESENTATION = 'Slides/Presentation/SAVE_PRESENTATION';
 
 export const CHANGE_SLIDE = '@@router/LOCATION_CHANGE';
