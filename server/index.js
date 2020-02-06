@@ -8,7 +8,6 @@ const port = require('./port');
 const { resolve } = require('path');
 const setup = require('./middlewares/frontendMiddleware');
 const uploadsFolder = process.env.UPLOADS_FOLDER;
-// const publicFolder = process.env.PUBLIC_FOLDER;
 const isDev = process.env.NODE_ENV !== 'production';
 const ngrok =
   (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel
@@ -41,7 +40,8 @@ app.post('/upload', (req, res) => {
     });
   });
 });
-
+// serve static images from folder public/static/images
+app.use('/static', express.static(uploadsFolder));
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
   outputPath: resolve(process.cwd(), 'build'),

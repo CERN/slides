@@ -3,36 +3,28 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Image } from 'semantic-ui-react';
-import preloader from '../../../../utils/preloader';
-
-import {} from '../../redux-store/actions';
 import {
   selectCurrentImageArray,
   selectAssetsPath,
 } from '../../redux-store/selectors';
 import './Images.css';
 
-
-// fix image rendering
-// import img from '';
-
-// preloader(img);
-
 function Images({ currentImageArray, assetsPath }) {
-  const base = "../../../../../public/static/images";
-  const imagePaths = currentImageArray.map(img => `${base}/${img.src}`);
-  console.log('............imagePaths: ', imagePaths);
-
-  const images = currentImageArray.map(img => (
+  // this base will be the server's address base for every image , localhost:3000/public/static/images
+  // the base I will be assetsPath
+  const imagePaths = currentImageArray.map(img => `${assetsPath}/${img.src}`);
+  console.log("imagePaths.......", imagePaths)
+  const images = imagePaths.map(img => (
     <Image
       key={img}
       size="medium"
-      src={require(`../../../../../public/static/images/${img.src}`)}
+      src={img}
       alt=""
       className="img-responsive"
     />
   ));
-  return <div className="container">{images}</div>;
+  // return <div className="container">{images}</div>;
+  return <div>{images}</div>
 }
 
 Images.propTypes = {
@@ -59,3 +51,14 @@ export default connect(
 //   src?: string;
 //   width?: number | string;
 // }
+
+
+// return (
+//   <Image
+//     key={1}
+//     size="medium"
+//     src="http://souvlaki:3000/static/happy.jpg"
+//     alt=""
+//     className="img-responsive"
+//   />
+// )

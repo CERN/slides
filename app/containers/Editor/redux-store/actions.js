@@ -29,6 +29,7 @@ import {
   SET_DESCRIPTION,
   ADD_IMAGE,
   IMAGE_UPLOAD_REQUEST,
+  SET_ASSETS_PATH,
 } from './constants';
 
 /**
@@ -173,5 +174,12 @@ export function uploadImageRequest(request) {
   return {
     type: IMAGE_UPLOAD_REQUEST,
     request,
+  };
+}
+
+export function setAssetsPath(path) {
+  return {
+    type: SET_ASSETS_PATH,
+    path,
   };
 }

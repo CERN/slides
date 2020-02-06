@@ -21,6 +21,7 @@ import {
   SET_DESCRIPTION,
   ADD_IMAGE,
   IMAGE_UPLOAD_REQUEST,
+  SET_ASSETS_PATH,
   LOAD_PRESENTATION,
   SAVE_PRESENTATION,
 } from './constants';
@@ -58,7 +59,9 @@ export const initialState = {
       ],
     },
   ],
-  assetsPath: 'home/aristofanis/Desktop/Slides/public/static/images',
+  // assetsPath: 'http://souvlaki:3000/static', // localhost:3000/public/static/images or the similar for production
+  assetsPath: '',
+  // use dotenv var to determine the correct path here
   pendingImageUploadRequest: false,
   currentSlide: 0,
   theme: '',
@@ -157,12 +160,10 @@ const PresentationReducer = (state = initialState, action) =>
         draft.description = action.description;
         break;
       case IMAGE_UPLOAD_REQUEST:
-        console.log(
-          'User',
-          action.request ? 'wants' : "doesn't want",
-          'to upload an image',
-        );
         draft.pendingImageUploadRequest = action.request;
+        break;
+      case SET_ASSETS_PATH:
+        draft.assetsPath = action.path;
         break;
       case LOAD_PRESENTATION:
         // get the json from the action

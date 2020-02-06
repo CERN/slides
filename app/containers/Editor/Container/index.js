@@ -38,10 +38,3 @@ export default function Container() {
     </div>
   );
 }
-
-//  <div className="settings">
-//           </div>
-//           <div className="sidebar">
-//           </div>
-//           <div className="canvas">
-//           </div>
