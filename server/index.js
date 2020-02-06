@@ -40,8 +40,20 @@ app.post('/upload', (req, res) => {
     });
   });
 });
-// serve static images from folder public/static/images
+
+// serve static images from folder public/
 app.use('/static', express.static(uploadsFolder));
+// this is to allow cross origin request and be able to send photos
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept',
+  );
+  next();
+});
+
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
   outputPath: resolve(process.cwd(), 'build'),

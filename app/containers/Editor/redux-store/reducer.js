@@ -59,9 +59,7 @@ export const initialState = {
       ],
     },
   ],
-  // assetsPath: 'http://souvlaki:3000/static', // localhost:3000/public/static/images or the similar for production
   assetsPath: '',
-  // use dotenv var to determine the correct path here
   pendingImageUploadRequest: false,
   currentSlide: 0,
   theme: '',

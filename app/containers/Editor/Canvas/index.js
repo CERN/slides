@@ -32,7 +32,6 @@ function Canvas({
   const myTheme = createTheme(themeObj.themeConfig, themeObj.fontConfig);
   // set the assetsFolder, where images will be, in the redux store
   if (assetsPath === '') onSetAssetsPath(config.assetsPath);
-
   // // now make the check if it is cern 3,4,5 then add intro and end slide
   // // use this hook to be able to move to next previous slide in adding removing slides
   useEffect(() => {
