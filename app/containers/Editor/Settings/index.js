@@ -18,7 +18,7 @@ function Settings() {
     <Menu inverted vertical fluid icon="labeled" className="settings">
       {Item('eye', 'Preview (^F)')}
       {Item('undo', 'Undo (Ctrl+Z)')}
-      {Item('check', 'Latest Changes Are Saved')}
+      {Item('save', 'Save')}
       {Item('play', 'Present (Ctrl+E)')}
       {Item('setting', 'Presentation Settings')}
       {Item('paint brush', 'Style')}
