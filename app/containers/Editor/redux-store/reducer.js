@@ -24,10 +24,14 @@ import {
   SET_ASSETS_PATH,
   LOAD_PRESENTATION,
   SAVE_PRESENTATION,
+  SET_USER,
+  SAVE_REQUEST,
+  LOAD_REQUEST,
 } from './constants';
 
 // The initial state of the App
 export const initialState = {
+  username: 'achionis',
   DeckOfSlides: [
     {
       currentText: 0,
@@ -61,6 +65,8 @@ export const initialState = {
   ],
   assetsPath: '',
   pendingImageUploadRequest: false,
+  saveRequest: false,
+  loadRequest: false,
   currentSlide: 0,
   theme: '',
   title: 'New Presentation',
@@ -160,6 +166,12 @@ const PresentationReducer = (state = initialState, action) =>
       case IMAGE_UPLOAD_REQUEST:
         draft.pendingImageUploadRequest = action.request;
         break;
+      case SAVE_REQUEST:
+        draft.saveRequest = action.request;
+        break;
+      case LOAD_REQUEST:
+        draft.loadRequest = action.request;
+        break;
       case SET_ASSETS_PATH:
         draft.assetsPath = action.path;
         break;
@@ -173,6 +185,9 @@ const PresentationReducer = (state = initialState, action) =>
         // })
         break;
       case SAVE_PRESENTATION:
+        break;
+      case SET_USER:
+        draft.username = action.user;
         break;
     }
   });

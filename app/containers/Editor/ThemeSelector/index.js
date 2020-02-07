@@ -13,12 +13,18 @@ import {
   Icon,
 } from 'semantic-ui-react';
 
-import { setTheme, setTitle, setDescription } from '../redux-store/actions';
+import {
+  setTheme,
+  setTitle,
+  setDescription,
+  setUsername,
+} from '../redux-store/actions';
 
 import {
   selectTheme,
   selectTitle,
   selectDescription,
+  selectUsername,
 } from '../redux-store/selectors';
 import img from '../../../images/CERN-Logo.png';
 import './index.css';
@@ -64,26 +70,32 @@ function ThemeSelector({
   onSetTheme,
   onSetTitle,
   onSetDescription,
+  onSetUsername,
   currentTheme,
   currentTitle,
   currentDescription,
+  currentUser,
   readyFunc,
 }) {
   const [title, setTi] = useState(currentTitle);
   const [theme, setTh] = useState(currentTheme);
   const [description, setDes] = useState(currentDescription);
+  const [user, setUser] = useState(currentUser);
 
   const clickHandler = () => {
     onSetTitle(title);
     onSetTheme(theme);
     onSetDescription(description);
     history.push(`/username/${title}/edit/`);
+    // make a uuid for this Presentation:
+    onSetUsername(user);
     readyFunc();
   };
 
   const settingTitle = (e, { value }) => setTi(value);
   const settingTheme = (e, { value }) => setTh(value);
   const settingDescription = (e, { value }) => setDes(value);
+  const settingUser = (e, { value }) => setUser(value);
 
   return (
     <div className="theme-selector">
@@ -93,6 +105,12 @@ function ThemeSelector({
       </Header>
       <Form size="large">
         <Segment>
+          <Input
+            className="spacing"
+            placeholder="Username"
+            fluid
+            onChange={settingUser}
+          />
           <Input
             className="spacing"
             placeholder="Presentation Title"
@@ -127,9 +145,11 @@ ThemeSelector.propTypes = {
   onSetTheme: PropTypes.func,
   onSetTitle: PropTypes.func,
   onSetDescription: PropTypes.func,
+  onSetUsername: PropTypes.func,
   currentTheme: PropTypes.string,
   currentTitle: PropTypes.string,
   currentDescription: PropTypes.string,
+  currentUser: PropTypes.string,
   readyFunc: PropTypes.func,
 };
 
@@ -138,6 +158,7 @@ export function mapDispatchToProps(dispatch) {
     onSetTheme: theme => dispatch(setTheme(theme)),
     onSetTitle: title => dispatch(setTitle(title)),
     onSetDescription: description => dispatch(setDescription(description)),
+    onSetUsername: user => dispatch(setUsername(user)),
   };
 }
 
@@ -146,6 +167,7 @@ export default connect(
     currentTheme: selectTheme(state),
     currentTitle: selectTitle(state),
     currentDescription: selectDescription(state),
+    currentUser: selectUsername(state),
   }),
   mapDispatchToProps,
 )(ThemeSelector);

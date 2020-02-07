@@ -30,6 +30,9 @@ const selectPendingImageUploadRequest = state =>
   state.global.pendingImageUploadRequest;
 
 const selectAssetsPath = state => state.global.assetsPath;
+const selectUsername = state => state.global.username;
+const selectSaveRequest = state => state.global.saveRequest;
+const selectLoadRequest = state => state.global.loadRequest;
 
 export {
   selectDeckOfSlides,
@@ -46,4 +49,7 @@ export {
   selectCurrentImageSrc,
   selectPendingImageUploadRequest,
   selectAssetsPath,
+  selectUsername,
+  selectSaveRequest,
+  selectLoadRequest,
 };

@@ -6,6 +6,9 @@ const logger = require('./logger');
 const argv = require('./argv');
 const port = require('./port');
 const { resolve } = require('path');
+// const uuidv4 = require('uuid/v4');
+const JSZip = require('jszip');
+const fs = require('fs-extra');
 const setup = require('./middlewares/frontendMiddleware');
 const uploadsFolder = process.env.UPLOADS_FOLDER;
 const isDev = process.env.NODE_ENV !== 'production';
@@ -20,6 +23,8 @@ const app = express();
 
 app.use(cors());
 app.use(fileUpload());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 // Upload Endpoint
 app.post('/upload', (req, res) => {
   if (req.files === null) {
@@ -27,8 +32,9 @@ app.post('/upload', (req, res) => {
   }
 
   const { file } = req.files;
-  const imageNameToStore = `${file.md5}-${file.name}`;
-  file.mv(resolve(uploadsFolder, imageNameToStore), err => {
+  const imageNameToStore = `${uploadsFolder}/assets/${file.md5}-${file.name}`;
+
+  file.mv(imageNameToStore, err => {
     if (err) {
       console.error(err);
       return res.status(500).send(err);
@@ -41,8 +47,8 @@ app.post('/upload', (req, res) => {
   });
 });
 
-// serve static images from folder public/
-app.use('/static', express.static(uploadsFolder));
+// serve static images from folder public/assets
+app.use('/static', express.static(`${uploadsFolder}/assets`));
 // this is to allow cross origin request and be able to send photos
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -52,6 +58,62 @@ app.use((req, res, next) => {
     'Origin, X-Requested-With, Content-Type, Accept',
   );
   next();
+});
+
+// Save Endpoint
+app.post('/save', (req, res) => {
+  if (req.state === null) {
+    return res.status(400).json({ msg: 'No redux state given' });
+  }
+  // in this endpoint I need to get,
+  // Presentation UUID, title, all the state stringified
+  // I know where the assets are located
+
+  // so now in the public/UUID/ folder put: JSON of state, assets folder
+  // save this in public/user/UUID
+  // Presentation UUID
+  // const id = uuidv4();
+  const { state } = req.body;
+  const obj = JSON.parse(state);
+  const { username, title } = obj.global;
+  const presentationName = `${uploadsFolder}/${username}/${title}`;
+  const presentationFile = `${presentationName}/presentation.JSON`;
+  // writes the file and creates the folders if needed
+  //
+  // .then(() => fs.readJson(presentationFile))
+  fs.outputJsonSync(presentationFile, obj);
+  // .then(() => {
+  //   console.log('JSON Saved!');
+  // })
+  // .catch(err => {
+  //   console.error(err);
+  // });
+
+  // copy assets folder
+  fs.copySync(`${uploadsFolder}/assets`, `${presentationName}/assets`);
+  // .then(() => {
+  //   console.log('Assets folder moved!');
+  // })
+  // .catch(err => {
+  //   console.error(err);
+  // });
+  // zip it and rename
+  const zip = new JSZip();
+  // zip.file("file", content);
+  // ... and other manipulations
+  zip.folder(`${presentationName}`);
+  zip
+    .generateNodeStream({ type: 'nodebuffer', streamFiles: true })
+    .pipe(fs.createWriteStream(`${uploadsFolder}/${username}/${title}.slides`))
+    .on('finish', () => {
+      // JSZip generates a readable stream with a "end" event,
+      // but is piped here in a writable stream which emits a "finish" event.
+      console.log(`${uploadsFolder}/${username}/${title}.slides written.`);
+    });
+  res.json({
+    fileName: presentationFile,
+    filePath: presentationName,
+  });
 });
 
 // In production we need to pass these values in instead of relying on webpack

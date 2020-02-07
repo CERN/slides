@@ -30,6 +30,9 @@ import {
   ADD_IMAGE,
   IMAGE_UPLOAD_REQUEST,
   SET_ASSETS_PATH,
+  SET_USER,
+  SAVE_REQUEST,
+  LOAD_REQUEST,
 } from './constants';
 
 /**
@@ -181,5 +184,26 @@ export function setAssetsPath(path) {
   return {
     type: SET_ASSETS_PATH,
     path,
+  };
+}
+
+export function setUsername(user) {
+  return {
+    type: SET_USER,
+    user,
+  };
+}
+
+export function setSaveRequest(request) {
+  return {
+    type: SAVE_REQUEST,
+    request,
+  };
+}
+
+export function loadRequest(request) {
+  return {
+    type: LOAD_REQUEST,
+    request,
   };
 }

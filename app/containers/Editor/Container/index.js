@@ -5,6 +5,7 @@ import Settings from '../Settings';
 import Canvas from '../Canvas';
 import SideBar from '../SideBar';
 import ThemeSelector from '../ThemeSelector';
+import SavePresentation from '../../SavePresentation';
 
 export default function Container() {
   const [ready, setReady] = useState(false);
@@ -27,6 +28,7 @@ export default function Container() {
               <Canvas />
             </GridColumn>
           </Grid>
+          <SavePresentation />
         </div>
       ) : (
         <div className="themeSelector">

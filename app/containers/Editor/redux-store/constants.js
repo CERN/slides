@@ -24,5 +24,8 @@ export const IMAGE_UPLOAD_REQUEST = 'Slides/Presentation/IMAGE_UPLOAD_REQUEST';
 export const SET_ASSETS_PATH = 'Slides/Presentation/SET_ASSETS_PATH';
 export const LOAD_PRESENTATION = 'Slides/Presentation/LOAD_PRESENTATION';
 export const SAVE_PRESENTATION = 'Slides/Presentation/SAVE_PRESENTATION';
+export const SET_USER = 'Slides/Presentation/SET_USER';
+export const SAVE_REQUEST = 'Slides/Presentation/SAVE_REQUEST';
+export const LOAD_REQUEST = 'Slides/Presentation/LOAD_REQUEST';
 
 export const CHANGE_SLIDE = '@@router/LOCATION_CHANGE';
