@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import PropTypes from 'prop-types';
 import { Button, Icon } from 'semantic-ui-react';
-import axios, { post } from 'axios';
-
+import { post } from 'axios';
 import BMF from 'browser-md5-file';
+import { selectAssetsPath } from '../../../redux-store/selectors';
+
 import { uploadImageRequest, addImage } from '../../../redux-store/actions';
 import './Dropzone.css';
 
@@ -68,7 +69,7 @@ const acceptStyle = {
 const rejectStyle = {
   borderColor: '#ff1744',
 };
-export function Dropzone({ onImageRequest, onAddImage }) {
+export function Dropzone({ onImageRequest, onAddImage, assetsPath }) {
   // and include it as a parameter above
   // console.log('state: ', bull);
   const [files, setFiles] = useState([]);
@@ -110,7 +111,8 @@ export function Dropzone({ onImageRequest, onAddImage }) {
   );
 
   const filesUpload = () => {
-    const url = 'http://localhost:3000/upload';
+    // const url = 'http://localhost:3000/upload';
+    const url = `${assetsPath}/upload`;
     const formData = new FormData();
     files.forEach(f => formData.append('file', f));
     const config = {
@@ -168,6 +170,7 @@ export function Dropzone({ onImageRequest, onAddImage }) {
 Dropzone.propTypes = {
   onImageRequest: PropTypes.func,
   onAddImage: PropTypes.func,
+  assetsPath: PropTypes.string,
 };
 
 function mapDispatchToProps(dispatch) {
@@ -179,7 +182,7 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(
   state => ({
-    bull: JSON.stringify(state),
+    assetsPath: selectAssetsPath(state),
   }),
   mapDispatchToProps,
 )(Dropzone);
