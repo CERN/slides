@@ -33,6 +33,7 @@ import {
   SET_USER,
   SAVE_REQUEST,
   LOAD_REQUEST,
+  LOAD_STATE,
 } from './constants';
 
 /**
@@ -201,9 +202,16 @@ export function setSaveRequest(request) {
   };
 }
 
-export function loadRequest(request) {
+export function setLoadRequest(request) {
   return {
     type: LOAD_REQUEST,
     request,
+  };
+}
+
+export function loadState(state) {
+  return {
+    type: LOAD_STATE,
+    state,
   };
 }

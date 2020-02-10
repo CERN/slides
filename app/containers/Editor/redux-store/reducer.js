@@ -175,15 +175,15 @@ const PresentationReducer = (state = initialState, action) =>
       case SET_ASSETS_PATH:
         draft.assetsPath = action.path;
         break;
-      case LOAD_PRESENTATION:
+      case LOAD_PRESENTATION: {
         // get the json from the action
         // set the state using:
-
-        // const newState = JSON.parse(action.stateString);
-        // Object.keys(newState["global"]).map(s => {
-        //   draft[s] = newState[s];
-        // })
+        const newState = JSON.parse(action.state);
+        Object.keys(newState.global).map(s => {
+          draft[s] = newState[s];
+        });
         break;
+      }
       case SAVE_PRESENTATION:
         break;
       case SET_USER:

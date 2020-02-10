@@ -82,6 +82,7 @@
     "express": "4.16.4",
     "express-fileupload": "^1.1.6",
     "express-form-data": "^2.0.10",
+    "extract-zip": "^1.6.7",
     "fontfaceobserver": "2.1.0",
     "formidable": "^1.2.1",
     "fs": "0.0.1-security",

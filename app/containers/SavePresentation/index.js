@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { post } from 'axios';
-
-import { selectSaveRequest } from '../Editor/redux-store/selectors';
 import { setSaveRequest } from '../Editor/redux-store/actions';
 
 // when i load the state how can i put it in my state?
@@ -50,8 +48,7 @@ export function mapDispatchToProps(dispatch) {
 
 export default connect(
   state => ({
-    stateStringified: JSON.stringify(state, null, 2),
-    saveRequest: selectSaveRequest(state),
+    stateStringified: JSON.stringify(state),
   }),
   mapDispatchToProps,
 )(SavePresentation);
