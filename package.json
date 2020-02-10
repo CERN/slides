@@ -92,7 +92,6 @@
     "intl": "1.2.5",
     "invariant": "2.2.4",
     "ip": "1.1.5",
-    "jszip": "^3.2.2",
     "lodash": "^4.17.15",
     "minimist": "1.2.0",
     "multer": "^1.4.2",
@@ -118,7 +117,8 @@
     "semantic-ui-react": "^0.88.2",
     "spectacle": "^5.7.2",
     "styled-components": "4.2.0",
-    "uuid": "^3.4.0"
+    "uuid": "^3.4.0",
+    "zip-folder": "^1.0.0"
   },
   "devDependencies": {
     "@babel/cli": "7.4.3",
