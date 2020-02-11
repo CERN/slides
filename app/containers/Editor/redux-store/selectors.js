@@ -33,6 +33,7 @@ const selectAssetsPath = state => state.global.assetsPath;
 const selectUsername = state => state.global.username;
 const selectSaveRequest = state => state.global.saveRequest;
 const selectLoadRequest = state => state.global.loadRequest;
+const selectIsReady = state => state.global.isReady;
 
 export {
   selectDeckOfSlides,
@@ -52,4 +53,5 @@ export {
   selectUsername,
   selectSaveRequest,
   selectLoadRequest,
+  selectIsReady,
 };

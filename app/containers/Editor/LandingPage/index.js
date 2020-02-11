@@ -20,6 +20,8 @@ import {
   setTitle,
   setDescription,
   setUsername,
+  setLoadRequest,
+  setIsReady,
 } from '../redux-store/actions';
 
 import {
@@ -27,10 +29,11 @@ import {
   selectTitle,
   selectDescription,
   selectUsername,
+  selectAssetsPath,
 } from '../redux-store/selectors';
-import img from '../../../images/CERN-Logo.png';
+// import img from '../../../images/CERN-Logo.png';
 import './index.css';
-import preloader from '../../../utils/preloader';
+// import preloader from '../../../utils/preloader';
 import history from '../../../utils/history';
 
 const themeOptions = [
@@ -66,7 +69,7 @@ const themeOptions = [
   },
 ];
 
-preloader(img);
+// preloader(img);
 
 function LandingPage({
   onSetTheme,
@@ -77,21 +80,30 @@ function LandingPage({
   currentTitle,
   currentDescription,
   currentUser,
-  readyFunc,
+  onSetIsReady,
+  onLoadRequest,
+  assetsPath,
 }) {
   const [title, setTi] = useState(currentTitle);
   const [theme, setTh] = useState(currentTheme);
   const [description, setDes] = useState(currentDescription);
   const [user, setUser] = useState(currentUser);
 
-  const clickHandler = () => {
+  const clickHandlerNew = () => {
     onSetTitle(title);
     onSetTheme(theme);
     onSetDescription(description);
     history.push(`/${user}/${title}/edit/`);
     // make a uuid for this Presentation:
     onSetUsername(user);
-    readyFunc();
+    // ready
+    onSetIsReady();
+  };
+
+  const clickHandlerLoad = () => {
+    // set LoadReq
+    onLoadRequest();
+    // load component will take over and load content
   };
 
   const settingTitle = (e, { value }) => setTi(value);
@@ -99,9 +111,10 @@ function LandingPage({
   const settingDescription = (e, { value }) => setDes(value);
   const settingUser = (e, { value }) => setUser(value);
 
+  const cernLogoPath = `${assetsPath}/cernlogo/CERN-Logo.png`;
   return (
     <div className="landing-page">
-      <Image src={img} size="medium" centered />
+      <Image src={cernLogoPath} size="medium" centered />
       <Grid columns={2} relaxed="very" stackable textAlign="center">
         <Grid.Row>
           <Grid.Column width={12}>
@@ -136,8 +149,8 @@ function LandingPage({
                 />
                 <Button
                   color="green"
-                  size="large"
-                  onClick={clickHandler}
+                  // size="large"
+                  onClick={clickHandlerNew}
                   animated
                 >
                   <Button.Content visible>Let's GO!</Button.Content>
@@ -153,7 +166,17 @@ function LandingPage({
             <Header className="white" size="large">
               Edit Existing Presentation
             </Header>
-            <Button primary>Upload</Button>
+            <Button
+              color="blue"
+              // size="large"
+              onClick={clickHandlerLoad}
+              animated
+            >
+              <Button.Content visible>Upload</Button.Content>
+              <Button.Content hidden>
+                <Icon name="arrow up" />
+              </Button.Content>
+            </Button>
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -170,7 +193,9 @@ LandingPage.propTypes = {
   currentTitle: PropTypes.string,
   currentDescription: PropTypes.string,
   currentUser: PropTypes.string,
-  readyFunc: PropTypes.func,
+  onSetIsReady: PropTypes.func,
+  onLoadRequest: PropTypes.func,
+  assetsPath: PropTypes.string,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -179,6 +204,8 @@ export function mapDispatchToProps(dispatch) {
     onSetTitle: title => dispatch(setTitle(title)),
     onSetDescription: description => dispatch(setDescription(description)),
     onSetUsername: user => dispatch(setUsername(user)),
+    onLoadRequest: () => dispatch(setLoadRequest(true)),
+    onSetIsReady: () => dispatch(setIsReady(true)),
   };
 }
 
@@ -188,6 +215,7 @@ export default connect(
     currentTitle: selectTitle(state),
     currentDescription: selectDescription(state),
     currentUser: selectUsername(state),
+    assetsPath: selectAssetsPath(state),
   }),
   mapDispatchToProps,
 )(LandingPage);

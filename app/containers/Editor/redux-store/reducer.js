@@ -27,6 +27,7 @@ import {
   SET_USER,
   SAVE_REQUEST,
   LOAD_REQUEST,
+  IS_READY,
 } from './constants';
 
 // The initial state of the App
@@ -71,6 +72,7 @@ export const initialState = {
   theme: '',
   title: 'New Presentation',
   description: '',
+  isReady: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -189,6 +191,8 @@ const PresentationReducer = (state = initialState, action) =>
       case SET_USER:
         draft.username = action.user;
         break;
+      case IS_READY:
+        draft.isReady = action.ready;
     }
   });
 

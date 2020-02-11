@@ -1,18 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { post } from 'axios';
-
+import { useDropzone } from 'react-dropzone';
+import { Modal, Button, Icon } from 'semantic-ui-react';
 import { selectLoadRequest } from '../Editor/redux-store/selectors';
-import { setLoadRequest, loadState } from '../Editor/redux-store/actions';
-
+import {
+  setLoadRequest,
+  loadState,
+  setIsReady,
+} from '../Editor/redux-store/actions';
+import {
+  baseStyle,
+  activeStyle,
+  acceptStyle,
+  rejectStyle,
+  thumbsContainer,
+} from '../Editor/styles';
+import './index.css';
 // load will be a post request
 
 // when i load the state how can i put it in my state?
-function LoadPresentation({ onLoadRequest, loadRequest }) {
+function LoadPresentation({ onLoadRequest, loadRequest, onSetIsReady }) {
+  const {
+    acceptedFiles,
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragAccept,
+    isDragReject,
+  } = useDropzone({
+    accept: '.slides',
+  });
+
+  const style = useMemo(
+    () => ({
+      ...baseStyle,
+      ...(isDragActive ? activeStyle : {}),
+      ...(isDragAccept ? acceptStyle : {}),
+      ...(isDragReject ? rejectStyle : {}),
+    }),
+    [isDragActive, isDragReject],
+  );
   // use a load endpoint in the server
   // fix UI and redux is correct and server api more or less ready
-  const Load = () => {
+  const sendLoadRequest = () => {
     // I need to make the body of the post request and send a request that includes the params
     //     const url = `${assetsPath}/save`;
     //     post(
@@ -30,22 +62,59 @@ function LoadPresentation({ onLoadRequest, loadRequest }) {
     // make my post request in the server
     // check if the respone is good
     // extract the state information and call the loadstate action to copy the whole string to the current state
+    console.log('helloooooo from load front');
+    // now that the request is done I can say I am ready for and can move from landing page
+    onLoadRequest();
+    onSetIsReady();
   };
-  if (loadRequest) Load();
+  const onCancelHandler = () => {
+    onLoadRequest();
+  };
+  const acceptedFilesItems = acceptedFiles.map(file => (
+    // presentation icon
+    <div key={file.path}>
+      <h4>Presentation:</h4>
+      <Icon name="file" /> {file.path} - {file.size} bytes
+    </div>
+  ));
   // return a window to upload a file from local computer
   // check that it is .slides and send it to load endpoint and try to open and process it, if it is not processed show an error message
-  return <div />;
+  return (
+    <Modal dimmer="blurring" open={loadRequest}>
+      <Modal.Header>Load Presentation</Modal.Header>
+      <Modal.Content>
+        <div className="dropzone">
+          <div {...getRootProps({ style })}>
+            <input {...getInputProps()} />
+            <p>
+              Drag 'n' drop a presentation file here, or click to select file
+            </p>
+            <em>(Only *.slides presentations will be accepted)</em>
+          </div>
+          <aside style={thumbsContainer}>{acceptedFilesItems}</aside>
+          <Button color="red" onClick={onCancelHandler}>
+            <Icon name="remove" /> Cancel
+          </Button>
+          <Button color="green" onClick={sendLoadRequest}>
+            <Icon name="checkmark" /> Upload
+          </Button>
+        </div>
+      </Modal.Content>
+    </Modal>
+  );
 }
 
 LoadPresentation.propTypes = {
   onLoadRequest: PropTypes.func,
   loadRequest: PropTypes.bool,
+  onSetIsReady: PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     onLoadRequest: () => dispatch(setLoadRequest(false)),
     onLoadState: state => dispatch(loadState(state)),
+    onSetIsReady: () => dispatch(setIsReady(true)),
   };
 }
 

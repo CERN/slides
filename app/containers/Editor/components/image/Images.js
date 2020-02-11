@@ -13,7 +13,7 @@ function Images({ currentImageArray, assetsPath }) {
   // this base will be the server's address base for every image , localhost:3000/public/static/images
   // the base I will be assetsPath
   const imagePaths = currentImageArray.map(img => `${assetsPath}/static/${img.src}`);
-  console.log("imagePaths.......", imagePaths)
+  // console.log("imagePaths.......", imagePaths)
   const images = imagePaths.map(img => (
     <Image
       key={img}

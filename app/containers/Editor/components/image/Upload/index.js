@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 // import { Button, Progress, Icon, Message } from 'semantic-ui-react';
@@ -10,13 +10,8 @@ import { selectPendingImageUploadRequest } from '../../../redux-store/selectors'
 
 // check where can i store the images
 export function Upload({ uploadRequest }) {
-  const [uploading, setUploading] = useState(uploadRequest);
-  useEffect(() => {
-    setUploading(uploadRequest);
-  }, [uploadRequest]);
-
   return (
-    <Modal dimmer="blurring" open={uploading}>
+    <Modal dimmer="blurring" open={uploadRequest}>
       <Modal.Header>Upload an Image</Modal.Header>
       <Modal.Content>
         <Dropzone />

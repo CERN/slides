@@ -28,5 +28,6 @@ export const SET_USER = 'Slides/Presentation/SET_USER';
 export const SAVE_REQUEST = 'Slides/Presentation/SAVE_REQUEST';
 export const LOAD_REQUEST = 'Slides/Presentation/LOAD_REQUEST';
 export const LOAD_STATE = 'Slides/Presentation/LOAD_STATE';
+export const IS_READY = 'Slides/Presentation/IS_READY';
 
 export const CHANGE_SLIDE = '@@router/LOCATION_CHANGE';

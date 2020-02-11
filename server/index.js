@@ -50,6 +50,8 @@ app.post('/upload', (req, res) => {
 
 // serve static images from folder public/assets
 app.use('/static', express.static(`${uploadsFolder}/assets`));
+app.use('/cernlogo', express.static(`${uploadsFolder}/cernLogo`));
+
 // this is to allow cross origin request and be able to send photos
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');

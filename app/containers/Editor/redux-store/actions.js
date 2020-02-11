@@ -34,6 +34,7 @@ import {
   SAVE_REQUEST,
   LOAD_REQUEST,
   LOAD_STATE,
+  IS_READY,
 } from './constants';
 
 /**
@@ -213,5 +214,12 @@ export function loadState(state) {
   return {
     type: LOAD_STATE,
     state,
+  };
+}
+
+export function setIsReady(ready) {
+  return {
+    type: IS_READY,
+    ready,
   };
 }

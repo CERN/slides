@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import './index.css';
 import { Grid, GridColumn } from 'semantic-ui-react';
 import Settings from '../Settings';
@@ -6,16 +9,13 @@ import Canvas from '../Canvas';
 import SideBar from '../SideBar';
 import LandingPage from '../LandingPage';
 import SavePresentation from '../../SavePresentation';
+import LoadPresentation from '../../LoadPresentation';
+import { selectIsReady } from '../redux-store/selectors';
 
-export default function Container() {
-  const [ready, setReady] = useState(false);
-  const readyFunc = () => {
-    setReady(true);
-  };
-
+export function Container({ isReady }) {
   return (
     <div>
-      {ready ? (
+      {isReady ? (
         <div className="container">
           <Grid>
             <GridColumn className="settings">
@@ -33,10 +33,22 @@ export default function Container() {
       ) : (
         <div className="themeSelector">
           <div className="inside">
-            <LandingPage readyFunc={readyFunc} />
+            <LandingPage />
+            <LoadPresentation />
           </div>
         </div>
       )}
     </div>
   );
 }
+
+Container.propTypes = {
+  isReady: PropTypes.bool,
+};
+
+export default connect(
+  state => ({
+    isReady: selectIsReady(state),
+  }),
+  null,
+)(Container);

@@ -2,15 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Menu, Icon, Popup } from 'semantic-ui-react';
-import { setSaveRequest, setLoadRequest } from '../redux-store/actions';
+import { setSaveRequest } from '../redux-store/actions';
 
 import './index.css';
 
-function Settings({ onSaveRequest, onLoadRequest }) {
+function Settings({ onSaveRequest }) {
   const onClickHandler = item => {
     // turn on a save request
     if (item === 'save') onSaveRequest();
-    else if (item === 'cloud upload') onLoadRequest();
   };
   const Item = (item, description) => (
     <Menu.Item onClick={() => onClickHandler(item)}>
@@ -48,13 +47,11 @@ function Settings({ onSaveRequest, onLoadRequest }) {
 
 Settings.propTypes = {
   onSaveRequest: PropTypes.func,
-  onLoadRequest: PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     onSaveRequest: () => dispatch(setSaveRequest(true)),
-    onLoadRequest: () => dispatch(setLoadRequest(true)),
   };
 }
 
