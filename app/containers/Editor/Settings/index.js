@@ -2,14 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Menu, Icon, Popup } from 'semantic-ui-react';
-import { setSaveRequest } from '../redux-store/actions';
+import { setSaveRequest, setLoadRequest } from '../redux-store/actions';
 
 import './index.css';
 
-function Settings({ onSaveRequest }) {
+function Settings({ onSaveRequest, onLoadRequest }) {
   const onClickHandler = item => {
     // turn on a save request
     if (item === 'save') onSaveRequest();
+    else if (item === 'cloud upload') onLoadRequest();
   };
   const Item = (item, description) => (
     <Menu.Item onClick={() => onClickHandler(item)}>
@@ -31,7 +32,7 @@ function Settings({ onSaveRequest }) {
       {Item('paint brush', 'Style')}
       {Item('ordered list', 'Arrange Slides')}
       {Item('time', 'Revision history')}
-      {Item('cloud upload', 'Import')}
+      {Item('cloud upload', 'Import from my CERNBox')}
       {Item('cloud download', 'Export')}
       {Item('image', 'Media')}
       {Item('share alternate', 'Share')}
@@ -47,11 +48,13 @@ function Settings({ onSaveRequest }) {
 
 Settings.propTypes = {
   onSaveRequest: PropTypes.func,
+  onLoadRequest: PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     onSaveRequest: () => dispatch(setSaveRequest(true)),
+    onLoadRequest: () => dispatch(setLoadRequest(true)),
   };
 }
 

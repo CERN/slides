@@ -63,9 +63,9 @@ app.use((req, res, next) => {
 
 // Save Endpoint
 app.post('/save', (req, res) => {
-  if (req.state === null) {
-    return res.status(400).json({ msg: 'No redux state given' });
-  }
+  // if (req.state === null) {
+  //   return res.status(400).json({ msg: 'No redux state given' });
+  // }
   // in this endpoint I need to get,
   // username, title, all the state stringified
   // I know where the assets are located
@@ -104,8 +104,11 @@ app.post('/save', (req, res) => {
   }
 });
 
-app.get('/load', (req, res) => {
-  // source will be
+app.post('/load', (req, res) => {
+  // if (req.data === null) {
+  //   return res.status(400).json({ msg: 'No redux state given' });
+  // }
+
   const { data } = req.body;
   const { username, title } = data;
   const presentationName = `${uploadsFolder}/${username}/${title}.slides`;

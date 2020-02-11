@@ -11,6 +11,8 @@ import {
   Select,
   TextArea,
   Icon,
+  Grid,
+  Divider,
 } from 'semantic-ui-react';
 
 import {
@@ -66,7 +68,7 @@ const themeOptions = [
 
 preloader(img);
 
-function ThemeSelector({
+function LandingPage({
   onSetTheme,
   onSetTitle,
   onSetDescription,
@@ -86,7 +88,7 @@ function ThemeSelector({
     onSetTitle(title);
     onSetTheme(theme);
     onSetDescription(description);
-    history.push(`/username/${title}/edit/`);
+    history.push(`/${user}/${title}/edit/`);
     // make a uuid for this Presentation:
     onSetUsername(user);
     readyFunc();
@@ -98,50 +100,68 @@ function ThemeSelector({
   const settingUser = (e, { value }) => setUser(value);
 
   return (
-    <div className="theme-selector">
+    <div className="landing-page">
       <Image src={img} size="medium" centered />
-      <Header className="white" size="large">
-        Start your Presentation
-      </Header>
-      <Form size="large">
-        <Segment>
-          <Input
-            className="spacing"
-            placeholder="Username"
-            fluid
-            onChange={settingUser}
-          />
-          <Input
-            className="spacing"
-            placeholder="Presentation Title"
-            fluid
-            onChange={settingTitle}
-          />
-          <Select
-            className="spacing"
-            placeholder="Select Theme"
-            fluid
-            options={themeOptions}
-            onChange={settingTheme}
-          />
-          <TextArea
-            className="spacing"
-            placeholder="What is your Presentation about?"
-            onChange={settingDescription}
-          />
-          <Button color="green" size="large" onClick={clickHandler} animated>
-            <Button.Content visible>Let's GO!</Button.Content>
-            <Button.Content hidden>
-              <Icon name="arrow right" />
-            </Button.Content>
-          </Button>
-        </Segment>
-      </Form>
+      <Grid columns={2} relaxed="very" stackable textAlign="center">
+        <Grid.Row>
+          <Grid.Column width={12}>
+            <Header className="white" size="large">
+              Start New Presentation
+            </Header>
+            <Form size="large">
+              <Segment>
+                <Input
+                  className="spacing"
+                  placeholder="Username"
+                  fluid
+                  onChange={settingUser}
+                />
+                <Input
+                  className="spacing"
+                  placeholder="Presentation Title"
+                  fluid
+                  onChange={settingTitle}
+                />
+                <Select
+                  className="spacing"
+                  placeholder="Select Theme"
+                  fluid
+                  options={themeOptions}
+                  onChange={settingTheme}
+                />
+                <TextArea
+                  className="spacing"
+                  placeholder="What is your Presentation about?"
+                  onChange={settingDescription}
+                />
+                <Button
+                  color="green"
+                  size="large"
+                  onClick={clickHandler}
+                  animated
+                >
+                  <Button.Content visible>Let's GO!</Button.Content>
+                  <Button.Content hidden>
+                    <Icon name="arrow right" />
+                  </Button.Content>
+                </Button>
+              </Segment>
+            </Form>
+          </Grid.Column>
+          <Divider horizontal>Or</Divider>
+          <Grid.Column>
+            <Header className="white" size="large">
+              Edit Existing Presentation
+            </Header>
+            <Button primary>Upload</Button>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </div>
   );
 }
 
-ThemeSelector.propTypes = {
+LandingPage.propTypes = {
   onSetTheme: PropTypes.func,
   onSetTitle: PropTypes.func,
   onSetDescription: PropTypes.func,
@@ -170,4 +190,4 @@ export default connect(
     currentUser: selectUsername(state),
   }),
   mapDispatchToProps,
-)(ThemeSelector);
+)(LandingPage);

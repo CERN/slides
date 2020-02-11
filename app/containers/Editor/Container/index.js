@@ -4,7 +4,7 @@ import { Grid, GridColumn } from 'semantic-ui-react';
 import Settings from '../Settings';
 import Canvas from '../Canvas';
 import SideBar from '../SideBar';
-import ThemeSelector from '../ThemeSelector';
+import LandingPage from '../LandingPage';
 import SavePresentation from '../../SavePresentation';
 
 export default function Container() {
@@ -33,7 +33,7 @@ export default function Container() {
       ) : (
         <div className="themeSelector">
           <div className="inside">
-            <ThemeSelector readyFunc={readyFunc} />
+            <LandingPage readyFunc={readyFunc} />
           </div>
         </div>
       )}

@@ -4,13 +4,13 @@
 
 .grid {
   background-color: #0053A1 !important;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 .ui.grid {
   margin: 0 !important;
 }
 
-.theme-selector {
-  width: 35em;
+.landing-page {
+  width: 60em;
 }

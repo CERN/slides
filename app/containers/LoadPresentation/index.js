@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { get } from 'axios';
+import { post } from 'axios';
 
 import { selectLoadRequest } from '../Editor/redux-store/selectors';
 import { setLoadRequest, loadState } from '../Editor/redux-store/actions';
+
+// load will be a post request
 
 // when i load the state how can i put it in my state?
 function LoadPresentation({ onLoadRequest, loadRequest }) {
@@ -13,7 +15,7 @@ function LoadPresentation({ onLoadRequest, loadRequest }) {
   const Load = () => {
     // I need to make the body of the post request and send a request that includes the params
     //     const url = `${assetsPath}/save`;
-    //     get(
+    //     post(
     //       url,
     //       { state: stateStringified },
     //       { headers: { 'Content-Type': 'application/json' } },
@@ -25,12 +27,13 @@ function LoadPresentation({ onLoadRequest, loadRequest }) {
     //         console.log(error);
     //       });
     //     onLoadRequest();
-    // make my get request in the server
+    // make my post request in the server
     // check if the respone is good
     // extract the state information and call the loadstate action to copy the whole string to the current state
   };
   if (loadRequest) Load();
-
+  // return a window to upload a file from local computer
+  // check that it is .slides and send it to load endpoint and try to open and process it, if it is not processed show an error message
   return <div />;
 }
 
