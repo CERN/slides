@@ -111,36 +111,48 @@ app.post('/load', (req, res) => {
   //   return res.status(400).json({ msg: 'No redux state given' });
   // }
 
-  const { data } = req.body;
-  const { username, title } = data;
-  const presentationName = `${uploadsFolder}/${username}/${title}.slides`;
-  const extractFolder = `${uploadsFolder}/${username}/${title}/tmp`;
-  // check if i need to create this folder first
-  extract(presentationName, { dir: extractFolder }, err => {
+  if (req.files === null) {
+    return res.status(400).json({ msg: 'No file uploaded' });
+  }
+
+  const { file } = req.files;
+  // console.log('...........server::::', file);
+  const extractFolder = `${uploadsFolder}/extract-folder`;
+  const tmpFolder = `${uploadsFolder}/tmp-folder`;
+  fs.emptyDirSync(tmpFolder);
+  const tmpNameForDotSlides = `${tmpFolder}/${file.md5}-${file.name}`;
+  file.mv(tmpNameForDotSlides, err => {
     if (err) {
-      console.log('An error has occured', err);
-    } else {
-      console.log(
-        "The presentation is extracted let's read it, it is located in: ",
-        extractFolder,
-      );
-      // move assets in the common assets folder
-      fs.copySync(`${extractFolder}/assets`, `${uploadsFolder}/assets`);
-      // update react state with the JSON file
-      // read the JSON
-      const reduxStateOBJ = fs.readJsonSync(
-        `${extractFolder}/presentation.JSON`,
-      );
-      console.log('reduxStateOBJ', reduxStateOBJ);
-      // see how I can write it in redux state
-      // probably I can return the obj in the response
-      res.json({
-        state: reduxStateOBJ,
-      });
+      console.error(err);
+      return res.status(500).send(err);
     }
   });
-  // delete the extractFolder folder
-  fs.removeSync(extractFolder);
+  // check if i need to create this folder first
+  fs.emptyDirSync(extractFolder);
+  extract(tmpNameForDotSlides, { dir: extractFolder }, err => {
+    if (err) {
+      console.log('An error has occured1', err);
+      // return res.status(500).send(err);
+    }
+    console.log(
+      "The presentation is extracted let's read it, it is located in: ",
+      extractFolder,
+    );
+    // move assets in the common assets folder
+    fs.copySync(`${extractFolder}/assets`, `${uploadsFolder}/assets`);
+    // update react state with the JSON file
+    // read the JSON
+    const reduxStateOBJ = fs.readJsonSync(`${extractFolder}/presentation.JSON`);
+    console.log('reduxStateOBJ', reduxStateOBJ);
+    // see how I can write it in redux state
+    // probably I can return the obj in the response
+    res.json({
+      state: reduxStateOBJ,
+    });
+    // delete the extractFolder folder
+    fs.removeSync(tmpFolder);
+    fs.removeSync(extractFolder);
+  });
 });
 
 // In production we need to pass these values in instead of relying on webpack

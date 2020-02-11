@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import { post } from 'axios';
 import { useDropzone } from 'react-dropzone';
 import { Modal, Button, Icon } from 'semantic-ui-react';
-import { selectLoadRequest } from '../Editor/redux-store/selectors';
+import {
+  selectLoadRequest,
+  selectAssetsPath,
+} from '../Editor/redux-store/selectors';
 import {
   setLoadRequest,
   loadState,
@@ -19,9 +22,15 @@ import {
 } from '../Editor/styles';
 import './index.css';
 // load will be a post request
-
+// make possible to upload only one presentation at a point
 // when i load the state how can i put it in my state?
-function LoadPresentation({ onLoadRequest, loadRequest, onSetIsReady }) {
+// I do something wrong with the image extracting check it
+function LoadPresentation({
+  onLoadRequest,
+  loadRequest,
+  onSetIsReady,
+  assetsPath,
+}) {
   const {
     acceptedFiles,
     getRootProps,
@@ -43,26 +52,35 @@ function LoadPresentation({ onLoadRequest, loadRequest, onSetIsReady }) {
     [isDragActive, isDragReject],
   );
   // use a load endpoint in the server
+  // so get the .slides
+  // send it as post in server
+  // server extracts, saves the images
+  // send as response the stringified state
+  // frontend sets the state that it got using a redux dispatch action
   // fix UI and redux is correct and server api more or less ready
-  const sendLoadRequest = () => {
-    // I need to make the body of the post request and send a request that includes the params
-    //     const url = `${assetsPath}/save`;
-    //     post(
-    //       url,
-    //       { state: stateStringified },
-    //       { headers: { 'Content-Type': 'application/json' } },
-    //     )
-    //       .then(response => {
-    //         console.log('response:', response);
-    //       })
-    //       .catch(error => {
-    //         console.log(error);
-    //       });
-    //     onLoadRequest();
-    // make my post request in the server
-    // check if the respone is good
+  const presentationUpload = () => {
+    // const url = 'http://localhost:3000/load';
+    const url = `${assetsPath}/load`;
+    const formData = new FormData();
+    formData.append('file', acceptedFiles[0]);
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    };
+    return post(url, formData, config);
+  };
+  const sendLoadRequest = e => {
+    e.preventDefault();
+
+    // the response is correct
+    presentationUpload().then(response => {
+      console.log(
+        'The response should be the string of the state or the object check: ',
+        response.data.state.reduxStateOBJ,
+      );
+    });
     // extract the state information and call the loadstate action to copy the whole string to the current state
-    console.log('helloooooo from load front');
     // now that the request is done I can say I am ready for and can move from landing page
     onLoadRequest();
     onSetIsReady();
@@ -108,6 +126,7 @@ LoadPresentation.propTypes = {
   onLoadRequest: PropTypes.func,
   loadRequest: PropTypes.bool,
   onSetIsReady: PropTypes.func,
+  assetsPath: PropTypes.string,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -121,6 +140,7 @@ export function mapDispatchToProps(dispatch) {
 export default connect(
   state => ({
     loadRequest: selectLoadRequest(state),
+    assetsPath: selectAssetsPath(state),
   }),
   mapDispatchToProps,
 )(LoadPresentation);

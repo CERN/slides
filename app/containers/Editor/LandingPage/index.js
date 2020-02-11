@@ -172,7 +172,7 @@ function LandingPage({
               onClick={clickHandlerLoad}
               animated
             >
-              <Button.Content visible>Upload</Button.Content>
+              <Button.Content visible>Upload!</Button.Content>
               <Button.Content hidden>
                 <Icon name="arrow up" />
               </Button.Content>
