@@ -31,9 +31,7 @@ import {
   selectUsername,
   selectAssetsPath,
 } from '../redux-store/selectors';
-// import img from '../../../images/CERN-Logo.png';
 import './index.css';
-// import preloader from '../../../utils/preloader';
 import history from '../../../utils/history';
 
 const themeOptions = [

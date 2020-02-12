@@ -65,9 +65,6 @@ app.use((req, res, next) => {
 
 // Save Endpoint
 app.post('/save', (req, res) => {
-  // if (req.state === null) {
-  //   return res.status(400).json({ msg: 'No redux state given' });
-  // }
   // in this endpoint I need to get,
   // username, title, all the state stringified
   // I know where the assets are located
@@ -107,16 +104,10 @@ app.post('/save', (req, res) => {
 });
 
 app.post('/load', (req, res) => {
-  // if (req.data === null) {
-  //   return res.status(400).json({ msg: 'No redux state given' });
-  // }
-
   if (req.files === null) {
     return res.status(400).json({ msg: 'No file uploaded' });
   }
-
   const { file } = req.files;
-  // console.log('...........server::::', file);
   const extractFolder = `${uploadsFolder}/extract-folder`;
   const tmpFolder = `${uploadsFolder}/tmp-folder`;
   fs.emptyDirSync(tmpFolder);
@@ -128,24 +119,18 @@ app.post('/load', (req, res) => {
     }
   });
   // check if i need to create this folder first
-  fs.emptyDirSync(extractFolder);
+  fs.emptyDirSync(`${extractFolder}/assets`);
   extract(tmpNameForDotSlides, { dir: extractFolder }, err => {
     if (err) {
       console.log('An error has occured1', err);
-      // return res.status(500).send(err);
+      return res.status(500).send(err);
     }
-    console.log(
-      "The presentation is extracted let's read it, it is located in: ",
-      extractFolder,
-    );
     // move assets in the common assets folder
+    fs.emptyDirSync(`${uploadsFolder}/assets`);
     fs.copySync(`${extractFolder}/assets`, `${uploadsFolder}/assets`);
-    // update react state with the JSON file
     // read the JSON
     const reduxStateOBJ = fs.readJsonSync(`${extractFolder}/presentation.JSON`);
-    console.log('reduxStateOBJ', reduxStateOBJ);
-    // see how I can write it in redux state
-    // probably I can return the obj in the response
+    // return the redux state
     res.json({
       state: reduxStateOBJ,
     });

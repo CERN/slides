@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { post } from 'axios';
@@ -20,6 +20,7 @@ import {
   rejectStyle,
   thumbsContainer,
 } from '../Editor/styles';
+import history from '../../utils/history';
 import './index.css';
 // load will be a post request
 // make possible to upload only one presentation at a point
@@ -30,6 +31,7 @@ function LoadPresentation({
   loadRequest,
   onSetIsReady,
   assetsPath,
+  onLoadState,
 }) {
   const {
     acceptedFiles,
@@ -72,15 +74,14 @@ function LoadPresentation({
   };
   const sendLoadRequest = e => {
     e.preventDefault();
-
-    // the response is correct
     presentationUpload().then(response => {
-      console.log(
-        'The response should be the string of the state or the object check: ',
-        response.data.state.reduxStateOBJ,
-      );
+      // extract the state information and call the loadstate action to copy the whole obj to the current state
+      onLoadState(response.data.state);
+      // set url
+      const { title, username } = response.data.state.global;
+      history.push(`/${username}/${title}/edit/`);
     });
-    // extract the state information and call the loadstate action to copy the whole string to the current state
+
     // now that the request is done I can say I am ready for and can move from landing page
     onLoadRequest();
     onSetIsReady();
@@ -127,6 +128,7 @@ LoadPresentation.propTypes = {
   loadRequest: PropTypes.bool,
   onSetIsReady: PropTypes.func,
   assetsPath: PropTypes.string,
+  onLoadState: PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {

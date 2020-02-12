@@ -22,12 +22,12 @@ import {
   ADD_IMAGE,
   IMAGE_UPLOAD_REQUEST,
   SET_ASSETS_PATH,
-  LOAD_PRESENTATION,
   SAVE_PRESENTATION,
   SET_USER,
   SAVE_REQUEST,
   LOAD_REQUEST,
   IS_READY,
+  LOAD_STATE,
 } from './constants';
 
 // The initial state of the App
@@ -37,31 +37,8 @@ export const initialState = {
     {
       currentText: 0,
       currentImage: 0,
-      textArray: [
-        {
-          id: 0,
-          data: "That's 0 Slide",
-          edit: false,
-          position: {
-            width: '500px',
-            height: '70px',
-            x: 400,
-            y: 250,
-          },
-        },
-      ],
-      imageArray: [
-        {
-          id: 0,
-          src: 'happy.jpg',
-          position: {
-            width: '800px',
-            height: '70px',
-            x: 500,
-            y: 250,
-          },
-        },
-      ],
+      textArray: [],
+      imageArray: [],
     },
   ],
   assetsPath: '',
@@ -177,13 +154,15 @@ const PresentationReducer = (state = initialState, action) =>
       case SET_ASSETS_PATH:
         draft.assetsPath = action.path;
         break;
-      case LOAD_PRESENTATION: {
+      case LOAD_STATE: {
         // get the json from the action
         // set the state using:
-        const newState = JSON.parse(action.state);
-        Object.keys(newState.global).map(s => {
+        const newState = { ...action.state.global };
+        Object.keys(newState).map(s => {
           draft[s] = newState[s];
         });
+        draft.saveRequest = false;
+        // and change the link
         break;
       }
       case SAVE_PRESENTATION:
@@ -197,3 +176,26 @@ const PresentationReducer = (state = initialState, action) =>
   });
 
 export default PresentationReducer;
+
+// {
+//   id: 0,
+//   data: "That's 0 Slide",
+//   edit: false,
+//   position: {
+//     width: '500px',
+//     height: '70px',
+//     x: 400,
+//     y: 250,
+//   },
+// },
+
+// {
+//   id: 0,
+//   src: 'happy.jpg',
+//   position: {
+//     width: '800px',
+//     height: '70px',
+//     x: 500,
+//     y: 250,
+//   },
+// },
