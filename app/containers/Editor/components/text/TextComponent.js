@@ -22,6 +22,7 @@ export function TextComponent({
   onToggleEditMode,
   editMode,
 }) {
+  console.log('eimai  o text component');
   const node = useRef(null);
   const style = {
     display: 'flex',

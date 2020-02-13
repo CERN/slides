@@ -81,7 +81,8 @@ const PresentationReducer = (state = initialState, action) =>
           // eslint-disable-next-line no-alert
         } else alert('Not possible to remove the only slide');
         break;
-      case ADD_TEXT:
+      case ADD_TEXT: {
+        console.log('im in add text');
         draft.DeckOfSlides[draft.currentSlide].textArray.push({
           id: draft.DeckOfSlides[draft.currentSlide].currentText + 1,
           data: 'Type Something...',
@@ -94,6 +95,7 @@ const PresentationReducer = (state = initialState, action) =>
         });
         draft.DeckOfSlides[draft.currentSlide].currentText += 1;
         break;
+      }
       case ADD_IMAGE:
         draft.DeckOfSlides[draft.currentSlide].imageArray.push({
           id: draft.DeckOfSlides[draft.currentSlide].currentImage + 1,
