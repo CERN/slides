@@ -5,12 +5,10 @@ import Draggable from 'react-draggable';
 import { Image } from 'semantic-ui-react';
 
 import { changeImagePosition } from '../../redux-store/actions';
-import {
-  selectAssetsPath,
-  selectCurrentImageObject,
-} from '../../redux-store/selectors';
+import { selectAssetsPath } from '../../redux-store/selectors';
 
 function ImageItem({ id, imageObj, assetsPath, onChangePosition }) {
+  // this base will be the server's address base for every image , localhost:3000/public/static/images
   // every image gets his id from the caller
   // and keeps his delta position
   // his normal position
@@ -22,7 +20,6 @@ function ImageItem({ id, imageObj, assetsPath, onChangePosition }) {
   // it should be capable of updating its own position
   // it should be able to trace its delta and update local state and redux state
   const handleDrag = (e, ui) => {
-    console.log('ui', ui.deltaX, ui.deltaY);
     const { x, y } = myDeltaPosition;
     setMyDeltaPosition({
       x: x + ui.deltaX,
@@ -35,11 +32,10 @@ function ImageItem({ id, imageObj, assetsPath, onChangePosition }) {
       y: position.y + myDeltaPosition.y,
     });
   };
-  console.log('myDeltaPosition', myDeltaPosition, 'position', position);
   // render the draggable image
   return (
     <Draggable
-      key={id}
+      // key={id}
       positionOffset={position}
       onDrag={handleDrag}
       onStop={handleDragStop}
@@ -71,7 +67,6 @@ export function mapDispatchToProps(dispatch) {
 export default connect(
   state => ({
     assetsPath: selectAssetsPath(state),
-    imageObj: selectCurrentImageObject(state),
   }),
   mapDispatchToProps,
 )(ImageItem);

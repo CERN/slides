@@ -36,20 +36,9 @@ export const initialState = {
   DeckOfSlides: [
     {
       currentText: -1,
-      currentImage: 0,
+      currentImage: -1,
       textArray: [],
-      imageArray: [
-        {
-          id: 0,
-          src: 'happy.jpg',
-          position: {
-            width: '800px',
-            height: '70px',
-            x: 500,
-            y: 250,
-          },
-        },
-      ],
+      imageArray: [],
     },
   ],
   assetsPath: '',
@@ -137,11 +126,6 @@ const PresentationReducer = (state = initialState, action) =>
         draft.DeckOfSlides[draft.currentSlide].imageArray[
           action.id
         ].position.y = newPosition.y;
-        // Object.keys(newPosition).map(s => {
-        //   draft.DeckOfSlides[draft.currentSlide].imageArray[action.id].position[
-        //     s
-        //   ] = newPosition[s];
-        // });
         break;
       }
       case CHANGE_SLIDE:
