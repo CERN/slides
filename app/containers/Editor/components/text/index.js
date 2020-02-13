@@ -13,7 +13,7 @@ export function MyText({ DeckOfSlides, currentSlide }) {
     <div>
       {DeckOfSlides[currentSlide] &&
         DeckOfSlides[currentSlide].textArray.map(elem => (
-          <TextComponent key={elem.id} textArrayEntry={elem.id} />
+          <TextComponent key={elem.id} />
         ))}
     </div>
   );
@@ -24,7 +24,10 @@ MyText.propTypes = {
   currentSlide: PropTypes.number,
 };
 
-export default connect(state => ({
-  DeckOfSlides: selectDeckOfSlides(state),
-  currentSlide: selectCurrentSlide(state),
-}))(MyText);
+export default connect(
+  state => ({
+    DeckOfSlides: selectDeckOfSlides(state),
+    currentSlide: selectCurrentSlide(state),
+  }),
+  null,
+)(MyText);

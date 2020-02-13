@@ -22,12 +22,12 @@ import {
   ADD_IMAGE,
   IMAGE_UPLOAD_REQUEST,
   SET_ASSETS_PATH,
-  SAVE_PRESENTATION,
   SET_USER,
   SAVE_REQUEST,
   LOAD_REQUEST,
   IS_READY,
   LOAD_STATE,
+  CHANGE_IMAGE_POSITION,
 } from './constants';
 
 // The initial state of the App
@@ -35,10 +35,21 @@ export const initialState = {
   username: 'achionis',
   DeckOfSlides: [
     {
-      currentText: 0,
+      currentText: -1,
       currentImage: 0,
       textArray: [],
-      imageArray: [],
+      imageArray: [
+        {
+          id: 0,
+          src: 'happy.jpg',
+          position: {
+            width: '800px',
+            height: '70px',
+            x: 500,
+            y: 250,
+          },
+        },
+      ],
     },
   ],
   assetsPath: '',
@@ -46,7 +57,7 @@ export const initialState = {
   saveRequest: false,
   loadRequest: false,
   currentSlide: 0,
-  theme: '',
+  theme: 'CERN 1',
   title: 'New Presentation',
   description: '',
   isReady: false,
@@ -59,19 +70,9 @@ const PresentationReducer = (state = initialState, action) =>
     switch (action.type) {
       case ADD_SLIDE:
         draft.DeckOfSlides.splice(draft.currentSlide + 1, 0, {
-          currentText: 0,
-          textArray: [
-            {
-              id: 0,
-              data: `That's ${draft.currentSlide + 1} Slide`,
-              position: {
-                width: '500px',
-                height: '70px',
-                x: 400,
-                y: 250,
-              },
-            },
-          ],
+          currentText: -1,
+          currentImage: -1,
+          textArray: [],
           imageArray: [],
         });
         break;
@@ -82,10 +83,10 @@ const PresentationReducer = (state = initialState, action) =>
         } else alert('Not possible to remove the only slide');
         break;
       case ADD_TEXT: {
-        console.log('im in add text');
         draft.DeckOfSlides[draft.currentSlide].textArray.push({
           id: draft.DeckOfSlides[draft.currentSlide].currentText + 1,
           data: 'Type Something...',
+          edit: false,
           position: {
             width: '500px',
             height: '70px',
@@ -101,8 +102,8 @@ const PresentationReducer = (state = initialState, action) =>
           id: draft.DeckOfSlides[draft.currentSlide].currentImage + 1,
           src: action.src,
           position: {
-            width: '500px',
-            height: '70px',
+            width: '200px',
+            height: '60px',
             x: 400,
             y: 250,
           },
@@ -127,6 +128,22 @@ const PresentationReducer = (state = initialState, action) =>
         draft.DeckOfSlides[draft.currentSlide].textArray[action.id].position =
           action.position;
         break;
+      case CHANGE_IMAGE_POSITION: {
+        const newPosition = { ...action.position };
+        console.log('newPosition.............', newPosition);
+        draft.DeckOfSlides[draft.currentSlide].imageArray[
+          action.id
+        ].position.x = newPosition.x;
+        draft.DeckOfSlides[draft.currentSlide].imageArray[
+          action.id
+        ].position.y = newPosition.y;
+        // Object.keys(newPosition).map(s => {
+        //   draft.DeckOfSlides[draft.currentSlide].imageArray[action.id].position[
+        //     s
+        //   ] = newPosition[s];
+        // });
+        break;
+      }
       case CHANGE_SLIDE:
         draft.currentSlide = Number(action.payload.location.hash.substr(2));
         break;
@@ -164,11 +181,8 @@ const PresentationReducer = (state = initialState, action) =>
           draft[s] = newState[s];
         });
         draft.saveRequest = false;
-        // and change the link
         break;
       }
-      case SAVE_PRESENTATION:
-        break;
       case SET_USER:
         draft.username = action.user;
         break;

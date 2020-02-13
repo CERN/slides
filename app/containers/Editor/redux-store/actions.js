@@ -35,6 +35,7 @@ import {
   LOAD_REQUEST,
   LOAD_STATE,
   IS_READY,
+  CHANGE_IMAGE_POSITION,
 } from './constants';
 
 /**
@@ -221,5 +222,13 @@ export function setIsReady(ready) {
   return {
     type: IS_READY,
     ready,
+  };
+}
+
+export function changeImagePosition(id, position) {
+  return {
+    type: CHANGE_IMAGE_POSITION,
+    id,
+    position,
   };
 }

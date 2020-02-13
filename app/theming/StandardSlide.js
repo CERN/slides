@@ -6,7 +6,7 @@ import getTheme from './theme';
 export default theme =>
   class extends Component {
     static propTypes = {
-      children: PropTypes.object.isRequired,
+      children: PropTypes.array.isRequired,
     };
 
     render() {

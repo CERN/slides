@@ -7,8 +7,10 @@ const selectCurrentSlide = state => state.global.currentSlide;
 const selectTheme = state => state.global.theme;
 const selectTitle = state => state.global.title;
 const selectDescription = state => state.global.description;
-const selectCurrentText = state => state.global.DeckOfSlides.currentText;
-const selectCurrentImage = state => state.global.DeckOfSlides.currentImage;
+const selectCurrentText = state =>
+  state.global.DeckOfSlides[state.global.currentSlide].currentText;
+const selectCurrentImage = state =>
+  state.global.DeckOfSlides[state.global.currentSlide].currentImage;
 const selectEditMode = state =>
   state.global.DeckOfSlides[state.global.currentSlide].textArray[
     state.global.DeckOfSlides[state.global.currentSlide].currentText
@@ -26,6 +28,10 @@ const selectCurrentImageSrc = state =>
     state.global.DeckOfSlides[state.global.currentSlide].currentImage
   ].src;
 
+const selectCurrentImageObject = state =>
+  state.global.DeckOfSlides[state.global.currentSlide].imageArray[
+    state.global.DeckOfSlides[state.global.currentSlide].currentImage
+  ];
 const selectPendingImageUploadRequest = state =>
   state.global.pendingImageUploadRequest;
 
@@ -54,4 +60,5 @@ export {
   selectSaveRequest,
   selectLoadRequest,
   selectIsReady,
+  selectCurrentImageObject,
 };

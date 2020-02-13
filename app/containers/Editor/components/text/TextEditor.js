@@ -15,6 +15,7 @@ export default function TextEditor({ onChange, initialData }) {
       onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
       data={initialData}
       config={{
+        uiColor: '#0053A1',
         toolbar: [
           {
             name: 'clipboard',

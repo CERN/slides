@@ -7,6 +7,8 @@ import TextEditor from './TextEditor';
 import {
   selectCurrentTextArray,
   selectEditMode,
+  selectCurrentTextData,
+  selectCurrentText,
 } from '../../redux-store/selectors';
 import {
   addData,
@@ -16,13 +18,13 @@ import {
 import './index.css';
 export function TextComponent({
   onAddData,
-  textArrayEntry,
+  currentText,
   onChangePosition,
   currentTextArray,
   onToggleEditMode,
   editMode,
+  currentData,
 }) {
-  console.log('eimai  o text component');
   const node = useRef(null);
   const style = {
     display: 'flex',
@@ -31,9 +33,9 @@ export function TextComponent({
     position: 'absolute',
   };
   // text's content
-  const [text, setText] = useState(currentTextArray[textArrayEntry].data);
+  const [text, setText] = useState(currentData);
   // text's position
-  const pos = currentTextArray[textArrayEntry].position;
+  const pos = currentTextArray[currentText].position;
   const [position, setPosition] = useState({
     width: pos.width,
     height: pos.height,
@@ -50,8 +52,8 @@ export function TextComponent({
       // inside click
       // then edit
       console.log('double click');
-      onChangePosition(textArrayEntry, position);
-      onToggleEditMode(textArrayEntry, true);
+      onChangePosition(currentText, position);
+      onToggleEditMode(currentText, true);
     }
   };
 
@@ -65,8 +67,8 @@ export function TextComponent({
     // outside click
     console.log('outside clicki');
     // node.current.blur();
-    onAddData(textArrayEntry, text);
-    onToggleEditMode(textArrayEntry, false);
+    onAddData(currentText, text);
+    onToggleEditMode(currentText, false);
   };
 
   useEffect(() => {
@@ -83,7 +85,7 @@ export function TextComponent({
     setPosition(posi);
   };
 
-  console.log('textedit is ', editMode, text);
+  // console.log('textedit is ', editMode, text);
   return (
     <div
       ref={node}
@@ -130,11 +132,12 @@ export function TextComponent({
 
 TextComponent.propTypes = {
   onAddData: PropTypes.func,
-  textArrayEntry: PropTypes.number,
+  currentText: PropTypes.number,
   onChangePosition: PropTypes.func,
   currentTextArray: PropTypes.array,
   onToggleEditMode: PropTypes.func,
   editMode: PropTypes.bool,
+  currentData: PropTypes.string,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -149,6 +152,8 @@ export default connect(
   state => ({
     currentTextArray: selectCurrentTextArray(state),
     editMode: selectEditMode(state),
+    currentData: selectCurrentTextData(state),
+    currentText: selectCurrentText(state),
   }),
   mapDispatchToProps,
 )(TextComponent);
