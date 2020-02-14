@@ -55,7 +55,7 @@ app.use('/cernlogo', express.static(`${uploadsFolder}/cernLogo`));
 // this is to allow cross origin request and be able to send photos
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
   res.header(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept',
@@ -137,6 +137,17 @@ app.post('/load', (req, res) => {
     // delete the extractFolder folder
     fs.removeSync(tmpFolder);
     fs.removeSync(extractFolder);
+  });
+});
+
+// REMOVE IMAGE API
+app.delete('/image/:id', (req, res) => {
+  const imageName = `${uploadsFolder}/assets/${Number(req.params.id)}`;
+  // delete image file
+  console.log('imageName : ', imageName);
+  // fs.removeSync(imageName);
+  res.json({
+    state: 'Successful',
   });
 });
 

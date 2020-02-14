@@ -7,6 +7,8 @@ import {
   selectCurrentImageArray,
 } from '../../redux-store/selectors';
 import './Images.css';
+import 'react-grid-layout/css/styles.css';
+import 'react-resizable/css/styles.css';
 
 function Images({ currentImageArray }) {
   return (

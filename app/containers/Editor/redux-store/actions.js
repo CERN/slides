@@ -36,6 +36,8 @@ import {
   LOAD_STATE,
   IS_READY,
   CHANGE_IMAGE_POSITION,
+  CHANGE_IMAGE_SIZE,
+  DELETE_IMAGE,
 } from './constants';
 
 /**
@@ -230,5 +232,20 @@ export function changeImagePosition(id, position) {
     type: CHANGE_IMAGE_POSITION,
     id,
     position,
+  };
+}
+
+export function changeImageSize(id, size) {
+  return {
+    type: CHANGE_IMAGE_SIZE,
+    id,
+    size,
+  };
+}
+
+export function deleteImage(id) {
+  return {
+    type: DELETE_IMAGE,
+    id,
   };
 }

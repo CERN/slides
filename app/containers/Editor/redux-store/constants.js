@@ -29,5 +29,7 @@ export const LOAD_STATE = 'Slides/Presentation/LOAD_STATE';
 export const IS_READY = 'Slides/Presentation/IS_READY';
 export const CHANGE_IMAGE_POSITION =
   'Slides/Presentation/CHANGE_IMAGE_POSITION';
+export const CHANGE_IMAGE_SIZE = 'Slides/Presentation/CHANGE_IMAGE_SIZE';
+export const DELETE_IMAGE = 'Slides/Presentation/DELETE_IMAGE';
 
 export const CHANGE_SLIDE = '@@router/LOCATION_CHANGE';

@@ -28,6 +28,8 @@ import {
   IS_READY,
   LOAD_STATE,
   CHANGE_IMAGE_POSITION,
+  CHANGE_IMAGE_SIZE,
+  DELETE_IMAGE,
 } from './constants';
 
 // The initial state of the App
@@ -36,9 +38,20 @@ export const initialState = {
   DeckOfSlides: [
     {
       currentText: -1,
-      currentImage: -1,
+      currentImage: 0,
       textArray: [],
-      imageArray: [],
+      imageArray: [
+        {
+          id: 0,
+          src: 'afb2451a03547549408920c27a68ac10-happy.jpg',
+          position: {
+            width: '200px',
+            height: '70px',
+            x: 500,
+            y: 250,
+          },
+        },
+      ],
     },
   ],
   assetsPath: '',
@@ -109,6 +122,17 @@ const PresentationReducer = (state = initialState, action) =>
           // eslint-disable-next-line no-alert
         } else alert("There aren't any text to remove");
         break;
+      case DELETE_IMAGE:
+        if (draft.DeckOfSlides[draft.currentSlide].currentImage >= 0) {
+          draft.DeckOfSlides[draft.currentSlide].imageArray.splice(
+            action.id,
+            1,
+          );
+          draft.DeckOfSlides[draft.currentSlide].currentImage -= 1;
+          // eslint-disable-next-line no-alert
+        } else alert("There aren't any images to remove");
+        break;
+
       case ADD_DATA:
         draft.DeckOfSlides[draft.currentSlide].textArray[action.id].data =
           action.data;
@@ -126,6 +150,17 @@ const PresentationReducer = (state = initialState, action) =>
         draft.DeckOfSlides[draft.currentSlide].imageArray[
           action.id
         ].position.y = newPosition.y;
+        break;
+      }
+      case CHANGE_IMAGE_SIZE: {
+        const newSize = { ...action.size };
+        console.log('newSize.............', newSize);
+        draft.DeckOfSlides[draft.currentSlide].imageArray[
+          action.id
+        ].position.width = newSize.width;
+        draft.DeckOfSlides[draft.currentSlide].imageArray[
+          action.id
+        ].position.height = newSize.height;
         break;
       }
       case CHANGE_SLIDE:
