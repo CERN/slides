@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { post } from 'axios';
+import { useToasts } from 'react-toast-notifications';
+
 import { setSaveRequest } from '../Editor/redux-store/actions';
 
 // when i load the state how can i put it in my state?
@@ -10,6 +12,7 @@ import { setSaveRequest } from '../Editor/redux-store/actions';
 function SavePresentation({ stateStringified, onSaveRequest }) {
   // use a save endpoint in the server
   // title and uuid and savereq can be extracted from state
+  const { addToast } = useToasts();
   const obj = JSON.parse(stateStringified);
   const { assetsPath, saveRequest } = obj.global;
 
@@ -22,10 +25,21 @@ function SavePresentation({ stateStringified, onSaveRequest }) {
       { headers: { 'Content-Type': 'application/json' } },
     )
       .then(response => {
-        console.log('response:', response);
+        // console.log('response:', response);
+        if (response.status === 200) {
+          // notify with success
+          addToast(`Saved successfully! 😊`, {
+            appearance: 'success',
+            autoDismiss: true,
+          });
+        }
       })
       .catch(error => {
         console.log(error);
+        addToast('Saving Failed...', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
       });
 
     onSaveRequest();

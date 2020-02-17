@@ -65,6 +65,7 @@ export function Dropzone({ onImageRequest, onAddImage, assetsPath }) {
   const filesUpload = () => {
     // const url = 'http://localhost:3000/upload';
     const url = `${assetsPath}/upload`;
+    console.log('sending req to', url);
     const formData = new FormData();
     files.forEach(f => formData.append('file', f));
     const config = {

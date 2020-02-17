@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 // import { Button, Progress, Icon, Message } from 'semantic-ui-react';
 import { Modal } from 'semantic-ui-react';
 
-// import Notifications, { notify } from 'react-notify-toast';
 import Dropzone from './Dropzone';
 import { selectPendingImageUploadRequest } from '../../../redux-store/selectors';
 

@@ -11,7 +11,8 @@ const zipFolder = require('zip-folder');
 const extract = require('extract-zip');
 const fs = require('fs-extra');
 const setup = require('./middlewares/frontendMiddleware');
-const uploadsFolder = process.env.UPLOADS_FOLDER;
+// const uploadsFolder = process.env.UPLOADS_FOLDER;
+const uploadsFolder = `${process.cwd()}/public`;
 const isDev = process.env.NODE_ENV !== 'production';
 const ngrok =
   (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel
@@ -25,11 +26,33 @@ const app = express();
 app.use(cors());
 app.use(fileUpload());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(
+  express.urlencoded({
+    extended: true,
+  }),
+);
+
+// serve static images from folder public/assets
+app.use('/static', express.static(`${uploadsFolder}/assets`));
+app.use('/cernlogo', express.static(`${uploadsFolder}/cernLogo`));
+
+// this is to allow cross origin request and be able to send photos
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept',
+  );
+  next();
+});
+
 // Upload Endpoint
 app.post('/upload', (req, res) => {
   if (req.files === null) {
-    return res.status(400).json({ msg: 'No file uploaded' });
+    return res.status(400).json({
+      msg: 'No file uploaded',
+    });
   }
 
   const { file } = req.files;
@@ -47,22 +70,6 @@ app.post('/upload', (req, res) => {
     });
   });
 });
-
-// serve static images from folder public/assets
-app.use('/static', express.static(`${uploadsFolder}/assets`));
-app.use('/cernlogo', express.static(`${uploadsFolder}/cernLogo`));
-
-// this is to allow cross origin request and be able to send photos
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept',
-  );
-  next();
-});
-
 // Save Endpoint
 app.post('/save', (req, res) => {
   // in this endpoint I need to get,
@@ -85,7 +92,7 @@ app.post('/save', (req, res) => {
     // zip it and rename
     zipFolder(`${tmp}`, `${presentationName}.slides`, err => {
       if (!err) {
-        console.log('Saved successfully!');
+        // console.log('Saved successfully!');
         // delete the folder now that I have the .slides
         // delete the tmp
         fs.removeSync(tmp);
@@ -97,15 +104,15 @@ app.post('/save', (req, res) => {
     });
   } catch (e) {
     console.log('An error occured ', e);
-    res.json({
-      error: e,
-    });
+    return res.status(500).send(e);
   }
 });
 
 app.post('/load', (req, res) => {
   if (req.files === null) {
-    return res.status(400).json({ msg: 'No file uploaded' });
+    return res.status(400).json({
+      msg: 'No file uploaded',
+    });
   }
   const { file } = req.files;
   const extractFolder = `${uploadsFolder}/extract-folder`;
@@ -120,24 +127,32 @@ app.post('/load', (req, res) => {
   });
   // check if i need to create this folder first
   fs.emptyDirSync(`${extractFolder}/assets`);
-  extract(tmpNameForDotSlides, { dir: extractFolder }, err => {
-    if (err) {
-      console.log('An error has occured1', err);
-      return res.status(500).send(err);
-    }
-    // move assets in the common assets folder
-    fs.emptyDirSync(`${uploadsFolder}/assets`);
-    fs.copySync(`${extractFolder}/assets`, `${uploadsFolder}/assets`);
-    // read the JSON
-    const reduxStateOBJ = fs.readJsonSync(`${extractFolder}/presentation.JSON`);
-    // return the redux state
-    res.json({
-      state: reduxStateOBJ,
-    });
-    // delete the extractFolder folder
-    fs.removeSync(tmpFolder);
-    fs.removeSync(extractFolder);
-  });
+  extract(
+    tmpNameForDotSlides,
+    {
+      dir: extractFolder,
+    },
+    err => {
+      if (err) {
+        console.log('An error has occured1', err);
+        return res.status(500).send(err);
+      }
+      // move assets in the common assets folder
+      fs.emptyDirSync(`${uploadsFolder}/assets`);
+      fs.copySync(`${extractFolder}/assets`, `${uploadsFolder}/assets`);
+      // read the JSON
+      const reduxStateOBJ = fs.readJsonSync(
+        `${extractFolder}/presentation.JSON`,
+      );
+      // return the redux state
+      res.json({
+        state: reduxStateOBJ,
+      });
+      // delete the extractFolder folder
+      fs.removeSync(tmpFolder);
+      fs.removeSync(extractFolder);
+    },
+  );
 });
 
 // REMOVE IMAGE API

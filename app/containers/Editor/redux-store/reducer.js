@@ -38,20 +38,9 @@ export const initialState = {
   DeckOfSlides: [
     {
       currentText: -1,
-      currentImage: 0,
+      currentImage: -1,
       textArray: [],
-      imageArray: [
-        {
-          id: 0,
-          src: 'afb2451a03547549408920c27a68ac10-happy.jpg',
-          position: {
-            width: '200px',
-            height: '70px',
-            x: 500,
-            y: 250,
-          },
-        },
-      ],
+      imageArray: [],
     },
   ],
   assetsPath: '',
@@ -142,7 +131,9 @@ const PresentationReducer = (state = initialState, action) =>
           action.position;
         break;
       case CHANGE_IMAGE_POSITION: {
-        const newPosition = { ...action.position };
+        const newPosition = {
+          ...action.position,
+        };
         console.log('newPosition.............', newPosition);
         draft.DeckOfSlides[draft.currentSlide].imageArray[
           action.id
@@ -153,7 +144,9 @@ const PresentationReducer = (state = initialState, action) =>
         break;
       }
       case CHANGE_IMAGE_SIZE: {
-        const newSize = { ...action.size };
+        const newSize = {
+          ...action.size,
+        };
         console.log('newSize.............', newSize);
         draft.DeckOfSlides[draft.currentSlide].imageArray[
           action.id
@@ -195,7 +188,9 @@ const PresentationReducer = (state = initialState, action) =>
       case LOAD_STATE: {
         // get the json from the action
         // set the state using:
-        const newState = { ...action.state.global };
+        const newState = {
+          ...action.state.global,
+        };
         Object.keys(newState).map(s => {
           draft[s] = newState[s];
         });
