@@ -33,13 +33,13 @@ export function Container({ isReady }) {
             <SavePresentation />
           </div>
         ) : (
-            <div className="themeSelector">
-              <div className="inside">
-                <LandingPage />
-                <LoadPresentation />
-              </div>
+          <div className="themeSelector">
+            <div className="inside">
+              <LandingPage />
+              <LoadPresentation />
             </div>
-          )}
+          </div>
+        )}
       </div>
     </ToastProvider>
   );

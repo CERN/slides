@@ -112,7 +112,7 @@ function LandingPage({
   const cernLogoPath = `${assetsPath}/cernlogo/CERN-Logo.png`;
   return (
     <div className="landing-page">
-      <Image src={cernLogoPath} size="medium" centered />
+      <Image src={cernLogoPath} className="image" centered />
       <Grid columns={2} relaxed="very" stackable textAlign="center">
         <Grid.Row>
           <Grid.Column width={12}>

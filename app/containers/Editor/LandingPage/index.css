@@ -11,6 +11,12 @@
   margin: 0 !important;
 }
 
+.image {
+  width: 40%;
+  max-width: 60em !important;
+}
+
 .landing-page {
-  width: 60em;
+  background-color: #0053A1 !important;
+
 }
