@@ -12,11 +12,14 @@
 }
 
 .image {
-  width: 40%;
+  height: auto;
+  max-height: 60em;
+  width: 20%;
   max-width: 60em !important;
 }
 
 .landing-page {
   background-color: #0053A1 !important;
-
+  height: 100%;
+  width: 100%;
 }

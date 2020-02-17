@@ -67,8 +67,6 @@ const themeOptions = [
   },
 ];
 
-// preloader(img);
-
 function LandingPage({
   onSetTheme,
   onSetTitle,
