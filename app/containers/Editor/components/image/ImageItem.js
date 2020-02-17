@@ -44,10 +44,9 @@ function ImageItem({
     });
   };
 
-
   const delImageReq = () => {
-    const url = `${assetsPath}/image`;
-    return axios.delete(url, { params: { id: `${imageObj.src}` } });
+    const url = `${assetsPath}/image/${imageObj.src}`;
+    return axios.delete(url);
   };
 
   const delImage = e => {
@@ -55,9 +54,7 @@ function ImageItem({
     // send a delete in Redux
     onDeleteImage(id);
     // send a delete in Server
-    delImageReq().then(response => {
-      console.log('Delete response is: ', response);
-    });
+    delImageReq();
   };
   // useeffect [] this is only mount and unmount
 

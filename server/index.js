@@ -157,10 +157,9 @@ app.post('/load', (req, res) => {
 
 // REMOVE IMAGE API
 app.delete('/image/:id', (req, res) => {
-  const imageName = `${uploadsFolder}/assets/${Number(req.params.id)}`;
+  const imageName = `${uploadsFolder}/assets/${req.params.id}`;
   // delete image file
-  console.log('imageName : ', imageName);
-  // fs.removeSync(imageName);
+  fs.removeSync(imageName);
   res.json({
     state: 'Successful',
   });
