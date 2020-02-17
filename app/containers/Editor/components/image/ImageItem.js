@@ -3,10 +3,8 @@ import KeyboardEventHandler from 'react-keyboard-event-handler';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
-// import Draggable from 'react-draggable';
-// import { Resizable, ResizableBox } from 'react-resizable';
+import Draggable from 'react-draggable';
 import { Image } from 'semantic-ui-react';
-import { Rnd } from 'react-rnd';
 import {
   changeImagePosition,
   changeImageSize,
@@ -29,25 +27,23 @@ function ImageItem({
   // his normal position
   // and his source
   // then renders the Draggable Component and inside the Image component
+  const [myDeltaPosition, setMyDeltaPosition] = useState({ x: 0, y: 0 });
   const myPath = `${assetsPath}/static/${imageObj.src}`;
   const position = { x: imageObj.position.x, y: imageObj.position.y };
-  const size = {
-    width: imageObj.position.width,
-    height: imageObj.position.height,
+  const handleDrag = (e, ui) => {
+    const { x, y } = myDeltaPosition;
+    setMyDeltaPosition({
+      x: x + ui.deltaX,
+      y: y + ui.deltaY,
+    });
   };
-  // it should be capable of updating its own position
-  const handleDragStop = d => {
+  const handleDragStop = () => {
     onChangePosition(id, {
-      x: d.x,
-      y: d.y,
+      x: position.x + myDeltaPosition.x,
+      y: position.y + myDeltaPosition.y,
     });
   };
-  const handleResizeStop = ref => {
-    onChangeImageSize(id, {
-      width: ref.offsetWidth,
-      height: ref.offsetHeight,
-    });
-  };
+
 
   const delImageReq = () => {
     const url = `${assetsPath}/image`;
@@ -67,21 +63,20 @@ function ImageItem({
 
   // render the draggable image
   return (
-    <Rnd
-      bounds="window"
-      size={{ width: size.width, height: size.height }}
-      position={{ x: position.x, y: position.y }}
-      onDragStop={(e, d) => handleDragStop(d)}
-      onResizeStop={(e, direction, ref, delta, position) =>
-        handleResizeStop(ref)
-      }
-    >
+    <div>
       <KeyboardEventHandler
         handleKeys={['backspace', 'del']}
         onKeyEvent={(key, e) => delImage(e)}
       />
-      <Image src={myPath} alt="" />
-    </Rnd>
+      <Draggable
+        // key={id}
+        positionOffset={position}
+        onDrag={handleDrag}
+        onStop={handleDragStop}
+      >
+        <Image src={myPath} alt="" size="medium" />
+      </Draggable>
+    </div>
   );
 }
 
