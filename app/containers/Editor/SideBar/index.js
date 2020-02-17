@@ -34,7 +34,7 @@ function SideBar({
   };
   return (
     <div className="content-edit-bar">
-      <Menu vertical inverted icon="labeled">
+      <Menu vertical inverted fluid icon="labeled">
         <Menu.Item name="AddSlide" onClick={addingSlide}>
           <Icon name="plus" />
           Add a New Slide

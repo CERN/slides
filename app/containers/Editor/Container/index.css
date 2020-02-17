@@ -9,6 +9,7 @@
 
 .settings {
   width: 4% !important;
+  min-width: 3em !important;
   height: 100vh;
   /* float: left; */
   background-color: #1B1C1D;
@@ -17,6 +18,7 @@
 
 .sidebar {
   width: 6% !important;
+  min-width: 5em !important;
   height: 100vh;
   /* float: left; */
   background-color: black;
