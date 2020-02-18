@@ -93,8 +93,8 @@ const PresentationReducer = (state = initialState, action) =>
           id: draft.DeckOfSlides[draft.currentSlide].currentImage + 1,
           src: action.src,
           position: {
-            width: '200px',
-            height: '60px',
+            width: '500px',
+            height: '90px',
             x: 400,
             y: 250,
           },
