@@ -1,24 +1,22 @@
-/* eslint consistent-return:0 import/order:0 */
 require('dotenv-flow').config();
 const express = require('express');
 const cors = require('cors');
-const logger = require('./logger');
-const argv = require('./argv');
-const port = require('./port');
 const { resolve } = require('path');
-// const uuidv4 = require('uuid/v4');
-const zipFolder = require('zip-folder');
-const extract = require('extract-zip');
-const fs = require('fs-extra');
-const setup = require('./middlewares/frontendMiddleware');
-// const uploadsFolder = process.env.UPLOADS_FOLDER;
-const uploadsFolder = `${process.cwd()}/public`;
 const isDev = process.env.NODE_ENV !== 'production';
+// eslint-disable-next-line import/order
+const argv = require('./argv');
 const ngrok =
   (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel
     ? require('ngrok')
     : false;
 const fileUpload = require('express-fileupload');
+const logger = require('./logger');
+const port = require('./port');
+const setup = require('./middlewares/frontendMiddleware');
+// const uploadsFolder = process.env.UPLOADS_FOLDER;
+const uploadsFolder = `${process.cwd()}/public`;
+const api = require('./routes.ts');
+
 const app = express();
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
@@ -36,7 +34,7 @@ app.use(
 app.use('/static', express.static(`${uploadsFolder}/assets`));
 app.use('/cernlogo', express.static(`${uploadsFolder}/cernLogo`));
 
-// this is to allow cross origin request and be able to send photos
+// this is to allow cross origin requests
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
@@ -47,123 +45,16 @@ app.use((req, res, next) => {
   next();
 });
 
+// --------------------------- API ENDPOINTS ---------------------------
 // Upload Endpoint
-app.post('/upload', (req, res) => {
-  if (req.files === null) {
-    return res.status(400).json({
-      msg: 'No file uploaded',
-    });
-  }
-
-  const { file } = req.files;
-  const imageNameToStore = `${uploadsFolder}/assets/${file.md5}-${file.name}`;
-
-  file.mv(imageNameToStore, err => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send(err);
-    }
-
-    res.json({
-      fileName: imageNameToStore,
-      filePath: resolve(uploadsFolder, imageNameToStore),
-    });
-  });
-});
+app.post('/upload', (req, res) => api.imageUpload(req, res));
 // Save Endpoint
-app.post('/save', (req, res) => {
-  // in this endpoint I need to get,
-  // username, title, all the state stringified
-  // I know where the assets are located
-  // so now in the public/username/ folder put: JSON of state, assets folder
-  const { state } = req.body;
-  const obj = JSON.parse(state);
-  const { username, title } = obj.global;
-  const presentationName = `${uploadsFolder}/${username}/${title}`;
-
-  const tmp = `${uploadsFolder}/${username}/tmp`;
-  const presentationFile = `${tmp}/presentation.JSON`;
-  //
-  try {
-    // writes the file and creates the folders if needed
-    fs.outputJsonSync(presentationFile, obj);
-    // copy assets folder
-    fs.copySync(`${uploadsFolder}/assets`, `${tmp}/assets`);
-    // zip it and rename
-    zipFolder(`${tmp}`, `${presentationName}.slides`, err => {
-      if (!err) {
-        // console.log('Saved successfully!');
-        // delete the folder now that I have the .slides
-        // delete the tmp
-        fs.removeSync(tmp);
-        res.json({
-          fileName: `${presentationName}.slides`,
-          filePath: `${presentationName}`,
-        });
-      }
-    });
-  } catch (e) {
-    console.log('An error occured ', e);
-    return res.status(500).send(e);
-  }
-});
-
-app.post('/load', (req, res) => {
-  if (req.files === null) {
-    return res.status(400).json({
-      msg: 'No file uploaded',
-    });
-  }
-  const { file } = req.files;
-  const extractFolder = `${uploadsFolder}/extract-folder`;
-  const tmpFolder = `${uploadsFolder}/tmp-folder`;
-  fs.emptyDirSync(tmpFolder);
-  const tmpNameForDotSlides = `${tmpFolder}/${file.md5}-${file.name}`;
-  file.mv(tmpNameForDotSlides, err => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send(err);
-    }
-  });
-  // check if i need to create this folder first
-  fs.emptyDirSync(`${extractFolder}/assets`);
-  extract(
-    tmpNameForDotSlides,
-    {
-      dir: extractFolder,
-    },
-    err => {
-      if (err) {
-        console.log('An error has occured1', err);
-        return res.status(500).send(err);
-      }
-      // move assets in the common assets folder
-      fs.emptyDirSync(`${uploadsFolder}/assets`);
-      fs.copySync(`${extractFolder}/assets`, `${uploadsFolder}/assets`);
-      // read the JSON
-      const reduxStateOBJ = fs.readJsonSync(
-        `${extractFolder}/presentation.JSON`,
-      );
-      // return the redux state
-      res.json({
-        state: reduxStateOBJ,
-      });
-      // delete the extractFolder folder
-      fs.removeSync(tmpFolder);
-      fs.removeSync(extractFolder);
-    },
-  );
-});
-
-// REMOVE IMAGE API
-app.delete('/image/:id', (req, res) => {
-  const imageName = `${uploadsFolder}/assets/${req.params.id}`;
-  // delete image file
-  fs.removeSync(imageName);
-  res.json({
-    state: 'Successful',
-  });
-});
+app.post('/save', (req, res) => api.savePresentation(req, res));
+// Load Endpoint
+app.post('/load', (req, res) => api.loadPresentation(req, res));
+// Remove Image Endpoint
+app.delete('/image/:id', (req, res) => api.deleteImage(req, res));
+// --------------------------- API ENDPOINTS ---------------------------
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
