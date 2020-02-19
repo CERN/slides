@@ -227,10 +227,10 @@ export function setIsReady(ready) {
   };
 }
 
-export function changeImagePosition(id, position) {
+export function changeImagePosition(src, position) {
   return {
     type: CHANGE_IMAGE_POSITION,
-    id,
+    src,
     position,
   };
 }
@@ -243,9 +243,9 @@ export function changeImageSize(id, size) {
   };
 }
 
-export function deleteImage(id) {
+export function deleteImage(src) {
   return {
     type: DELETE_IMAGE,
-    id,
+    src,
   };
 }

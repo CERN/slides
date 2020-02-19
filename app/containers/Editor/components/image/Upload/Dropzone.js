@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import PropTypes from 'prop-types';
@@ -65,7 +65,6 @@ export function Dropzone({ onImageRequest, onAddImage, assetsPath }) {
   const filesUpload = () => {
     // const url = 'http://localhost:3000/upload';
     const url = `${assetsPath}/upload`;
-    console.log('sending req to', url);
     const formData = new FormData();
     files.forEach(f => formData.append('file', f));
     const config = {
@@ -80,9 +79,7 @@ export function Dropzone({ onImageRequest, onAddImage, assetsPath }) {
     e.preventDefault();
     // now i got some files
     // Upload Files in the server
-    filesUpload().then(response => {
-      console.log('The response is: ', response);
-    });
+    filesUpload();
     // Save images in Redux Store
     // find md5 of the file and append name
     files.forEach(f => {

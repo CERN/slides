@@ -38,7 +38,6 @@ export const initialState = {
   DeckOfSlides: [
     {
       currentText: -1,
-      currentImage: -1,
       textArray: [],
       imageArray: [],
     },
@@ -62,7 +61,6 @@ const PresentationReducer = (state = initialState, action) =>
       case ADD_SLIDE:
         draft.DeckOfSlides.splice(draft.currentSlide + 1, 0, {
           currentText: -1,
-          currentImage: -1,
           textArray: [],
           imageArray: [],
         });
@@ -90,7 +88,6 @@ const PresentationReducer = (state = initialState, action) =>
       }
       case ADD_IMAGE:
         draft.DeckOfSlides[draft.currentSlide].imageArray.push({
-          id: draft.DeckOfSlides[draft.currentSlide].currentImage + 1,
           src: action.src,
           position: {
             width: '500px',
@@ -99,7 +96,6 @@ const PresentationReducer = (state = initialState, action) =>
             y: 250,
           },
         });
-        draft.DeckOfSlides[draft.currentSlide].currentImage += 1;
         break;
       case REMOVE_TEXT:
         if (draft.DeckOfSlides[draft.currentSlide].currentText >= 0) {
@@ -111,17 +107,13 @@ const PresentationReducer = (state = initialState, action) =>
           // eslint-disable-next-line no-alert
         } else alert("There aren't any text to remove");
         break;
-      case DELETE_IMAGE:
-        if (draft.DeckOfSlides[draft.currentSlide].currentImage >= 0) {
-          draft.DeckOfSlides[draft.currentSlide].imageArray.splice(
-            action.id,
-            1,
-          );
-          draft.DeckOfSlides[draft.currentSlide].currentImage -= 1;
-          // eslint-disable-next-line no-alert
-        } else alert("There aren't any images to remove");
+      case DELETE_IMAGE: {
+        // eslint-disable-next-line prettier/prettier
+        const ind = draft.DeckOfSlides[draft.currentSlide].imageArray.findIndex(img => img.src === action.src);
+        if (ind === -1) break; // otherwise it will delete the last item
+        draft.DeckOfSlides[draft.currentSlide].imageArray.splice(ind, 1);
         break;
-
+      }
       case ADD_DATA:
         draft.DeckOfSlides[draft.currentSlide].textArray[action.id].data =
           action.data;
@@ -135,12 +127,12 @@ const PresentationReducer = (state = initialState, action) =>
           ...action.position,
         };
         console.log('newPosition.............', newPosition);
-        draft.DeckOfSlides[draft.currentSlide].imageArray[
-          action.id
-        ].position.x = newPosition.x;
-        draft.DeckOfSlides[draft.currentSlide].imageArray[
-          action.id
-        ].position.y = newPosition.y;
+        draft.DeckOfSlides[draft.currentSlide].imageArray.forEach(img => {
+          if (img.src === action.src) {
+            img.position.x = newPosition.x;
+            img.position.y = newPosition.y;
+          }
+        });
         break;
       }
       case CHANGE_IMAGE_SIZE: {
@@ -220,7 +212,6 @@ export default PresentationReducer;
 // },
 
 // {
-//   id: 0,
 //   src: 'happy.jpg',
 //   position: {
 //     width: '800px',

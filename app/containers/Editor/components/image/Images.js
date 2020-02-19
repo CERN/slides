@@ -14,7 +14,7 @@ function Images({ currentImageArray }) {
   return (
     <div>
       {currentImageArray.map(img => (
-        <ImageItem key={img.id} id={img.id} imageObj={img} />
+        <ImageItem key={img.src} imageObj={img} />
       ))}
     </div>
   )}

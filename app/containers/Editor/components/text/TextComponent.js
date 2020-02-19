@@ -51,7 +51,7 @@ export function TextComponent({
     if (node.current.contains(evt.target)) {
       // inside click
       // then edit
-      console.log('double click');
+      // console.log('double click');
       onChangePosition(currentText, position);
       onToggleEditMode(currentText, true);
     }
@@ -65,7 +65,7 @@ export function TextComponent({
       return;
     }
     // outside click
-    console.log('outside clicki');
+    // console.log('outside clicki');
     // node.current.blur();
     onAddData(currentText, text);
     onToggleEditMode(currentText, false);

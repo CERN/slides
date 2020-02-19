@@ -14,7 +14,6 @@ import { selectAssetsPath } from '../../redux-store/selectors';
 
 // fix the wrong mounting of this component
 function ImageItem({
-  id,
   imageObj,
   assetsPath,
   onChangePosition,
@@ -38,7 +37,7 @@ function ImageItem({
     });
   };
   const handleDragStop = () => {
-    onChangePosition(id, {
+    onChangePosition(imageObj.src, {
       x: position.x + myDeltaPosition.x,
       y: position.y + myDeltaPosition.y,
     });
@@ -52,7 +51,7 @@ function ImageItem({
   const delImage = e => {
     e.preventDefault();
     // send a delete in Redux
-    onDeleteImage(id);
+    onDeleteImage(imageObj.src);
     // send a delete in Server
     delImageReq();
   };
@@ -78,7 +77,6 @@ function ImageItem({
 }
 
 ImageItem.propTypes = {
-  id: PropTypes.number,
   imageObj: PropTypes.object,
   onChangePosition: PropTypes.func,
   onChangeImageSize: PropTypes.func,
@@ -88,11 +86,11 @@ ImageItem.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onChangePosition: (id, position) =>
-      dispatch(changeImagePosition(id, position)),
+    onChangePosition: (src, position) =>
+      dispatch(changeImagePosition(src, position)),
     onChangeImageSize: (id, position) =>
       dispatch(changeImageSize(id, position)),
-    onDeleteImage: id => dispatch(deleteImage(id)),
+    onDeleteImage: src => dispatch(deleteImage(src)),
   };
 }
 
