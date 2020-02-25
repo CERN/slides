@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Menu, Icon, Popup } from 'semantic-ui-react';
-import { setSaveRequest } from '../redux-store/actions';
+import { setSaveRequest } from '../../redux-store/PresentationReducer/actions';
 
 import './index.css';
 

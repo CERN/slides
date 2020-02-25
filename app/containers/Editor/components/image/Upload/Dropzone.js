@@ -5,9 +5,10 @@ import PropTypes from 'prop-types';
 import { Button, Icon } from 'semantic-ui-react';
 import { post } from 'axios';
 import BMF from 'browser-md5-file';
-import { selectAssetsPath } from '../../../redux-store/selectors';
+import { getAssetsPath } from '../../../../redux-store/PresentationReducer/selectors';
+import { addItem } from '../../../../redux-store/DeckReducer/actions';
 
-import { uploadImageRequest, addImage } from '../../../redux-store/actions';
+import { uploadImageRequest } from '../../../../redux-store/PresentationReducer/actions';
 import './Dropzone.css';
 import {
   thumbsContainer,
@@ -126,13 +127,13 @@ Dropzone.propTypes = {
 function mapDispatchToProps(dispatch) {
   return {
     onImageRequest: () => dispatch(uploadImageRequest(false)),
-    onAddImage: src => dispatch(addImage(src)),
+    onAddImage: src => dispatch(addItem(src)),
   };
 }
 
 export default connect(
   state => ({
-    assetsPath: selectAssetsPath(state),
+    assetsPath: getAssetsPath(state),
   }),
   mapDispatchToProps,
 )(Dropzone);

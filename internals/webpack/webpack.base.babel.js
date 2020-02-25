@@ -17,6 +17,7 @@ module.exports = options => ({
     options.output,
   ), // Merge with env dependent settings
   optimization: options.optimization,
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -102,6 +103,11 @@ module.exports = options => ({
           },
         },
       },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
     ],
   },
   plugins: options.plugins.concat([
@@ -114,10 +120,10 @@ module.exports = options => ({
   ]),
   resolve: {
     modules: ['node_modules', 'app'],
-    extensions: ['.js', '.jsx', '.react.js'],
+    extensions: ['.ts', '.tsx', '.js'],
     mainFields: ['browser', 'jsnext:main', 'main'],
   },
-  devtool: options.devtool,
+  // devtool: options.devtool,
   target: 'web', // Make web variables accessible to webpack, e.g. window
   performance: options.performance || {},
 });

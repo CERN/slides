@@ -6,19 +6,18 @@ import { Menu, Icon } from 'semantic-ui-react';
 import {
   addSlide,
   removeSlide,
-  addText,
-  removeText,
-  uploadImageRequest,
-} from '../redux-store/actions';
-import { selectCurrentSlide } from '../redux-store/selectors';
+  addItem,
+} from '../../redux-store/DeckReducer/actions';
+import { uploadImageRequest } from '../../redux-store/PresentationReducer/actions';
+import { getCurrentSlide } from '../../redux-store/DeckReducer/selectors';
 import './index.css';
+import { Text } from '../../redux-store/DeckReducer/definitions';
 // when i render SideBar onClick they will render something in the middle
 
 function SideBar({
   onAddSlide,
   onRemoveSlide,
   onAddText,
-  onRemoveText,
   currentSlide,
   onAddImage,
 }) {
@@ -47,10 +46,6 @@ function SideBar({
           <Icon name="pencil alternate" />
           Add Text
         </Menu.Item>
-        <Menu.Item name="RemoveText" onClick={onRemoveText}>
-          <Icon name="trash" />
-          Remove Text
-        </Menu.Item>
         <Menu.Item name="UploadImage" onClick={onAddImage}>
           <Icon name="image outline" />
           Add Image
@@ -64,24 +59,22 @@ SideBar.propTypes = {
   onAddSlide: PropTypes.func,
   onRemoveSlide: PropTypes.func,
   onAddText: PropTypes.func,
-  onRemoveText: PropTypes.func,
-  currentSlide: PropTypes.number,
   onAddImage: PropTypes.func,
+  currentSlide: PropTypes.number,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
     onAddSlide: () => dispatch(addSlide()),
     onRemoveSlide: () => dispatch(removeSlide()),
-    onAddText: () => dispatch(addText()),
-    onRemoveText: () => dispatch(removeText()),
+    onAddText: () => dispatch(addItem(new Text())),
     onAddImage: () => dispatch(uploadImageRequest(true)),
   };
 }
 
 export default connect(
   state => ({
-    currentSlide: selectCurrentSlide(state),
+    currentSlide: getCurrentSlide(state),
   }),
   mapDispatchToProps,
 )(SideBar);

@@ -34,7 +34,7 @@ module.exports.savePresentation = function(req, res) {
   // so now in the public/username/ folder put: JSON of state, assets folder
   const { state } = req.body;
   const obj = JSON.parse(state);
-  const { username, title } = obj.global;
+  const { username, title } = obj.presentation;
   const presentationName = `${uploadsFolder}/${username}/${title}`;
 
   const tmp = `${uploadsFolder}/${username}/tmp`;
@@ -109,7 +109,7 @@ module.exports.loadPresentation = function(req, res) {
       fs.removeSync(extractFolder);
     },
   );
-}
+};
 
 module.exports.deleteImage = function(req, res) {
   const imageName = `${uploadsFolder}/assets/${req.params.id}`;
@@ -118,4 +118,4 @@ module.exports.deleteImage = function(req, res) {
   res.json({
     state: 'Successful',
   });
-}
+};

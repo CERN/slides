@@ -9,8 +9,8 @@ import {
   changeImagePosition,
   changeImageSize,
   deleteImage,
-} from '../../redux-store/actions';
-import { selectAssetsPath } from '../../redux-store/selectors';
+} from '../../../redux-store/PresentationReducer/actions';
+import { selectAssetsPath } from '../../../redux-store/PresentationReducer/selectors';
 
 // fix the wrong mounting of this component
 function ImageItem({

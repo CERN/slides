@@ -6,14 +6,16 @@ import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 
 import history from 'utils/history';
-import globalReducer from './containers/Editor/redux-store/reducer';
+import presentationReducer from './containers/redux-store/PresentationReducer/reducer.ts';
+import deckReducer from './containers/redux-store/DeckReducer/reducer.ts';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
  */
 export default function createReducer(injectedReducers = {}) {
   const rootReducer = combineReducers({
-    global: globalReducer,
+    presentation: presentationReducer,
+    deck: deckReducer,
     router: connectRouter(history),
     ...injectedReducers,
   });

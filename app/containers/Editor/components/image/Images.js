@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import ImageItem from './ImageItem';
 import {
   selectCurrentImageArray,
-} from '../../redux-store/selectors';
+} from '../../../redux-store/selectors';
 import './Images.css';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';

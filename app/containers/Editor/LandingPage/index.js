@@ -22,15 +22,15 @@ import {
   setUsername,
   setLoadRequest,
   setIsReady,
-} from '../redux-store/actions';
+} from '../../redux-store/PresentationReducer/actions';
 
 import {
-  selectTheme,
-  selectTitle,
-  selectDescription,
-  selectUsername,
-  selectAssetsPath,
-} from '../redux-store/selectors';
+  getTheme,
+  getTitle,
+  getDescription,
+  getAssetsPath,
+  getUsername,
+} from '../../redux-store/PresentationReducer/selectors';
 import './index.css';
 import history from '../../../utils/history';
 
@@ -207,11 +207,11 @@ export function mapDispatchToProps(dispatch) {
 
 export default connect(
   state => ({
-    currentTheme: selectTheme(state),
-    currentTitle: selectTitle(state),
-    currentDescription: selectDescription(state),
-    currentUser: selectUsername(state),
-    assetsPath: selectAssetsPath(state),
+    currentTheme: getTheme(state),
+    currentTitle: getTitle(state),
+    currentDescription: getDescription(state),
+    currentUser: getUsername(state),
+    assetsPath: getAssetsPath(state),
   }),
   mapDispatchToProps,
 )(LandingPage);

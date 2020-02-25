@@ -7,17 +7,18 @@ import createTheme from 'spectacle/lib/themes/default';
 import { config } from '../../../../server/constants';
 
 import {
-  selectTheme,
-  selectTitle,
-  selectDescription,
-  selectDeckOfSlides,
-  selectAssetsPath,
-} from '../redux-store/selectors';
-import { setAssetsPath } from '../redux-store/actions';
+  getTheme,
+  getTitle,
+  getDescription,
+  getAssetsPath,
+} from '../../redux-store/PresentationReducer/selectors';
+
+import { getDeck } from '../../redux-store/DeckReducer/selectors';
+import { setAssetsPath } from '../../redux-store/PresentationReducer/actions';
 
 import MySlide from '../MySlide';
 import './index.css';
-import getTheme from '../../../theming/theme';
+import getterTheme from '../../../theming/theme';
 
 function Canvas({
   title,
@@ -28,7 +29,7 @@ function Canvas({
   assetsPath,
 }) {
   const deck = useRef();
-  const themeObj = getTheme(theme);
+  const themeObj = getterTheme(theme);
   const myTheme = createTheme(themeObj.themeConfig, themeObj.fontConfig);
   // set the assetsFolder, where images will be, in the redux store
   if (assetsPath === '') onSetAssetsPath(config.assetsPath);
@@ -37,7 +38,7 @@ function Canvas({
   useEffect(() => {
     window.slideCount = deck.current.props.children.length;
   });
-
+  console.log('....DeckOfSlides', DeckOfSlides);
   return (
     <div>
       <Helmet>
@@ -80,11 +81,11 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(
   state => ({
-    theme: selectTheme(state),
-    title: selectTitle(state),
-    description: selectDescription(state),
-    DeckOfSlides: selectDeckOfSlides(state),
-    assetsPath: selectAssetsPath(state),
+    theme: getTheme(state),
+    title: getTitle(state),
+    description: getDescription(state),
+    DeckOfSlides: getDeck(state),
+    assetsPath: getAssetsPath(state),
   }),
   mapDispatchToProps,
 )(Canvas);

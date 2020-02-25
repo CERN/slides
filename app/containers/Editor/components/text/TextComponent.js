@@ -9,12 +9,12 @@ import {
   selectEditMode,
   selectCurrentTextData,
   selectCurrentText,
-} from '../../redux-store/selectors';
+} from '../../../redux-store/PresentationReducer/selectors';
 import {
   addData,
   changePosition,
   toggleEditMode,
-} from '../../redux-store/actions';
+} from '../../../redux-store/PresentationReducer/actions';
 import './index.css';
 export function TextComponent({
   onAddData,

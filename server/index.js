@@ -15,7 +15,7 @@ const port = require('./port');
 const setup = require('./middlewares/frontendMiddleware');
 // const uploadsFolder = process.env.UPLOADS_FOLDER;
 const uploadsFolder = `${process.cwd()}/public`;
-const api = require('./routes.ts');
+const api = require('./routes');
 
 const app = express();
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here

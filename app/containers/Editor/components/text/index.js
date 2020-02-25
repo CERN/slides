@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import {
   selectDeckOfSlides,
   selectCurrentSlide,
-} from '../../redux-store/selectors';
+} from '../../../redux-store/selectors';
 import TextComponent from './TextComponent';
 
 export function MyText({ DeckOfSlides, currentSlide }) {

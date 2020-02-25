@@ -5,14 +5,14 @@ import { post } from 'axios';
 import { useDropzone } from 'react-dropzone';
 import { Modal, Button, Icon } from 'semantic-ui-react';
 import {
-  selectLoadRequest,
-  selectAssetsPath,
-} from '../Editor/redux-store/selectors';
+  getLoadRequest,
+  getAssetsPath,
+} from '../redux-store/PresentationReducer/selectors';
 import {
   setLoadRequest,
   loadState,
   setIsReady,
-} from '../Editor/redux-store/actions';
+} from '../redux-store/PresentationReducer/actions';
 import {
   baseStyle,
   activeStyle,
@@ -78,7 +78,7 @@ function LoadPresentation({
       // extract the state information and call the loadstate action to copy the whole obj to the current state
       onLoadState(response.data.state);
       // set url
-      const { title, username } = response.data.state.global;
+      const { title, username } = response.data.state.presentation;
       history.push(`/${username}/${title}/edit/`);
     });
 
@@ -141,8 +141,8 @@ export function mapDispatchToProps(dispatch) {
 
 export default connect(
   state => ({
-    loadRequest: selectLoadRequest(state),
-    assetsPath: selectAssetsPath(state),
+    loadRequest: getLoadRequest(state),
+    assetsPath: getAssetsPath(state),
   }),
   mapDispatchToProps,
 )(LoadPresentation);

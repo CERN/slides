@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { post } from 'axios';
 import { useToasts } from 'react-toast-notifications';
 
-import { setSaveRequest } from '../Editor/redux-store/actions';
+import { setSaveRequest } from '../redux-store/PresentationReducer/actions';
 
 // when i load the state how can i put it in my state?
 // DONT STORE IN THE CLIENT SIDE, STORE IN THE SERVER SIDE IN EOS USING FS
@@ -14,7 +14,7 @@ function SavePresentation({ stateStringified, onSaveRequest }) {
   // title and uuid and savereq can be extracted from state
   const { addToast } = useToasts();
   const obj = JSON.parse(stateStringified);
-  const { assetsPath, saveRequest } = obj.global;
+  const { assetsPath, saveRequest } = obj.presentation;
 
   const Save = () => {
     // I need to make the body of the post request and send a request that includes the params

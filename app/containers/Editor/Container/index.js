@@ -11,7 +11,7 @@ import SideBar from '../SideBar';
 import LandingPage from '../LandingPage';
 import SavePresentation from '../../SavePresentation';
 import LoadPresentation from '../../LoadPresentation';
-import { selectIsReady } from '../redux-store/selectors';
+import { getIsReady } from '../../redux-store/PresentationReducer/selectors';
 
 export function Container({ isReady }) {
   return (
@@ -51,7 +51,7 @@ Container.propTypes = {
 
 export default connect(
   state => ({
-    isReady: selectIsReady(state),
+    isReady: getIsReady(state),
   }),
   null,
 )(Container);
