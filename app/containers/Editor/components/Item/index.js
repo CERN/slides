@@ -60,18 +60,20 @@ function Item({
     setCurSize(siz);
     onChangeSize(itemObj.ID, siz);
   };
-  // const delImageReq = () => {
-  //   const url = `${assetsPath}/image/${imageObj.src}`;
-  //   return axios.delete(url);
-  // };
+
+  const delImageReq = () => {
+    const url = `${assetsPath}/image/${itemObj.Src}`;
+    console.log('url in deleter is ', url);
+    return axios.delete(url);
+  };
 
   const deleter = e => {
     e.preventDefault();
-    console.log('deleter called');
+    console.log('deleter called', itemObj.ID);
     // send a delete in Redux
-    // onRemoveItem(imageObj.src);
+    onRemoveItem(itemObj.ID);
     // send a delete in Server if it is an Image
-    // delImageReq();
+    if (itemObj.type === 'IMAGE') delImageReq();
   };
 
   const onDoubleClick = evt => {
@@ -80,8 +82,8 @@ function Item({
       // inside click
       // then edit
       // console.log('double click');
-      onChangePosition(itemObj.ID, curPosition);
-      onChangeSize(itemObj.ID, curSize);
+      // onChangePosition(itemObj.ID, curPosition);
+      // onChangeSize(itemObj.ID, curSize);
       onSetEditMode(itemObj.ID, true);
     }
   };
