@@ -1,4 +1,6 @@
 import produce from 'immer';
+const uuidv4 = require("uuid/v4");
+
 import { Action } from './actions';
 import {
   ADD_SLIDE,
@@ -18,6 +20,7 @@ export let initialDeck:Deck = {
   slides: [],
 }
 export const newSlide:Slide = {
+  ID: uuidv4(),
   itemsArray: [],
 }
 initialDeck.slides.push(newSlide);
@@ -27,7 +30,11 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
     // eslint-disable-next-line no-console
     switch (action.type) {
       case ADD_SLIDE: {
-        draft.slides.splice(draft.currentSlide + 1, 0, newSlide);
+        const slide:Slide = {
+          ID: uuidv4(),
+          itemsArray: [],
+        }
+        draft.slides.splice(draft.currentSlide + 1, 0, slide);
         break;
       }
       case REMOVE_SLIDE: {

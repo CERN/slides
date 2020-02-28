@@ -12,6 +12,7 @@ import LandingPage from '../LandingPage';
 import SavePresentation from '../../SavePresentation';
 import LoadPresentation from '../../LoadPresentation';
 import { getIsReady } from '../../redux-store/PresentationReducer/selectors';
+import { Upload } from '../components/image/Upload';
 
 export function Container({ isReady }) {
   return (
@@ -31,6 +32,7 @@ export function Container({ isReady }) {
               </GridColumn>
             </Grid>
             <SavePresentation />
+            <Upload />
           </div>
         ) : (
           <div className="themeSelector">

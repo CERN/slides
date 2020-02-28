@@ -20,7 +20,7 @@ class baseItem {
     Size: size
     constructor(){
       this.ID = uuidv4();
-      this.Position= {x: 400, y: 250};
+      this.Position= {x: 200, y: 250};
       this.Size = {width: '500px', height: '90px'};
     }
     changePosition(position: position) {
@@ -62,6 +62,7 @@ export class Image extends baseItem {
 export type Item = Text | Image;
 
 export type Slide = {
+  ID: string
   itemsArray: Array<Item>
 }
 

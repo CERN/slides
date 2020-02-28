@@ -1,33 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import TextEditor from './TextEditor';
+import { getItems } from '../../../redux-store/DeckReducer/selectors';
+import { editData } from '../../../redux-store/DeckReducer/actions';
+import './index.css';
+function Text({ onEditData, ID, itemsArray }) {
+  // const { ID, Data, Edit } = obj;
+  const onChangeFunc = input => {
+    // i send it directly to redux
+    onEditData(ID, input);
+  };
 
-import {
-  selectDeckOfSlides,
-  selectCurrentSlide,
-} from '../../../redux-store/selectors';
-import TextComponent from './TextComponent';
-
-export function MyText({ DeckOfSlides, currentSlide }) {
+  const item = itemsArray.find(itm => itm.ID === ID);
+  const { Edit, Data } = item;
+  console.log('IN text is=====', item);
   return (
     <div>
-      {DeckOfSlides[currentSlide] &&
-        DeckOfSlides[currentSlide].textArray.map(elem => (
-          <TextComponent key={elem.id} />
-        ))}
+      {Edit ? <TextEditor onChange={onChangeFunc} initialData={Data} /> : Data}
     </div>
   );
 }
 
-MyText.propTypes = {
-  DeckOfSlides: PropTypes.array,
-  currentSlide: PropTypes.number,
+Text.propTypes = {
+  ID: PropTypes.string,
+  onEditData: PropTypes.func,
+  itemsArray: PropTypes.array,
 };
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onEditData: (id, data) => dispatch(editData(id, data)),
+  };
+}
 
 export default connect(
   state => ({
-    DeckOfSlides: selectDeckOfSlides(state),
-    currentSlide: selectCurrentSlide(state),
+    itemsArray: getItems(state),
   }),
-  null,
-)(MyText);
+  mapDispatchToProps,
+)(Text);

@@ -56,7 +56,7 @@ function Canvas({
           // controls={false} // show or hide the move buttons
         >
           {DeckOfSlides.map(item => (
-            <MySlide key={item} />
+            <MySlide key={item.ID} />
           ))}
         </Deck>
       </div>

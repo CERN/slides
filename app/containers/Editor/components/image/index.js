@@ -1,14 +1,23 @@
 import React from 'react';
-import Images from './Images';
-import Upload from './Upload';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Image as SementicImage } from 'semantic-ui-react';
+import { getAssetsPath } from '../../../redux-store/PresentationReducer/selectors';
 
-// I will render the current Images
-// I will render the Uploader component
-export default function MyImage() {
-  return (
-    <div>
-      <Upload />
-      <Images />
-    </div>
-  );
+function Image({ obj, assetsPath }) {
+  // this base will be the server's address base for every image , localhost:3000/public/static/images
+  const myPath = `${assetsPath}/static/${obj.Src}`;
+  return <SementicImage src={myPath} alt="" size="medium" />;
 }
+
+Image.propTypes = {
+  obj: PropTypes.object,
+  assetsPath: PropTypes.string,
+};
+
+export default connect(
+  state => ({
+    assetsPath: getAssetsPath(state),
+  }),
+  null,
+)(Image);

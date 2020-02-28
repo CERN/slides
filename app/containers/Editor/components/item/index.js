@@ -24,6 +24,9 @@ import {
   setEditMode,
 } from '../../../redux-store/DeckReducer/actions';
 import { getAssetsPath } from '../../../redux-store/PresentationReducer/selectors';
+import { getCurrentSlide } from '../../../redux-store/DeckReducer/selectors';
+import Text from '../text';
+import Image from '../image';
 import './index.css';
 
 const style = {
@@ -40,25 +43,28 @@ function Item({
   onChangeSize,
   assetsPath,
   onSetEditMode,
+  currentSlide,
 }) {
   const itemRef = useRef(null);
-  const { Position, Size, type } = itemObj;
+
+  const { Position, Size, type, ID } = itemObj;
   const [curSize, setCurSize] = useState(Size);
   const [curPosition, setCurPosition] = useState(Position);
   const [focused, setFocused] = useState(false);
-  console.log('itemObj', itemObj);
+  console.log('itemObj', itemObj, currentSlide);
+  const ItemName = type === 'TEXT' ? Text : Image;
   // this is something that doesn't need to be stored in store
   // will change in with clicks
   const handleDragStop = (e, pos) => {
     e.preventDefault();
     setCurPosition(pos);
-    onChangePosition(itemObj.ID, pos);
+    onChangePosition(ID, pos);
   };
 
   const handleResizeStop = (e, siz) => {
     e.preventDefault();
     setCurSize(siz);
-    onChangeSize(itemObj.ID, siz);
+    onChangeSize(ID, siz);
   };
 
   const delImageReq = () => {
@@ -69,11 +75,11 @@ function Item({
 
   const deleter = e => {
     e.preventDefault();
-    console.log('deleter called', itemObj.ID);
+    console.log('deleter called', ID);
     // send a delete in Redux
-    onRemoveItem(itemObj.ID);
+    onRemoveItem(ID);
     // send a delete in Server if it is an Image
-    if (itemObj.type === 'IMAGE') delImageReq();
+    if (type === 'IMAGE') delImageReq();
   };
 
   const onDoubleClick = evt => {
@@ -84,7 +90,7 @@ function Item({
       // console.log('double click');
       // onChangePosition(itemObj.ID, curPosition);
       // onChangeSize(itemObj.ID, curSize);
-      onSetEditMode(itemObj.ID, true);
+      if (type === 'TEXT') onSetEditMode(ID, true);
     }
   };
 
@@ -102,7 +108,7 @@ function Item({
     itemRef.current.blur();
     setFocused(false);
     // onAddData(currentText, text);
-    onSetEditMode(itemObj.ID, false);
+    if (type === 'TEXT') onSetEditMode(ID, false);
   };
 
   useEffect(() => {
@@ -137,7 +143,14 @@ function Item({
           handleKeys={['backspace', 'del']}
           onKeyEvent={(key, e) => focused && deleter(e)}
         />
-        <h1>Hello my item</h1>
+        <ItemName ID={ID} />
+        {/* {type === 'TEXT' ? (
+          // TEXT render
+          <Text ID={ID} />
+        ) : (
+          // IMAGE render
+          <Image ID={ID} />
+        )} */}
       </Rnd>
     </div>
   );
@@ -150,6 +163,7 @@ Item.propTypes = {
   onChangePosition: PropTypes.func,
   onChangeSize: PropTypes.func,
   onSetEditMode: PropTypes.func,
+  currentSlide: PropTypes.number,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -165,6 +179,7 @@ export function mapDispatchToProps(dispatch) {
 export default connect(
   state => ({
     assetsPath: getAssetsPath(state),
+    currentSlide: getCurrentSlide(state),
   }),
   mapDispatchToProps,
 )(Item);
