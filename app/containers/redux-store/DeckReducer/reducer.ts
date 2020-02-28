@@ -64,13 +64,14 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
       case CHANGE_ITEM_POSITION: {
         const ind:number = draft.slides[draft.currentSlide].itemsArray.findIndex((itm:Item) => itm.ID === action.id);
         if (ind === -1) break;
-        draft.slides[draft.currentSlide].itemsArray[ind].changePosition(action.position);
+        draft.slides[draft.currentSlide].itemsArray[ind].Position = {...action.position};
         break;
       }
       case CHANGE_ITEM_SIZE: {
         const ind:number = draft.slides[draft.currentSlide].itemsArray.findIndex((itm:Item) => itm.ID === action.id);
         if (ind === -1) break;
-        draft.slides[draft.currentSlide].itemsArray[ind].changeSize(action.size);
+        // draft.slides[draft.currentSlide].itemsArray[ind].changeSize(action.size);
+        draft.slides[draft.currentSlide].itemsArray[ind].Size = {...action.size};
         break;
       }
       case EDIT_DATA: {
@@ -80,9 +81,8 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
           throw new Error("I got an editDate for an Image");
         }
         const currentText = (draft.slides[draft.currentSlide].itemsArray[ind] as Text);
-        if(currentText.setData){
-          currentText.setData(action.data);
-        }
+        currentText.Data = action.data;
+        (draft.slides[draft.currentSlide].itemsArray[ind] as Text) = (currentText as Text);
         break;
       }
       case SET_EDIT_MODE: {
@@ -91,10 +91,9 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
         if(draft.slides[draft.currentSlide].itemsArray[ind].type === ItemTypes.IMAGE){
           throw new Error("I got an editMode for an Image");
         }
-        const currentText = (draft.slides[draft.currentSlide].itemsArray[ind] as Text);
-        if(currentText.toggleEdit){
-          currentText.toggleEdit(action.edit);
-        }
+        const currentText = {...(draft.slides[draft.currentSlide].itemsArray[ind] as Text)};
+        currentText.Edit = action.edit;
+        (draft.slides[draft.currentSlide].itemsArray[ind] as Text) = (currentText as Text);
         break;
       }
     }

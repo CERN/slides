@@ -5,7 +5,6 @@ import './TextEditor.css';
 
 export default function TextEditor({ onChange, initialData }) {
   const handleEditorChange = evt => {
-    console.log(evt.editor.getData());
     onChange(evt.editor.getData());
   };
   return (

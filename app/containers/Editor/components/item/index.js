@@ -82,17 +82,20 @@ function Item({
     if (type === 'IMAGE') delImageReq();
   };
 
-  const onDoubleClick = evt => {
-    evt.preventDefault();
-    if (itemRef.current.contains(evt.target)) {
-      // inside click
-      // then edit
-      // console.log('double click');
-      // onChangePosition(itemObj.ID, curPosition);
-      // onChangeSize(itemObj.ID, curSize);
-      if (type === 'TEXT') onSetEditMode(ID, true);
-    }
-  };
+  // const onDoubleClick = evt => {
+  //   evt.preventDefault();
+  //   if (itemRef.current.contains(evt.target)) {
+  //     // inside click
+  //     // then edit
+  //     // console.log('double click');
+  //     // onChangePosition(itemObj.ID, curPosition);
+  //     // onChangeSize(itemObj.ID, curSize);
+
+  //     // only for text the double click
+  //     // will be set to true if it's not already
+  //     if (type === 'TEXT' && !itemObj.Edit) onSetEditMode(ID, true);
+  //   }
+  // };
 
   const handleClick = e => {
     e.preventDefault();
@@ -108,7 +111,7 @@ function Item({
     itemRef.current.blur();
     setFocused(false);
     // onAddData(currentText, text);
-    if (type === 'TEXT') onSetEditMode(ID, false);
+    if (type === 'TEXT' && itemObj.Edit) onSetEditMode(ID, false);
   };
 
   useEffect(() => {
@@ -124,6 +127,8 @@ function Item({
   return (
     <div ref={itemRef}>
       <Rnd
+        disableDragging={itemObj.Edit}
+        // enableResizing={itemObj.Edit}
         className="item-style"
         style={style}
         size={{ width: curSize.width, height: curSize.height }}
@@ -137,20 +142,13 @@ function Item({
         }}
         minWidth={500}
         minHeight={70}
-        onDoubleClick={onDoubleClick}
+        // onDoubleClick={onDoubleClick}
       >
         <KeyboardEventHandler
           handleKeys={['backspace', 'del']}
           onKeyEvent={(key, e) => focused && deleter(e)}
         />
-        <ItemName ID={ID} />
-        {/* {type === 'TEXT' ? (
-          // TEXT render
-          <Text ID={ID} />
-        ) : (
-          // IMAGE render
-          <Image ID={ID} />
-        )} */}
+        <ItemName ref={itemRef} ID={ID} />
       </Rnd>
     </div>
   );
