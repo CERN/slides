@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TextEditor from './TextEditor';
+import { RenderHtml } from './RenderHtml';
 import { getItems } from '../../../redux-store/DeckReducer/selectors';
 import {
   editData,
@@ -13,44 +14,38 @@ const Text = React.forwardRef(
   ({ onEditData, ID, itemsArray, onSetEditMode }, ref) => {
     const item = itemsArray.find(itm => itm.ID === ID);
     const { Edit, Data } = item;
-    console.log('IN text is=====', ref);
     const [txt, setTxt] = useState(Data);
+    // i need the useeffect here cause i need the clicks of all of the document
+    useEffect(() => {
+      document.addEventListener('mousedown', handleClick);
+      return () => {
+        document.removeEventListener('mousedown', handleClick);
+      };
+    });
+
     const onChangeFunc = input => {
-      console.log('....bbbbbbbbbbbbbbla', txt, input, Edit);
       setTxt(input);
-      // onEditData(ID, input);
     };
-    // const handleClick = e => {
-    //   if (item.Edit) onSetEditMode(ID, false);
-    // };
 
-    // useEffect(() => {
-    //   document.addEventListener('mousedown', handleClick);
-
-    //   return () => {
-    //     document.removeEventListener('mousedown', handleClick);
-    //   };
-    // });
-    const onDoubleClick = evt => {
-      evt.preventDefault();
-      if (ref.current.contains(evt.target)) {
+    const handleClick = e => {
+      if (ref.current.contains(e.target)) {
         // inside click
-        // then edit
-        // console.log('double click');
-        // onChangePosition(itemObj.ID, curPosition);
-        // onChangeSize(itemObj.ID, curSize);
-
-        // only for text the double click
-        // will be set to true if it's not already
-        if (!item.Edit) onSetEditMode(ID, true);
+        return;
       }
+      // outside click
+      onEditData(ID, txt);
+      onSetEditMode(ID, false);
     };
     return (
-      <div onDoubleClick={onDoubleClick}>
+      <div>
         {Edit ? (
-          <TextEditor onChange={onChangeFunc} initialData={Data} />
+          <TextEditor
+            className="editor"
+            onChange={onChangeFunc}
+            initialData={txt}
+          />
         ) : (
-          Data
+          <RenderHtml text={txt} />
         )}
       </div>
     );
@@ -62,12 +57,6 @@ Text.propTypes = {
   onEditData: PropTypes.func,
   itemsArray: PropTypes.array,
   onSetEditMode: PropTypes.func,
-  // ref: PropTypes.oneOfType([
-  //   // Either a function
-  //   PropTypes.func,
-  //   // Or the instance of a DOM native element (see the note about SSR)
-  //   PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-  // ]),
 };
 
 function mapDispatchToProps(dispatch) {

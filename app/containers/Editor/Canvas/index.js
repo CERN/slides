@@ -38,7 +38,7 @@ function Canvas({
   useEffect(() => {
     window.slideCount = deck.current.props.children.length;
   });
-  console.log('....DeckOfSlides', DeckOfSlides);
+
   return (
     <div>
       <Helmet>

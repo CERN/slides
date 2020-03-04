@@ -1,5 +1,13 @@
 
+.item-style {
+  width: 23em;
+  height: 3em;
+}
 .item-style:hover {
+    border-color: #004883;
+    box-shadow: 0 0 8px rgb(0, 79, 143);
+  }
+.item-style:focus {
     border-color: #66afe9;
     box-shadow: 0 0 8px rgb(0, 140, 255);
   }

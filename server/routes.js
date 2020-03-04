@@ -1,8 +1,22 @@
+/* eslint-disable func-names */
 const uploadsFolder = `${process.cwd()}/public`;
 const { resolve } = require('path');
 const zipFolder = require('zip-folder');
 const extract = require('extract-zip');
 const fs = require('fs-extra');
+const sanitizeHtml = require('sanitize-html');
+
+const stateSanitizer = stateObj =>
+  stateObj.deck.slides.forEach(slide => {
+    slide.itemsArray.forEach(item => {
+      if (item.type === 'TEXT') {
+        const newItem = { ...item };
+        newItem.Data = sanitizeHtml(item.Data);
+        return newItem;
+      }
+      return item;
+    });
+  });
 
 module.exports.imageUpload = function(req, res) {
   if (req.files === null) {
@@ -33,7 +47,10 @@ module.exports.savePresentation = function(req, res) {
   // I know where the assets are located
   // so now in the public/username/ folder put: JSON of state, assets folder
   const { state } = req.body;
-  const obj = JSON.parse(state);
+  // sanitize state
+  const newState = stateSanitizer(state);
+  //
+  const obj = JSON.parse(newState);
   const { username, title } = obj.presentation;
   const presentationName = `${uploadsFolder}/${username}/${title}`;
 
@@ -101,8 +118,9 @@ module.exports.loadPresentation = function(req, res) {
         `${extractFolder}/presentation.JSON`,
       );
       // return the redux state
+      // sanitize html in load as well
       res.json({
-        state: reduxStateOBJ,
+        state: stateSanitizer(reduxStateOBJ),
       });
       // delete the extractFolder folder
       fs.removeSync(tmpFolder);

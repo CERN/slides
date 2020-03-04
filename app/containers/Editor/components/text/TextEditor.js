@@ -1,75 +1,50 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import CKEditor from 'ckeditor4-react';
+// import style manually
 import './TextEditor.css';
 
 export default function TextEditor({ onChange, initialData }) {
   const handleEditorChange = evt => {
+    console.log('handleEditorChange', evt.editor.getData());
     onChange(evt.editor.getData());
   };
+
   return (
-    <CKEditor
-      // this is to prevent an error with the editor that multiple instances of the editor exists
-      // eslint-disable-next-line no-return-assign
-      onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
-      data={initialData}
-      config={{
-        uiColor: '#0053A1',
-        toolbar: [
-          {
-            name: 'clipboard',
-            items: [
-              'Cut',
-              'Copy',
-              'Paste',
-              'PasteText',
-              'PasteFromWord',
-              '-',
-              'Undo',
-              'Redo',
-            ],
-          },
-          {
-            name: 'basicstyles',
-            items: [
-              'Bold',
-              'Italic',
-              'Underline',
-              'Strike',
-              'Subscript',
-              'Superscript',
-              '-',
-              'CopyFormatting',
-              'RemoveFormat',
-            ],
-          },
-          {
-            name: 'paragraph',
-            items: [
-              'NumberedList',
-              'BulletedList',
-              '-',
-              'Blockquote',
-              'CreateDiv',
-              '-',
-              'JustifyLeft',
-              'JustifyCenter',
-              'JustifyRight',
-              'JustifyBlock',
-              '-',
-              'BidiLtr',
-              'BidiRtl',
-              'Language',
-            ],
-          },
-          { name: 'links', items: ['Link', 'Unlink'] },
-          { name: 'styles', items: ['Styles', 'Format', 'Font', 'FontSize'] },
-          { name: 'colors', items: ['TextColor', 'BGColor'] },
-        ],
-      }}
-      // type="inline"
-      onChange={handleEditorChange}
-    />
+    <div>
+      <CKEditor
+        onBeforeLoad={CKEDITOR => (CKEDITOR.disableAutoInline = true)}
+        data={initialData}
+        type="inline"
+        onChange={handleEditorChange}
+        className="text-editor"
+        config={{
+          skin: 'kama',
+          toolbar: [
+            { name: 'styles', items: ['Format', 'FontSize'] }, // font size not working
+            { name: 'colors', items: ['TextColor'] }, // not working
+            {
+              name: 'basicstyles',
+              items: ['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat'], // underline not working
+            },
+            {
+              name: 'paragraph',
+              items: [
+                'NumberedList',
+                'BulletedList',
+                'Blockquote',
+                '-',
+                'JustifyLeft',
+                'JustifyCenter',
+                'JustifyRight',
+                'JustifyBlock',
+              ], // the justifies not working
+            },
+            { name: 'links', items: ['Link', 'Unlink'] },
+          ],
+        }}
+      />
+    </div>
   );
 }
 

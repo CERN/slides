@@ -16,12 +16,14 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
 import axios from 'axios';
-import { Rnd } from 'react-rnd';
+import Draggable from 'react-draggable';
+
 import {
   removeItem,
   changeItemPosition,
   changeItemSize,
   setEditMode,
+  editData,
 } from '../../../redux-store/DeckReducer/actions';
 import { getAssetsPath } from '../../../redux-store/PresentationReducer/selectors';
 import { getCurrentSlide } from '../../../redux-store/DeckReducer/selectors';
@@ -44,25 +46,26 @@ function Item({
   assetsPath,
   onSetEditMode,
   currentSlide,
+  onEditData,
 }) {
   const itemRef = useRef(null);
 
-  const { Position, Size, type, ID } = itemObj;
+  const { Position, Size, type, ID, Edit } = itemObj;
   const [curSize, setCurSize] = useState(Size);
   const [curPosition, setCurPosition] = useState(Position);
   const [focused, setFocused] = useState(false);
-  console.log('itemObj', itemObj, currentSlide);
+  // console.log('itemObj', itemObj, currentSlide);
   const ItemName = type === 'TEXT' ? Text : Image;
   // this is something that doesn't need to be stored in store
   // will change in with clicks
   const handleDragStop = (e, pos) => {
-    e.preventDefault();
+    // e.preventDefault();
     setCurPosition(pos);
     onChangePosition(ID, pos);
   };
 
   const handleResizeStop = (e, siz) => {
-    e.preventDefault();
+    // e.preventDefault();
     setCurSize(siz);
     onChangeSize(ID, siz);
   };
@@ -74,7 +77,7 @@ function Item({
   };
 
   const deleter = e => {
-    e.preventDefault();
+    // e.preventDefault();
     console.log('deleter called', ID);
     // send a delete in Redux
     onRemoveItem(ID);
@@ -82,74 +85,32 @@ function Item({
     if (type === 'IMAGE') delImageReq();
   };
 
-  // const onDoubleClick = evt => {
-  //   evt.preventDefault();
-  //   if (itemRef.current.contains(evt.target)) {
-  //     // inside click
-  //     // then edit
-  //     // console.log('double click');
-  //     // onChangePosition(itemObj.ID, curPosition);
-  //     // onChangeSize(itemObj.ID, curSize);
-
-  //     // only for text the double click
-  //     // will be set to true if it's not already
-  //     if (type === 'TEXT' && !itemObj.Edit) onSetEditMode(ID, true);
-  //   }
-  // };
-
-  const handleClick = e => {
-    e.preventDefault();
+  const singleClick = e => {
     if (itemRef.current.contains(e.target)) {
       // inside click
-      itemRef.current.focus();
       setFocused(true);
-      // then move
       return;
     }
-    // outside click
-    // console.log('outside clicki');
-    itemRef.current.blur();
     setFocused(false);
-    // onAddData(currentText, text);
-    if (type === 'TEXT' && itemObj.Edit) onSetEditMode(ID, false);
   };
 
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClick);
+  const doubleClick = () =>
+    type === 'TEXT' && !Edit ? onSetEditMode(ID, true) : null;
 
+  useEffect(() => {
+    document.addEventListener('mousedown', singleClick);
     return () => {
-      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('mousedown', singleClick);
     };
   });
 
-  // deleter only called when the element is focused
-
   return (
-    <div ref={itemRef}>
-      <Rnd
-        disableDragging={itemObj.Edit}
-        // enableResizing={itemObj.Edit}
-        className="item-style"
-        style={style}
-        size={{ width: curSize.width, height: curSize.height }}
-        position={{ x: curPosition.x, y: curPosition.y }}
-        onDragStop={(e, d) => handleDragStop(e, { x: d.x, y: d.y })}
-        onResizeStop={(e, direction, ref, delta, position) => {
-          handleResizeStop(e, {
-            width: ref.style.width,
-            height: ref.style.height,
-          });
-        }}
-        minWidth={500}
-        minHeight={70}
-        // onDoubleClick={onDoubleClick}
-      >
-        <KeyboardEventHandler
-          handleKeys={['backspace', 'del']}
-          onKeyEvent={(key, e) => focused && deleter(e)}
-        />
-        <ItemName ref={itemRef} ID={ID} />
-      </Rnd>
+    <div ref={itemRef} onDoubleClick={doubleClick} className="item-style">
+      <KeyboardEventHandler
+        handleKeys={['backspace', 'del']}
+        onKeyEvent={(key, e) => focused && deleter(e)}
+      />
+      <ItemName ref={itemRef} ID={ID} />
     </div>
   );
 }
@@ -162,6 +123,7 @@ Item.propTypes = {
   onChangeSize: PropTypes.func,
   onSetEditMode: PropTypes.func,
   currentSlide: PropTypes.number,
+  onEditData: PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -171,6 +133,7 @@ export function mapDispatchToProps(dispatch) {
     onChangeSize: (id, position) => dispatch(changeItemSize(id, position)),
     onRemoveItem: id => dispatch(removeItem(id)),
     onSetEditMode: (id, edit) => dispatch(setEditMode(id, edit)),
+    onEditData: (id, data) => dispatch(editData(id, data)),
   };
 }
 
