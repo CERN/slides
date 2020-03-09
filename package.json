@@ -65,8 +65,6 @@
   },
   "dependencies": {
     "@babel/polyfill": "7.4.3",
-    "@ckeditor/ckeditor5-build-classic": "^17.0.0",
-    "@ckeditor/ckeditor5-react": "^2.1.0",
     "@emotion/core": "^10.0.27",
     "@emotion/styled": "^10.0.27",
     "@tinymce/tinymce-react": "^3.5.0",
