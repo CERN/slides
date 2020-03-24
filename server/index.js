@@ -54,6 +54,14 @@ app.post('/save', (req, res) => api.savePresentation(req, res));
 app.post('/load', (req, res) => api.loadPresentation(req, res));
 // Remove Image Endpoint
 app.delete('/image/:id', (req, res) => api.deleteImage(req, res));
+// Phoenix/Wopi Endpoints
+// Start Phoenix Endpoint
+app.get('/phoenix/wopi/start', (req, res) => api.wopiStart(req, res));
+// Save in WOPI
+// app.post('/phoenix/wopi/save', (req, res) => api.wopiSave(req, res));
+// Load in WOPI
+// app.post('/phoenix/wopi/load', (req, res) => api.wopiLoad(req, res));
+
 // --------------------------- API ENDPOINTS ---------------------------
 
 // In production we need to pass these values in instead of relying on webpack

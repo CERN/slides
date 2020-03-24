@@ -4,7 +4,9 @@ const { resolve } = require('path');
 const zipFolder = require('zip-folder');
 const extract = require('extract-zip');
 const fs = require('fs-extra');
+const axios = require('axios');
 const sanitizeHtml = require('sanitize-html');
+const wopiServerFiles = 'http://localhost:8443/wopi/files/';
 
 const stateSanitizer = stateObj =>
   stateObj.deck.slides.forEach(slide => {
@@ -137,3 +139,30 @@ module.exports.deleteImage = function(req, res) {
     state: 'Successful',
   });
 };
+
+module.exports.wopiStart = function(req, res) {
+  const { accessToken, inode, username } = req.query;
+  console.log('accessToken and inode ', accessToken, inode);
+  // accessToken, inode, username
+  // now i have to make the getfile info, getfile wopi requests, and after that i set all the parameters like the redux state and images and im ready to roll
+  // getfile info:
+  const getFileInfoURL = `${wopiServerFiles}${inode}?access_token=Bearer ${accessToken}`;
+  const getFileURL = `${wopiServerFiles}${inode}/contents?access_token=Bearer ${accessToken}`;
+  // lock, uuid, conflict
+  // put
+  // unlock
+  // `X-WOPI-${SessionContext}`
+  // const wopi_header = 'X-WOPI-Override';
+  axios
+    .get(getFileInfoURL)
+    .then(resp => {
+      console.log('getFileInfoURL returned me:', resp.response);
+    })
+    .catch(e => {
+      console.log('error is', e.response);
+    });
+};
+
+// module.exports.wopiSave = function(req, res) {};
+
+// module.exports.wopiLoad = function(req, res) {};
