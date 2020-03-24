@@ -1,6 +1,10 @@
-<img src="https://cds.cern.ch/images/CERN-PHOTO-201802-030-10/file?size=medium" alt="CERN" align="center" />
-# Slides [![Made at CERN!](https://img.shields.io/badge/CERN-Open%20Source-%232980b9.svg)](https://home.cern)
-<br />
+<img src="https://cds.cern.ch/images/CERN-PHOTO-201802-030-10/file?size=medium" alt="CERN" align="center" width="600" />
+
+**Slides** is:
+ * **slides-creator** application
+ * fully **web-based**
+ * **Open-Source** Software under the MIT License
+ * **made at CERN**, [the place where the web was born](https://home.cern/science/computing/birth-web)!
 
 <div align="center">
   <sub>Created by <a href="https://twitter.com/aristofanischionis">Aristofanis Chionis</a> and maintained with ❤️ by CERN.</sub>
@@ -38,4 +42,4 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 ## License
 
-This project is licensed under the ? license, Copyright (c) 2020 CERN. For more information see `LICENSE.md`.
+This project is licensed under the MIT license, Copyright (c) 2020 CERN. For more information see `LICENSE.md`.
