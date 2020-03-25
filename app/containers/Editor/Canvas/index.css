@@ -1,29 +1,17 @@
-/* .grid {
-  height: 100%;
-  width: 100%;
-  background-color: black;
-  display: inline-block;
-} */
-
-/* .sidebar {
-  width: 6% !important;
-  height: 100%;
-  text-align: center;
-} */
-
 .deck {
-  /* left: 3; */
+  display:block;
+  /* border-style: dotted;
+  border-color: white; */
+  width: 100%;
+  height: 100%;
+  position: relative;
+  /* top: 10%;
+  left: 5%; */
 }
 
-/* .ui.grid>.column:not(.row) {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+.canvas-parent {
+  background-color: #0053A1;
 }
-
-.ui.grid>.column:not(.row) {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-} */
 
 .down {
   bottom: 0;

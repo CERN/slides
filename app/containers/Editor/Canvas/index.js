@@ -35,17 +35,17 @@ function Canvas({
   if (assetsPath === '') onSetAssetsPath(config.assetsPath);
   // // now make the check if it is cern 3,4,5 then add intro and end slide
   // // use this hook to be able to move to next previous slide in adding removing slides
-  useEffect(() => {
-    window.slideCount = deck.current.props.children.length;
-  });
+  // useEffect(() => {
+  //   window.slideCount = deck.current.props.children.length;
+  // });
 
   return (
-    <div>
+    <div className="canvas-parent">
       <Helmet>
         <title>Edit: {title}</title>
         <meta name="Canvas" content={description} />
       </Helmet>
-      <div>
+      <div className="deck">
         <Deck
           ref={deck}
           transition={['zoom', 'slide']}

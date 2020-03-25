@@ -19,18 +19,10 @@ export function Container({ isReady }) {
     <ToastProvider>
       <div>
         {isReady ? (
-          <div className="container">
-            <Grid>
-              <GridColumn className="settings">
-                <Settings />
-              </GridColumn>
-              <GridColumn className="sidebar">
-                <SideBar />
-              </GridColumn>
-              <GridColumn className="canvas">
-                <Canvas />
-              </GridColumn>
-            </Grid>
+          <div className="parent">
+            <Settings className="div1" />
+            <SideBar className="div2" />
+            <Canvas className="div3" />
             <SavePresentation />
             <Upload />
           </div>

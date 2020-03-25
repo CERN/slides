@@ -11,11 +11,9 @@ function MySlide({ theme, itemsArray }) {
   const StandardSlideTemplate = StandardSlide(theme);
   return (
     <StandardSlideTemplate>
-      <div id="this-slide" className="slide-style">
-        {itemsArray.map(itm => (
-          <MyItem key={itm.ID} itemObj={itm} />
-        ))}
-      </div>
+      {itemsArray.map(itm => (
+        <MyItem key={itm.ID} itemObj={itm} />
+      ))}
     </StandardSlideTemplate>
   );
 }

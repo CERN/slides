@@ -22,26 +22,28 @@ function Settings({ onSaveRequest }) {
     </Menu.Item>
   );
   return (
-    <Menu inverted vertical fluid icon="labeled" className="settings">
-      {Item('eye', 'Preview (^F)')}
-      {Item('undo', 'Undo (Ctrl+Z)')}
-      {Item('save', 'Save')}
-      {Item('play', 'Present (Ctrl+E)')}
-      {Item('setting', 'Presentation Settings')}
-      {Item('paint brush', 'Style')}
-      {Item('ordered list', 'Arrange Slides')}
-      {Item('time', 'Revision history')}
-      {Item('cloud upload', 'Import from my CERNBox')}
-      {Item('cloud download', 'Export')}
-      {Item('image', 'Media')}
-      {Item('share alternate', 'Share')}
-      {Item('ellipsis vertical')}
-      {/* have to make a popup specially for this one, https://react.semantic-ui.com/modules/popup/#usage-nested */}
-      <Menu.Item className="lastitem">
+    <div className="settings">
+      <Menu inverted vertical fluid icon="labeled">
+        {Item('eye', 'Preview (^F)')}
+        {/* {Item('undo', 'Undo (Ctrl+Z)')} */}
+        {Item('save', 'Save')}
+        {Item('play', 'Present (Ctrl+E)')}
+        {/* {Item('setting', 'Presentation Settings')} */}
+        {/* {Item('paint brush', 'Style')} */}
+        {/* {Item('ordered list', 'Arrange Slides')} */}
+        {/* {Item('time', 'Revision history')} */}
+        {Item('cloud upload', 'Import from my CERNBox')}
+        {Item('cloud download', 'Export')}
+        {/* {Item('image', 'Media')} */}
+        {/* {Item('share alternate', 'Share')} */}
+        {/* {Item('ellipsis vertical')} */}
+        {/* have to make a popup specially for this one, https://react.semantic-ui.com/modules/popup/#usage-nested */}
+        {/* <Menu.Item className="lastitem"> */}
         {/* same for this one */}
-        <Icon name="content" />
-      </Menu.Item>
-    </Menu>
+        {/* <Icon name="content" /> */}
+        {/* </Menu.Item> */}
+      </Menu>
+    </div>
   );
 }
 

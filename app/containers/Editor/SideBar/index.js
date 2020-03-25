@@ -32,7 +32,7 @@ function SideBar({
     } else window.location = `#/${currentSlide - 1}`;
   };
   return (
-    <div className="content-edit-bar">
+    <div className="sidebar">
       <Menu vertical inverted fluid icon="labeled">
         <Menu.Item name="AddSlide" onClick={addingSlide}>
           <Icon name="plus" />

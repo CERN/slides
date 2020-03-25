@@ -3,3 +3,12 @@
   bottom: 0;
   position: absolute;
 }
+
+.settings {
+  min-width: 3em;
+  /* height: 100vh; */
+  height: 100vh;
+  background-color: #1B1C1D;
+  /* bottom: 0;
+  top: 0; */
+}
