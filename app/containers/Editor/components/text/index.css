@@ -11,11 +11,15 @@
 .editor {
   /* width: 30em;
   height: 10em; */
-  text-align: center;
-  margin: auto;
+  /* text-align: center; */
+  /* margin: 0 auto; */
 }
 
 /* .render-text :hover {
     border-color: #66afe9;
     box-shadow: 0 0 8px rgb(0, 140, 255);
 } */
+.fit-text {
+  display: block;
+  overflow: auto;
+}

@@ -38,7 +38,7 @@ export class Text extends baseItem {
     constructor(){
       super();
       this.type = ItemTypes.TEXT
-      this.Data = "Text";
+      this.Data = "<p>Text</p>";
       this.Edit = false;
     }
     toggleEdit(edit: boolean){

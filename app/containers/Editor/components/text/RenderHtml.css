@@ -1,0 +1,13 @@
+.bigger-text > h1{
+    font-size: 3em;
+}
+.bigger-text > h2{
+    font-size: 2.25em;
+}
+.bigger-text > h3{
+    font-size: 1.755em;
+}
+.bigger-text > p{
+    font-size: 1.3em;
+}
+/* 150% larger text */

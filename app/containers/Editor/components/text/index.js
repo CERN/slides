@@ -36,8 +36,9 @@ const Text = React.forwardRef(
       onEditData(ID, txt);
       onSetEditMode(ID, false);
     };
+
     return (
-      <div>
+      <div className="fit-text">
         {Edit ? (
           <TextEditor
             className="editor"
