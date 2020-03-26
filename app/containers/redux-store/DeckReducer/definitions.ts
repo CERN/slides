@@ -20,7 +20,7 @@ class baseItem {
     Size: size
     constructor(){
       this.ID = uuidv4();
-      this.Position= {x: 200, y: 250};
+      this.Position= {x: 0, y: 0};
       this.Size = {width: '500px', height: '90px'};
     }
     changePosition(position: position) {

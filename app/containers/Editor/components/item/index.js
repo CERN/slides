@@ -60,15 +60,17 @@ function Item({
   // will change in with clicks
   const handleDragStop = (e, pos) => {
     // e.preventDefault();
-    setCurPosition(pos);
-    onChangePosition(ID, pos);
+    const posi = { x: pos.x, y: pos.y };
+    console.log('posssssssssssssssss', pos, 'posiiiiiiiiiiiiiii', posi);
+    setCurPosition(posi);
+    onChangePosition(ID, posi);
   };
 
-  const handleResizeStop = (e, siz) => {
-    // e.preventDefault();
-    setCurSize(siz);
-    onChangeSize(ID, siz);
-  };
+  // const handleResizeStop = (e, siz) => {
+  //   // e.preventDefault();
+  //   setCurSize(siz);
+  //   onChangeSize(ID, siz);
+  // };
 
   const delImageReq = () => {
     const url = `${assetsPath}/image/${itemObj.Src}`;
@@ -105,13 +107,15 @@ function Item({
   });
 
   return (
-    <div ref={itemRef} onDoubleClick={doubleClick} className="item-style">
-      <KeyboardEventHandler
-        handleKeys={['backspace', 'del']}
-        onKeyEvent={(key, e) => focused && deleter(e)}
-      />
-      <ItemName ref={itemRef} ID={ID} />
-    </div>
+    <Draggable onStop={handleDragStop} defaultPosition={curPosition}>
+      <div ref={itemRef} onDoubleClick={doubleClick} className="item-style">
+        <KeyboardEventHandler
+          handleKeys={['backspace', 'del']}
+          onKeyEvent={(key, e) => focused && deleter(e)}
+        />
+        <ItemName ref={itemRef} ID={ID} />
+      </div>
+    </Draggable>
   );
 }
 
