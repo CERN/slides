@@ -11,6 +11,7 @@ import {
   LOAD_REQUEST,
   IS_READY,
   LOAD_STATE,
+  STYLE_REQUEST,
 } from './constants';
 import { Action } from './actions';
 
@@ -58,6 +59,9 @@ const PresentationReducer = (state: presentationState=initialState, action: Acti
         break;
       case IS_READY:
         draft.isReady = action.ready;
+        break;
+      case STYLE_REQUEST:
+        draft.styleRequest = action.request;
         break;
     }
   });

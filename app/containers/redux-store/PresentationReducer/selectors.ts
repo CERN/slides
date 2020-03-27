@@ -16,6 +16,7 @@ const getSaveRequest = (state: { presentation: presentationState; }) => state.pr
 const getLoadRequest = (state: { presentation: presentationState; }) => state.presentation.loadRequest;
 
 const getIsReady = (state: { presentation: presentationState; }) => state.presentation.isReady;
+const getStyleRequest = (state: { presentation: presentationState; }) => state.presentation.styleRequest;
 
 export {
   getTheme,
@@ -27,4 +28,5 @@ export {
   getSaveRequest,
   getLoadRequest,
   getIsReady,
+  getStyleRequest,
 };

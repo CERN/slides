@@ -2,14 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Menu, Icon, Popup } from 'semantic-ui-react';
-import { setSaveRequest } from '../../redux-store/PresentationReducer/actions';
+import {
+  setSaveRequest,
+  setStyleRequest,
+} from '../../redux-store/PresentationReducer/actions';
 
 import './index.css';
 
-function Settings({ onSaveRequest }) {
+function Settings({ onSaveRequest, onStyleRequest }) {
   const onClickHandler = item => {
     // turn on a save request
     if (item === 'save') onSaveRequest();
+    if (item === 'paint brush') onStyleRequest();
   };
   const Item = (item, description) => (
     <Menu.Item onClick={() => onClickHandler(item)}>
@@ -29,7 +33,7 @@ function Settings({ onSaveRequest }) {
         {Item('save', 'Save')}
         {Item('play', 'Present (Ctrl+E)')}
         {/* {Item('setting', 'Presentation Settings')} */}
-        {/* {Item('paint brush', 'Style')} */}
+        {Item('paint brush', 'Style')}
         {/* {Item('ordered list', 'Arrange Slides')} */}
         {/* {Item('time', 'Revision history')} */}
         {Item('cloud upload', 'Import from my CERNBox')}
@@ -49,11 +53,13 @@ function Settings({ onSaveRequest }) {
 
 Settings.propTypes = {
   onSaveRequest: PropTypes.func,
+  onStyleRequest: PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     onSaveRequest: () => dispatch(setSaveRequest(true)),
+    onStyleRequest: () => dispatch(setStyleRequest(true)),
   };
 }
 

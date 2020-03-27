@@ -9,6 +9,7 @@ import {
   LOAD_REQUEST,
   LOAD_STATE,
   IS_READY,
+  STYLE_REQUEST,
 } from './constants';
 
 export const setTheme = (theme: string) => ({
@@ -61,9 +62,14 @@ export const setIsReady = (ready: boolean) => ({
   ready,
 }) as const;
 
+export const setStyleRequest = (request: boolean) => ({
+  type: STYLE_REQUEST,
+  request,
+}) as const;
+
 export type Action = ReturnType<
  typeof setTheme | typeof setTitle | typeof setDescription |
  typeof uploadImageRequest | typeof setAssetsPath | typeof setUsername |
  typeof setSaveRequest | typeof setLoadRequest | typeof loadState |
- typeof setIsReady
+ typeof setIsReady | typeof setStyleRequest
 >

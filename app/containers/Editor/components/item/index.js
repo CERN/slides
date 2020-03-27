@@ -61,7 +61,6 @@ function Item({
   const handleDragStop = (e, pos) => {
     // e.preventDefault();
     const posi = { x: pos.x, y: pos.y };
-    console.log('posssssssssssssssss', pos, 'posiiiiiiiiiiiiiii', posi);
     setCurPosition(posi);
     onChangePosition(ID, posi);
   };
@@ -91,8 +90,10 @@ function Item({
     if (itemRef.current.contains(e.target)) {
       // inside click
       setFocused(true);
+      itemRef.current.focus();
       return;
     }
+    itemRef.current.blur();
     setFocused(false);
   };
 
@@ -107,15 +108,19 @@ function Item({
   });
 
   return (
-    <Draggable onStop={handleDragStop} defaultPosition={curPosition}>
+    // <Draggable
+    //   disabled={!focused}
+    //   defaultPosition={curPosition}
+    //   onStop={handleDragStop}
+    // >
       <div ref={itemRef} onDoubleClick={doubleClick} className="item-style">
-        <KeyboardEventHandler
+        {/* <KeyboardEventHandler
           handleKeys={['backspace', 'del']}
           onKeyEvent={(key, e) => focused && deleter(e)}
-        />
+        /> */}
         <ItemName ref={itemRef} ID={ID} />
       </div>
-    </Draggable>
+    // </Draggable>
   );
 }
 

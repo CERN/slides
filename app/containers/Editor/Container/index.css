@@ -16,10 +16,10 @@
 
 .parent {
   display: grid;
-  grid-template-columns: 1fr 1.5fr 10fr;
+  grid-template-columns: 0.7fr 1fr 10fr;
   grid-template-rows: 1fr;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px; 
+  /* grid-column-gap: 0px;
+  grid-row-gap: 0px;  */
   background-color: black;
 }
 

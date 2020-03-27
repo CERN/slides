@@ -111,14 +111,16 @@ function LoadPresentation({
             <em>(Only *.slides presentations will be accepted)</em>
           </div>
           <aside style={thumbsContainer}>{acceptedFilesItems}</aside>
-          <Button color="red" onClick={onCancelHandler}>
-            <Icon name="remove" /> Cancel
-          </Button>
-          <Button color="green" onClick={sendLoadRequest}>
-            <Icon name="checkmark" /> Upload
-          </Button>
         </div>
       </Modal.Content>
+      <Modal.Actions>
+        <Button color="red" onClick={onCancelHandler}>
+          <Icon name="remove" /> Cancel
+        </Button>
+        <Button color="green" onClick={sendLoadRequest}>
+          <Icon name="checkmark" /> Upload
+        </Button>
+      </Modal.Actions>
     </Modal>
   );
 }
