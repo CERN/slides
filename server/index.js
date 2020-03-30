@@ -13,8 +13,8 @@ const fileUpload = require('express-fileupload');
 const logger = require('./logger');
 const port = require('./port');
 const setup = require('./middlewares/frontendMiddleware');
-// const uploadsFolder = process.env.UPLOADS_FOLDER;
-const uploadsFolder = `${process.cwd()}/public`;
+const uploadsFolder = process.env.UPLOADS_FOLDER;
+// const uploadsFolder = `${process.cwd()}/public`;
 const api = require('./routes');
 
 const app = express();
@@ -30,11 +30,11 @@ app.use(
   }),
 );
 
-// serve static images from folder public/assets
-app.use('/static', express.static(`${uploadsFolder}/assets`));
-app.use('/cernlogo', express.static(`${uploadsFolder}/cernLogo`));
+// serve static images from folder the images there will be served
+app.use('/static', express.static(uploadsFolder));
+app.use('/cernlogo', express.static(`${process.cwd()}/public/cernLogo`));
 
-// this is to allow cross origin requests
+// this is to allow cross origin requests, will have to be changed, it is DANGEROUS
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
@@ -55,7 +55,7 @@ app.post('/load', (req, res) => api.loadPresentation(req, res));
 // Remove Image Endpoint
 app.delete('/image/:id', (req, res) => api.deleteImage(req, res));
 // Phoenix/Wopi Endpoints
-// Start Phoenix Endpoint
+// Start Phoenix Endpoint, will have to store somewhere if i am using wopi
 app.get('/phoenix/wopi/start', (req, res) => api.wopiStart(req, res));
 // Save in WOPI
 // app.post('/phoenix/wopi/save', (req, res) => api.wopiSave(req, res));

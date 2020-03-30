@@ -26,9 +26,12 @@ module.exports.imageUpload = function(req, res) {
       msg: 'No file uploaded',
     });
   }
-
+  // uploadsfolder/user/presentationName/hash_filename
   const { file } = req.files;
-  const imageNameToStore = `${uploadsFolder}/assets/${file.md5}-${file.name}`;
+  const { username, title } = req.body;
+  // this makes the dir if it doesn't exist else does nothing
+  fs.ensureDirSync(`${uploadsFolder}/${username}/${title}`);
+  const imageNameToStore = `${uploadsFolder}/${username}/${title}/${file.md5}_${file.name}`;
 
   file.mv(imageNameToStore, err => {
     if (err) {
@@ -146,8 +149,8 @@ module.exports.wopiStart = function(req, res) {
   // accessToken, inode, username
   // now i have to make the getfile info, getfile wopi requests, and after that i set all the parameters like the redux state and images and im ready to roll
   // getfile info:
-  const getFileInfoURL = `${wopiServerFiles}${inode}?access_token=Bearer ${accessToken}`;
-  const getFileURL = `${wopiServerFiles}${inode}/contents?access_token=Bearer ${accessToken}`;
+  const getFileInfoURL = `${wopiServerFiles}${inode}?access_token=${accessToken}`;
+  const getFileURL = `${wopiServerFiles}${inode}/contents?access_token=${accessToken}`;
   // lock, uuid, conflict
   // put
   // unlock

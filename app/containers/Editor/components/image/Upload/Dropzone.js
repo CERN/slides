@@ -5,9 +5,8 @@ import PropTypes from 'prop-types';
 import { Button, Icon } from 'semantic-ui-react';
 import { post } from 'axios';
 import BMF from 'browser-md5-file';
-import { getAssetsPath } from '../../../../redux-store/PresentationReducer/selectors';
+import { getAssetsPath, getTitle, getUsername } from '../../../../redux-store/PresentationReducer/selectors';
 import { addItem } from '../../../../redux-store/DeckReducer/actions';
-
 import { uploadImageRequest } from '../../../../redux-store/PresentationReducer/actions';
 import './Dropzone.css';
 import {
@@ -22,7 +21,7 @@ import {
 } from '../../../styles';
 // Add notification and check System
 
-export function Dropzone({ onImageRequest, onAddImage, assetsPath }) {
+export function Dropzone({ onImageRequest, onAddImage, assetsPath, username, title }) {
   // and include it as a parameter above
   // console.log('state: ', bull);
   const [files, setFiles] = useState([]);
@@ -64,9 +63,10 @@ export function Dropzone({ onImageRequest, onAddImage, assetsPath }) {
   );
 
   const filesUpload = () => {
-    // const url = 'http://localhost:3000/upload';
     const url = `${assetsPath}/upload`;
     const formData = new FormData();
+    formData.set('username', username);
+    formData.set('title', title);
     files.forEach(f => formData.append('file', f));
     const config = {
       headers: {
@@ -86,7 +86,7 @@ export function Dropzone({ onImageRequest, onAddImage, assetsPath }) {
     files.forEach(f => {
       const bmf = new BMF();
       bmf.md5(f, (err, hash) => {
-        onAddImage(`${hash}-${f.name}`);
+        onAddImage(`${hash}_${f.name}`);
       });
     });
     // destroy the reference to all of the files
@@ -122,6 +122,8 @@ Dropzone.propTypes = {
   onImageRequest: PropTypes.func,
   onAddImage: PropTypes.func,
   assetsPath: PropTypes.string,
+  username: PropTypes.string,
+  title: PropTypes.string,
 };
 
 function mapDispatchToProps(dispatch) {
@@ -134,6 +136,8 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   state => ({
     assetsPath: getAssetsPath(state),
+    username: getUsername(state),
+    title: getTitle(state),
   }),
   mapDispatchToProps,
 )(Dropzone);

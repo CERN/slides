@@ -6,7 +6,6 @@ import { Modal } from 'semantic-ui-react';
 import Dropzone from './Dropzone';
 import { getImgUploadRequest } from '../../../../redux-store/PresentationReducer/selectors';
 
-// check where can i store the images
 function Upload({ uploadRequest }) {
   return (
     <Modal dimmer="blurring" open={uploadRequest}>
