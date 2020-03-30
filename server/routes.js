@@ -1,5 +1,5 @@
 /* eslint-disable func-names */
-const uploadsFolder = `${process.cwd()}/public`;
+const uploadsFolder = process.env.UPLOADS_FOLDER;
 const { resolve } = require('path');
 const zipFolder = require('zip-folder');
 const extract = require('extract-zip');
@@ -32,7 +32,6 @@ module.exports.imageUpload = function(req, res) {
   // this makes the dir if it doesn't exist else does nothing
   fs.ensureDirSync(`${uploadsFolder}/${username}/${title}`);
   const imageNameToStore = `${uploadsFolder}/${username}/${title}/${file.md5}_${file.name}`;
-
   file.mv(imageNameToStore, err => {
     if (err) {
       console.error(err);
@@ -43,6 +42,16 @@ module.exports.imageUpload = function(req, res) {
       fileName: imageNameToStore,
       filePath: resolve(uploadsFolder, imageNameToStore),
     });
+  });
+};
+
+module.exports.deleteImage = function (req, res) {
+  const { id, username, title } = req.params;
+  const imageName = `${uploadsFolder}/${username}/${title}/${id}`;
+  // delete image file
+  fs.removeSync(imageName);
+  res.json({
+    state: 'Successful',
   });
 };
 
@@ -96,7 +105,7 @@ module.exports.loadPresentation = function(req, res) {
   const extractFolder = `${uploadsFolder}/extract-folder`;
   const tmpFolder = `${uploadsFolder}/tmp-folder`;
   fs.emptyDirSync(tmpFolder);
-  const tmpNameForDotSlides = `${tmpFolder}/${file.md5}-${file.name}`;
+  const tmpNameForDotSlides = `${tmpFolder}/${file.md5}_${file.name}`;
   file.mv(tmpNameForDotSlides, err => {
     if (err) {
       console.error(err);
@@ -134,14 +143,6 @@ module.exports.loadPresentation = function(req, res) {
   );
 };
 
-module.exports.deleteImage = function(req, res) {
-  const imageName = `${uploadsFolder}/assets/${req.params.id}`;
-  // delete image file
-  fs.removeSync(imageName);
-  res.json({
-    state: 'Successful',
-  });
-};
 
 module.exports.wopiStart = function(req, res) {
   const { accessToken, inode, username } = req.query;

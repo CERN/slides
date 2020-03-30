@@ -30,7 +30,7 @@ app.use(
   }),
 );
 
-// serve static images from folder the images there will be served
+// serve static images from the uploads folder
 app.use('/static', express.static(uploadsFolder));
 app.use('/cernlogo', express.static(`${process.cwd()}/public/cernLogo`));
 

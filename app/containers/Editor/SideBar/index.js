@@ -11,7 +11,7 @@ import {
 import { uploadImageRequest } from '../../redux-store/PresentationReducer/actions';
 import { getCurrentSlide } from '../../redux-store/DeckReducer/selectors';
 import './index.css';
-import { Text } from '../../redux-store/DeckReducer/definitions';
+import { ItemTypes } from '../../redux-store/DeckReducer/definitions';
 // when i render SideBar onClick they will render something in the middle
 
 function SideBar({
@@ -67,7 +67,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onAddSlide: () => dispatch(addSlide()),
     onRemoveSlide: () => dispatch(removeSlide()),
-    onAddText: () => dispatch(addItem(new Text())),
+    onAddText: () => dispatch(addItem({ type: ItemTypes.TEXT })),
     onAddImage: () => dispatch(uploadImageRequest(true)),
   };
 }

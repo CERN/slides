@@ -5,9 +5,15 @@ import PropTypes from 'prop-types';
 import { Button, Icon } from 'semantic-ui-react';
 import { post } from 'axios';
 import BMF from 'browser-md5-file';
-import { getAssetsPath, getTitle, getUsername } from '../../../../redux-store/PresentationReducer/selectors';
+import {
+  getAssetsPath,
+  getTitle,
+  getUsername,
+} from '../../../../redux-store/PresentationReducer/selectors';
 import { addItem } from '../../../../redux-store/DeckReducer/actions';
 import { uploadImageRequest } from '../../../../redux-store/PresentationReducer/actions';
+import { ItemTypes } from '../../../../redux-store/DeckReducer/definitions';
+
 import './Dropzone.css';
 import {
   thumbsContainer,
@@ -21,7 +27,13 @@ import {
 } from '../../../styles';
 // Add notification and check System
 
-export function Dropzone({ onImageRequest, onAddImage, assetsPath, username, title }) {
+export function Dropzone({
+  onImageRequest,
+  onAddImage,
+  assetsPath,
+  username,
+  title,
+}) {
   // and include it as a parameter above
   // console.log('state: ', bull);
   const [files, setFiles] = useState([]);
@@ -129,7 +141,7 @@ Dropzone.propTypes = {
 function mapDispatchToProps(dispatch) {
   return {
     onImageRequest: () => dispatch(uploadImageRequest(false)),
-    onAddImage: src => dispatch(addItem(src)),
+    onAddImage: src => dispatch(addItem({ type: ItemTypes.IMAGE, src })),
   };
 }
 
