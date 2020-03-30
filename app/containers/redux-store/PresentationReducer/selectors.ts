@@ -18,6 +18,8 @@ const getLoadRequest = (state: { presentation: presentationState; }) => state.pr
 const getIsReady = (state: { presentation: presentationState; }) => state.presentation.isReady;
 const getStyleRequest = (state: { presentation: presentationState; }) => state.presentation.styleRequest;
 
+const getBackgroundColor = (state: { presentation: presentationState; }) => state.presentation.backgroundColor;
+
 export {
   getTheme,
   getTitle,
@@ -29,4 +31,5 @@ export {
   getLoadRequest,
   getIsReady,
   getStyleRequest,
+  getBackgroundColor,
 };

@@ -4,6 +4,7 @@ export const initialState = {
     theme: 'CERN 1',
     title: 'New Presentation',
     description: 'No description yet',
+    backgroundColor: '#0053A1',
     isReady: false,
     //
     assetsPath: '',

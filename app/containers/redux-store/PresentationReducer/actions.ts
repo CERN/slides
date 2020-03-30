@@ -10,6 +10,7 @@ import {
   LOAD_STATE,
   IS_READY,
   STYLE_REQUEST,
+  BACKGROUND_COLOR,
 } from './constants';
 
 export const setTheme = (theme: string) => ({
@@ -67,9 +68,14 @@ export const setStyleRequest = (request: boolean) => ({
   request,
 }) as const;
 
+export const setBackgroundColor = (color: string) => ({
+  type: BACKGROUND_COLOR,
+  color,
+}) as const;
+
 export type Action = ReturnType<
  typeof setTheme | typeof setTitle | typeof setDescription |
  typeof uploadImageRequest | typeof setAssetsPath | typeof setUsername |
  typeof setSaveRequest | typeof setLoadRequest | typeof loadState |
- typeof setIsReady | typeof setStyleRequest
+ typeof setIsReady | typeof setStyleRequest | typeof setBackgroundColor
 >

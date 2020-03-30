@@ -9,3 +9,4 @@ export const LOAD_REQUEST = 'Slides/Presentation/LOAD_REQUEST';
 export const IS_READY = 'Slides/Presentation/IS_READY';
 export const LOAD_STATE = 'Slides/Presentation/LOAD_STATE';
 export const STYLE_REQUEST = 'Slides/Presentation/STYLE_REQUEST';
+export const BACKGROUND_COLOR = 'Slides/Presentation/BACKGROUND_COLOR';

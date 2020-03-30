@@ -11,6 +11,7 @@ import {
   getTitle,
   getDescription,
   getAssetsPath,
+  getBackgroundColor,
 } from '../../redux-store/PresentationReducer/selectors';
 
 import { getDeck } from '../../redux-store/DeckReducer/selectors';
@@ -27,10 +28,19 @@ function Canvas({
   DeckOfSlides,
   onSetAssetsPath,
   assetsPath,
+  backgroundColor,
 }) {
   const deck = useRef();
   const themeObj = getterTheme(theme);
-  const myTheme = createTheme(themeObj.themeConfig, themeObj.fontConfig);
+  // change fontconfig from here
+  const newTheme = {
+    ...themeObj,
+    themeConfig: {
+      ...themeObj.themeConfig,
+      secondary: backgroundColor,
+    },
+  };
+  const myTheme = createTheme(newTheme.themeConfig, newTheme.fontConfig);
   // set the assetsFolder, where images will be, in the redux store
   if (assetsPath === '') onSetAssetsPath(config.assetsPath);
   // // now make the check if it is cern 3,4,5 then add intro and end slide
@@ -38,8 +48,9 @@ function Canvas({
   useEffect(() => {
     window.slideCount = deck.current.props.children.length;
   });
+
   return (
-    <div className="canvas-parent">
+    <div>
       <Helmet>
         <title>Edit: {title}</title>
         <meta name="Canvas" content={description} />
@@ -70,6 +81,7 @@ Canvas.propTypes = {
   DeckOfSlides: PropTypes.array,
   onSetAssetsPath: PropTypes.func,
   assetsPath: PropTypes.string,
+  backgroundColor: PropTypes.string,
 };
 
 function mapDispatchToProps(dispatch) {
@@ -85,6 +97,7 @@ export default connect(
     description: getDescription(state),
     DeckOfSlides: getDeck(state),
     assetsPath: getAssetsPath(state),
+    backgroundColor: getBackgroundColor(state),
   }),
   mapDispatchToProps,
 )(Canvas);

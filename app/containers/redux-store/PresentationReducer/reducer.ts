@@ -12,6 +12,7 @@ import {
   IS_READY,
   LOAD_STATE,
   STYLE_REQUEST,
+  BACKGROUND_COLOR,
 } from './constants';
 import { Action } from './actions';
 
@@ -62,6 +63,9 @@ const PresentationReducer = (state: presentationState=initialState, action: Acti
         break;
       case STYLE_REQUEST:
         draft.styleRequest = action.request;
+        break;
+      case BACKGROUND_COLOR:
+        draft.backgroundColor = action.color;
         break;
     }
   });

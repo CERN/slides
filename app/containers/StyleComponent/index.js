@@ -4,22 +4,32 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { SketchPicker } from 'react-color';
 import { Modal, Button, Icon } from 'semantic-ui-react';
-import { setStyleRequest } from '../redux-store/PresentationReducer/actions';
-import { getStyleRequest } from '../redux-store/PresentationReducer/selectors';
+import {
+  setStyleRequest,
+  setBackgroundColor,
+} from '../redux-store/PresentationReducer/actions';
+import {
+  getStyleRequest,
+  getBackgroundColor,
+} from '../redux-store/PresentationReducer/selectors';
 import './index.css';
 
-function StyleComponent({ styleRequest, onStyleRequest }) {
-  const [backgroundColor, setBackgroundSolor] = useState('#0053A1');
+function StyleComponent({
+  styleRequest,
+  onStyleRequest,
+  onColorChange,
+  style,
+}) {
+  const [backgroundColor, _setBackgroundColor] = useState(style);
   const handleChangeColor = color => {
-    setBackgroundSolor(color.hex);
+    _setBackgroundColor(color.hex);
   };
 
   const sendStyleRequest = () => {
-    console.log('do things', backgroundColor);
+    onColorChange(backgroundColor);
     onStyleRequest();
   };
   const onCancelHandler = () => {
-    console.log('cancelled');
     onStyleRequest();
   };
 
@@ -48,17 +58,21 @@ function StyleComponent({ styleRequest, onStyleRequest }) {
 StyleComponent.propTypes = {
   styleRequest: PropTypes.bool,
   onStyleRequest: PropTypes.func,
+  onColorChange: PropTypes.func,
+  style: PropTypes.string,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     onStyleRequest: () => dispatch(setStyleRequest(false)),
+    onColorChange: color => dispatch(setBackgroundColor(color)),
   };
 }
 
 export default connect(
   state => ({
     styleRequest: getStyleRequest(state),
+    style: getBackgroundColor(state),
   }),
   mapDispatchToProps,
 )(StyleComponent);
