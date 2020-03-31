@@ -28,12 +28,12 @@ function Settings({ onSaveRequest, onStyleRequest }) {
   return (
     <div className="settings">
       <Menu inverted vertical fluid icon="labeled">
-        {Item('eye', 'Preview (^F)')}
+        {Item('eye', 'Slideshow')}
         {/* {Item('undo', 'Undo (Ctrl+Z)')} */}
         {Item('save', 'Save')}
-        {Item('play', 'Present (Ctrl+E)')}
+        {/* {Item('play', 'Present (Ctrl+E)')} */}
         {/* {Item('setting', 'Presentation Settings')} */}
-        {Item('paint brush', 'Style')}
+        {Item('paint brush', 'Change Background Color')}
         {/* {Item('ordered list', 'Arrange Slides')} */}
         {/* {Item('time', 'Revision history')} */}
         {Item('cloud upload', 'Import from my CERNBox')}

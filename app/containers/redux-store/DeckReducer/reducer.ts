@@ -32,7 +32,7 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
       case ADD_SLIDE: {
         const slide:Slide = {
           ID: uuidv4(),
-          itemsArray: [],
+          itemsArray: [], // add a box that can be image or text
         }
         draft.slides.splice(draft.currentSlide + 1, 0, slide);
         break;

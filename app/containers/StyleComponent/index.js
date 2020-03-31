@@ -14,6 +14,25 @@ import {
 } from '../redux-store/PresentationReducer/selectors';
 import './index.css';
 
+const allColors = [
+  { color: '#0053A1', title: 'CERN' }, // added CERN's default official color
+  '#D0021B',
+  '#F5A623',
+  '#F8E71C',
+  '#8B572A',
+  '#7ED321',
+  '#417505',
+  '#BD10E0',
+  '#9013FE',
+  '#4A90E2',
+  '#50E3C2',
+  '#B8E986',
+  '#000000',
+  '#4A4A4A',
+  '#9B9B9B',
+  '#FFFFFF',
+];
+
 function StyleComponent({
   styleRequest,
   onStyleRequest,
@@ -32,14 +51,17 @@ function StyleComponent({
   const onCancelHandler = () => {
     onStyleRequest();
   };
-
+  // ask if this with the colored letters is good or not
   return (
     <Modal dimmer="blurring" open={styleRequest} size="mini">
-      <Modal.Header>Choose a background Colour</Modal.Header>
+      <Modal.Header>
+        <font color={backgroundColor}>Choose a background Colour</font>
+      </Modal.Header>
       <Modal.Content>
         <SketchPicker
           width={300}
           color={backgroundColor}
+          presetColors={allColors}
           onChangeComplete={handleChangeColor}
         />
       </Modal.Content>

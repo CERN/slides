@@ -21,7 +21,7 @@ class baseItem {
     constructor(){
       this.ID = uuidv4();
       this.Position= {x: 0, y: 0};
-      this.Size = {width: '500px', height: '90px'};
+      this.Size = {width: '500px', height: '90px'}; // make it bigger
     }
     changePosition(position: position) {
       this.Position = {...position};
@@ -38,7 +38,7 @@ export class Text extends baseItem {
     constructor(){
       super();
       this.type = ItemTypes.TEXT
-      this.Data = "<p>Text</p>";
+      this.Data = "<p>Double Click to Edit</p>";
       this.Edit = false;
     }
     toggleEdit(edit: boolean){
