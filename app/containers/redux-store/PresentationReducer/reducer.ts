@@ -43,15 +43,11 @@ const PresentationReducer = (state: presentationState=initialState, action: Acti
         draft.assetsPath = action.path;
         break;
       case LOAD_STATE: {
-        // get the json from the action
-        // set the state using:
-        const newState:presentationState = {
-          ...action.state.presentation,
+        // action.state has the information for Presentation reducer
+        const newPresentationState:presentationState = {
+          ...action.state,
         };
-        console.log("FIx the load state")
-        // Object.keys(newState).map(s => {
-        //   draft[s] = newState[s];
-        // });
+        Object.assign(draft, newPresentationState);
         draft.saveRequest = false;
         break;
       }

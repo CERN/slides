@@ -12,6 +12,7 @@ import {
   CHANGE_ITEM_SIZE,
   EDIT_DATA,
   SET_EDIT_MODE,
+  LOAD_DECK_STATE,
 } from './constants';
 import { Item, newItem, ItemTypes, Text, Deck, Slide} from './definitions';
 
@@ -94,6 +95,13 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
         const currentText = {...(draft.slides[draft.currentSlide].itemsArray[ind] as Text)};
         currentText.Edit = action.edit;
         (draft.slides[draft.currentSlide].itemsArray[ind] as Text) = (currentText as Text);
+        break;
+      }
+      case LOAD_DECK_STATE: {
+        const newDeckState: Deck = {
+          ...action.state,
+        }
+        Object.assign(draft, newDeckState);
         break;
       }
     }

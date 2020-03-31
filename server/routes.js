@@ -8,17 +8,17 @@ const axios = require('axios');
 const sanitizeHtml = require('sanitize-html');
 const wopiServerFiles = 'http://localhost:8443/wopi/files/';
 
-// const stateSanitizer = stateObj =>
-//   stateObj.deck.slides.forEach(slide => {
-//     slide.itemsArray.forEach(item => {
-//       if (item.type === 'TEXT') {
-//         const newItem = { ...item };
-//         newItem.Data = sanitizeHtml(item.Data);
-//         return newItem;
-//       }
-//       return item;
-//     });
-//   });
+const stateSanitizer = stateObj =>
+  stateObj.deck.slides.forEach(slide => {
+    slide.itemsArray.forEach(item => {
+      if (item.type === 'TEXT') {
+        const newItem = { ...item };
+        newItem.Data = sanitizeHtml(item.Data);
+        return newItem;
+      }
+      return item;
+    });
+  });
 
 module.exports.imageUpload = function(req, res) {
   if (req.files === null) {
@@ -31,7 +31,9 @@ module.exports.imageUpload = function(req, res) {
   const { username, title } = req.body;
   // this makes the dir if it doesn't exist else does nothing
   fs.ensureDirSync(`${uploadsFolder}/${username}/${title}/assets`);
-  const imageNameToStore = `${uploadsFolder}/${username}/${title}/assets/${file.md5}_${file.name}`;
+  const imageNameToStore = `${uploadsFolder}/${username}/${title}/assets/${
+    file.md5
+  }_${file.name}`;
   file.mv(imageNameToStore, err => {
     if (err) {
       console.error(err);
@@ -102,7 +104,9 @@ module.exports.savePresentation = function(req, res) {
     return res.status(500).send(e);
   }
 };
-// fix load
+// for WOPI would be the same, I will make another endpoint for wopi,
+// which will make a request to this endpoint and giving the file as a parameter
+// unzipping and saving will be the same in the same folders
 module.exports.loadPresentation = function(req, res) {
   if (req.files === null) {
     return res.status(400).json({
@@ -110,11 +114,10 @@ module.exports.loadPresentation = function(req, res) {
     });
   }
   const { file } = req.files;
-  // i have to get an identifier for this particular action
-  // IMPORTANT because it can interfere with someone else trying to load a presentation in the same time
-  const extractFolder = `${uploadsFolder}/extract-folder`;
   const tmpFolder = `${uploadsFolder}/tmp-folder`;
-  fs.emptyDirSync(tmpFolder);
+  // check if exists, then do nothing otherwise create
+  fs.ensureDirSync(tmpFolder);
+  // this name should be unique
   const tmpNameForDotSlides = `${tmpFolder}/${file.md5}_${file.name}`;
   file.mv(tmpNameForDotSlides, err => {
     if (err) {
@@ -122,32 +125,42 @@ module.exports.loadPresentation = function(req, res) {
       return res.status(500).send(err);
     }
   });
-  // check if i need to create this folder first
+  // unique name for extract folder distinguised by unique file md5 hash
+  const extractFolder = `${uploadsFolder}/extract-folder_id_${file.md5}`;
+  // ensure it exists and it is empty
   fs.emptyDirSync(`${extractFolder}/assets`);
+  // get the files
   extract(
-    tmpNameForDotSlides,
+    tmpNameForDotSlides, // that's the temporary file
     {
       dir: extractFolder,
     },
     err => {
       if (err) {
-        console.log('An error has occured1', err);
+        console.log('An error has occured', err);
         return res.status(500).send(err);
       }
-      // move assets in the common assets folder
-      fs.emptyDirSync(`${uploadsFolder}/assets`);
-      fs.copySync(`${extractFolder}/assets`, `${uploadsFolder}/assets`);
       // read the JSON
       const reduxStateOBJ = fs.readJsonSync(
         `${extractFolder}/presentation.JSON`,
       );
+      // extract name and title
+      const { username, title } = reduxStateOBJ.presentation;
+      console.log('username, title', username, title);
+      // move assets in the user's assets folder
+      fs.emptyDirSync(`${uploadsFolder}/${username}/${title}/assets`);
+      // copy the images to appropriate folder
+      fs.copySync(
+        `${extractFolder}/assets`,
+        `${uploadsFolder}/${username}/${title}/assets`,
+      );
       // return the redux state
-      // sanitize html in load as well
+      // SANITIZE html in load as well
       res.json({
-        state: stateSanitizer(reduxStateOBJ),
+        state: reduxStateOBJ,
       });
-      // delete the extractFolder folder
-      fs.removeSync(tmpFolder);
+      // delete the extractFolder folder and the file .slides
+      fs.removeSync(tmpNameForDotSlides);
       fs.removeSync(extractFolder);
     },
   );

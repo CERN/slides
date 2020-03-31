@@ -53,7 +53,8 @@ export const setLoadRequest = (request: boolean) => ({
   request,
 }) as const;
 
-export const loadState = (state: any) => ({ // check if this object or string?
+// this is a presentation as an object
+export const loadState = (state: any) => ({
   type: LOAD_STATE,
   state,
 }) as const;

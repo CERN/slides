@@ -13,6 +13,7 @@ import {
   loadState,
   setIsReady,
 } from '../redux-store/PresentationReducer/actions';
+import { loadDeckState } from '../redux-store/DeckReducer/actions';
 import {
   baseStyle,
   activeStyle,
@@ -32,6 +33,7 @@ function LoadPresentation({
   onSetIsReady,
   assetsPath,
   onLoadState,
+  onLoadDeckState,
 }) {
   const {
     acceptedFiles,
@@ -59,9 +61,7 @@ function LoadPresentation({
   // server extracts, saves the images
   // send as response the stringified state
   // frontend sets the state that it got using a redux dispatch action
-  // fix UI and redux is correct and server api more or less ready
   const presentationUpload = () => {
-    // const url = 'http://localhost:3000/load';
     const url = `${assetsPath}/load`;
     const formData = new FormData();
     formData.append('file', acceptedFiles[0]);
@@ -76,7 +76,8 @@ function LoadPresentation({
     e.preventDefault();
     presentationUpload().then(response => {
       // extract the state information and call the loadstate action to copy the whole obj to the current state
-      onLoadState(response.data.state);
+      onLoadState(response.data.state.presentation);
+      onLoadDeckState(response.data.state.deck);
       // set url
       const { title, username } = response.data.state.presentation;
       history.push(`/${username}/${title}/edit/`);
@@ -131,12 +132,14 @@ LoadPresentation.propTypes = {
   onSetIsReady: PropTypes.func,
   assetsPath: PropTypes.string,
   onLoadState: PropTypes.func,
+  onLoadDeckState: PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     onLoadRequest: () => dispatch(setLoadRequest(false)),
     onLoadState: state => dispatch(loadState(state)),
+    onLoadDeckState: state => dispatch(loadDeckState(state)),
     onSetIsReady: () => dispatch(setIsReady(true)),
   };
 }
