@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
 import axios from 'axios';
+import { useToasts } from 'react-toast-notifications';
 import Draggable from 'react-draggable';
 
 import {
@@ -25,7 +26,11 @@ import {
   setEditMode,
   editData,
 } from '../../../redux-store/DeckReducer/actions';
-import { getAssetsPath } from '../../../redux-store/PresentationReducer/selectors';
+import {
+  getAssetsPath,
+  getUsername,
+  getTitle,
+} from '../../../redux-store/PresentationReducer/selectors';
 import { getCurrentSlide } from '../../../redux-store/DeckReducer/selectors';
 import Text from '../text';
 import Image from '../image';
@@ -47,6 +52,8 @@ function Item({
   onSetEditMode,
   currentSlide,
   onEditData,
+  title,
+  username,
 }) {
   const itemRef = useRef(null);
 
@@ -54,6 +61,7 @@ function Item({
   const [curSize, setCurSize] = useState(Size);
   const [curPosition, setCurPosition] = useState(Position);
   const [focused, setFocused] = useState(false);
+  const { addToast } = useToasts();
   // console.log('itemObj', itemObj, currentSlide);
   const ItemName = type === 'TEXT' ? Text : Image;
   // this is something that doesn't need to be stored in store
@@ -72,18 +80,37 @@ function Item({
   // };
 
   const delImageReq = () => {
-    const url = `${assetsPath}/image/${itemObj.Src}`;
-    console.log('url in deleter is ', url);
+    const url = `${assetsPath}/image/${username}/${title}/${itemObj.Src}`;
+    // console.log('url in deleter is ', url);
     return axios.delete(url);
   };
 
   const deleter = e => {
     // e.preventDefault();
-    console.log('deleter called', ID);
+    // console.log('deleter called', ID);
     // send a delete in Redux
     onRemoveItem(ID);
     // send a delete in Server if it is an Image
-    if (type === 'IMAGE') delImageReq();
+    if (type === 'IMAGE') {
+      delImageReq()
+        .then(res => {
+          if (res.status === 200) {
+            // console.log('deleted successfully');
+            // notify with success
+            addToast(`Deleted successfully!`, {
+              appearance: 'success',
+              autoDismiss: true,
+            });
+          }
+        })
+        .catch(err => {
+          addToast('Deletion Failed...', {
+            appearance: 'error',
+            autoDismiss: true,
+          });
+          console.log('Error is', err);
+        });
+    }
   };
 
   const singleClick = e => {
@@ -113,13 +140,13 @@ function Item({
     //   defaultPosition={curPosition}
     //   onStop={handleDragStop}
     // >
-      <div ref={itemRef} onDoubleClick={doubleClick} className="item-style">
-        {/* <KeyboardEventHandler
-          handleKeys={['backspace', 'del']}
-          onKeyEvent={(key, e) => focused && deleter(e)}
-        /> */}
-        <ItemName ref={itemRef} ID={ID} />
-      </div>
+    <div ref={itemRef} onDoubleClick={doubleClick} className="item-style">
+      <KeyboardEventHandler
+        handleKeys={['backspace', 'del']}
+        onKeyEvent={(key, e) => focused && deleter(e)}
+      />
+      <ItemName ref={itemRef} ID={ID} />
+    </div>
     // </Draggable>
   );
 }
@@ -133,6 +160,8 @@ Item.propTypes = {
   onSetEditMode: PropTypes.func,
   currentSlide: PropTypes.number,
   onEditData: PropTypes.func,
+  username: PropTypes.string,
+  title: PropTypes.string,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -150,6 +179,8 @@ export default connect(
   state => ({
     assetsPath: getAssetsPath(state),
     currentSlide: getCurrentSlide(state),
+    username: getUsername(state),
+    title: getTitle(state),
   }),
   mapDispatchToProps,
 )(Item);

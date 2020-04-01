@@ -51,10 +51,14 @@ module.exports.deleteImage = function(req, res) {
   const { id, username, title } = req.params;
   const imageName = `${uploadsFolder}/${username}/${title}/assets/${id}`;
   // delete image file
-  fs.removeSync(imageName);
-  res.json({
-    state: 'Successful',
-  });
+  if (fs.existsSync(imageName)) {
+    fs.removeSync(imageName);
+    res.json({
+      state: 'Successful',
+    });
+  } else {
+    res.status(404).send('File does not exist');
+  }
 };
 
 module.exports.savePresentation = function(req, res) {

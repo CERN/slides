@@ -53,7 +53,9 @@ app.post('/save', (req, res) => api.savePresentation(req, res));
 // Load Endpoint
 app.post('/load', (req, res) => api.loadPresentation(req, res));
 // Remove Image Endpoint
-app.delete('/image/:id', (req, res) => api.deleteImage(req, res));
+app.delete('/image/:username/:title/:id', (req, res) =>
+  api.deleteImage(req, res),
+);
 // Phoenix/Wopi Endpoints
 // Start Phoenix Endpoint, will have to store somewhere if i am using wopi
 app.get('/phoenix/wopi/start', (req, res) => api.wopiStart(req, res));
