@@ -17,7 +17,7 @@ const Image = forwardRef(
     // this base will be the server's address base for every image , localhost:3000/static/username/title/hash_imagename
     // src only has hash_name, i have to add username and title infront
     const myPath = `${assetsPath}/static/${username}/${title}/assets/${item.Src}`;
-    return <SemanticImage src={myPath} alt="" size="medium" />;
+    return <SemanticImage src={myPath} alt="" size="large" />;
   },
 );
 

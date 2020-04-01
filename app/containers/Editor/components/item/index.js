@@ -17,7 +17,6 @@ import PropTypes from 'prop-types';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
 import axios from 'axios';
 import { useToasts } from 'react-toast-notifications';
-import Draggable from 'react-draggable';
 
 import {
   removeItem,
@@ -57,27 +56,10 @@ function Item({
 }) {
   const itemRef = useRef(null);
 
-  const { Position, Size, type, ID, Edit } = itemObj;
-  const [curSize, setCurSize] = useState(Size);
-  const [curPosition, setCurPosition] = useState(Position);
+  const { type, ID, Edit } = itemObj;
   const [focused, setFocused] = useState(false);
   const { addToast } = useToasts();
-  // console.log('itemObj', itemObj, currentSlide);
   const ItemName = type === 'TEXT' ? Text : Image;
-  // this is something that doesn't need to be stored in store
-  // will change in with clicks
-  const handleDragStop = (e, pos) => {
-    // e.preventDefault();
-    const posi = { x: pos.x, y: pos.y };
-    setCurPosition(posi);
-    onChangePosition(ID, posi);
-  };
-
-  // const handleResizeStop = (e, siz) => {
-  //   // e.preventDefault();
-  //   setCurSize(siz);
-  //   onChangeSize(ID, siz);
-  // };
 
   const delImageReq = () => {
     const url = `${assetsPath}/image/${username}/${title}/${itemObj.Src}`;
@@ -86,7 +68,7 @@ function Item({
   };
 
   const deleter = e => {
-    // e.preventDefault();
+    e.preventDefault(); // super IMPORTANT here otherwise it propagates the event
     // console.log('deleter called', ID);
     // send a delete in Redux
     onRemoveItem(ID);
@@ -115,6 +97,7 @@ function Item({
 
   const singleClick = e => {
     if (itemRef.current.contains(e.target)) {
+      e.preventDefault();
       // inside click
       setFocused(true);
       itemRef.current.focus();
@@ -124,8 +107,10 @@ function Item({
     setFocused(false);
   };
 
-  const doubleClick = () =>
-    type === 'TEXT' && !Edit ? onSetEditMode(ID, true) : null;
+  const doubleClick = e => {
+    e.preventDefault();
+    return type === 'TEXT' && !Edit ? onSetEditMode(ID, true) : null;
+  };
 
   useEffect(() => {
     document.addEventListener('mousedown', singleClick);
@@ -135,11 +120,6 @@ function Item({
   });
 
   return (
-    // <Draggable
-    //   disabled={!focused}
-    //   defaultPosition={curPosition}
-    //   onStop={handleDragStop}
-    // >
     <div ref={itemRef} onDoubleClick={doubleClick} className="item-style">
       <KeyboardEventHandler
         handleKeys={['backspace', 'del']}
@@ -147,7 +127,6 @@ function Item({
       />
       <ItemName ref={itemRef} ID={ID} />
     </div>
-    // </Draggable>
   );
 }
 

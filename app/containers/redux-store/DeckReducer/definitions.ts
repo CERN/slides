@@ -21,7 +21,8 @@ class baseItem {
     constructor(){
       this.ID = uuidv4();
       this.Position= {x: 0, y: 0};
-      this.Size = {width: '500px', height: '90px'}; // make it bigger
+      this.Size = { width: '15em', height: '15em' }; // make it bigger 
+      // doesn't work from here, it takes semantic size
     }
     changePosition(position: position) {
       this.Position = {...position};

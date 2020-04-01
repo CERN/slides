@@ -30,6 +30,7 @@ const Text = React.forwardRef(
     const handleClick = e => {
       if (ref.current.contains(e.target)) {
         // inside click
+        e.preventDefault();
         return;
       }
       // outside click

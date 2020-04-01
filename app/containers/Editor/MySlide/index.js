@@ -1,18 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import MyItem from '../components/item';
 import StandardSlide from '../../../theming/StandardSlide';
 import { getTheme } from '../../redux-store/PresentationReducer/selectors';
 import { getItems } from '../../redux-store/DeckReducer/selectors';
-import './index.css';
+import MoveResize from '../components/resize_move';
 
 function MySlide({ theme, itemsArray }) {
   const StandardSlideTemplate = StandardSlide(theme);
   return (
     <StandardSlideTemplate>
       {itemsArray.map(itm => (
-        <MyItem key={itm.ID} itemObj={itm} />
+        <MoveResize key={itm.ID} ID={itm.ID} />
       ))}
     </StandardSlideTemplate>
   );

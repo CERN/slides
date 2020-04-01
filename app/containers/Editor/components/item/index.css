@@ -1,12 +1,12 @@
 
 .item-style {
-  max-width: 27em;
+  /* max-width: 27em;
   min-width: 8em;
   min-height: 3em;
   max-height: 17em;
   display: block;
   overflow: auto; 
-  margin: 0 auto;
+  margin: 0 auto; */
 }
 
 .item-style:hover {
