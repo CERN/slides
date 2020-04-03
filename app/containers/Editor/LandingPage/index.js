@@ -147,12 +147,12 @@ function LandingPage({
                   color="green"
                   // size="large"
                   onClick={clickHandlerNew}
-                  animated
+                  // animated
                 >
                   <Button.Content visible>Let's GO!</Button.Content>
-                  <Button.Content hidden>
+                  {/* <Button.Content hidden>
                     <Icon name="arrow right" />
-                  </Button.Content>
+                  </Button.Content> */}
                 </Button>
               </Segment>
             </Form>
@@ -166,12 +166,12 @@ function LandingPage({
               color="blue"
               // size="large"
               onClick={clickHandlerLoad}
-              animated
+              // animated
             >
               <Button.Content visible>Upload!</Button.Content>
-              <Button.Content hidden>
+              {/* <Button.Content hidden>
                 <Icon name="arrow up" />
-              </Button.Content>
+              </Button.Content> */}
             </Button>
           </Grid.Column>
         </Grid.Row>

@@ -44,6 +44,7 @@ function LoadPresentation({
     isDragReject,
   } = useDropzone({
     accept: '.slides',
+    multiple: false,
   });
 
   const style = useMemo(
@@ -87,7 +88,8 @@ function LoadPresentation({
     onLoadRequest();
     onSetIsReady();
   };
-  const onCancelHandler = () => {
+  const onCancelHandler = e => {
+    e.preventDefault();
     onLoadRequest();
   };
   const acceptedFilesItems = acceptedFiles.map(file => (
@@ -100,29 +102,31 @@ function LoadPresentation({
   // return a window to upload a file from local computer
   // check that it is .slides and send it to load endpoint and try to open and process it, if it is not processed show an error message
   return (
-    <Modal dimmer="blurring" open={loadRequest}>
-      <Modal.Header>Load Presentation</Modal.Header>
-      <Modal.Content>
-        <div className="dropzone">
-          <div {...getRootProps({ style })}>
-            <input {...getInputProps()} />
-            <p>
-              Drag 'n' drop a presentation file here, or click to select file
-            </p>
-            <em>(Only *.slides presentations will be accepted)</em>
+    <div className="loadPresentation">
+      <Modal dimmer="blurring" open={loadRequest}>
+        <Modal.Header>Load Presentation</Modal.Header>
+        <Modal.Content>
+          <div className="dropzone">
+            <div {...getRootProps({ style })}>
+              <input {...getInputProps()} />
+              <p>
+                Drag 'n' drop a presentation file here, or click to select file
+              </p>
+              <em>(Only *.slides presentations will be accepted)</em>
+            </div>
+            <aside style={thumbsContainer}>{acceptedFilesItems}</aside>
           </div>
-          <aside style={thumbsContainer}>{acceptedFilesItems}</aside>
-        </div>
-      </Modal.Content>
-      <Modal.Actions>
-        <Button color="red" onClick={onCancelHandler}>
-          <Icon name="remove" /> Cancel
-        </Button>
-        <Button color="green" onClick={sendLoadRequest}>
-          <Icon name="checkmark" /> Upload
-        </Button>
-      </Modal.Actions>
-    </Modal>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button color="red" onClick={onCancelHandler}>
+            <Icon name="remove" /> Cancel
+          </Button>
+          <Button color="green" onClick={sendLoadRequest}>
+            <Icon name="checkmark" /> Upload
+          </Button>
+        </Modal.Actions>
+      </Modal>
+    </div>
   );
 }
 

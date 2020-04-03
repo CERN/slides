@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Rnd } from 'react-rnd';
+// import { Rnd } from 'react-rnd';
+import Draggable from 'react-draggable';
+// IF I USE DRAGGABLE PLACE A DIV INSIDE IT
 import { connect } from 'react-redux';
 
 import MyItem from '../item';
@@ -13,38 +15,34 @@ import {
 // im only getting the itm ID
 function MoveResize({ ID, itemsArray, onChangePosition, onChangeSize }) {
   const item = itemsArray.find(itm => itm.ID === ID);
-  const [curSize, setCurSize] = useState(item.Size);
-  const [curPosition, setCurPosition] = useState(item.Position);
-  //   const [size, setSize] = useState({
-  //     width: item.Size.width,
-  //     height: item.Size.height,
-  //   });
-  //   const [pos, setPos] = useState({ x: item.Position.x, y: item.Position.y });
+  const [myDeltaPosition, setMyDeltaPosition] = useState({ x: 0, y: 0 });
+  const position = { x: item.Position.x, y: item.Position.y };
+  console.log('ID ', ID, ' position', position);
+  const handleDrag = (e, ui) => {
+    const { x, y } = myDeltaPosition;
+    setMyDeltaPosition({
+      x: x + ui.deltaX,
+      y: y + ui.deltaY,
+    });
+  };
+  const handleDragStop = () => {
+    onChangePosition(ID, {
+      x: position.x + myDeltaPosition.x,
+      y: position.y + myDeltaPosition.y,
+    });
+  };
 
   return (
-    <Rnd
-      size={curSize}
-      position={curPosition}
-      bounds=".deck" // this allows the item to move only inside the deck className
-      onDragStop={(e, d) => {
-        // setPos({ x: d.x, y: d.y });
-        // e.preventDefault();
-        const posi = { x: d.x, y: d.y };
-        setCurPosition(posi);
-        onChangePosition(ID, posi);
-      }}
-      //   onResizeStop={(e, direction, ref, delta, otherPosition) => {
-      //     e.preventDefault();
-      //     const siz = {
-      //       width: ref.style.width,
-      //       height: ref.style.height,
-      //     };
-      //     setCurSize(siz);
-      //     onChangeSize(ID, siz);
-      //   }}
+    <Draggable
+      // bounds=".deck"
+      positionOffset={position}
+      onDrag={handleDrag}
+      onStop={handleDragStop}
     >
-      <MyItem itemObj={item} />
-    </Rnd>
+      <div>
+        <MyItem itemObj={item} />
+      </div>
+    </Draggable>
   );
 }
 

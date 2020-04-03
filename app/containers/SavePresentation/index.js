@@ -21,18 +21,6 @@ const zip = require('jszip')();
 // add it in formdata
 // give it to phoenix
 
-const makeZip = (stateStringified, title) => {
-  zip.file('presentation.JSON', stateStringified);
-  zip.folder('assets');
-  zip
-    .generateAsync({
-      type: 'blob',
-      mimeType: 'application/slides',
-    })
-    .then(blob => {
-      saveAs(blob, `${title}.slides`);
-    });
-};
 /*
 SO
 when from browser

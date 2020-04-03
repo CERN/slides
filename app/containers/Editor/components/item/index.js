@@ -97,7 +97,7 @@ function Item({
 
   const singleClick = e => {
     if (itemRef.current.contains(e.target)) {
-      e.preventDefault();
+      // e.preventDefault();
       // inside click
       setFocused(true);
       itemRef.current.focus();
@@ -105,11 +105,6 @@ function Item({
     }
     itemRef.current.blur();
     setFocused(false);
-  };
-
-  const doubleClick = e => {
-    e.preventDefault();
-    return type === 'TEXT' && !Edit ? onSetEditMode(ID, true) : null;
   };
 
   useEffect(() => {
@@ -120,12 +115,12 @@ function Item({
   });
 
   return (
-    <div ref={itemRef} onDoubleClick={doubleClick} className="item-style">
+    <div ref={itemRef} className="item-style">
       <KeyboardEventHandler
         handleKeys={['backspace', 'del']}
         onKeyEvent={(key, e) => focused && deleter(e)}
       />
-      <ItemName ref={itemRef} ID={ID} />
+      <ItemName ID={ID} />
     </div>
   );
 }

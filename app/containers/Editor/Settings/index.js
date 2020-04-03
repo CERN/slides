@@ -5,15 +5,26 @@ import { Menu, Icon, Popup } from 'semantic-ui-react';
 import {
   setSaveRequest,
   setStyleRequest,
+  setLoadRequest,
 } from '../../redux-store/PresentationReducer/actions';
 
 import './index.css';
 
-function Settings({ onSaveRequest, onStyleRequest }) {
+function Settings({ onSaveRequest, onStyleRequest, onLoadRequest }) {
   const onClickHandler = item => {
-    // turn on a save request
-    if (item === 'save') onSaveRequest();
-    if (item === 'paint brush') onStyleRequest();
+    switch (item) {
+      case 'cloud upload':
+        onLoadRequest();
+        break;
+      case 'save':
+        onSaveRequest();
+        break;
+      case 'paint brush':
+        onStyleRequest();
+        break;
+      default:
+        break;
+    }
   };
   const Item = (item, description) => (
     <Menu.Item onClick={() => onClickHandler(item)}>
@@ -28,7 +39,7 @@ function Settings({ onSaveRequest, onStyleRequest }) {
   return (
     <div className="settings">
       <Menu inverted vertical fluid icon="labeled">
-        {Item('eye', 'Slideshow')}
+        {Item('eye', 'Slideshow (pending)')}
         {/* {Item('undo', 'Undo (Ctrl+Z)')} */}
         {Item('save', 'Save')}
         {/* {Item('play', 'Present (Ctrl+E)')} */}
@@ -36,8 +47,8 @@ function Settings({ onSaveRequest, onStyleRequest }) {
         {Item('paint brush', 'Change Background Color')}
         {/* {Item('ordered list', 'Arrange Slides')} */}
         {/* {Item('time', 'Revision history')} */}
-        {Item('cloud upload', 'Import from my CERNBox')}
-        {Item('cloud download', 'Export')}
+        {Item('cloud upload', 'Upload existing presentation')}
+        {Item('cloud download', 'Export as PDF (pending)')}
         {/* {Item('image', 'Media')} */}
         {/* {Item('share alternate', 'Share')} */}
         {/* {Item('ellipsis vertical')} */}
@@ -54,12 +65,14 @@ function Settings({ onSaveRequest, onStyleRequest }) {
 Settings.propTypes = {
   onSaveRequest: PropTypes.func,
   onStyleRequest: PropTypes.func,
+  onLoadRequest: PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     onSaveRequest: () => dispatch(setSaveRequest(true)),
     onStyleRequest: () => dispatch(setStyleRequest(true)),
+    onLoadRequest: () => dispatch(setLoadRequest(true)),
   };
 }
 

@@ -150,7 +150,6 @@ module.exports.loadPresentation = function(req, res) {
       );
       // extract name and title
       const { username, title } = reduxStateOBJ.presentation;
-      console.log('username, title', username, title);
       // move assets in the user's assets folder
       fs.emptyDirSync(`${uploadsFolder}/${username}/${title}/assets`);
       // copy the images to appropriate folder

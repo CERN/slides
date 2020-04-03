@@ -25,6 +25,7 @@ export function Container({ isReady }) {
             <SideBar className="div2" />
             <Canvas className="div3" />
             <SavePresentation />
+            <LoadPresentation />
             <Upload />
             <StyleComponent />
           </div>
