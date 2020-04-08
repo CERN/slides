@@ -2,15 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TextEditor from './TextEditor';
-import { RenderHtml } from './RenderHtml';
+import RenderHtml from './RenderHtml';
 import { getItems } from '../../../redux-store/DeckReducer/selectors';
 import {
   editData,
   setEditMode,
+  toggleFocus,
 } from '../../../redux-store/DeckReducer/actions';
 import './index.css';
 
-const Text = ({ onEditData, ID, itemsArray, onSetEditMode }) => {
+const Text = ({ onEditData, ID, itemsArray, onSetEditMode, onToggleFocus }) => {
   const ref = useRef(null);
   const item = itemsArray.find(itm => itm.ID === ID);
   const { Edit, Data } = item;
@@ -28,19 +29,25 @@ const Text = ({ onEditData, ID, itemsArray, onSetEditMode }) => {
   };
 
   const handleClick = e => {
+    // e.preventDefault();
+
     if (ref.current.contains(e.target)) {
       // inside click
       // e.preventDefault();
-      console.log('text click inside');
+      console.log('text click inside focus!');
+      // onToggleFocus(ID, true);
       return;
     }
     // e.preventDefault();
     // outside click
     console.log('text click outside');
-    onEditData(ID, txt);
-    onSetEditMode(ID, false);
+    if (Edit) {
+      onEditData(ID, txt);
+      onSetEditMode(ID, false);
+    }
+    onToggleFocus(ID, false);
   };
-// find another way to handle double click
+  // find another way to handle double click
   const doubleClick = e => {
     // e.preventDefault();
     console.log('DOUBLE KLIKI ', Edit);
@@ -71,12 +78,14 @@ Text.propTypes = {
   onEditData: PropTypes.func,
   itemsArray: PropTypes.array,
   onSetEditMode: PropTypes.func,
+  onToggleFocus: PropTypes.func,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
     onEditData: (id, data) => dispatch(editData(id, data)),
     onSetEditMode: (id, edit) => dispatch(setEditMode(id, edit)),
+    onToggleFocus: (id, focus) => dispatch(toggleFocus(id, focus)),
   };
 }
 

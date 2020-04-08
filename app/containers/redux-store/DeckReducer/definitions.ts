@@ -18,18 +18,23 @@ class baseItem {
     ID: string
     Position: position
     Size: size
+    Focused: boolean
     constructor(){
       this.ID = uuidv4();
       this.Position= {x: 0, y: 0};
       this.Size = { width: '15em', height: '15em' }; // make it bigger 
       // doesn't work from here, it takes semantic size
+      this.Focused = false;
     }
-    changePosition(position: position) {
-      this.Position = {...position};
-    }
-    changeSize(size: size) {
-      this.Size = {...size};
-    }
+    // changePosition(position: position) {
+    //   this.Position = {...position};
+    // }
+    // changeSize(size: size) {
+    //   this.Size = {...size};
+    // }
+    // toggleFocus(focus: boolean) {
+    //   this.Focused = focus;
+    // }
 }
 
 export class Text extends baseItem {
@@ -39,15 +44,15 @@ export class Text extends baseItem {
     constructor(){
       super();
       this.type = ItemTypes.TEXT
-      this.Data = "<p>Double Click to Edit</p>";
+      this.Data = "";
       this.Edit = false;
     }
-    toggleEdit(edit: boolean){
-      this.Edit = edit;
-    }
-    setData(data: string){
-      this.Data = data;
-    }
+    // toggleEdit(edit: boolean){
+    //   this.Edit = edit;
+    // }
+    // setData(data: string){
+    //   this.Data = data;
+    // }
   }
 
 export class Image extends baseItem {

@@ -17,7 +17,8 @@ function MoveResize({ ID, itemsArray, onChangePosition, onChangeSize }) {
   const item = itemsArray.find(itm => itm.ID === ID);
   const [myDeltaPosition, setMyDeltaPosition] = useState({ x: 0, y: 0 });
   const position = { x: item.Position.x, y: item.Position.y };
-  console.log('ID ', ID, ' position', position);
+  const focused = item.Focused;
+  console.log('ID ', ID, ' position', position, 'focused', focused);
   const handleDrag = (e, ui) => {
     const { x, y } = myDeltaPosition;
     setMyDeltaPosition({
@@ -33,16 +34,16 @@ function MoveResize({ ID, itemsArray, onChangePosition, onChangeSize }) {
   };
 
   return (
-    <Draggable
-      // bounds=".deck"
-      positionOffset={position}
-      onDrag={handleDrag}
-      onStop={handleDragStop}
-    >
+    // <Draggable
+    //   // bounds=".deck"
+    //   positionOffset={position}
+    //   onDrag={handleDrag}
+    //   onStop={handleDragStop}
+    // >
       <div>
         <MyItem itemObj={item} />
       </div>
-    </Draggable>
+    // </Draggable>
   );
 }
 

@@ -9,3 +9,4 @@ export const CHANGE_ITEM_SIZE = 'Slides/Presentation/CHANGE_ITEM_SIZE';
 export const EDIT_DATA = 'Slides/Presentation/EDIT_DATA';
 export const SET_EDIT_MODE = 'Slides/Presentation/SET_EDIT_MODE';
 export const LOAD_DECK_STATE = 'Slides/Presentation/LOAD_DECK_STATE';
+export const TOGGLE_FOCUS = 'Slides/Presentation/TOGGLE_FOCUS';

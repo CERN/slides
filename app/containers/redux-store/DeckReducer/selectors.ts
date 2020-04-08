@@ -2,16 +2,21 @@
  * Selectors
  */
 
- import { Deck } from './definitions';
+ import { Deck, Item } from './definitions';
 
 const getDeck = (state: { deck: Deck; }) => state.deck.slides;
 const getCurrentSlide = (state: { deck: Deck; }) => state.deck.currentSlide;
 const getItems = (state: { deck: Deck; }) => state.deck.slides[state.deck.currentSlide].itemsArray;
-
+const getFocus = (state: { deck: Deck; }, id: string) => {
+  const ind:number = state.deck.slides[state.deck.currentSlide].itemsArray.findIndex((itm:Item) => itm.ID === id);
+  if (ind === -1) return false;
+  return state.deck.slides[state.deck.currentSlide].itemsArray[ind].Focused;
+}
 export {
   getDeck,
   getCurrentSlide,
   getItems,
+  // getFocus,
 };
 
 // const getCurrentText = state =>

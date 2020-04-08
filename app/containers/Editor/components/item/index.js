@@ -24,6 +24,7 @@ import {
   changeItemSize,
   setEditMode,
   editData,
+  toggleFocus,
 } from '../../../redux-store/DeckReducer/actions';
 import {
   getAssetsPath,
@@ -53,23 +54,24 @@ function Item({
   onEditData,
   title,
   username,
+  onToggleFocus,
 }) {
   const itemRef = useRef(null);
 
-  const { type, ID, Edit } = itemObj;
-  const [focused, setFocused] = useState(false);
+  const { type, ID, Edit, Focused } = itemObj;
+  const [focused, setFocused] = useState(Focused);
   const { addToast } = useToasts();
-  const ItemName = type === 'TEXT' ? Text : Image;
+  const ItemComponent = type === 'TEXT' ? Text : Image;
 
   const delImageReq = () => {
     const url = `${assetsPath}/image/${username}/${title}/${itemObj.Src}`;
     // console.log('url in deleter is ', url);
     return axios.delete(url);
   };
-
+  console.log("ITEM Focused ", focused);
   const deleter = e => {
     e.preventDefault(); // super IMPORTANT here otherwise it propagates the event
-    // console.log('deleter called', ID);
+    console.log('deleter called', ID);
     // send a delete in Redux
     onRemoveItem(ID);
     // send a delete in Server if it is an Image
@@ -96,15 +98,19 @@ function Item({
   };
 
   const singleClick = e => {
+    // e.preventDefault();
     if (itemRef.current.contains(e.target)) {
-      // e.preventDefault();
       // inside click
-      setFocused(true);
       itemRef.current.focus();
+      console.log("focused true")
+      setFocused(true);
+      onToggleFocus(ID, true);
       return;
     }
     itemRef.current.blur();
+    console.log("focused false")
     setFocused(false);
+    onToggleFocus(ID, false);
   };
 
   useEffect(() => {
@@ -120,7 +126,7 @@ function Item({
         handleKeys={['backspace', 'del']}
         onKeyEvent={(key, e) => focused && deleter(e)}
       />
-      <ItemName ID={ID} />
+      <ItemComponent ID={ID} />
     </div>
   );
 }
@@ -136,6 +142,7 @@ Item.propTypes = {
   onEditData: PropTypes.func,
   username: PropTypes.string,
   title: PropTypes.string,
+  onToggleFocus: PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -146,6 +153,7 @@ export function mapDispatchToProps(dispatch) {
     onRemoveItem: id => dispatch(removeItem(id)),
     onSetEditMode: (id, edit) => dispatch(setEditMode(id, edit)),
     onEditData: (id, data) => dispatch(editData(id, data)),
+    onToggleFocus: (id, focus) => dispatch(toggleFocus(id, focus)),
   };
 }
 
