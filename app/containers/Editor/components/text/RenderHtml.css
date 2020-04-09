@@ -1,13 +1,25 @@
 .bigger-text > h1{
     font-size: 3em;
+    line-height: 1.5;
+    margin: 0 0 0;
 }
 .bigger-text > h2{
     font-size: 2.25em;
+    line-height: 1.5;
+    margin: 0 0 0;
 }
 .bigger-text > h3{
     font-size: 1.755em;
+    line-height: 1.5;
+    margin: 0 0 0;
 }
 .bigger-text > p{
     font-size: 1.3em;
+    line-height: 1.5;
+    margin: 0 0 0;
 }
+/* .bigger-text { */
+    /* line-height: 0.3; */
+    /* margin: 0 0 0; */
+/* } */
 /* 150% larger text */

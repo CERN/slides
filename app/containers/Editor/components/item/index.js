@@ -58,8 +58,7 @@ function Item({
 }) {
   const itemRef = useRef(null);
 
-  const { type, ID, Edit, Focused } = itemObj;
-  const [focused, setFocused] = useState(Focused);
+  const { type, ID, Focused } = itemObj;
   const { addToast } = useToasts();
   const ItemComponent = type === 'TEXT' ? Text : Image;
 
@@ -68,7 +67,7 @@ function Item({
     // console.log('url in deleter is ', url);
     return axios.delete(url);
   };
-  console.log("ITEM Focused ", focused);
+
   const deleter = e => {
     e.preventDefault(); // super IMPORTANT here otherwise it propagates the event
     console.log('deleter called', ID);
@@ -98,18 +97,17 @@ function Item({
   };
 
   const singleClick = e => {
-    // e.preventDefault();
     if (itemRef.current.contains(e.target)) {
       // inside click
       itemRef.current.focus();
-      console.log("focused true")
-      setFocused(true);
       onToggleFocus(ID, true);
       return;
     }
+    if (type === 'TEXT' && itemObj.Edit) {
+      // if text is still editing then ignore the outside click
+      return;
+    }
     itemRef.current.blur();
-    console.log("focused false")
-    setFocused(false);
     onToggleFocus(ID, false);
   };
 
@@ -124,7 +122,7 @@ function Item({
     <div ref={itemRef} className="item-style">
       <KeyboardEventHandler
         handleKeys={['backspace', 'del']}
-        onKeyEvent={(key, e) => focused && deleter(e)}
+        onKeyEvent={(key, e) => Focused && deleter(e)}
       />
       <ItemComponent ID={ID} />
     </div>
