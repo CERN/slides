@@ -45,7 +45,7 @@ const TextEditor = ({
   );
 
   return (
-    <div>
+    <div className="text-editor">
       <Editor
         editorState={editorState}
         toolbar={editorConfig}

@@ -15,23 +15,23 @@ import {
 // im only getting the itm ID
 function MoveResize({ ID, itemsArray, onChangePosition, onChangeSize }) {
   const item = itemsArray.find(itm => itm.ID === ID);
-  const [myDeltaPosition, setMyDeltaPosition] = useState({ x: 0, y: 0 });
-  const position = { x: item.Position.x, y: item.Position.y };
-  const focused = item.Focused;
-  console.log('ID ', ID, ' position', position, 'focused', focused);
-  const handleDrag = (e, ui) => {
-    const { x, y } = myDeltaPosition;
-    setMyDeltaPosition({
-      x: x + ui.deltaX,
-      y: y + ui.deltaY,
-    });
-  };
-  const handleDragStop = () => {
-    onChangePosition(ID, {
-      x: position.x + myDeltaPosition.x,
-      y: position.y + myDeltaPosition.y,
-    });
-  };
+  // const [myDeltaPosition, setMyDeltaPosition] = useState({ x: 0, y: 0 });
+  // const position = { x: item.Position.x, y: item.Position.y };
+  // const focused = item.Focused;
+  // console.log('ID ', ID, ' position', position);
+  // const handleDrag = (e, ui) => {
+  //   const { x, y } = myDeltaPosition;
+  //   setMyDeltaPosition({
+  //     x: x + ui.deltaX,
+  //     y: y + ui.deltaY,
+  //   });
+  // };
+  // const handleDragStop = () => {
+  //   onChangePosition(ID, {
+  //     x: position.x + myDeltaPosition.x,
+  //     y: position.y + myDeltaPosition.y,
+  //   });
+  // };
 
   return (
     // <Draggable
@@ -40,11 +40,16 @@ function MoveResize({ ID, itemsArray, onChangePosition, onChangeSize }) {
     //   onDrag={handleDrag}
     //   onStop={handleDragStop}
     // >
-      <div>
+      // <div>
         <MyItem itemObj={item} />
-      </div>
+      // </div>
     // </Draggable>
   );
+  // return (
+  //   <div>
+  //     {item.type === 'Text' && item.}
+  //   </div>
+  // )
 }
 
 MoveResize.propTypes = {

@@ -1,3 +1,6 @@
+// For more configuration information visit:
+// https://jpuri.github.io/react-draft-wysiwyg/#/docs
+
 export const editorConfig = {
   options: [
     'inline',
@@ -5,10 +8,10 @@ export const editorConfig = {
     'fontSize',
     'fontFamily',
     'list',
+    'link',
     'textAlign',
     'colorPicker',
-    'link',
-    'embedded',
+    // 'embedded',
     'emoji',
     'remove',
     'history',
@@ -22,6 +25,8 @@ export const editorConfig = {
   fontFamily: {
     options: [
       'Arial',
+      'Garamond',
+      'Helvetica',
       'Roboto',
       'Times New Roman',
       'Times',
@@ -29,11 +34,9 @@ export const editorConfig = {
       'Courier',
       'Verdana',
       'Palatino',
-      'Garamond',
       'Georgia',
       'Impact',
       'Tahoma',
-      'Helvetica',
       'Baskerville',
       'Futura',
     ],
@@ -70,5 +73,7 @@ export const editorConfig = {
       'rgb(209,213,216)',
     ],
   },
+  // link: {
+  //   // defaultTargetOption: '_self'
+  // }
 };
- 

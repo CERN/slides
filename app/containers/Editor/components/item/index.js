@@ -72,6 +72,10 @@ function Item({
     e.preventDefault(); // super IMPORTANT here otherwise it propagates the event
     console.log('deleter called', ID);
     // send a delete in Redux
+    if (type === 'TEXT' && itemObj.Edit) {
+      // text in edit mode so don't delete it
+      return;
+    }
     onRemoveItem(ID);
     // send a delete in Server if it is an Image
     if (type === 'IMAGE') {
