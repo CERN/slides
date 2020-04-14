@@ -31,9 +31,7 @@ module.exports.imageUpload = function(req, res) {
   const { username, title } = req.body;
   // this makes the dir if it doesn't exist else does nothing
   fs.ensureDirSync(`${uploadsFolder}/${username}/${title}/assets`);
-  const imageNameToStore = `${uploadsFolder}/${username}/${title}/assets/${
-    file.md5
-  }_${file.name}`;
+  const imageNameToStore = `${uploadsFolder}/${username}/${title}/assets/${file.md5}_${file.name}`;
   file.mv(imageNameToStore, err => {
     if (err) {
       console.error(err);

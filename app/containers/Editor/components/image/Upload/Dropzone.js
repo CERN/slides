@@ -92,7 +92,10 @@ export function Dropzone({
     e.preventDefault();
     // now i got some files
     // Upload Files in the server
-    filesUpload();
+    // filesUpload();
+    filesUpload().then(res => {
+      console.log("FilePath for saving is", res.data.filePath)
+    });
     // Save images in Redux Store
     // find md5 of the file and append name
     files.forEach(f => {
