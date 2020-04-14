@@ -114,6 +114,7 @@ function LandingPage({
 
   // set the assetsFolder, where images will be, in the redux store
   if (assetsPath === '') onSetAssetsPath(config.assetsPath);
+  console.log('In Landing Page I can see ', config);
   // const cernLogoPath = `./cernlogo/CERN-Logo.png`;
   return (
     <div className="landing-page">
