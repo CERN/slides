@@ -31,6 +31,7 @@ app.use(
 );
 
 // serve static images from the uploads folder
+console.log("uploadsFolder", uploadsFolder)
 app.use('/static', express.static(uploadsFolder));
 app.use('/cernlogo', express.static(`${process.cwd()}/public/cernLogo`));
 
