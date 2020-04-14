@@ -33,7 +33,7 @@ app.use(
 // serve static images from the uploads folder
 console.log("uploadsFolder", uploadsFolder)
 app.use('/static', express.static(uploadsFolder));
-app.use('/cernlogo', express.static(`${process.cwd()}/public/cernLogo`));
+// app.use('/cernlogo', express.static(`${process.cwd()}/cernLogo`)); // cern logo put in the uploads folder
 
 // this is to allow cross origin requests, will have to be changed, it is DANGEROUS
 app.use((req, res, next) => {

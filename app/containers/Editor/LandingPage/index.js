@@ -15,6 +15,8 @@ import {
   Divider,
 } from 'semantic-ui-react';
 
+import { config } from '../../../../server/constants';
+
 import {
   setTheme,
   setTitle,
@@ -22,6 +24,7 @@ import {
   setUsername,
   setLoadRequest,
   setIsReady,
+  setAssetsPath,
 } from '../../redux-store/PresentationReducer/actions';
 
 import {
@@ -33,6 +36,7 @@ import {
 } from '../../redux-store/PresentationReducer/selectors';
 import './index.css';
 import history from '../../../utils/history';
+import cernLogoPath from '../../../../cernLogo/CERN-Logo.png';
 
 const themeOptions = [
   {
@@ -79,6 +83,7 @@ function LandingPage({
   onSetIsReady,
   onLoadRequest,
   assetsPath,
+  onSetAssetsPath,
 }) {
   const [title, setTi] = useState(currentTitle);
   const [theme, setTh] = useState(currentTheme);
@@ -107,7 +112,9 @@ function LandingPage({
   const settingDescription = (e, { value }) => setDes(value);
   const settingUser = (e, { value }) => setUser(value);
 
-  const cernLogoPath = `${assetsPath}/cernlogo/CERN-Logo.png`;
+  // set the assetsFolder, where images will be, in the redux store
+  if (assetsPath === '') onSetAssetsPath(config.assetsPath);
+  // const cernLogoPath = `./cernlogo/CERN-Logo.png`;
   return (
     <div className="landing-page">
       <Image src={cernLogoPath} className="image" centered />
@@ -192,6 +199,7 @@ LandingPage.propTypes = {
   onSetIsReady: PropTypes.func,
   onLoadRequest: PropTypes.func,
   assetsPath: PropTypes.string,
+  onSetAssetsPath: PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -202,6 +210,7 @@ export function mapDispatchToProps(dispatch) {
     onSetUsername: user => dispatch(setUsername(user)),
     onLoadRequest: () => dispatch(setLoadRequest(true)),
     onSetIsReady: () => dispatch(setIsReady(true)),
+    onSetAssetsPath: path => dispatch(setAssetsPath(path)),
   };
 }
 
