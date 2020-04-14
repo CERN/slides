@@ -25,6 +25,7 @@ const TextEditor = ({
   const saveHandler = () => {
     const myhtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
     // save in redux state
+    console.log('myhtml.........', myhtml)
     onEditData(ID, myhtml);
     // turn edit mode off
     onSetEditMode(ID, false);

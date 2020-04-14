@@ -31,7 +31,6 @@ app.use(
 );
 
 // serve static images from the uploads folder
-console.log("uploadsFolder", uploadsFolder)
 app.use('/static', express.static(uploadsFolder));
 
 // this is to allow cross origin requests, will have to be changed, it is DANGEROUS
