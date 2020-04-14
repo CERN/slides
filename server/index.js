@@ -13,7 +13,7 @@ const fileUpload = require('express-fileupload');
 const logger = require('./logger');
 const port = require('./port');
 const setup = require('./middlewares/frontendMiddleware');
-const uploadsFolder = process.env.UPLOADS_FOLDER;
+const uploadsFolder = require('./constants').uploadsFolder;
 // const uploadsFolder = `${process.cwd()}/public`;
 const api = require('./routes');
 

@@ -1,11 +1,13 @@
 /* eslint-disable func-names */
-const uploadsFolder = process.env.UPLOADS_FOLDER;
+// const uploadsFolder = process.env.UPLOADS_FOLDER;
 const { resolve } = require('path');
 const zipFolder = require('zip-folder');
 const extract = require('extract-zip');
 const fs = require('fs-extra');
 const axios = require('axios');
 const sanitizeHtml = require('sanitize-html');
+const uploadsFolder = require('./constants').uploadsFolder;
+
 const wopiServerFiles = 'http://localhost:8443/wopi/files/';
 
 const stateSanitizer = stateObj =>

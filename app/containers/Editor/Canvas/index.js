@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Deck } from 'spectacle';
 import createTheme from 'spectacle/lib/themes/default';
-// import { config } from '../../../../server/constants';
 
 import {
   getTheme,
@@ -15,21 +14,12 @@ import {
 } from '../../redux-store/PresentationReducer/selectors';
 
 import { getDeck } from '../../redux-store/DeckReducer/selectors';
-// import { setAssetsPath } from '../../redux-store/PresentationReducer/actions';
 
 import MySlide from '../MySlide';
 import './index.css';
 import getterTheme from '../../../theming/theme';
 
-function Canvas({
-  title,
-  theme,
-  description,
-  DeckOfSlides,
-  // onSetAssetsPath,
-  // assetsPath,
-  backgroundColor,
-}) {
+function Canvas({ title, theme, description, DeckOfSlides, backgroundColor }) {
   const deck = useRef();
   const themeObj = getterTheme(theme);
   // change fontconfig from here
@@ -41,8 +31,6 @@ function Canvas({
     },
   };
   const myTheme = createTheme(newTheme.themeConfig, newTheme.fontConfig);
-  // set the assetsFolder, where images will be, in the redux store
-  // if (assetsPath === '') onSetAssetsPath(config.assetsPath);
   // // now make the check if it is cern 3,4,5 then add intro and end slide
   // // use this hook to be able to move to next previous slide in adding removing slides
   useEffect(() => {
@@ -79,16 +67,8 @@ Canvas.propTypes = {
   theme: PropTypes.string,
   description: PropTypes.string,
   DeckOfSlides: PropTypes.array,
-  // onSetAssetsPath: PropTypes.func,
-  // assetsPath: PropTypes.string,
   backgroundColor: PropTypes.string,
 };
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     onSetAssetsPath: path => dispatch(setAssetsPath(path)),
-//   };
-// }
 
 export default connect(
   state => ({

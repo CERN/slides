@@ -15,7 +15,7 @@ import {
   Divider,
 } from 'semantic-ui-react';
 
-import { config } from '../../../../server/constants';
+import config from '../../../../server/constants';
 
 import {
   setTheme,
