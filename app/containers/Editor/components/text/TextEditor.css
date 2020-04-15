@@ -2,11 +2,12 @@
 
 
 .text-editor {
-    min-height: 7!important;
+    /* min-height: 7!important; */
 }
 
 /* overwriting some default values */
 .public-DraftStyleDefault-block {
     margin: 0 0 0 !important;
-    line-height: 1.5 !important;
+    /* line-height: 1.5 !important; */
+    line-height: normal !important;
 }

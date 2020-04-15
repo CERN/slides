@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-// import { Rnd } from 'react-rnd';
-import Draggable from 'react-draggable';
-// IF I USE DRAGGABLE PLACE A DIV INSIDE IT
+import reactable from 'reactablejs';
+import interact from 'interactjs';
+
 import { connect } from 'react-redux';
 
 import MyItem from '../item';
@@ -13,43 +13,99 @@ import {
 } from '../../../redux-store/DeckReducer/actions';
 
 // im only getting the itm ID
-function MoveResize({ ID, itemsArray, onChangePosition, onChangeSize }) {
-  const item = itemsArray.find(itm => itm.ID === ID);
-  // const [myDeltaPosition, setMyDeltaPosition] = useState({ x: 0, y: 0 });
-  // const position = { x: item.Position.x, y: item.Position.y };
-  // const focused = item.Focused;
-  // console.log('ID ', ID, ' position', position);
-  // const handleDrag = (e, ui) => {
-  //   const { x, y } = myDeltaPosition;
-  //   setMyDeltaPosition({
-  //     x: x + ui.deltaX,
-  //     y: y + ui.deltaY,
-  //   });
-  // };
-  // const handleDragStop = () => {
-  //   onChangePosition(ID, {
-  //     x: position.x + myDeltaPosition.x,
-  //     y: position.y + myDeltaPosition.y,
-  //   });
-  // };
 
+const Core = ({ x, y, width, height, angle, getRef, ID, itemsArray }) => {
+  const item = itemsArray.find(itm => itm.ID === ID);
   return (
-    // <Draggable
-    //   // bounds=".deck"
-    //   positionOffset={position}
-    //   onDrag={handleDrag}
-    //   onStop={handleDragStop}
-    // >
-      // <div>
-        <MyItem itemObj={item} />
-      // </div>
-    // </Draggable>
+    <div
+      style={{
+        position: 'relative',
+        left: x,
+        top: y,
+        width,
+        height,
+        transform: `rotate(${angle}deg)`,
+        border: '1px solid black',
+        boxSizing: 'border-box',
+      }}
+      ref={getRef}
+    >
+      <MyItem itemObj={item} />
+    </div>
   );
-  // return (
-  //   <div>
-  //     {item.type === 'Text' && item.}
-  //   </div>
-  // )
+};
+
+Core.defaultProps = {
+  x: 0,
+  y: 0,
+  width: 1000,
+  height: 80,
+  angle: 0,
+};
+
+Core.propTypes = {
+  x: PropTypes.number,
+  y: PropTypes.number,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  angle: PropTypes.number,
+  getRef: PropTypes.any,
+
+  ID: PropTypes.string,
+  itemsArray: PropTypes.array,
+};
+
+const Reactable = reactable(Core);
+
+function MoveResize({ ID, itemsArray, onChangePosition, onChangeSize }) {
+  const [coordinate, setCoordinate] = useState({
+    x: 0,
+    y: 0,
+    width: 300,
+    height: 200,
+  });
+  console.log('new position is:', coordinate);
+  return (
+    <Reactable
+      draggable={{
+        onmove: event => {
+          setCoordinate(prev => ({
+            ...prev,
+            x: prev.x + event.dx,
+            y: prev.y + event.dy,
+          }));
+        },
+        modifiers: [
+          interact.modifiers.restrictRect({
+            restriction: '.deck',
+            endOnly: true,
+          }),
+        ],
+      }}
+      resizable={{
+        edges: { left: true, right: true, bottom: true, top: true },
+        onmove: e => {
+          const { width, height } = e.rect;
+          const { left, top } = e.deltaRect;
+          setCoordinate(prev => ({
+            x: prev.x + left,
+            y: prev.y + top,
+            width,
+            height,
+          }));
+        },
+        modifiers: [
+          interact.modifiers.restrictEdges({
+            outer: '.deck',
+            endOnly: true,
+          }),
+        ],
+      }}
+      {...coordinate}
+      ID={ID}
+      itemsArray={itemsArray}
+    />
+  );
 }
 
 MoveResize.propTypes = {
