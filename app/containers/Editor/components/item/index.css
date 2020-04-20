@@ -8,6 +8,11 @@
   overflow: auto; 
   margin: 0 auto; */
 }
+/* this ensures that image will be resized according to its div */
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
 
 .item-style:hover {
     /* border-color: #004883;

@@ -7,23 +7,23 @@ import { getItems } from '../../../redux-store/DeckReducer/selectors';
 import { setEditMode } from '../../../redux-store/DeckReducer/actions';
 import './index.css';
 
-const Text = ({ ID, itemsArray, onSetEditMode }) => {
+const Text = ({ ID, itemsArray }) => {
   const item = itemsArray.find(itm => itm.ID === ID);
   const { Edit, Data } = item;
-  const doubleClick = e => {
-    if (Edit === false) {
-      onSetEditMode(ID, true);
-    }
-  };
+  // const doubleClick = e => {
+  //   if (Edit === false) {
+  //     onSetEditMode(ID, true);
+  //   }
+  // };
 
   return (
     <div className="fit-text">
       {Edit ? (
         <TextEditor className="editor" initialData={Data} ID={ID} />
       ) : (
-        <div onDoubleClick={doubleClick}>
-          <RenderHtml text={Data} />
-        </div>
+        // <div onDoubleClick={doubleClick}>
+        <RenderHtml ID={ID} text={Data} />
+        // </div>
       )}
     </div>
   );
@@ -32,7 +32,6 @@ const Text = ({ ID, itemsArray, onSetEditMode }) => {
 Text.propTypes = {
   ID: PropTypes.string,
   itemsArray: PropTypes.array,
-  onSetEditMode: PropTypes.func,
 };
 
 function mapDispatchToProps(dispatch) {

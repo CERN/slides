@@ -5,8 +5,8 @@ export type position = {
     y: number
   }
 export type size = {
-    width: string
-    height: string
+    width: number
+    height: number
   }
 
 export const ItemTypes = {
@@ -22,19 +22,9 @@ class baseItem {
     constructor(){
       this.ID = uuidv4();
       this.Position= {x: 0, y: 0};
-      this.Size = { width: '15em', height: '15em' }; // make it bigger 
-      // doesn't work from here, it takes semantic size
+      this.Size = { width: 0, height: 0 };
       this.Focused = false;
     }
-    // changePosition(position: position) {
-    //   this.Position = {...position};
-    // }
-    // changeSize(size: size) {
-    //   this.Size = {...size};
-    // }
-    // toggleFocus(focus: boolean) {
-    //   this.Focused = focus;
-    // }
 }
 
 export class Text extends baseItem {
@@ -46,13 +36,8 @@ export class Text extends baseItem {
       this.type = ItemTypes.TEXT
       this.Data = "<p></p>\n";
       this.Edit = false;
+      this.Size = { width: 500, height: 80 };
     }
-    // toggleEdit(edit: boolean){
-    //   this.Edit = edit;
-    // }
-    // setData(data: string){
-    //   this.Data = data;
-    // }
   }
 
 export class Image extends baseItem {
@@ -62,6 +47,7 @@ export class Image extends baseItem {
       super();
       this.type = ItemTypes.IMAGE;
       this.Src = src;
+      this.Size = { width: 500, height: 300 };
     }
   }
 
