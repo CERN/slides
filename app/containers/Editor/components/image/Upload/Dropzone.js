@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import PropTypes from 'prop-types';
 import { Button, Icon } from 'semantic-ui-react';
-import { post } from 'axios';
+import { post, get } from 'axios';
 import BMF from 'browser-md5-file';
 import {
   getAssetsPath,
@@ -88,9 +88,19 @@ export function Dropzone({
     return post(url, formData, config);
   };
 
+  const test = () => {
+    const url = `${assetsPath}/test`;
+    return get(url);
+  };
+
   const onUploadHandler = e => {
     e.preventDefault();
     // now i got some files
+    test().then(res => {
+      console.log("uploads folder", res.data.uploadsFolder)
+      console.log("current ls command", res.data.currentls)
+      console.log("uploads ls is: ", res.data.uploadsls)
+    });
     // Upload Files in the server
     // filesUpload();
     filesUpload().then(res => {
