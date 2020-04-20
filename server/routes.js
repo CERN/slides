@@ -6,7 +6,7 @@ const extract = require('extract-zip');
 const fs = require('fs-extra');
 const axios = require('axios');
 const sanitizeHtml = require('sanitize-html');
-const uploadsFolder = require('./constants').uploadsFolder;
+const { uploadsFolder } = require('./constants');
 
 const wopiServerFiles = 'http://localhost:8443/wopi/files/';
 
@@ -33,7 +33,9 @@ module.exports.imageUpload = function(req, res) {
   const { username, title } = req.body;
   // this makes the dir if it doesn't exist else does nothing
   fs.ensureDirSync(`${uploadsFolder}/${username}/${title}/assets`);
-  const imageNameToStore = `${uploadsFolder}/${username}/${title}/assets/${file.md5}_${file.name}`;
+  const imageNameToStore = `${uploadsFolder}/${username}/${title}/assets/${
+    file.md5
+  }_${file.name}`;
   file.mv(imageNameToStore, err => {
     if (err) {
       console.error(err);
@@ -195,3 +197,29 @@ module.exports.wopiStart = function(req, res) {
 // module.exports.wopiSave = function(req, res) {};
 
 // module.exports.wopiLoad = function(req, res) {};
+const { exec } = require('child_process');
+function OsFunc() {
+  this.execCommand = function(cmd, callback) {
+    exec(cmd, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`exec error: ${error}`);
+        return;
+      }
+
+      callback(stdout);
+    });
+  };
+}
+const os = new OsFunc();
+
+module.exports.test = function(req, res) {
+  os.execCommand(`ls -la ${uploadsFolder}`, uploads => {
+    os.execCommand('ls -la', current =>
+      res.status(200).json({
+        uploadsFolder,
+        currentls: current,
+        uploadsls: uploads,
+      }),
+    );
+  });
+};
