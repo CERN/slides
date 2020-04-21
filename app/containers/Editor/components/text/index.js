@@ -10,20 +10,12 @@ import './index.css';
 const Text = ({ ID, itemsArray }) => {
   const item = itemsArray.find(itm => itm.ID === ID);
   const { Edit, Data } = item;
-  // const doubleClick = e => {
-  //   if (Edit === false) {
-  //     onSetEditMode(ID, true);
-  //   }
-  // };
-
   return (
     <div className="fit-text">
       {Edit ? (
         <TextEditor className="editor" initialData={Data} ID={ID} />
       ) : (
-        // <div onDoubleClick={doubleClick}>
         <RenderHtml ID={ID} text={Data} />
-        // </div>
       )}
     </div>
   );

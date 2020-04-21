@@ -5,13 +5,21 @@ import StandardSlide from '../../../theming/StandardSlide';
 import { getTheme } from '../../redux-store/PresentationReducer/selectors';
 import { getItems } from '../../redux-store/DeckReducer/selectors';
 import MoveResize from '../components/resize_move';
+import MyItem from '../components/item';
 
 function MySlide({ theme, itemsArray }) {
   const StandardSlideTemplate = StandardSlide(theme);
+  const editMode = (type, edit) => type === 'TEXT' && edit;
   return (
     <StandardSlideTemplate>
       {itemsArray.map(itm => (
-        <MoveResize key={itm.ID} ID={itm.ID} />
+        <div>
+          {editMode(itm.type, itm.Edit) ? (
+            <MyItem key={itm.ID} itemObj={itm} />
+          ) : (
+            <MoveResize key={itm.ID} ID={itm.ID} />
+          )}
+        </div>
       ))}
     </StandardSlideTemplate>
   );
