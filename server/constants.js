@@ -1,6 +1,6 @@
 const prod = {
   assetsPath: 'https://slides.web.cern.ch',
-  uploadsFolder: '/data/tmp/presentations',
+  uploadsFolder: '/mydata/presentations',
 };
 const dev = {
   assetsPath: 'http://localhost:3000',
