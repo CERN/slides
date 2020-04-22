@@ -96,15 +96,15 @@ export function Dropzone({
   const onUploadHandler = e => {
     e.preventDefault();
     // now i got some files
-    test().then(res => {
-      console.log('uploads folder', res.data.uploadsFolder);
-      console.log('ls .: ', res.data.currentls);
-      console.log('ls /mydata: ', res.data.lsroot);
-    });
+    // test().then(res => {
+    //   console.log('uploads folder', res.data.uploadsFolder);
+    //   console.log('ls .: ', res.data.currentls);
+    //   console.log('ls /mydata: ', res.data.lsroot);
+    // });
     // Upload Files in the server
     // filesUpload();
     filesUpload().then(res => {
-      console.log('FilePath for saving is', res.data.filePath);
+      // console.log('FilePath for saving is', res.data.filePath);
     });
     // Save images in Redux Store
     // find md5 of the file and append name

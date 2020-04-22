@@ -8,6 +8,7 @@ import {
 } from '../../../redux-store/PresentationReducer/selectors';
 
 import { getItems } from '../../../redux-store/DeckReducer/selectors';
+import './index.css';
 
 // FIX positioning of image
 const Image = ({ ID, itemsArray, assetsPath, username, title }) => {
@@ -15,7 +16,11 @@ const Image = ({ ID, itemsArray, assetsPath, username, title }) => {
   // this base will be the server's address base for every image , localhost:3000/static/username/title/hash_imagename
   // src only has hash_name, i have to add username and title infront
   const myPath = `${assetsPath}/static/${username}/${title}/assets/${item.Src}`;
-  return <img src={myPath} alt="" />;
+  return (
+    <div className="img-style">
+      <img src={myPath} alt="" />
+    </div>
+  );
 };
 
 Image.propTypes = {
