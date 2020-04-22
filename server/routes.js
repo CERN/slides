@@ -203,6 +203,7 @@ function OsFunc() {
     exec(cmd, (error, stdout, stderr) => {
       if (error) {
         console.error(`exec error: ${error}`);
+        callback(error);
         return;
       }
 
@@ -213,12 +214,12 @@ function OsFunc() {
 const os = new OsFunc();
 
 module.exports.test = function(req, res) {
-  os.execCommand(`ls -la ${uploadsFolder}`, uploads => {
-    os.execCommand('ls -la', current =>
+  os.execCommand('ls /', lsroot => {
+    os.execCommand('ls .', current =>
       res.status(200).json({
         uploadsFolder,
         currentls: current,
-        uploadsls: uploads,
+        lsroot,
       }),
     );
   });
