@@ -45,7 +45,10 @@ const TextEditor = ({
   );
 
   return (
-    <div className="text-editor">
+    <div>
+      <Button positive floated="right" onClick={saveHandler}>
+        Save
+      </Button>
       <Editor
         editorState={editorState}
         toolbar={editorConfig}
@@ -55,9 +58,6 @@ const TextEditor = ({
         editorClassName="editorClassName"
         onEditorStateChange={handleEditorChange}
       />
-      <Button positive floated="right" onClick={saveHandler}>
-        Save
-      </Button>
     </div>
   );
 };

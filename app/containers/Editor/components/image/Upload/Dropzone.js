@@ -99,7 +99,7 @@ export function Dropzone({
     // test().then(res => {
     //   console.log('uploads folder', res.data.uploadsFolder);
     //   console.log('ls .: ', res.data.currentls);
-    //   console.log('ls /mydata: ', res.data.lsroot);
+    //   console.log('ls /root: ', res.data.lsroot);
     // });
     // Upload Files in the server
     // filesUpload();

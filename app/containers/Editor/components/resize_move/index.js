@@ -17,11 +17,18 @@ import {
 const Core = ({ x, y, width, height, getRef, item }) => (
   <div
     style={{
-      position: 'relative',
+      // amazing how much this helps in consistent position of elements (absolute)
+      position: 'absolute',
       left: x,
       top: y,
       width,
       height,
+      // border: '1px solid black',
+      boxSizing: 'border-box',
+      display: 'inline-block',
+      // padding: 0,
+      // display: 'block',
+      // overflow: 'hidden',
     }}
     ref={getRef}
   >
@@ -45,10 +52,13 @@ function MoveResize({
     height: item.Size.height,
   });
 
+  const editMode = (type, edit) => type === 'TEXT' && edit;
+
   const onDragStop = e => {
+    e.preventDefault();
     const x = e.client.x - e.clientX0 + coordinate.x;
     const y = e.client.y - e.clientY0 + coordinate.y;
-    // console.log('Drag Stopped', x, y);
+    console.log('Drag Stopped', x, y);
     onChangePosition(ID, {
       x,
       y,
@@ -56,14 +66,16 @@ function MoveResize({
   };
 
   const onResizeStop = e => {
-    const x = e.client.x - e.clientX0 + coordinate.x;
-    const y = e.client.y - e.clientY0 + coordinate.y;
+    e.preventDefault();
+    // const x = e.client.x - e.clientX0 + coordinate.x;
+    // const y = e.client.y - e.clientY0 + coordinate.y;
     const { width, height } = e.rect;
-    // console.log('Resize Stopped', x, y, width, height);
-    onChangePosition(ID, {
-      x,
-      y,
-    });
+    console.log('Resize Stopped', width, height);
+    onDragStop(e);
+    // onChangePosition(ID, {
+    //   x,
+    //   y,
+    // });
     onChangeSize(ID, {
       width,
       height,
@@ -76,52 +88,73 @@ function MoveResize({
     }
   };
 
+  const movableItemRender = () => (
+    <Reactable
+      draggable={{
+        onmove: e => {
+          setCoordinate(prev => ({
+            ...prev,
+            x: prev.x + e.dx,
+            y: prev.y + e.dy,
+          }));
+        },
+        onend: e => {
+          onDragStop(e);
+        },
+        modifiers: [
+          interact.modifiers.restrictRect({
+            restriction: '.deck',
+            endOnly: false,
+          }),
+        ],
+      }}
+      resizable={{
+        edges: { left: true, right: true, bottom: true, top: true },
+        // preserveAspectRatio: true,
+        onmove: e => {
+          const { width, height } = e.rect;
+          const { left, top } = e.deltaRect;
+          setCoordinate(prev => ({
+            x: prev.x + left,
+            y: prev.y + top,
+            width,
+            height,
+          }));
+        },
+        onend: e => {
+          onResizeStop(e);
+        },
+        modifiers: [
+          interact.modifiers.restrictEdges({
+            outer: '.deck',
+            endOnly: false,
+          }),
+        ],
+      }}
+      {...coordinate}
+      item={item}
+    />
+  );
+
+  const textEditModeRender = () => {
+    // const specialCoordinates = {
+    //   ...coordinate,
+    //   width: 800,
+    //   height: 400,
+    // };
+    return <Reactable {...coordinate} item={item} />;
+  };
+
+  console.log("my coordinates are:", coordinate)
   return (
-    <div id={item.ID} onDoubleClick={handler}>
-      <Reactable
-        draggable={{
-          onmove: e => {
-            setCoordinate(prev => ({
-              ...prev,
-              x: prev.x + e.dx,
-              y: prev.y + e.dy,
-            }));
-          },
-          onend: e => {
-            onDragStop(e);
-          },
-          modifiers: [
-            interact.modifiers.restrictRect({
-              restriction: '.deck',
-              endOnly: true,
-            }),
-          ],
-        }}
-        resizable={{
-          edges: { left: true, right: true, bottom: true, top: true },
-          onmove: e => {
-            const { width, height } = e.rect;
-            const { left, top } = e.deltaRect;
-            setCoordinate(prev => ({
-              x: prev.x + left,
-              y: prev.y + top,
-              width,
-              height,
-            }));
-          },
-          onend: e => {
-            onResizeStop(e);
-          },
-          modifiers: [
-            interact.modifiers.restrictEdges({
-              outer: '.deck',
-              endOnly: true,
-            }),
-          ],
-        }}
-        {...coordinate}
-        item={item}
-      />
+    <div>
+      {editMode(item.type, item.Edit) ? (
+        <div>{textEditModeRender()}</div>
+      ) : (
+        <div id={item.ID} onDoubleClick={handler}>
+          {movableItemRender()}
+        </div>
+      )}
     </div>
   );
 }

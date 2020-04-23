@@ -41,7 +41,7 @@ function Settings({ onSaveRequest, onStyleRequest, onLoadRequest }) {
       <Menu inverted vertical fluid icon="labeled">
         {Item('eye', 'Slideshow (pending)')}
         {/* {Item('undo', 'Undo (Ctrl+Z)')} */}
-        {Item('save', 'Save')}
+        {Item('save', 'Save Presentation')}
         {/* {Item('play', 'Present (Ctrl+E)')} */}
         {/* {Item('setting', 'Presentation Settings')} */}
         {Item('paint brush', 'Change Background Color')}

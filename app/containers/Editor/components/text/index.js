@@ -11,9 +11,9 @@ const Text = ({ ID, itemsArray }) => {
   const item = itemsArray.find(itm => itm.ID === ID);
   const { Edit, Data } = item;
   return (
-    <div className="fit-text">
+    <div>
       {Edit ? (
-        <TextEditor className="editor" initialData={Data} ID={ID} />
+        <TextEditor initialData={Data} ID={ID} />
       ) : (
         <RenderHtml ID={ID} text={Data} />
       )}
