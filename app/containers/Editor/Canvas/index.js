@@ -8,7 +8,6 @@ import createTheme from 'spectacle/lib/themes/default';
 import {
   getTheme,
   getTitle,
-  getDescription,
   getAssetsPath,
   getBackgroundColor,
 } from '../../redux-store/PresentationReducer/selectors';
@@ -19,7 +18,7 @@ import MySlide from '../MySlide';
 import './index.css';
 import getterTheme from '../../../theming/theme';
 
-function Canvas({ title, theme, description, DeckOfSlides, backgroundColor }) {
+function Canvas({ title, theme, DeckOfSlides, backgroundColor }) {
   const deck = useRef();
   const themeObj = getterTheme(theme);
   // change fontconfig from here
@@ -41,7 +40,6 @@ function Canvas({ title, theme, description, DeckOfSlides, backgroundColor }) {
     <div>
       <Helmet>
         <title>Edit: {title}</title>
-        <meta name="Canvas" content={description} />
       </Helmet>
       <div className="deck">
         <Deck
@@ -65,7 +63,6 @@ function Canvas({ title, theme, description, DeckOfSlides, backgroundColor }) {
 Canvas.propTypes = {
   title: PropTypes.string,
   theme: PropTypes.string,
-  description: PropTypes.string,
   DeckOfSlides: PropTypes.array,
   backgroundColor: PropTypes.string,
 };
@@ -74,7 +71,6 @@ export default connect(
   state => ({
     theme: getTheme(state),
     title: getTitle(state),
-    description: getDescription(state),
     DeckOfSlides: getDeck(state),
     assetsPath: getAssetsPath(state),
     backgroundColor: getBackgroundColor(state),

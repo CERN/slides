@@ -6,7 +6,6 @@ import { presentationState } from './definitions';
 const getTheme = (state: { presentation: presentationState; }) => state.presentation.theme;
 const getTitle = (state: { presentation: presentationState; }) => state.presentation.title;
 
-const getDescription = (state: { presentation: presentationState; }) => state.presentation.description;
 const getImgUploadRequest = (state: { presentation: presentationState; }) => state.presentation.imgUploadRequest;
 
 const getAssetsPath = (state: { presentation: presentationState; }) => state.presentation.assetsPath;
@@ -23,7 +22,6 @@ const getBackgroundColor = (state: { presentation: presentationState; }) => stat
 export {
   getTheme,
   getTitle,
-  getDescription,
   getImgUploadRequest,
   getAssetsPath,
   getUsername,

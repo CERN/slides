@@ -67,15 +67,9 @@ function MoveResize({
 
   const onResizeStop = e => {
     e.preventDefault();
-    // const x = e.client.x - e.clientX0 + coordinate.x;
-    // const y = e.client.y - e.clientY0 + coordinate.y;
     const { width, height } = e.rect;
     console.log('Resize Stopped', width, height);
     onDragStop(e);
-    // onChangePosition(ID, {
-    //   x,
-    //   y,
-    // });
     onChangeSize(ID, {
       width,
       height,

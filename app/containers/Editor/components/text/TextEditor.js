@@ -5,7 +5,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
-import { Button } from 'semantic-ui-react';
+import { Button, Popup } from 'semantic-ui-react';
 import {
   editData,
   setEditMode,
@@ -14,6 +14,23 @@ import {
 import { editorConfig } from './editorConfig';
 import './TextEditor.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
+function SaveButton({ saveHandler }) {
+  // add Custom Save button in the toolbar of draft.js
+  return (
+    <Popup
+      trigger={
+        <Button compact basic size="small" icon="save" onClick={saveHandler} />
+      }
+      mouseEnterDelay={300} // ?! not very important just an effect to delay the showing of the popup
+      content="Save Text!"
+      basic
+    />
+  );
+}
+SaveButton.propTypes = {
+  saveHandler: PropTypes.func,
+};
 
 const TextEditor = ({
   initialData,
@@ -46,9 +63,6 @@ const TextEditor = ({
 
   return (
     <div>
-      <Button positive floated="right" onClick={saveHandler}>
-        Save
-      </Button>
       <Editor
         editorState={editorState}
         toolbar={editorConfig}
@@ -56,6 +70,7 @@ const TextEditor = ({
         toolbarClassName="toolbarClassName"
         wrapperClassName="wrapperClassName"
         editorClassName="editorClassName"
+        toolbarCustomButtons={[<SaveButton saveHandler={saveHandler} />]}
         onEditorStateChange={handleEditorChange}
       />
     </div>

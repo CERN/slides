@@ -23,11 +23,6 @@ export const setTitle = (title: string) => ({
   title,
 }) as const;
 
-export const setDescription = (description: string) => ({
-  type: SET_DESCRIPTION,
-  description,
-}) as const;
-
 export const uploadImageRequest = (request: boolean) => ({
   type: IMAGE_UPLOAD_REQUEST,
   request,
@@ -75,7 +70,7 @@ export const setBackgroundColor = (color: string) => ({
 }) as const;
 
 export type Action = ReturnType<
- typeof setTheme | typeof setTitle | typeof setDescription |
+ typeof setTheme | typeof setTitle |
  typeof uploadImageRequest | typeof setAssetsPath | typeof setUsername |
  typeof setSaveRequest | typeof setLoadRequest | typeof loadState |
  typeof setIsReady | typeof setStyleRequest | typeof setBackgroundColor

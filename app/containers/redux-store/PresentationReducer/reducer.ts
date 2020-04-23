@@ -27,9 +27,6 @@ const PresentationReducer = (state: presentationState=initialState, action: Acti
       case SET_TITLE:
         draft.title = action.title;
         break;
-      case SET_DESCRIPTION:
-        draft.description = action.description;
-        break;
       case IMAGE_UPLOAD_REQUEST:
         draft.imgUploadRequest = action.request;
         break;
