@@ -44,9 +44,10 @@ const PresentationReducer = (state: presentationState=initialState, action: Acti
         const newPresentationState:presentationState = {
           ...action.state,
         };
+        // Object.assign(draft, {});
         Object.assign(draft, newPresentationState);
         draft.saveRequest = false;
-        // draft.currentSlide = 0; ??? how to go to first slide
+        draft.currentSlide = 0; // ??? how to go to first slide
         break;
       }
       case SET_USER:

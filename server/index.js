@@ -55,6 +55,8 @@ app.post('/load', (req, res) => api.loadPresentation(req, res));
 app.delete('/image/:username/:title/:id', (req, res) =>
   api.deleteImage(req, res),
 );
+// Rename Presentation Title
+app.post('/rename', (req, res) => api.renamePresentation(req, res));
 app.get('/test', (req, res) => api.test(req, res));
 // Phoenix/Wopi Endpoints
 // Start Phoenix Endpoint, will have to store somewhere if i am using wopi

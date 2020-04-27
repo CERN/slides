@@ -14,6 +14,8 @@ import {
 } from '../../../redux-store/DeckReducer/actions';
 
 // min height, min width
+
+// : x,y: 350, 330 for middle
 const Core = ({ x, y, width, height, getRef, item }) => (
   <div
     style={{
@@ -26,6 +28,7 @@ const Core = ({ x, y, width, height, getRef, item }) => (
       // border: '1px solid black',
       boxSizing: 'border-box',
       display: 'inline-block',
+      // 'vertical-align': 'middle',
       // padding: 0,
       // display: 'block',
       // overflow: 'hidden',
@@ -130,16 +133,15 @@ function MoveResize({
     />
   );
 
-  const textEditModeRender = () => {
+  const textEditModeRender = () => (
     // const specialCoordinates = {
     //   ...coordinate,
     //   width: 800,
     //   height: 400,
     // };
-    return <Reactable {...coordinate} item={item} />;
-  };
-
-  console.log("my coordinates are:", coordinate)
+    <Reactable {...coordinate} item={item} />
+  );
+  console.log('my coordinates are:', coordinate);
   return (
     <div>
       {editMode(item.type, item.Edit) ? (

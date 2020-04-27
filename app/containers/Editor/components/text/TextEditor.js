@@ -66,7 +66,7 @@ const TextEditor = ({
       <Editor
         editorState={editorState}
         toolbar={editorConfig}
-        placeholder="start typing..."
+        placeholder="start typing - don’t forget to save"
         toolbarClassName="toolbarClassName"
         wrapperClassName="wrapperClassName"
         editorClassName="editorClassName"

@@ -112,7 +112,7 @@ function LandingPage({
       <Grid columns={2} relaxed="very" stackable textAlign="center">
         <Grid.Row>
           <Grid.Column width={12}>
-            <Header className="white" size="large">
+            <Header className="white" as="h2">
               Start New Presentation
             </Header>
             <Form size="large">
@@ -143,8 +143,9 @@ function LandingPage({
             </Form>
           </Grid.Column>
           <Divider horizontal>Or</Divider>
-          <Grid.Column>
-            <Header className="white" size="large">
+          {/* this width makes the Header text take all the required space to be inline */}
+          <Grid.Column width={10}>
+            <Header className="white" as="h2">
               Edit Existing Presentation
             </Header>
             <Button color="blue" onClick={clickHandlerLoad}>

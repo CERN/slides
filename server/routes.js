@@ -197,6 +197,32 @@ module.exports.wopiStart = function(req, res) {
 // module.exports.wopiSave = function(req, res) {};
 
 // module.exports.wopiLoad = function(req, res) {};
+
+module.exports.renamePresentation = function(req, res) {
+  // take the old and replace it with the new name
+  const { username, oldTitle, newTitle } = req.body;
+  fs.pathExists(`${uploadsFolder}/${username}/${oldTitle}`).then(oldExists => {
+    if (!oldExists) {
+      res.status(200).send('Success');
+    } else {
+      fs.pathExists(`${uploadsFolder}/${username}/${newTitle}`).then(
+        newExists => {
+          if (!newExists) {
+            fs.moveSync(
+              `${uploadsFolder}/${username}/${oldTitle}`,
+              `${uploadsFolder}/${username}/${newTitle}`,
+            );
+            res.status(200).send('Success');
+          } else {
+            res.status(400).send('Already Exists'); // status 400, means that is obvious client's fault
+          }
+        },
+      );
+    }
+  });
+};
+
+// ONLY FOR BACKEND TESTING PURPOSES
 const { exec } = require('child_process');
 function OsFunc() {
   this.execCommand = function(cmd, callback) {

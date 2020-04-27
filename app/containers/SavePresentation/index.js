@@ -2,11 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { post } from 'axios';
-import { useToasts } from 'react-toast-notifications';
-
 import { saveAs } from 'file-saver';
-import { setSaveRequest } from '../redux-store/PresentationReducer/actions';
-import { getTitle } from '../redux-store/PresentationReducer/selectors';
+import {
+  setSaveRequest,
+  setTitle,
+} from '../redux-store/PresentationReducer/actions';
+import {
+  getTitle,
+  getUsername,
+} from '../redux-store/PresentationReducer/selectors';
+import history from '../../utils/history';
+
+import AlertForSaving from './AlertForSaving';
+import saveSuccess from './AlertForSaving/saveSuccess';
+import saveFail from './AlertForSaving/saveFail';
 const zip = require('jszip')();
 
 // i first need to init and load
@@ -28,10 +37,66 @@ send request to server
 server --> responds with the blob
 frontend uses saveas to give the blob to the user
 */
-function SavePresentation({ stateStringified, onSaveRequest, title }) {
+
+// returns true or false if everything with the renaming in the background was successful
+async function renamePresentation(assetsPath, username, oldTitle, newTitle) {
+  if (oldTitle === newTitle) {
+    // then no rename
+    return true;
+  }
+  const renaming = post(`${assetsPath}/rename`, {
+    username,
+    oldTitle,
+    newTitle,
+  }).then(res => {
+    if (res.data === 'Already Exists') {
+      // already exists
+      return false;
+    }
+    return true;
+  });
+  return renaming.then(() => true).catch(() => false);
+}
+
+async function sendSaveRequest(assetsPath, stateStringified, newTitle) {
+  const url = `${assetsPath}/save`;
+  post(
+    url,
+    { state: JSON.parse(stateStringified) },
+    {
+      headers: {
+        Accept: 'application/slides',
+      },
+      responseType: 'arraybuffer',
+    },
+  )
+    .then(response => response.status === 200 && response.data)
+    .then(fileAsBuffer => {
+      // create the alert so the user can select a filename
+      // make a toast here that is successful
+      saveSuccess();
+      // here i have an arraybuffer
+      const blob = new Blob([fileAsBuffer]);
+      return saveAs(blob, `${newTitle}.slides`);
+    })
+    .catch(error => {
+      console.log(error);
+      // i couldn't make the blob in the backend
+      // create an alert for the user
+      // `${newTitle}.slides file creation failed...`
+      saveFail(`${newTitle}.slides file creation failed...`);
+    });
+}
+
+function SavePresentation({
+  stateStringified,
+  onSaveRequest,
+  title,
+  onSetTitle,
+  user,
+}) {
   // use a save endpoint in the server
   // title and uuid and savereq can be extracted from state
-  const { addToast } = useToasts();
   const obj = JSON.parse(stateStringified);
   const { assetsPath, saveRequest } = obj.presentation;
 
@@ -64,37 +129,24 @@ function SavePresentation({ stateStringified, onSaveRequest, title }) {
   const sendToUser = () => {
     // make a blob and save it locally give it to user for download
     // I need to make the body of the post request and send a request that includes the params
-    const url = `${assetsPath}/save`;
-    post(
-      url,
-      { state: JSON.parse(stateStringified) },
-      {
-        headers: {
-          Accept: 'application/slides',
-        },
-        responseType: 'arraybuffer',
-      },
-    )
-      .then(response => response.status === 200 && response.data)
-      .then(fileAsBuffer => {
-        // notify with success
-        addToast(`Saved successfully! 😊`, {
-          appearance: 'success',
-          autoDismiss: true,
-        });
-        // here i have an arraybuffer
-        const blob = new Blob([fileAsBuffer]);
-        return saveAs(blob, `${title}.slides`);
-      })
-      .catch(error => {
-        console.log(error);
-        // i couldn't make the blob in the backend
-        addToast('Saving Failed...', {
-          appearance: 'error',
-          autoDismiss: true,
-        });
+    AlertForSaving(title).then(newTitle => {
+      // check if I can rename in the background first
+      renamePresentation(assetsPath, user, title, newTitle).then(res => {
+        if (!res) {
+          // failed
+          saveFail('A Presentation with the same name already exists');
+          onSaveRequest();
+        } else {
+          // set new filename as title in the presentation
+          onSetTitle(newTitle);
+          sendSaveRequest(assetsPath, stateStringified, newTitle).then(() => {
+            onSaveRequest();
+            // push the new title in the URL bar
+            history.push(`/${user}/${newTitle}/edit/`);
+          });
+        }
       });
-    onSaveRequest();
+    });
   };
 
   const Save = () => {
@@ -113,12 +165,15 @@ function SavePresentation({ stateStringified, onSaveRequest, title }) {
 SavePresentation.propTypes = {
   stateStringified: PropTypes.string,
   onSaveRequest: PropTypes.func,
+  onSetTitle: PropTypes.func,
   title: PropTypes.string,
+  user: PropTypes.string,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     onSaveRequest: () => dispatch(setSaveRequest(false)),
+    onSetTitle: title => dispatch(setTitle(title)),
   };
 }
 
@@ -126,6 +181,7 @@ export default connect(
   state => ({
     stateStringified: JSON.stringify(state),
     title: getTitle(state),
+    user: getUsername(state),
   }),
   mapDispatchToProps,
 )(SavePresentation);

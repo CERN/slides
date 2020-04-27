@@ -102,6 +102,7 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
         const newDeckState: Deck = {
           ...action.state,
         }
+        // Object.assign(draft, {});
         Object.assign(draft, newDeckState);
         break;
       }

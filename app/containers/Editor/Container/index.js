@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import './index.css';
-import { Grid, GridColumn } from 'semantic-ui-react';
 import { ToastProvider } from 'react-toast-notifications';
 import Settings from '../Settings';
 import Canvas from '../Canvas';
