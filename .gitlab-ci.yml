@@ -1,5 +1,6 @@
 variables:
   NAMESPACE_DEV: slides
+  BACKEND_NAMESPACE_DEV: slides-backend
   OPENSHIFT_SERVER_DEV: https://openshift.cern.ch
   BUILD_ENV_DEV: staging
   APP_NAME: slides
@@ -35,18 +36,28 @@ stages:
     paths:
       - build
 
+
 .docker_build_template: &docker_definition
   stage: build_docker
-  tags:
-    - docker-image-build
-  script: "echo building $CI_REGISTRY_IMAGE for slides" # No empty scripts are allowed
+  image: 
+    # We recommend using the CERN version of the Kaniko image: gitlab-registry.cern.ch/ci-tools/docker-image-builder
+    name: gitlab-registry.cern.ch/ci-tools/docker-image-builder
+    entrypoint: [""]
+  script:
+    # Prepare Kaniko configuration file
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    # Build and push the image from the Dockerfile at the root of the project.
+    # To push to a specific docker tag, amend the --destination parameter, e.g. --destination $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME
+    # See https://docs.gitlab.com/ee/ci/variables/predefined_variables.html#variables-reference for available variables
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination ${TO}
+
 
 .deploy_template: &deploy_definition
   stage: deploy
   image: gitlab-registry.cern.ch/paas-tools/openshift-client:latest
   script:
     # Adding || true to disable the error message when the image already exists
-    - oc import-image ${APP_NAME} --from="gitlab-registry.cern.ch/authoring/slides/slides:${TAG}" --confirm --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE} || true
+    - oc import-image ${APP_NAME} --from="${CI_REGISTRY_IMAGE}/${DEPLOYMENT_TYPE}:${TAG}" --confirm --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE} || true
     - oc tag "gitlab-registry.cern.ch/authoring/slides/slides:${TAG}" "${APP_NAME}:latest" --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE}
 
 build_dev:
@@ -59,11 +70,36 @@ build_dev:
 build_docker_dev:
   <<: *docker_definition
   variables:
-    TO: ${CI_REGISTRY_IMAGE}:${DEV_TAG}
+    TO: ${CI_REGISTRY_IMAGE}/frontend:${DEV_TAG}
   dependencies:
     - build_dev
-  only:
-    - master
+  # only:
+  #   - master
+
+build_backend_docker_dev:
+  <<: *docker_definition
+  variables:
+    TO: ${CI_REGISTRY_IMAGE}/backend:${DEV_TAG}
+    DOCKER_FILE: "Dockerfile.backend"
+  dependencies:
+    - build_dev
+  # only:
+  #   - master
+  
+deploy_backend_dev:
+  <<: *deploy_definition
+  variables:
+    TOKEN: ${OPENSHIFT_DEV_BACKEND_TOKEN}
+    OPENSHIFT_SERVER: ${OPENSHIFT_SERVER_DEV}
+    NAMESPACE: ${BACKEND_NAMESPACE_DEV}
+    DEPLOYMENT_TYPE: backend
+    TAG: ${DEV_TAG}
+  environment:
+    name: staging
+    url: https://slides-backend.web.cern.ch
+  # only:
+  #   - master
+
 
 deploy_dev:
   <<: *deploy_definition
@@ -71,9 +107,10 @@ deploy_dev:
     TOKEN: ${OPENSHIFT_DEV_TOKEN}
     OPENSHIFT_SERVER: ${OPENSHIFT_SERVER_DEV}
     NAMESPACE: ${NAMESPACE_DEV}
+    DEPLOYMENT_TYPE: frontend
     TAG: ${DEV_TAG}
   environment:
     name: staging
     url: https://slides.web.cern.ch
-  only:
-    - master
+  # only:
+  #   - master

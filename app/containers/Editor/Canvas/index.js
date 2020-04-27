@@ -35,7 +35,6 @@ function Canvas({ title, theme, DeckOfSlides, backgroundColor }) {
   useEffect(() => {
     window.slideCount = deck.current.props.children.length;
   });
-   console.log("Canvas with ", DeckOfSlides)
   return (
     <div>
       <Helmet>

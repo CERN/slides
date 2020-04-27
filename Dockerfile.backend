@@ -1,0 +1,15 @@
+FROM node:12-alpine
+
+USER root
+WORKDIR /opt/app-root/src
+
+RUN apk add git
+
+COPY . .
+
+RUN npm ci
+
+EXPOSE 3000
+
+USER 1001
+CMD npm start

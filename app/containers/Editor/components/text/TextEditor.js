@@ -61,6 +61,8 @@ const TextEditor = ({
     ),
   );
 
+  // add support for Ctrl+s or Cmd+s for saving the text
+  // docs: https://stackoverflow.com/questions/42311815/how-to-create-custom-key-bindings-in-draft-js
   return (
     <div>
       <Editor
