@@ -17,8 +17,6 @@ stages:
     - apk add --update git bash lcms2-dev libpng-dev gcc g++ make autoconf automake && rm -rf /var/cache/apk/*
     - npm install
 
-
-
 # test:
 #   stage: test
 #   image: node:12-alpine

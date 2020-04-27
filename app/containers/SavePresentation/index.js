@@ -130,6 +130,10 @@ function SavePresentation({
     // make a blob and save it locally give it to user for download
     // I need to make the body of the post request and send a request that includes the params
     AlertForSaving(title).then(newTitle => {
+      if (!newTitle) {
+        onSaveRequest();
+        return;
+      }
       // check if I can rename in the background first
       renamePresentation(assetsPath, user, title, newTitle).then(res => {
         if (!res) {
@@ -139,11 +143,18 @@ function SavePresentation({
         } else {
           // set new filename as title in the presentation
           onSetTitle(newTitle);
-          sendSaveRequest(assetsPath, stateStringified, newTitle).then(() => {
-            onSaveRequest();
-            // push the new title in the URL bar
-            history.push(`/${user}/${newTitle}/edit/`);
-          });
+          // state is not gonna update in time
+          const newObj = JSON.parse(stateStringified);
+          newObj.presentation.title = newTitle;
+          newObj.router.location.pathname = `/${user}/${newTitle}/edit/`;
+          const newStateStringified = JSON.stringify(newObj);
+          sendSaveRequest(assetsPath, newStateStringified, newTitle).then(
+            () => {
+              onSaveRequest();
+              // push the new title in the URL bar
+              history.push(`/${user}/${newTitle}/edit/`);
+            },
+          );
         }
       });
     });
