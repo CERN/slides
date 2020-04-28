@@ -17,6 +17,8 @@ stages:
     - apk add --update git bash lcms2-dev libpng-dev gcc g++ make autoconf automake && rm -rf /var/cache/apk/*
     - npm install
 
+
+
 # test:
 #   stage: test
 #   image: node:12-alpine
@@ -47,7 +49,7 @@ stages:
     # Build and push the image from the Dockerfile at the root of the project.
     # To push to a specific docker tag, amend the --destination parameter, e.g. --destination $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME
     # See https://docs.gitlab.com/ee/ci/variables/predefined_variables.html#variables-reference for available variables
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination ${TO}
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/$DOCKER_FILE --destination ${TO}
 
 
 .deploy_template: &deploy_definition
@@ -56,19 +58,18 @@ stages:
   script:
     # Adding || true to disable the error message when the image already exists
     - oc import-image ${APP_NAME} --from="${CI_REGISTRY_IMAGE}/${DEPLOYMENT_TYPE}:${TAG}" --confirm --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE} || true
-    - oc tag "gitlab-registry.cern.ch/authoring/slides/slides:${TAG}" "${APP_NAME}:latest" --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE}
+    - oc tag "${CI_REGISTRY_IMAGE}/${DEPLOYMENT_TYPE}:${TAG}" "${APP_NAME}:latest" --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE}
 
 build_dev:
   <<: *build_definition
   variables:
     BUILD_ENV: ${BUILD_ENV_DEV}
-  only:
-    - master
 
 build_docker_dev:
   <<: *docker_definition
   variables:
     TO: ${CI_REGISTRY_IMAGE}/frontend:${DEV_TAG}
+    DOCKER_FILE: Dockerfile
   dependencies:
     - build_dev
   # only:
@@ -78,7 +79,7 @@ build_backend_docker_dev:
   <<: *docker_definition
   variables:
     TO: ${CI_REGISTRY_IMAGE}/backend:${DEV_TAG}
-    DOCKER_FILE: "Dockerfile.backend"
+    DOCKER_FILE: Dockerfile.backend
   dependencies:
     - build_dev
   # only:

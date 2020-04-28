@@ -8,6 +8,7 @@ RUN apk add git
 COPY . .
 
 RUN npm ci
+RUN npm i -g cross-env
 
 EXPOSE 3000
 
