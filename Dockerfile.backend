@@ -13,4 +13,4 @@ RUN npm i -g cross-env
 EXPOSE 3000
 
 USER 1001
-CMD npm cross-env NODE_ENV=production node server
+CMD cross-env NODE_ENV=production node server
