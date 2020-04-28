@@ -58,7 +58,6 @@ function MoveResize({
   const editMode = (type, edit) => type === 'TEXT' && edit;
 
   const onDragStop = e => {
-    e.preventDefault();
     const x = e.client.x - e.clientX0 + coordinate.x;
     const y = e.client.y - e.clientY0 + coordinate.y;
     console.log('Drag Stopped', x, y);
@@ -69,7 +68,6 @@ function MoveResize({
   };
 
   const onResizeStop = e => {
-    e.preventDefault();
     const { width, height } = e.rect;
     console.log('Resize Stopped', width, height);
     onDragStop(e);
@@ -101,7 +99,7 @@ function MoveResize({
         modifiers: [
           interact.modifiers.restrictRect({
             restriction: '.deck',
-            endOnly: false,
+            endOnly: true,
           }),
         ],
       }}
@@ -124,7 +122,7 @@ function MoveResize({
         modifiers: [
           interact.modifiers.restrictEdges({
             outer: '.deck',
-            endOnly: false,
+            endOnly: true,
           }),
         ],
       }}
@@ -133,15 +131,8 @@ function MoveResize({
     />
   );
 
-  const textEditModeRender = () => (
-    // const specialCoordinates = {
-    //   ...coordinate,
-    //   width: 800,
-    //   height: 400,
-    // };
-    <Reactable {...coordinate} item={item} />
-  );
-  console.log('my coordinates are:', coordinate);
+  const textEditModeRender = () => <Reactable {...coordinate} item={item} />;
+  // console.log('my coordinates are:', coordinate);
   return (
     <div>
       {editMode(item.type, item.Edit) ? (
