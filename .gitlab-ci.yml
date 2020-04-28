@@ -72,8 +72,8 @@ build_docker_dev:
     DOCKER_FILE: Dockerfile
   dependencies:
     - build_dev
-  # only:
-  #   - master
+  only:
+    - master
 
 build_backend_docker_dev:
   <<: *docker_definition
@@ -82,8 +82,8 @@ build_backend_docker_dev:
     DOCKER_FILE: Dockerfile.backend
   dependencies:
     - build_dev
-  # only:
-  #   - master
+  only:
+    - master
   
 deploy_backend_dev:
   <<: *deploy_definition
@@ -96,8 +96,8 @@ deploy_backend_dev:
   environment:
     name: staging
     url: https://slides-backend.web.cern.ch
-  # only:
-  #   - master
+  only:
+    - master
 
 
 deploy_dev:
@@ -111,5 +111,5 @@ deploy_dev:
   environment:
     name: staging
     url: https://slides.web.cern.ch
-  # only:
-  #   - master
+  only:
+    - master
