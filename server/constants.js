@@ -1,5 +1,5 @@
 const prod = {
-  assetsPath: 'https://slides.web.cern.ch',
+  assetsPath: 'https://slides-backend.web.cern.ch/',
   uploadsFolder: '/mydata/presentations',
 };
 const dev = {
