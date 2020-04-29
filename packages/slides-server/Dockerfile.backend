@@ -1,0 +1,30 @@
+FROM node:12-alpine
+
+# RUN command to make sure to grant necessary permission
+# into node_module and app folders, so that when npm install can be executed.
+RUN mkdir -p /home/node/slides-backend/node_modules && chown -R node:node /home/node/slides-backend
+WORKDIR /home/node/slides-backend
+
+# COPY command to copy package.json file.
+COPY package*.json ./
+USER node
+RUN npm install
+
+# Copy your application code with the appropriate permissions 
+# to the application directory on the container:
+COPY --chown=node:node . .
+
+EXPOSE 3000
+
+CMD ["node", "src/index.js" ]
+# RUN apt update && apt install -y git g++ gcc
+
+# COPY . .
+
+# RUN npm ci
+# RUN npm i -g cross-env
+
+# EXPOSE 3000
+
+# USER 1001
+# CMD cross-env NODE_ENV=production node server // call the correct command to start server

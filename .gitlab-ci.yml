@@ -17,8 +17,6 @@ stages:
     - apk add --update git bash lcms2-dev libpng-dev gcc g++ make autoconf automake && rm -rf /var/cache/apk/*
     - npm install
 
-
-
 # test:
 #   stage: test
 #   image: node:12-alpine
@@ -35,7 +33,6 @@ stages:
   artifacts:
     paths:
       - build
-
 
 .docker_build_template: &docker_definition
   stage: build_docker
@@ -69,7 +66,7 @@ build_docker_dev:
   <<: *docker_definition
   variables:
     TO: ${CI_REGISTRY_IMAGE}/frontend:${DEV_TAG}
-    DOCKER_FILE: Dockerfile
+    DOCKER_FILE: frontend.Dockerfile
   dependencies:
     - build_dev
   only:
@@ -79,7 +76,7 @@ build_backend_docker_dev:
   <<: *docker_definition
   variables:
     TO: ${CI_REGISTRY_IMAGE}/backend:${DEV_TAG}
-    DOCKER_FILE: Dockerfile.backend
+    DOCKER_FILE: backend.Dockerfile
   dependencies:
     - build_dev
   only:
