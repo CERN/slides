@@ -62,11 +62,11 @@ build_dev:
   variables:
     BUILD_ENV: ${BUILD_ENV_DEV}
 
-build_docker_dev:
+build_frontend_docker_dev:
   <<: *docker_definition
   variables:
     TO: ${CI_REGISTRY_IMAGE}/frontend:${DEV_TAG}
-    DOCKER_FILE: frontend.Dockerfile
+    DOCKER_FILE: ./packages/slides-frontend/Dockerfile
   dependencies:
     - build_dev
   only:
@@ -76,7 +76,7 @@ build_backend_docker_dev:
   <<: *docker_definition
   variables:
     TO: ${CI_REGISTRY_IMAGE}/backend:${DEV_TAG}
-    DOCKER_FILE: backend.Dockerfile
+    DOCKER_FILE: ./packages/slides-server/Dockerfile
   dependencies:
     - build_dev
   only:

@@ -1,11 +1,12 @@
 {
   "name": "slides-server",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development nodemon --exec babel-node src/index.js",
-    "start:prod": "NODE_ENV=production nodemon --exec babel-node src/index.js",
+    "start:dev": "NODE_ENV=development nodemon --exec babel-node src/index.js",
+    "build": "babel src -d dist",
+    "start:prod": "NODE_ENV=production node dist/index.js",
     "test": "echo \"No test specified\" && exit 0"
   },
   "keywords": [],

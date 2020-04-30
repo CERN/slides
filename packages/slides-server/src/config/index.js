@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const prod = {
   uploadsFolder: '/mydata/presentations',
 };
