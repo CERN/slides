@@ -8,31 +8,32 @@ variables:
 
 stages:
   # - test
-  # - build
+  - build_prod_frontend
   - build_dockers
   - deploy
 
-.before_npm: &before_npm_def
+.before_yarn: &before_yarn_def
   before_script:
     - apk add --update git bash lcms2-dev libpng-dev gcc g++ make autoconf automake && rm -rf /var/cache/apk/*
-    # - npm install
+    - npm install -g yarn
+    - yarn install
 
 # test:
 #   stage: test
 #   image: node:12-alpine
-#   <<: *before_npm_def
+#   <<: *before_yarn_def
 #   script:
 #     - yarn test a
 
-# .build_template: &build_definition
-#   stage: build
-#   image: node:12-alpine
-#   <<: *before_npm_def
-#   script:
-#     - npm run build
-#   artifacts:
-#     paths:
-#       - build
+.build_template: &build_definition
+  stage: build_prod_frontend
+  image: node:12-alpine
+  <<: *before_yarn_def
+  script:
+    - yarn build
+  artifacts:
+    paths:
+      - build
 
 .docker_build_template: &docker_definition
   stage: build_dockers
