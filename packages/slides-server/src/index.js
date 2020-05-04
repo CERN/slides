@@ -6,11 +6,22 @@ import express from 'express';
 
 import routes from './routes';
 const fileUpload = require('express-fileupload');
+
+/* AUTHENTICATION */
+// Add : ​"keycloak-connect": "10.0.0" to package.json
+// const session = require('express-session');
+// const Keycloak = require('keycloak-connect');
+
+// const memoryStore = new session.MemoryStore();
+// const keycloak = new Keycloak({ store: memoryStore });
+/* END AUTH */
 const { uploadsFolder } = require('./config');
 
 const app = express();
 
 // Application-Level Middleware
+// Auth
+// app.use(keycloak.middleware());
 
 app.use(cors());
 app.use(fileUpload());

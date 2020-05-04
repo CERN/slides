@@ -4,16 +4,16 @@ RUN mkdir -p /home/slides/slides-backend
 RUN cd /home/slides/slides-backend
 WORKDIR /home/slides/slides-backend
 
-# COPY command to copy package.json file.
-COPY ./package.json .
+# USER root
+# RUN npm install -g @babel/cli
+# RUN npm install -g @babel/preset-env
+# RUN npm install -g @babel/core
+ENV NODE_ENV production
+COPY . .
 RUN yarn install
 USER node
 
-# Copy your application code with the appropriate permissions 
-# to the application directory on the container:
-COPY --chown=node:node . .
-ENV NODE_ENV production
 # port for nodejs servers
 EXPOSE 8000
-
-CMD ["node", "dist/index.js" ]
+# that's yarn start:prod
+CMD ["node", "-r", "esm", "./src/index.js", "build/index.js" ]
