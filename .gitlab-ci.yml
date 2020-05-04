@@ -64,6 +64,7 @@ stages:
 #     BUILD_ENV: ${BUILD_ENV_DEV}
 
 build_frontend_docker:
+  <<: *build_definition
   <<: *docker_definition
   variables:
     TO: ${CI_REGISTRY_IMAGE}/frontend:${DEV_TAG}
