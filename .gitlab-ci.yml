@@ -14,8 +14,8 @@ stages:
 
 .before_yarn: &before_yarn_def
   before_script:
-    - apk add --update git bash lcms2-dev libpng-dev gcc g++ make autoconf automake && rm -rf /var/cache/apk/*
-    # - npm install -g yarn
+    - apk add --update git bash lcms2-dev libpng-dev gcc g++ make autoconf automake npm && rm -rf /var/cache/apk/*
+    - npm install -g yarn
     # - yarn install
 
 # test:
@@ -37,6 +37,7 @@ stages:
 
 .docker_build_template: &docker_definition
   stage: build_docker
+  <<: *before_yarn_def
   image: 
     # We recommend using the CERN version of the Kaniko image: gitlab-registry.cern.ch/ci-tools/docker-image-builder
     name: gitlab-registry.cern.ch/ci-tools/docker-image-builder
@@ -65,9 +66,10 @@ stages:
 
 build_frontend_docker:
   <<: *docker_definition
+  # <<: *before_yarn_def
   script: 
     - "cd ./packages/slides-frontend"
-    - "npm install -g yarn"
+    # - "npm install -g yarn"
     - "yarn install"
     - "yarn build"
   variables:
