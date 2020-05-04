@@ -36,7 +36,7 @@ stages:
   before_script:
     - apk update
     - apk add git autoconf
-    - npm install -g yarn
+    # - npm install -g yarn
     - cd ./packages/slides-frontend
     - yarn install
 
