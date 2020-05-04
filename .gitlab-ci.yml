@@ -8,8 +8,8 @@ variables:
 
 stages:
   # - test
-#   - build
-  - build_docker
+  # - build
+  - build_dockers
   - deploy
 
 .before_npm: &before_npm_def
@@ -35,7 +35,7 @@ stages:
 #       - build
 
 .docker_build_template: &docker_definition
-  stage: build_docker
+  stage: build_dockers
   image: 
     # We recommend using the CERN version of the Kaniko image: gitlab-registry.cern.ch/ci-tools/docker-image-builder
     name: gitlab-registry.cern.ch/ci-tools/docker-image-builder
@@ -62,7 +62,7 @@ stages:
 #   variables:
 #     BUILD_ENV: ${BUILD_ENV_DEV}
 
-build_frontend_docker_dev:
+build_frontend_docker:
   <<: *docker_definition
   variables:
     TO: ${CI_REGISTRY_IMAGE}/frontend:${DEV_TAG}
@@ -70,7 +70,7 @@ build_frontend_docker_dev:
   only:
     - master
 
-build_backend_docker_dev:
+build_backend_docker:
   <<: *docker_definition
   variables:
     TO: ${CI_REGISTRY_IMAGE}/backend:${DEV_TAG}
@@ -78,7 +78,7 @@ build_backend_docker_dev:
   only:
     - master
   
-deploy_backend_dev:
+deploy_backend:
   <<: *deploy_definition
   variables:
     TOKEN: ${OPENSHIFT_DEV_BACKEND_TOKEN}
@@ -93,7 +93,7 @@ deploy_backend_dev:
     - master
 
 
-deploy_dev:
+deploy_frontend:
   <<: *deploy_definition
   variables:
     TOKEN: ${OPENSHIFT_DEV_TOKEN}

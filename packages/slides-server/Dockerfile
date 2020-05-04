@@ -1,6 +1,8 @@
 FROM node:12-alpine
 
-WORKDIR /opt/app-root/src
+RUN mkdir -p /home/slides/slides-backend
+RUN cd /home/slides/slides-backend
+WORKDIR /home/slides/slides-backend
 
 # USER root
 # RUN npm install -g @babel/cli
@@ -14,4 +16,5 @@ USER node
 # port for nodejs servers
 EXPOSE 8000
 # that's yarn start:prod
-CMD ["node", "-r", "esm", "./src/index.js" ]
+# CMD ["node", "-r", "esm", "./src/index.js" ]
+CMD ["yarn", "start:prod"]
