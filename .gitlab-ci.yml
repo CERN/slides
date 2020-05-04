@@ -25,16 +25,6 @@ stages:
 #   script:
 #     - yarn test a
 
-# .build_template: &build_definition
-#   stage: build
-#   image: node:12-alpine
-#   <<: *before_yarn_def
-#   script:
-#     - yarn build
-#   artifacts:
-#     paths:
-#       - build
-
 .docker_build_template: &docker_definition
   stage: build_docker
   <<: *before_yarn_def
@@ -66,10 +56,8 @@ stages:
 
 build_frontend_docker:
   <<: *docker_definition
-  # <<: *before_yarn_def
   script: 
     - "cd ./packages/slides-frontend"
-    # - "npm install -g yarn"
     - "yarn install"
     - "yarn build"
   variables:
