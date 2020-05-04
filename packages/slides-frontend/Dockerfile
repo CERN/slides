@@ -10,14 +10,14 @@ USER root
 # RUN npm i -g yarn
 RUN npm install -g serve
 # install packages
-# RUN yarn
+RUN yarn
 # create production build of React
-# RUN yarn build
+RUN yarn build
 USER node
 
 # Copy your application code with the appropriate permissions 
 # to the application directory on the container:
-COPY --chown=node:node build .
+COPY --chown=node:node . .
 ENV NODE_ENV production
 # port for deployed react
 EXPOSE 5000
