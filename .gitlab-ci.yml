@@ -40,7 +40,6 @@ stages:
     # See https://docs.gitlab.com/ee/ci/variables/predefined_variables.html#variables-reference for available variables
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/$DOCKER_FILE --destination ${TO}
 
-
 .deploy_template: &deploy_definition
   stage: deploy
   image: gitlab-registry.cern.ch/paas-tools/openshift-client:latest
@@ -56,7 +55,8 @@ stages:
 
 build_frontend_docker:
   <<: *docker_definition
-  script: 
+  before_script: 
+    - "npm install -g yarn"
     - "cd ./packages/slides-frontend"
     - "yarn install"
     - "yarn build"
@@ -87,7 +87,6 @@ deploy_backend:
     url: https://slides-backend.web.cern.ch
   only:
     - master
-
 
 deploy_frontend:
   <<: *deploy_definition
