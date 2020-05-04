@@ -35,6 +35,8 @@ stages:
 build_frontend_docker:
   <<: *docker_definition
   before_script: 
+    - "apk add --update git bash lcms2-dev libpng-dev gcc g++ make autoconf automake npm && rm -rf /var/cache/apk/*"
+    - "apt-get install -y npm"
     - "npm install -g yarn"
     - "cd ./packages/slides-frontend"
     - "yarn install"
