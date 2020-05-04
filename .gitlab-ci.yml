@@ -27,7 +27,7 @@ stages:
     - oc tag "${CI_REGISTRY_IMAGE}/${DEPLOYMENT_TYPE}:${TAG}" "${APP_NAME}:latest" --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE}
 
 build_frontend_docker:
-  <<: *build_definition
+  <<: *docker_definition
   variables:
     TO: ${CI_REGISTRY_IMAGE}/frontend:${DEV_TAG}
     DOCKER_FILE: ./packages/slides-frontend/Dockerfile
