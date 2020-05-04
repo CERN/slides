@@ -32,15 +32,27 @@ stages:
     - oc import-image ${APP_NAME} --from="${CI_REGISTRY_IMAGE}/${DEPLOYMENT_TYPE}:${TAG}" --confirm --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE} || true
     - oc tag "${CI_REGISTRY_IMAGE}/${DEPLOYMENT_TYPE}:${TAG}" "${APP_NAME}:latest" --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE}
 
+.before_npm: &before_npm_def
+  before_script:
+    - apk add git
+    - npm install -g yarn
+    - yarn install
+
+.build_template: &build_definition
+  stage: build_dockers
+  image: node:12-alpine
+  <<: *before_npm_def
+  before_script:
+    - cd ./packages/slides-frontend
+    - yarn install
+  script:
+    - yarn build
+  artifacts:
+    paths:
+      - build
+
 build_frontend_docker:
-  <<: *docker_definition
-  before_script: 
-    - "apk add --update git bash lcms2-dev libpng-dev gcc g++ make autoconf automake npm && rm -rf /var/cache/apk/*"
-    - "apt-get install -y npm"
-    - "npm install -g yarn"
-    - "cd ./packages/slides-frontend"
-    - "yarn install"
-    - "yarn build"
+  <<: *build_definition
   variables:
     TO: ${CI_REGISTRY_IMAGE}/frontend:${DEV_TAG}
     DOCKER_FILE: ./packages/slides-frontend/Dockerfile
