@@ -8,15 +8,15 @@ variables:
 
 stages:
   # - test
-  - build
+  # - build
   - build_docker
   - deploy
 
 .before_yarn: &before_yarn_def
   before_script:
     - apk add --update git bash lcms2-dev libpng-dev gcc g++ make autoconf automake && rm -rf /var/cache/apk/*
-    - npm install -g yarn
-    - yarn install
+    # - npm install -g yarn
+    # - yarn install
 
 # test:
 #   stage: test
@@ -67,6 +67,8 @@ build_frontend_docker:
   <<: *docker_definition
   script: 
     - "cd ./packages/slides-frontend"
+    - "npm install -g yarn"
+    - "yarn install"
     - "yarn build"
   variables:
     TO: ${CI_REGISTRY_IMAGE}/frontend:${DEV_TAG}
