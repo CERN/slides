@@ -7,11 +7,13 @@ variables:
   DEV_TAG: dev
 
 stages:
-  - build_dockers
-  - deploy
+  # - build_dockers
+  # - deploy
+  - frontend
+  - backend
 
 .docker_build_template: &docker_definition
-  stage: build_dockers
+  # stage: build_dockers
   image: 
     name: gitlab-registry.cern.ch/ci-tools/docker-image-builder
     entrypoint: [""]
@@ -20,13 +22,14 @@ stages:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/$DOCKER_FILE --destination ${TO}
 
 .deploy_template: &deploy_definition
-  stage: deploy
+  # stage: deploy
   image: gitlab-registry.cern.ch/paas-tools/openshift-client:latest
   script:
     - oc import-image ${APP_NAME} --from="${CI_REGISTRY_IMAGE}/${DEPLOYMENT_TYPE}:${TAG}" --confirm --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE} || true
     - oc tag "${CI_REGISTRY_IMAGE}/${DEPLOYMENT_TYPE}:${TAG}" "${APP_NAME}:latest" --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE}
 
 build_frontend_docker:
+  stage: frontend
   <<: *docker_definition
   variables:
     TO: ${CI_REGISTRY_IMAGE}/frontend:${DEV_TAG}
@@ -35,6 +38,7 @@ build_frontend_docker:
     - deployment
 
 deploy_frontend:
+  stage: frontend
   <<: *deploy_definition
   variables:
     TOKEN: ${OPENSHIFT_DEV_TOKEN}
@@ -47,9 +51,9 @@ deploy_frontend:
     url: https://slides.web.cern.ch
   only:
     - deployment
-    
 
 build_backend_docker:
+  stage: backend
   <<: *docker_definition
   variables:
     TO: ${CI_REGISTRY_IMAGE}/backend:${DEV_TAG}
@@ -58,6 +62,7 @@ build_backend_docker:
     - deployment
   
 deploy_backend:
+  stage: backend
   <<: *deploy_definition
   variables:
     TOKEN: ${OPENSHIFT_DEV_BACKEND_TOKEN}

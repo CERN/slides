@@ -14,6 +14,5 @@ ENV NODE_ENV production
 # port for deployed react
 EXPOSE 5000
 
-# CMD ["serve", "-s", "build" ]
-CMD ["yarn", "start:prod"]
+CMD ["serve", "-s", "build" ]
 

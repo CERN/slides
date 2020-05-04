@@ -11,4 +11,4 @@ USER node
 # port for nodejs servers
 EXPOSE 8000
 
-CMD ["yarn", "start:prod"]
+CMD ["node", "-r","esm", "./src/index.js"]
