@@ -12,7 +12,6 @@ ENV NODE_ENV production
 COPY . .
 RUN yarn install
 USER node
-
 # port for nodejs servers
 EXPOSE 8000
 # that's yarn start:prod
