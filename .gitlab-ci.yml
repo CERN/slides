@@ -13,42 +13,18 @@ stages:
 .docker_build_template: &docker_definition
   stage: build_dockers
   image: 
-    # We recommend using the CERN version of the Kaniko image: gitlab-registry.cern.ch/ci-tools/docker-image-builder
     name: gitlab-registry.cern.ch/ci-tools/docker-image-builder
     entrypoint: [""]
   script:
-    # Prepare Kaniko configuration file
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    # Build and push the image from the Dockerfile at the root of the project.
-    # To push to a specific docker tag, amend the --destination parameter, e.g. --destination $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME
-    # See https://docs.gitlab.com/ee/ci/variables/predefined_variables.html#variables-reference for available variables
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/$DOCKER_FILE --destination ${TO}
 
 .deploy_template: &deploy_definition
   stage: deploy
   image: gitlab-registry.cern.ch/paas-tools/openshift-client:latest
   script:
-    # Adding || true to disable the error message when the image already exists
     - oc import-image ${APP_NAME} --from="${CI_REGISTRY_IMAGE}/${DEPLOYMENT_TYPE}:${TAG}" --confirm --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE} || true
     - oc tag "${CI_REGISTRY_IMAGE}/${DEPLOYMENT_TYPE}:${TAG}" "${APP_NAME}:latest" --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE}
-
-.before_npm: &before_npm_def
-  before_script:
-    - apk update
-    - apk add git autoconf
-    # - npm install -g yarn
-    - cd ./packages/slides-frontend
-    - yarn install
-
-.build_template: &build_definition
-  stage: build_dockers
-  image: node:12-alpine
-  <<: *before_npm_def
-  script:
-    - yarn build
-  artifacts:
-    paths:
-      - build
 
 build_frontend_docker:
   <<: *build_definition
