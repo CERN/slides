@@ -26,7 +26,7 @@ stages:
     - oc import-image ${APP_NAME} --from="${CI_REGISTRY_IMAGE}/${DEPLOYMENT_TYPE}:${TAG}" --confirm --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE} || true
     - oc tag "${CI_REGISTRY_IMAGE}/${DEPLOYMENT_TYPE}:${TAG}" "${APP_NAME}:latest" --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE}
 
-deploy frontend 1/2:
+build_frontend_docker:
   <<: *docker_definition
   variables:
     TO: ${CI_REGISTRY_IMAGE}/frontend:${DEV_TAG}
@@ -34,7 +34,7 @@ deploy frontend 1/2:
   only:
     - deployment
 
-deploy frontend 2/2:
+deploy_frontend:
   <<: *deploy_definition
   variables:
     TOKEN: ${OPENSHIFT_DEV_TOKEN}
@@ -47,8 +47,9 @@ deploy frontend 2/2:
     url: https://slides.web.cern.ch
   only:
     - deployment
+    
 
-backend 1/2:
+build_backend_docker:
   <<: *docker_definition
   variables:
     TO: ${CI_REGISTRY_IMAGE}/backend:${DEV_TAG}
@@ -56,7 +57,7 @@ backend 1/2:
   only:
     - deployment
   
-backend 2/2:
+deploy_backend:
   <<: *deploy_definition
   variables:
     TOKEN: ${OPENSHIFT_DEV_BACKEND_TOKEN}
