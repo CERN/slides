@@ -1,5 +1,5 @@
 variables:
-  NAMESPACE_DEV: slides
+  FRONTEND_NAMESPACE_DEV: slides
   BACKEND_NAMESPACE_DEV: slides-backend
   OPENSHIFT_SERVER_DEV: https://openshift.cern.ch
   BUILD_ENV_DEV: staging
@@ -7,27 +7,11 @@ variables:
   DEV_TAG: dev
 
 stages:
-  # - test
-  # - build
-  - build_docker
+  - build_dockers
   - deploy
 
-# .before_yarn: &before_yarn_def
-#   before_script:
-#     - apk add --update git bash lcms2-dev libpng-dev gcc g++ make autoconf automake npm && rm -rf /var/cache/apk/*
-#     - npm install -g yarn
-#     # - yarn install
-
-# test:
-#   stage: test
-#   image: node:12-alpine
-#   <<: *before_yarn_def
-#   script:
-#     - yarn test a
-
 .docker_build_template: &docker_definition
-  stage: build_docker
-  # <<: *before_yarn_def
+  stage: build_dockers
   image: 
     # We recommend using the CERN version of the Kaniko image: gitlab-registry.cern.ch/ci-tools/docker-image-builder
     name: gitlab-registry.cern.ch/ci-tools/docker-image-builder
@@ -48,11 +32,6 @@ stages:
     - oc import-image ${APP_NAME} --from="${CI_REGISTRY_IMAGE}/${DEPLOYMENT_TYPE}:${TAG}" --confirm --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE} || true
     - oc tag "${CI_REGISTRY_IMAGE}/${DEPLOYMENT_TYPE}:${TAG}" "${APP_NAME}:latest" --token=${TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE}
 
-# build_dev:
-#   <<: *build_definition
-#   variables:
-#     BUILD_ENV: ${BUILD_ENV_DEV}
-
 build_frontend_docker:
   <<: *docker_definition
   before_script: 
@@ -64,7 +43,7 @@ build_frontend_docker:
     TO: ${CI_REGISTRY_IMAGE}/frontend:${DEV_TAG}
     DOCKER_FILE: ./packages/slides-frontend/Dockerfile
   only:
-    - master
+    - deployment
 
 build_backend_docker:
   <<: *docker_definition
@@ -72,7 +51,7 @@ build_backend_docker:
     TO: ${CI_REGISTRY_IMAGE}/backend:${DEV_TAG}
     DOCKER_FILE: ./packages/slides-server/Dockerfile
   only:
-    - master
+    - deployment
   
 deploy_backend:
   <<: *deploy_definition
@@ -86,18 +65,18 @@ deploy_backend:
     name: staging
     url: https://slides-backend.web.cern.ch
   only:
-    - master
+    - deployment
 
 deploy_frontend:
   <<: *deploy_definition
   variables:
     TOKEN: ${OPENSHIFT_DEV_TOKEN}
     OPENSHIFT_SERVER: ${OPENSHIFT_SERVER_DEV}
-    NAMESPACE: ${NAMESPACE_DEV}
+    NAMESPACE: ${FRONTEND_NAMESPACE_DEV}
     DEPLOYMENT_TYPE: frontend
     TAG: ${DEV_TAG}
   environment:
     name: staging
     url: https://slides.web.cern.ch
   only:
-    - master
+    - deployment
