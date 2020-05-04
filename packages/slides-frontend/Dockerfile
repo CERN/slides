@@ -9,9 +9,11 @@ RUN npm install -g serve
 USER node
 # Copy your application code with the appropriate permissions 
 # to the application directory on the container:
-COPY --chown=node:node build .
+COPY --chown=node:node . .
 ENV NODE_ENV production
 # port for deployed react
 EXPOSE 5000
 
-CMD ["serve", "-s", "build" ]
+# CMD ["serve", "-s", "build" ]
+CMD ["yarn", "start:prod"]
+
