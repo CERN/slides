@@ -11,3 +11,4 @@ temp/
 *.log
 dump.rdb
 .env
+build

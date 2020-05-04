@@ -8,8 +8,8 @@ variables:
 
 stages:
   # - test
-  - build_prod_frontend
-  - build_dockers
+  - build
+  - build_docker
   - deploy
 
 .before_yarn: &before_yarn_def
@@ -25,18 +25,18 @@ stages:
 #   script:
 #     - yarn test a
 
-.build_template: &build_definition
-  stage: build_prod_frontend
-  image: node:12-alpine
-  <<: *before_yarn_def
-  script:
-    - yarn build
-  artifacts:
-    paths:
-      - build
+# .build_template: &build_definition
+#   stage: build
+#   image: node:12-alpine
+#   <<: *before_yarn_def
+#   script:
+#     - yarn build
+#   artifacts:
+#     paths:
+#       - build
 
 .docker_build_template: &docker_definition
-  stage: build_dockers
+  stage: build_docker
   image: 
     # We recommend using the CERN version of the Kaniko image: gitlab-registry.cern.ch/ci-tools/docker-image-builder
     name: gitlab-registry.cern.ch/ci-tools/docker-image-builder
@@ -64,8 +64,10 @@ stages:
 #     BUILD_ENV: ${BUILD_ENV_DEV}
 
 build_frontend_docker:
-  <<: *build_definition
   <<: *docker_definition
+  script: 
+    - "cd ./packages/slides-frontend"
+    - "yarn build"
   variables:
     TO: ${CI_REGISTRY_IMAGE}/frontend:${DEV_TAG}
     DOCKER_FILE: ./packages/slides-frontend/Dockerfile
