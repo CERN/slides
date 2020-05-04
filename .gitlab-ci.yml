@@ -35,16 +35,15 @@ stages:
 .before_npm: &before_npm_def
   before_script:
     - apk add git
+    - apt-get install dh-autoreconf
     - npm install -g yarn
+    - cd ./packages/slides-frontend
     - yarn install
 
 .build_template: &build_definition
   stage: build_dockers
   image: node:12-alpine
   <<: *before_npm_def
-  before_script:
-    - cd ./packages/slides-frontend
-    - yarn install
   script:
     - yarn build
   artifacts:
