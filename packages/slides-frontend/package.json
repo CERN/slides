@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@babel/polyfill": "7.4.3",
+    "@authzsvc/keycloak-js-react": "^1.1.0",
     "@types/react-redux": "^7.1.7",
     "axios": "^0.19.2",
     "browser-md5-file": "^1.1.1",
@@ -21,6 +21,7 @@
     "intl": "1.2.5",
     "invariant": "2.2.4",
     "jszip": "^3.2.2",
+    "keycloak-js": "^10.0.0",
     "prop-types": "15.7.2",
     "react": "^16.13.1",
     "react-color": "^2.18.0",

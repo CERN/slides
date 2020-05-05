@@ -6,24 +6,21 @@
  */
 
 // Needed for redux-saga es6 generator support
-import '@babel/polyfill';
-
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 // Import all the third party stuff
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import history from './utils/history';
-// import './sanitize.css/sanitize.css';
-
 // Import root app
 import App from './containers/App';
-// Load the favicon and the .htaccess file
-/* eslint-disable import/no-unresolved, import/extensions */
-// import './!file-loader?name=[name].[ext]!./images/favicon.ico';
-// import './file-loader?name=.htaccess!./.htaccess';
-/* eslint-enable import/no-unresolved, import/extensions */
+import KeycloakWrapper from "@authzsvc/keycloak-js-react";
+import Keycloak from "keycloak-js";
+
 import configureStore from './configureStore';
+import * as cfg from './conf';
 
 // Import Semantic-ui styles
 import 'semantic-ui-css/semantic.min.css';
@@ -31,11 +28,25 @@ import 'semantic-ui-css/semantic.min.css';
 const initialState = {};
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('root');
-
+console.log("cfg.keycloakUrl is", cfg)
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <App />
+      <KeycloakWrapper
+        keycloak={
+          new Keycloak({
+            url: cfg.keycloakUrl,
+            realm: cfg.keycloakRealm,
+            clientId: cfg.keycloakClientId
+          })
+        }
+        refresh={false}
+        keycloakParams={{
+          onLoad: "login-required",
+        }}
+      >
+        <App />
+      </KeycloakWrapper>
     </ConnectedRouter>
   </Provider>,
   MOUNT_NODE,
