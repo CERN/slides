@@ -2,7 +2,6 @@ FROM node:12-alpine
 
 USER root
 RUN mkdir -p /home/slides/slides-frontend
-RUN cd /home/slides/slides-frontend
 WORKDIR /home/slides/slides-frontend
 
 RUN npm install -g serve
@@ -15,4 +14,3 @@ USER node
 EXPOSE 5000
 
 CMD ["serve", "-s", "build" ]
-

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "NODE_ENV=development nodemon --exec babel-node src/index.js",
+    "start:dev": "NODE_ENV=development node -r esm ./src/index.js",
     "start:prod": "NODE_ENV=production node -r esm ./src/index.js",
     "test": "echo \"No test specified\" && exit 0"
   },
@@ -14,8 +14,7 @@
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.9.6",
-    "nodemon": "^1.18.9"
+    "@babel/preset-env": "^7.9.6"
   },
   "dependencies": {
     "axios": "^0.19.2",

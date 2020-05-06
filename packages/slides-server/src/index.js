@@ -1,4 +1,4 @@
-require('dotenv').config();
+// require('dotenv').config();
 
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -50,7 +50,7 @@ app.use('/test', routes.testBackend);
 app.use('/wopi', routes.wopi);
 
 // Start
-
-app.listen(process.env.PORT, () =>
-  console.log(`Server is listening on port ${process.env.PORT}!`),
+const PORT = 8000;
+app.listen(PORT, () =>
+  console.log(`Server is listening on port ${PORT}!`),
 );

@@ -2,7 +2,6 @@ FROM node:12-alpine
 
 USER root
 RUN mkdir -p /home/slides/slides-backend
-RUN cd /home/slides/slides-backend
 WORKDIR /home/slides/slides-backend
 
 ENV NODE_ENV production
