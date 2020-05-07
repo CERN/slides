@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import PropTypes from 'prop-types';
 import { Button, Icon } from 'semantic-ui-react';
-import { post, get } from 'axios';
+import { post } from 'axios';
 import BMF from 'browser-md5-file';
 import {
   getAssetsPath,
@@ -33,9 +33,8 @@ export function Dropzone({
   assetsPath,
   username,
   title,
+  token,
 }) {
-  // and include it as a parameter above
-  // console.log('state: ', bull);
   const [files, setFiles] = useState([]);
   const {
     getRootProps,
@@ -75,7 +74,7 @@ export function Dropzone({
   );
 
   const filesUpload = () => {
-    const url = `${assetsPath}/upload`;
+    const url = `${assetsPath}/image/upload`;
     const formData = new FormData();
     formData.set('username', username);
     formData.set('title', title);
@@ -83,29 +82,30 @@ export function Dropzone({
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`
       },
     };
     return post(url, formData, config);
   };
 
-  const test = () => {
-    const url = `${assetsPath}/test`;
-    return get(url);
-  };
+  // const test = () => {
+  //   const url = `${assetsPath}/test`;
+  //   return get(url);
+  // };
 
   const onUploadHandler = e => {
     e.preventDefault();
     // now i got some files
-    test().then(res => {
-      console.log('uploads folder', res.data.uploadsFolder);
-      console.log('ls .: ', res.data.currentls);
-      console.log('ls /root: ', res.data.lsroot);
-    });
+    // test().then(res => {
+    //   console.log('uploads folder', res.data.uploadsFolder);
+    //   console.log('ls .: ', res.data.currentls);
+    //   console.log('ls /root: ', res.data.lsroot);
+    // });
     // Upload Files in the server
-    // filesUpload();
-    filesUpload().then(res => {
-      console.log('FilePath for saving is', res.data.filePath);
-    });
+    filesUpload();
+    // filesUpload().then(res => {
+    //   console.log('FilePath for saving is', res.data.filePath);
+    // });
     // Save images in Redux Store
     // find md5 of the file and append name
     files.forEach(f => {
@@ -149,6 +149,7 @@ Dropzone.propTypes = {
   assetsPath: PropTypes.string,
   username: PropTypes.string,
   title: PropTypes.string,
+  token: PropTypes.string,
 };
 
 function mapDispatchToProps(dispatch) {
@@ -163,6 +164,7 @@ export default connect(
     assetsPath: getAssetsPath(state),
     username: getUsername(state),
     title: getTitle(state),
+    token: state.keycloak.instance.token,
   }),
   mapDispatchToProps,
 )(Dropzone);

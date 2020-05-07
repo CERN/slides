@@ -34,6 +34,7 @@ function LoadPresentation({
   assetsPath,
   onLoadState,
   onLoadDeckState,
+  token,
 }) {
   const {
     acceptedFiles,
@@ -63,12 +64,13 @@ function LoadPresentation({
   // send as response the stringified state
   // frontend sets the state that it got using a redux dispatch action
   const presentationUpload = () => {
-    const url = `${assetsPath}/load`;
+    const url = `${assetsPath}/presentation/load`;
     const formData = new FormData();
     formData.append('file', acceptedFiles[0]);
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`
       },
     };
     return post(url, formData, config);
@@ -137,6 +139,7 @@ LoadPresentation.propTypes = {
   assetsPath: PropTypes.string,
   onLoadState: PropTypes.func,
   onLoadDeckState: PropTypes.func,
+  token: PropTypes.string,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -152,6 +155,7 @@ export default connect(
   state => ({
     loadRequest: getLoadRequest(state),
     assetsPath: getAssetsPath(state),
+    token: state.keycloak.instance.token,
   }),
   mapDispatchToProps,
 )(LoadPresentation);

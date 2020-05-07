@@ -100,6 +100,7 @@ function MoveResize({
           interact.modifiers.restrictRect({
             restriction: '.deck',
             endOnly: true,
+            // hold: 1000
           }),
         ],
       }}
@@ -123,6 +124,7 @@ function MoveResize({
           interact.modifiers.restrictEdges({
             outer: '.deck',
             endOnly: true,
+            // hold: 1000
           }),
         ],
       }}

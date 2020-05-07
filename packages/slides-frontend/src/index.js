@@ -28,7 +28,7 @@ import 'semantic-ui-css/semantic.min.css';
 const initialState = {};
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('root');
-console.log("cfg.keycloakUrl is", cfg)
+
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
@@ -43,6 +43,7 @@ ReactDOM.render(
         refresh={false}
         keycloakParams={{
           onLoad: "login-required",
+          flow: "implicit"
         }}
       >
         <App />

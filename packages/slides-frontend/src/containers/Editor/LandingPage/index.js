@@ -28,7 +28,6 @@ import {
   getTheme,
   getTitle,
   getAssetsPath,
-  getUsername,
 } from '../../redux-store/PresentationReducer/selectors';
 import './index.css';
 import history from '../../../utils/history';
@@ -73,19 +72,21 @@ function LandingPage({
   onSetUsername,
   currentTheme,
   currentTitle,
-  currentUser,
   onSetIsReady,
   onLoadRequest,
   assetsPath,
   onSetAssetsPath,
+  userToken,
+  authenticated
 }) {
+
   const [title, setTi] = useState(currentTitle);
   const [theme, setTh] = useState(currentTheme);
-  const [user, setUser] = useState(currentUser);
 
   const clickHandlerNew = () => {
     onSetTitle(title);
     onSetTheme(theme);
+    const user = userToken;
     history.push(`/${user}/${title}/edit/`);
     // make a uuid for this Presentation:
     onSetUsername(user);
@@ -101,11 +102,10 @@ function LandingPage({
 
   const settingTitle = (e, { value }) => setTi(value);
   const settingTheme = (e, { value }) => setTh(value);
-  const settingUser = (e, { value }) => setUser(value);
 
   // set the assetsFolder, where images will be, in the redux store
   if (assetsPath === '') onSetAssetsPath(config.assetsPath);
-  // const cernLogoPath = `./cernlogo/CERN-Logo.png`;
+  // if isAuthenticated render else Loading...
   return (
     <div className="landing-page">
       <Image src={cernLogoPath} className="image" centered />
@@ -117,12 +117,6 @@ function LandingPage({
             </Header>
             <Form size="large">
               <Segment>
-                <Input
-                  className="spacing"
-                  placeholder="Username"
-                  fluid
-                  onChange={settingUser}
-                />
                 <Input
                   className="spacing"
                   placeholder="Presentation Title"
@@ -164,11 +158,12 @@ LandingPage.propTypes = {
   onSetUsername: PropTypes.func,
   currentTheme: PropTypes.string,
   currentTitle: PropTypes.string,
-  currentUser: PropTypes.string,
   onSetIsReady: PropTypes.func,
   onLoadRequest: PropTypes.func,
   assetsPath: PropTypes.string,
   onSetAssetsPath: PropTypes.func,
+  authenticated: PropTypes.bool,
+  userToken: PropTypes.string,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -186,8 +181,9 @@ export default connect(
   state => ({
     currentTheme: getTheme(state),
     currentTitle: getTitle(state),
-    currentUser: getUsername(state),
     assetsPath: getAssetsPath(state),
+    authenticated: state.keycloak.authenticated,
+    userToken: state.keycloak.userToken.cern_upn,
   }),
   mapDispatchToProps,
 )(LandingPage);

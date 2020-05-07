@@ -112,7 +112,7 @@
     "webpack": "4.30.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start:dev": "react-scripts start",
     "build": "react-scripts build",
     "start:prod": "serve -s build",
     "test": "react-scripts test",

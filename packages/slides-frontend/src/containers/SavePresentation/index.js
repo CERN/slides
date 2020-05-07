@@ -39,15 +39,19 @@ frontend uses saveas to give the blob to the user
 */
 
 // returns true or false if everything with the renaming in the background was successful
-async function renamePresentation(assetsPath, username, oldTitle, newTitle) {
+async function renamePresentation(assetsPath, username, oldTitle, newTitle, token) {
   if (oldTitle === newTitle) {
     // then no rename
     return true;
   }
-  const renaming = post(`${assetsPath}/rename`, {
+  const renaming = post(`${assetsPath}/presentation/rename`, {
     username,
     oldTitle,
     newTitle,
+  }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+    }
   }).then(res => {
     if (res.data === 'Already Exists') {
       // already exists
@@ -58,14 +62,15 @@ async function renamePresentation(assetsPath, username, oldTitle, newTitle) {
   return renaming.then(() => true).catch(() => false);
 }
 
-async function sendSaveRequest(assetsPath, stateStringified, newTitle) {
-  const url = `${assetsPath}/save`;
+async function sendSaveRequest(assetsPath, stateStringified, newTitle, token) {
+  const url = `${assetsPath}/presentation/save`;
   post(
     url,
     { state: JSON.parse(stateStringified) },
     {
       headers: {
         Accept: 'application/slides',
+        Authorization: `Bearer ${token}`,
       },
       responseType: 'arraybuffer',
     },
@@ -94,6 +99,7 @@ function SavePresentation({
   title,
   onSetTitle,
   user,
+  token,
 }) {
   // use a save endpoint in the server
   // title and uuid and savereq can be extracted from state
@@ -135,7 +141,7 @@ function SavePresentation({
         return;
       }
       // check if I can rename in the background first
-      renamePresentation(assetsPath, user, title, newTitle).then(res => {
+      renamePresentation(assetsPath, user, title, newTitle, token).then(res => {
         if (!res) {
           // failed
           saveFail('A Presentation with the same name already exists');
@@ -148,7 +154,7 @@ function SavePresentation({
           newObj.presentation.title = newTitle;
           newObj.router.location.pathname = `/${user}/${newTitle}/edit/`;
           const newStateStringified = JSON.stringify(newObj);
-          sendSaveRequest(assetsPath, newStateStringified, newTitle).then(
+          sendSaveRequest(assetsPath, newStateStringified, newTitle, token).then(
             () => {
               onSaveRequest();
               // push the new title in the URL bar
@@ -179,6 +185,7 @@ SavePresentation.propTypes = {
   onSetTitle: PropTypes.func,
   title: PropTypes.string,
   user: PropTypes.string,
+  token: PropTypes.string,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -193,6 +200,7 @@ export default connect(
     stateStringified: JSON.stringify(state),
     title: getTitle(state),
     user: getUsername(state),
+    token: state.keycloak.instance.token,
   }),
   mapDispatchToProps,
 )(SavePresentation);
@@ -203,7 +211,7 @@ export default connect(
 //   post(
 //     url,
 //     { state: stateStringified },
-//     { headers: { 'Content-Type': 'application/json' } },
+//     { headers: { 'Content-Type': 'application/json' }, Authorization: `Bearer ${token}` },
 //   )
 //     .then(response => {
 //       // console.log('response:', response);

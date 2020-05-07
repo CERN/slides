@@ -47,6 +47,7 @@ function Item({
   title,
   username,
   onToggleFocus,
+  token,
 }) {
   const itemRef = useRef(null);
 
@@ -56,7 +57,11 @@ function Item({
   const delImageReq = () => {
     const url = `${assetsPath}/image/${username}/${title}/${itemObj.Src}`;
     // console.log('url in deleter is ', url);
-    return axios.delete(url);
+    return axios.delete(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
   };
 
   const deleter = e => {
@@ -136,6 +141,7 @@ Item.propTypes = {
   username: PropTypes.string,
   title: PropTypes.string,
   onToggleFocus: PropTypes.func,
+  token: PropTypes.string,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -156,6 +162,7 @@ export default connect(
     currentSlide: getCurrentSlide(state),
     username: getUsername(state),
     title: getTitle(state),
+    token: state.keycloak.instance.token,
   }),
   mapDispatchToProps,
 )(Item);
