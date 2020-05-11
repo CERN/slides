@@ -12,14 +12,29 @@
 }
 
 .image {
-  height: auto;
-  max-height: 60em;
-  width: 20%;
-  max-width: 60em !important;
+  height: 10em;
+  width: 10em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  /* max-height: 60em; */
+  /* max-width: 60em !important; */
 }
 
 .landing-page {
   background-color: #0053A1 !important;
   height: 100%;
   width: 100%;
+}
+
+/* .segment {
+  background-color: #0053A1 !important;
+} */
+.ui.segment {
+  background-color: #0053A1 !important;
+  box-shadow: 0 0 0 0 !important;
+  border: 0!important;
+}
+
+.ui.divider {
+  color: white !important;
 }

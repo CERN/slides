@@ -31,7 +31,6 @@ import {
 } from '../../redux-store/PresentationReducer/selectors';
 import './index.css';
 import history from '../../../utils/history';
-import cernLogoPath from '../../../cernLogo/CERN-Logo.png';
 
 const themeOptions = [
   {
@@ -108,13 +107,12 @@ function LandingPage({
   // if isAuthenticated render else Loading...
   return (
     <div className="landing-page">
-      <Image src={cernLogoPath} className="image" centered />
-      <Grid columns={2} relaxed="very" stackable textAlign="center">
+      <Image src={`${config.assetsPath}/public/Logo-Outline-web-White@200.png`} className="image" centered/>
+      <Segment compact>
+      <Grid relaxed='very' stackable columns={2}>
         <Grid.Row>
-          <Grid.Column width={12}>
-            <Header className="white" as="h2">
-              Start New Presentation
-            </Header>
+          <Grid.Column>
+            <Header className="white" as="h2" textAlign='centered' content="Start New Presentation"/>
             <Form size="large">
               <Segment>
                 <Input
@@ -136,18 +134,18 @@ function LandingPage({
               </Segment>
             </Form>
           </Grid.Column>
-          <Divider horizontal>Or</Divider>
-          {/* this width makes the Header text take all the required space to be inline */}
-          <Grid.Column width={10}>
-            <Header className="white" as="h2">
-              Edit Existing Presentation
-            </Header>
+          {/* here i go to the next thing */}
+          <Grid.Column>
+            <Header className="white" as="h2" textAlign='centered' content="Edit Existing Presentation"/>
             <Button color="blue" onClick={clickHandlerLoad}>
               <Button.Content visible>Upload!</Button.Content>
             </Button>
           </Grid.Column>
+          {/* this width makes the Header text take all the required space to be inline */}
         </Grid.Row>
       </Grid>
+      <Divider vertical>Or</Divider>
+      </Segment>
     </div>
   );
 }

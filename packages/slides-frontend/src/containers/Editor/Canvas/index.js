@@ -35,6 +35,16 @@ function Canvas({ title, theme, DeckOfSlides, backgroundColor }) {
   useEffect(() => {
     window.slideCount = deck.current.props.children.length;
   });
+  // catch reload event
+  
+  useEffect(() => {
+    window.onbeforeunload = e => {
+      e.preventDefault();
+      e.returnValue = 'Hello 1 2 3';
+      console.log("refresh got")
+      // alert('Are you sure you want to reload?')
+    }
+  })
   return (
     <div>
       <Helmet>

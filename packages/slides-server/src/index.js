@@ -57,7 +57,8 @@ app.use(userKeycloak.middleware());
 // serve static images from the uploads folder
 // I don't use userKeycloak.protect() here, so the pictures are open to the public
 app.use('/static', express.static(uploadsFolder));
-
+// serve Slides' assets
+app.use('/public', express.static(`${__dirname}/../public`));
 // Routes
 
 app.use('/image', userKeycloak.protect(), passedAuth, routes.image);
