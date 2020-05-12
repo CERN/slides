@@ -18,7 +18,6 @@ import config from '../../../config';
 import {
   setTheme,
   setTitle,
-  setUsername,
   setLoadRequest,
   setIsReady,
   setAssetsPath,
@@ -87,8 +86,6 @@ function LandingPage({
     onSetTheme(theme);
     const user = userToken;
     history.push(`/${user}/${title}/edit/`);
-    // make a uuid for this Presentation:
-    onSetUsername(user);
     // ready
     onSetIsReady();
   };
@@ -112,7 +109,7 @@ function LandingPage({
       <Grid relaxed='very' stackable columns={2}>
         <Grid.Row>
           <Grid.Column>
-            <Header className="white" as="h2" textAlign='centered' content="Start New Presentation"/>
+            <Header className="white" as="h2" content="Start New Presentation" />
             <Form size="large">
               <Segment>
                 <Input
@@ -128,7 +125,7 @@ function LandingPage({
                   options={themeOptions}
                   onChange={settingTheme}
                 />
-                <Button color="green" onClick={clickHandlerNew}>
+                <Button color="blue" onClick={clickHandlerNew}>
                   <Button.Content visible>Let's GO!</Button.Content>
                 </Button>
               </Segment>
@@ -136,7 +133,7 @@ function LandingPage({
           </Grid.Column>
           {/* here i go to the next thing */}
           <Grid.Column>
-            <Header className="white" as="h2" textAlign='centered' content="Edit Existing Presentation"/>
+            <Header className="white" as="h2" content="Edit Existing Presentation" />
             <Button color="blue" onClick={clickHandlerLoad}>
               <Button.Content visible>Upload!</Button.Content>
             </Button>
@@ -168,7 +165,6 @@ export function mapDispatchToProps(dispatch) {
   return {
     onSetTheme: theme => dispatch(setTheme(theme)),
     onSetTitle: title => dispatch(setTitle(title)),
-    onSetUsername: user => dispatch(setUsername(user)),
     onLoadRequest: () => dispatch(setLoadRequest(true)),
     onSetIsReady: () => dispatch(setIsReady(true)),
     onSetAssetsPath: path => dispatch(setAssetsPath(path)),

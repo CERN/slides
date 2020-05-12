@@ -6,7 +6,7 @@
 
 const getDeck = (state: { deck: Deck; }) => state.deck.slides;
 const getCurrentSlide = (state: { deck: Deck; }) => state.deck.currentSlide;
-const getItems = (state: { deck: Deck; }) => state.deck.slides[state.deck.currentSlide].itemsArray;
+const getItems = (state: { deck: Deck; }) => state.deck.slides[state.deck.currentSlide || 0].itemsArray;
 // const getFocus = (state: { deck: Deck; }, id: string) => {
 //   const ind:number = state.deck.slides[state.deck.currentSlide].itemsArray.findIndex((itm:Item) => itm.ID === id);
 //   if (ind === -1) return false;

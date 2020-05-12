@@ -39,12 +39,12 @@ function Canvas({ title, theme, DeckOfSlides, backgroundColor }) {
   
   useEffect(() => {
     window.onbeforeunload = e => {
-      e.preventDefault();
-      e.returnValue = 'Hello 1 2 3';
-      console.log("refresh got")
-      // alert('Are you sure you want to reload?')
+      // e.preventDefault();
+      console.log("refresh or close action got")
+      return('Are you sure you want to reload?')
     }
   })
+
   return (
     <div>
       <Helmet>

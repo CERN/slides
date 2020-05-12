@@ -35,6 +35,7 @@ function LoadPresentation({
   onLoadState,
   onLoadDeckState,
   token,
+  username,
 }) {
   const {
     acceptedFiles,
@@ -66,6 +67,7 @@ function LoadPresentation({
   const presentationUpload = () => {
     const url = `${assetsPath}/presentation/load`;
     const formData = new FormData();
+    formData.append('username', username);
     formData.append('file', acceptedFiles[0]);
     const config = {
       headers: {
@@ -79,16 +81,18 @@ function LoadPresentation({
     e.preventDefault();
     presentationUpload().then(response => {
       // extract the state information and call the loadstate action to copy the whole obj to the current state
-      onLoadState(response.data.state.presentation);
       onLoadDeckState(response.data.state.deck);
+      onLoadState(response.data.state.presentation);
       // set url
-      const { title, username } = response.data.state.presentation;
+      const { title } = response.data.state.presentation;
       history.push(`/${username}/${title}/edit/`);
-    });
-
-    // now that the request is done I can say I am ready for and can move from landing page
-    onLoadRequest();
-    onSetIsReady();
+      // now that the request is done I can say I am ready for and can move from landing page
+      onLoadRequest();
+      onSetIsReady();
+    }).catch(err => {
+      console.log("Something went wrong", err)
+      // fail screen
+    })
   };
   const onCancelHandler = e => {
     e.preventDefault();
@@ -140,6 +144,7 @@ LoadPresentation.propTypes = {
   onLoadState: PropTypes.func,
   onLoadDeckState: PropTypes.func,
   token: PropTypes.string,
+  username: PropTypes.string,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -156,6 +161,7 @@ export default connect(
     loadRequest: getLoadRequest(state),
     assetsPath: getAssetsPath(state),
     token: state.keycloak.instance.token,
+    username: state.keycloak.userToken.cern_upn,
   }),
   mapDispatchToProps,
 )(LoadPresentation);

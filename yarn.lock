@@ -6061,7 +6061,7 @@ extglob@^2.0.4:
 
 extract-zip@^2.0.0:
   version "2.0.0"
-  resolved "https://cern-nexus.web.cern.ch/repository/npm-group/extract-zip/-/extract-zip-2.0.0.tgz#f53b71d44f4ff5a4527a2259ade000fb8b303492"
+  resolved "https://registry.yarnpkg.com/extract-zip/-/extract-zip-2.0.0.tgz#f53b71d44f4ff5a4527a2259ade000fb8b303492"
   integrity sha512-i42GQ498yibjdvIhivUsRslx608whtGoFIhF26Z7O4MYncBxp8CwalOs1lnHy21A9sIohWO2+uiE4SRtC9JXDg==
   dependencies:
     debug "^4.1.1"

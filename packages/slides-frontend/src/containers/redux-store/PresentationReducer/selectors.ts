@@ -9,7 +9,6 @@ const getTitle = (state: { presentation: presentationState; }) => state.presenta
 const getImgUploadRequest = (state: { presentation: presentationState; }) => state.presentation.imgUploadRequest;
 
 const getAssetsPath = (state: { presentation: presentationState; }) => state.presentation.assetsPath;
-const getUsername = (state: { presentation: presentationState; }) => state.presentation.username;
 
 const getSaveRequest = (state: { presentation: presentationState; }) => state.presentation.saveRequest;
 const getLoadRequest = (state: { presentation: presentationState; }) => state.presentation.loadRequest;
@@ -24,7 +23,6 @@ export {
   getTitle,
   getImgUploadRequest,
   getAssetsPath,
-  getUsername,
   getSaveRequest,
   getLoadRequest,
   getIsReady,

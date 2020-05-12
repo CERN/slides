@@ -5,7 +5,6 @@ import {
   SET_TITLE,
   IMAGE_UPLOAD_REQUEST,
   SET_ASSETS_PATH,
-  SET_USER,
   SAVE_REQUEST,
   LOAD_REQUEST,
   IS_READY,
@@ -43,15 +42,10 @@ const PresentationReducer = (state: presentationState=initialState, action: Acti
         const newPresentationState:presentationState = {
           ...action.state,
         };
-        // Object.assign(draft, {});
         Object.assign(draft, newPresentationState);
         draft.saveRequest = false;
-        // draft.currentSlide = 0; // ??? how to go to first slide
         break;
       }
-      case SET_USER:
-        draft.username = action.user;
-        break;
       case IS_READY:
         draft.isReady = action.ready;
         break;

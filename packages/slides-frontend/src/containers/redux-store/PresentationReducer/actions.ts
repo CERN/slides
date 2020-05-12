@@ -3,7 +3,6 @@ import {
   SET_TITLE,
   IMAGE_UPLOAD_REQUEST,
   SET_ASSETS_PATH,
-  SET_USER,
   SAVE_REQUEST,
   LOAD_REQUEST,
   LOAD_STATE,
@@ -30,11 +29,6 @@ export const uploadImageRequest = (request: boolean) => ({
 export const setAssetsPath = (path: string) => ({
   type: SET_ASSETS_PATH,
   path,
-}) as const;
-
-export const setUsername = (user: string) => ({
-  type: SET_USER,
-  user,
 }) as const;
 
 export const setSaveRequest = (request: boolean) => ({
@@ -70,7 +64,7 @@ export const setBackgroundColor = (color: string) => ({
 
 export type Action = ReturnType<
  typeof setTheme | typeof setTitle |
- typeof uploadImageRequest | typeof setAssetsPath | typeof setUsername |
+ typeof uploadImageRequest | typeof setAssetsPath |
  typeof setSaveRequest | typeof setLoadRequest | typeof loadState |
  typeof setIsReady | typeof setStyleRequest | typeof setBackgroundColor
 >

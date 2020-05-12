@@ -27,7 +27,6 @@ import {
 } from '../../../redux-store/DeckReducer/actions';
 import {
   getAssetsPath,
-  getUsername,
   getTitle,
 } from '../../../redux-store/PresentationReducer/selectors';
 import { getCurrentSlide } from '../../../redux-store/DeckReducer/selectors';
@@ -160,7 +159,7 @@ export default connect(
   state => ({
     assetsPath: getAssetsPath(state),
     currentSlide: getCurrentSlide(state),
-    username: getUsername(state),
+    username: state.keycloak.userToken.cern_upn,
     title: getTitle(state),
     token: state.keycloak.instance.token,
   }),

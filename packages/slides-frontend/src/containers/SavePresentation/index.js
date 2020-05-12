@@ -9,7 +9,6 @@ import {
 } from '../redux-store/PresentationReducer/actions';
 import {
   getTitle,
-  getUsername,
 } from '../redux-store/PresentationReducer/selectors';
 import history from '../../utils/history';
 
@@ -62,11 +61,11 @@ async function renamePresentation(assetsPath, username, oldTitle, newTitle, toke
   return renaming.then(() => true).catch(() => false);
 }
 
-async function sendSaveRequest(assetsPath, stateStringified, newTitle, token) {
+async function sendSaveRequest(assetsPath, stateStringified, newTitle, token, user) {
   const url = `${assetsPath}/presentation/save`;
   post(
     url,
-    { state: JSON.parse(stateStringified) },
+    { state: JSON.parse(stateStringified), username: user },
     {
       headers: {
         Accept: 'application/slides',
@@ -152,9 +151,13 @@ function SavePresentation({
           // state is not gonna update in time
           const newObj = JSON.parse(stateStringified);
           newObj.presentation.title = newTitle;
-          newObj.router.location.pathname = `/${user}/${newTitle}/edit/`;
+          newObj.deck.currentSlide = 0;
+          // newObj.router.location.pathname = `/${user}/${newTitle}/edit/`;
+          delete newObj.keycloak; 
+          delete newObj.router;
           const newStateStringified = JSON.stringify(newObj);
-          sendSaveRequest(assetsPath, newStateStringified, newTitle, token).then(
+          console.log("newStateStringified", newStateStringified)
+          sendSaveRequest(assetsPath, newStateStringified, newTitle, token, user).then(
             () => {
               onSaveRequest();
               // push the new title in the URL bar
@@ -199,7 +202,7 @@ export default connect(
   state => ({
     stateStringified: JSON.stringify(state),
     title: getTitle(state),
-    user: getUsername(state),
+    user: state.keycloak.userToken.cern_upn,
     token: state.keycloak.instance.token,
   }),
   mapDispatchToProps,

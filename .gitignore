@@ -12,3 +12,4 @@ temp/
 dump.rdb
 .env
 *.env
+Dockerfile

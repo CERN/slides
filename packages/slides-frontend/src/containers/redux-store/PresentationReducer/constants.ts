@@ -1,9 +1,7 @@
 export const SET_THEME = 'Slides/Presentation/SET_THEME';
 export const SET_TITLE = 'Slides/Presentation/SET_TITLE';
-export const SET_DESCRIPTION = 'Slides/Presentation/SET_DESCRIPTION';
 export const IMAGE_UPLOAD_REQUEST = 'Slides/Presentation/IMAGE_UPLOAD_REQUEST';
 export const SET_ASSETS_PATH = 'Slides/Presentation/SET_ASSETS_PATH';
-export const SET_USER = 'Slides/Presentation/SET_USER';
 export const SAVE_REQUEST = 'Slides/Presentation/SAVE_REQUEST';
 export const LOAD_REQUEST = 'Slides/Presentation/LOAD_REQUEST';
 export const IS_READY = 'Slides/Presentation/IS_READY';

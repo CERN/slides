@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import {
   getAssetsPath,
   getTitle,
-  getUsername,
 } from '../../../redux-store/PresentationReducer/selectors';
 
 import { getItems } from '../../../redux-store/DeckReducer/selectors';
@@ -33,7 +32,7 @@ Image.propTypes = {
 
 export default connect(state => ({
   assetsPath: getAssetsPath(state),
-  username: getUsername(state),
+  username: state.keycloak.userToken.cern_upn,
   title: getTitle(state),
   itemsArray: getItems(state),
 }))(Image);

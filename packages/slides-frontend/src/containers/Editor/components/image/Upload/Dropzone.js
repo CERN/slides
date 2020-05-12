@@ -8,7 +8,6 @@ import BMF from 'browser-md5-file';
 import {
   getAssetsPath,
   getTitle,
-  getUsername,
 } from '../../../../redux-store/PresentationReducer/selectors';
 import { addItem } from '../../../../redux-store/DeckReducer/actions';
 import { uploadImageRequest } from '../../../../redux-store/PresentationReducer/actions';
@@ -162,7 +161,7 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   state => ({
     assetsPath: getAssetsPath(state),
-    username: getUsername(state),
+    username: state.keycloak.userToken.cern_upn,
     title: getTitle(state),
     token: state.keycloak.instance.token,
   }),
