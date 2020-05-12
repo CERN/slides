@@ -1,6 +1,6 @@
 variables:
   FRONTEND_NAMESPACE_DEV: slides
-  # BACKEND_NAMESPACE_DEV: slides-backend
+  BACKEND_NAMESPACE_DEV: slides-backend
   OPENSHIFT_SERVER_DEV: https://openshift.cern.ch
   BUILD_ENV_DEV: staging
   APP_NAME: slides
@@ -61,7 +61,7 @@ deploy_backend:
   variables:
     TOKEN: ${OPENSHIFT_DEV_BACKEND_TOKEN}
     OPENSHIFT_SERVER: ${OPENSHIFT_SERVER_DEV}
-    NAMESPACE: ${FRONTEND_NAMESPACE_DEV}
+    NAMESPACE: ${BACKEND_NAMESPACE_DEV}
     DEPLOYMENT_TYPE: backend
     TAG: ${DEV_TAG}
   environment:

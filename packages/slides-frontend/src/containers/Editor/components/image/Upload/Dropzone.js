@@ -35,6 +35,7 @@ export function Dropzone({
   token,
 }) {
   const [files, setFiles] = useState([]);
+  const [loadingIndicator, setLoading] = useState(false);
   const {
     getRootProps,
     getInputProps,
@@ -87,24 +88,11 @@ export function Dropzone({
     return post(url, formData, config);
   };
 
-  // const test = () => {
-  //   const url = `${assetsPath}/test`;
-  //   return get(url);
-  // };
-
   const onUploadHandler = e => {
     e.preventDefault();
-    // now i got some files
-    // test().then(res => {
-    //   console.log('uploads folder', res.data.uploadsFolder);
-    //   console.log('ls .: ', res.data.currentls);
-    //   console.log('ls /root: ', res.data.lsroot);
-    // });
+    setLoading(true);
     // Upload Files in the server
     filesUpload();
-    // filesUpload().then(res => {
-    //   console.log('FilePath for saving is', res.data.filePath);
-    // });
     // Save images in Redux Store
     // find md5 of the file and append name
     files.forEach(f => {
@@ -135,7 +123,7 @@ export function Dropzone({
       <Button color="red" onClick={onCancelHandler}>
         <Icon name="remove" /> Cancel
       </Button>
-      <Button color="green" onClick={onUploadHandler}>
+      <Button color="green" onClick={onUploadHandler} loading={loadingIndicator}>
         <Icon name="checkmark" /> Upload
       </Button>
     </div>
