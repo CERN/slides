@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { post } from 'axios';
@@ -48,6 +48,7 @@ function LoadPresentation({
     accept: '.slides',
     multiple: false,
   });
+  const [loadingIndicator, setLoading] = useState(false);
 
   const style = useMemo(
     () => ({
@@ -78,6 +79,7 @@ function LoadPresentation({
     return post(url, formData, config);
   };
   const sendLoadRequest = e => {
+    setLoading(true);
     e.preventDefault();
     presentationUpload().then(response => {
       // extract the state information and call the loadstate action to copy the whole obj to the current state
@@ -127,7 +129,7 @@ function LoadPresentation({
           <Button color="red" onClick={onCancelHandler}>
             <Icon name="remove" /> Cancel
           </Button>
-          <Button color="green" onClick={sendLoadRequest}>
+          <Button color="green" onClick={sendLoadRequest} loading={loadingIndicator} >
             <Icon name="checkmark" /> Upload
           </Button>
         </Modal.Actions>
