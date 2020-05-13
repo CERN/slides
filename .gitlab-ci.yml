@@ -1,9 +1,9 @@
 variables:
-  # FRONTEND_NAMESPACE_DEV: slides
-  # BACKEND_NAMESPACE_DEV: slides-backend
-  NAMESPACE: slides
-  # OPENSHIFT_SERVER_DEV: https://openshift.cern.ch
-  OPENSHIFT_SERVER: https://openshift.cern.ch
+  FRONTEND_NAMESPACE_DEV: slides
+  BACKEND_NAMESPACE_DEV: slides-backend
+  # NAMESPACE: slides
+  OPENSHIFT_SERVER_DEV: https://openshift.cern.ch
+  # OPENSHIFT_SERVER: https://openshift.cern.ch
   BUILD_ENV_DEV: staging
   APP_NAME: slides
   DEV_TAG: dev
@@ -48,8 +48,8 @@ deploy_frontend:
   <<: *deploy_definition
   variables:
     TOKEN: ${OPENSHIFT_DEV_TOKEN}
-    # OPENSHIFT_SERVER: ${OPENSHIFT_SERVER_DEV}
-    # NAMESPACE: ${FRONTEND_NAMESPACE_DEV}
+    OPENSHIFT_SERVER: ${OPENSHIFT_SERVER_DEV}
+    NAMESPACE: ${FRONTEND_NAMESPACE_DEV}
     DEPLOYMENT_TYPE: frontend
     TAG: ${DEV_TAG}
   environment:
@@ -61,15 +61,15 @@ deploy_frontend:
 deploy_backend:
   <<: *deploy_definition
   variables:
-    TOKEN: ${OPENSHIFT_DEV_TOKEN}
-    # TOKEN: ${OPENSHIFT_DEV_BACKEND_TOKEN}
-    # OPENSHIFT_SERVER: ${OPENSHIFT_SERVER_DEV}
-    # NAMESPACE: ${BACKEND_NAMESPACE_DEV}
+    # TOKEN: ${OPENSHIFT_DEV_TOKEN}
+    TOKEN: ${OPENSHIFT_DEV_BACKEND_TOKEN}
+    OPENSHIFT_SERVER: ${OPENSHIFT_SERVER_DEV}
+    NAMESPACE: ${BACKEND_NAMESPACE_DEV}
     DEPLOYMENT_TYPE: backend
     TAG: ${DEV_TAG}
   environment:
     name: staging
-    # url: https://slides-backend.web.cern.ch
-    url: https://backend-slides.app.cern.ch
+    url: https://slides-backend.web.cern.ch
+    # url: https://backend-slides.app.cern.ch
   only:
     - deployment
