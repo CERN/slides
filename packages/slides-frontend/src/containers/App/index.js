@@ -9,18 +9,37 @@
 
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Container from '../Editor/Container';
-
+import { Loader } from 'semantic-ui-react';
 import GlobalStyle from '../../global-styles';
 
-export default function App() {
+function App ({authenticated}) {
   return (
     <div>
-      <Switch>
-        <Route path="/" component={Container} />
-      </Switch>
-      <GlobalStyle />
+      {authenticated ?
+        (
+          <div>
+            <Switch>
+              <Route path="/" component={Container} />
+            </Switch>
+            <GlobalStyle />
+          </div>
+        ) :
+        <Loader active content="Loading..."/>
+      }
     </div>
   );
 }
+
+App.propTypes = {
+  authenticated: PropTypes.bool
+}
+
+export default connect(
+  state => ({
+    authenticated: state.keycloak.authenticated,
+  }),
+  null
+)(App);

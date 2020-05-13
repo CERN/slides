@@ -39,9 +39,17 @@ function Canvas({ title, theme, DeckOfSlides, backgroundColor }) {
   
   useEffect(() => {
     window.onbeforeunload = e => {
-      // e.preventDefault();
-      console.log("refresh or close action got")
+      e.preventDefault();
       return('Are you sure you want to reload?')
+    }
+  })
+  useEffect(() => {
+    window.onunload = e => {
+      e.preventDefault();
+      console.log("I am now unloading")
+      // so delete things from server
+      // ideally one api request
+      // and navigate to home page
     }
   })
 
