@@ -14,6 +14,18 @@ import {
 } from '../../../redux-store/DeckReducer/actions';
 
 // min height, min width
+const restrictSizeParameters = type =>
+  (
+    type === 'TEXT' ?
+      ({
+        min: { width: 500, height: 80 },
+        max: { width: 800, height: 400 },
+      }) :
+      ({
+        min: { width: 100, height: 80 },
+        max: { width: 1000, height: 800 },
+      })
+  );
 
 // : x,y: 350, 330 for middle
 const Core = ({ x, y, width, height, getRef, item }) => (
@@ -126,6 +138,7 @@ function MoveResize({
             endOnly: true,
             // hold: 1000
           }),
+          interact.modifiers.restrictSize(restrictSizeParameters(item.type))
         ],
       }}
       {...coordinate}
