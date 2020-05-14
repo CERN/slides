@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -9,16 +9,26 @@ import { Loader } from 'semantic-ui-react';
 import { getItems } from '../../../redux-store/DeckReducer/selectors';
 import './index.css';
 
-const Image = ({ ID, itemsArray, assetsPath, username, title }) => {
+const useCheckImage = (imageSrc, success, fail) => {
+  const img = new Image();
+  img.onload = success; 
+  img.onerror = fail;
+  img.src = imageSrc;
+}
+
+const MyImage = ({ ID, itemsArray, assetsPath, username, title }) => {
+  const [loading, setLoading] = useState(true);
   const item = itemsArray.find(itm => itm.ID === ID);
-  // this base will be the server's address base for every image , localhost:3000/static/username/title/hash_imagename
-  // src only has hash_name, i have to add username and title infront
+  const imageSrc = `${assetsPath}/static/${username}/${title}/assets/${item.Src}`;
+  
+  useCheckImage(imageSrc, () => { setLoading(false) }, () => { setLoading(true) });
+
   return (
     <div>
-      {item ?
+      {!loading ?
         (
           <div className="img-style">
-            <img src={`${assetsPath}/static/${username}/${title}/assets/${item.Src}`} alt="" />
+            <img src={imageSrc} alt="" />
           </div>
         ) :
         <Loader active/>
@@ -27,7 +37,7 @@ const Image = ({ ID, itemsArray, assetsPath, username, title }) => {
   );
 };
 
-Image.propTypes = {
+MyImage.propTypes = {
   ID: PropTypes.string,
   itemsArray: PropTypes.array,
   assetsPath: PropTypes.string,
@@ -40,4 +50,4 @@ export default connect(state => ({
   username: state.keycloak.userToken.cern_upn,
   title: getTitle(state),
   itemsArray: getItems(state),
-}))(Image);
+}))(MyImage);

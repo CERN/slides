@@ -65,7 +65,6 @@ function Item({
 
   const deleter = e => {
     e.preventDefault(); // super IMPORTANT here otherwise it propagates the event
-    console.log('deleter called', ID);
     // send a delete in Redux
     if (type === 'TEXT' && itemObj.Edit) {
       // text in edit mode so don't delete it
@@ -159,8 +158,8 @@ export default connect(
   state => ({
     assetsPath: getAssetsPath(state),
     currentSlide: getCurrentSlide(state),
-    username: state.keycloak.userToken.cern_upn,
     title: getTitle(state),
+    username: state.keycloak.userToken.cern_upn,
     token: state.keycloak.instance.token,
   }),
   mapDispatchToProps,

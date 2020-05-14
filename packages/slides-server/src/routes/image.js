@@ -46,4 +46,24 @@ router.delete('/:username/:title/:id', (req, res) => {
   }
 });
 
+router.delete('/:username/:title', (req, res) => {
+  console.log("I am in the delete all!!!!!")
+  const { username, title } = req.params;
+  const userFolder = `${uploadsFolder}/${username}`;
+  const presentationFolder = `${userFolder}/${title}`;
+  // delete the presentation with title: 'title'
+  if (fs.existsSync(presentationFolder)) {
+    fs.removeSync(presentationFolder);
+    // delete the whole folder 'username' (only if there are no more presentations inside)
+    if (fs.emptyDirSync(userFolder)) {
+      fs.removeSync(userFolder)
+    }
+    res.json({
+      state: 'Successful',
+    });
+  } else {
+    res.status(404).send('File does not exist');
+  }
+})
+
 export default router;
