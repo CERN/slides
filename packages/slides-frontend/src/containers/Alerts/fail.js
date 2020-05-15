@@ -3,7 +3,7 @@ import withReactContent from 'sweetalert2-react-content';
 
 const MySwal = withReactContent(Swal);
 
-export default function saveFail(errorMessage) {
+export default function fail(errorMessage) {
   const Toast = MySwal.mixin({
     toast: true,
     position: 'top-end',
@@ -18,6 +18,5 @@ export default function saveFail(errorMessage) {
   Toast.fire({
     icon: 'error',
     title: errorMessage,
-    // title: 'Saving of this presentation failed',
   });
 }

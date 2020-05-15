@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import PropTypes from 'prop-types';
 import { Button, Icon } from 'semantic-ui-react';
-import { post } from 'axios';
+import { uploadImage } from '../../../../../utils/requests';
 import BMF from 'browser-md5-file';
 import {
   getAssetsPath,
@@ -73,26 +73,11 @@ export function Dropzone({
     [isDragActive, isDragAccept, isDragReject],
   );
 
-  const filesUpload = () => {
-    const url = `${assetsPath}/image/upload`;
-    const formData = new FormData();
-    formData.set('username', username);
-    formData.set('title', title);
-    files.forEach(f => formData.append('file', f));
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data',
-        Authorization: `Bearer ${token}`
-      },
-    };
-    return post(url, formData, config);
-  };
-
   const onUploadHandler = e => {
     e.preventDefault();
     setLoading(true);
     // Upload Files in the server
-    filesUpload();
+    uploadImage(assetsPath, username, title, files, token);
     // Save images in Redux Store
     // find md5 of the file and append name
     files.forEach(f => {

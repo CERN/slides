@@ -15,7 +15,7 @@ import React, { useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
-import axios from 'axios';
+import { deleteImage } from '../../../../utils/requests';
 
 import {
   removeItem,
@@ -53,17 +53,8 @@ function Item({
   const { type, ID, Focused } = itemObj;
   const ItemComponent = type === 'TEXT' ? Text : Image;
 
-  const delImageReq = () => {
-    const url = `${assetsPath}/image/${username}/${title}/${itemObj.Src}`;
-    // console.log('url in deleter is ', url);
-    return axios.delete(url, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-  };
-
   const deleter = e => {
+    console.log("hello from deleterrr")
     e.preventDefault(); // super IMPORTANT here otherwise it propagates the event
     // send a delete in Redux
     if (type === 'TEXT' && itemObj.Edit) {
@@ -73,24 +64,7 @@ function Item({
     onRemoveItem(ID);
     // send a delete in Server if it is an Image
     if (type === 'IMAGE') {
-      delImageReq()
-        .then(res => {
-          if (res.status === 200) {
-            // console.log('deleted successfully');
-            // notify with success
-            // addToast(`Deleted successfully!`, {
-            //   appearance: 'success',
-            //   autoDismiss: true,
-            // });
-          }
-        })
-        .catch(err => {
-          // addToast('Deletion Failed...', {
-          //   appearance: 'error',
-          //   autoDismiss: true,
-          // });
-          console.log('Error is', err);
-        });
+      deleteImage(assetsPath, username, title, itemObj.Src, token);
     }
   };
 

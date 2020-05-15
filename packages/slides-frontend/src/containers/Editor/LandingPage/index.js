@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { titleCheck } from '../../../utils/requests';
 import {
   Button,
   Form,
@@ -30,6 +31,7 @@ import {
 } from '../../redux-store/PresentationReducer/selectors';
 import './index.css';
 import history from '../../../utils/history';
+import fail from '../../Alerts/fail';
 
 const themeOptions = [
   {
@@ -67,27 +69,51 @@ const themeOptions = [
 function LandingPage({
   onSetTheme,
   onSetTitle,
-  onSetUsername,
   currentTheme,
   currentTitle,
   onSetIsReady,
   onLoadRequest,
   assetsPath,
   onSetAssetsPath,
-  userToken,
-  authenticated
+  username,
+  token
 }) {
 
   const [title, setTi] = useState(currentTitle);
   const [theme, setTh] = useState(currentTheme);
+  const [loadingIndicator, setLoading] = useState(false);
+  const [badTitle, setBadTitle] = useState(false);
+  
 
   const clickHandlerNew = () => {
-    onSetTitle(title);
-    onSetTheme(theme);
-    const user = userToken;
-    history.push(`/${user}/${title}/edit/`);
-    // ready
-    onSetIsReady();
+    // first check in server if title is good
+    setLoading(true);
+    if (title === '') {
+      setBadTitle(true);
+      // alert for bad title
+      fail("Title can't be empty!");
+      setLoading(false);
+      return;
+    }
+    titleCheck(assetsPath, username, title, token).then(res => {
+      if (res.status === 200) {
+        // all went good
+        onSetTitle(title);
+        onSetTheme(theme);
+        const user = username;
+        history.push(`/${user}/${title}/edit/`);
+        // ready
+        onSetIsReady();
+        setBadTitle(false);
+      }
+      setLoading(false);
+    }).catch(err => {
+      console.log('error in title is', err);
+      setBadTitle(true);
+      // alert for bad title
+      fail('Presentation with the same title already exists!')
+      setLoading(false);  
+    })
   };
 
   const clickHandlerLoad = () => {
@@ -112,10 +138,12 @@ function LandingPage({
             <Header className="white" as="h2" content="Start New Presentation" />
             <Form size="large">
               <Segment>
+                  {/* Don't leave it empty, don't have default */}
                 <Input
                   className="spacing"
                   placeholder="Presentation Title"
                   fluid
+                  error={badTitle}
                   onChange={settingTitle}
                 />
                 <Select
@@ -125,7 +153,7 @@ function LandingPage({
                   options={themeOptions}
                   onChange={settingTheme}
                 />
-                <Button color="blue" onClick={clickHandlerNew}>
+                <Button color="blue" onClick={clickHandlerNew} loading={loadingIndicator}>
                   <Button.Content visible>Let's GO!</Button.Content>
                 </Button>
               </Segment>
@@ -150,15 +178,14 @@ function LandingPage({
 LandingPage.propTypes = {
   onSetTheme: PropTypes.func,
   onSetTitle: PropTypes.func,
-  onSetUsername: PropTypes.func,
   currentTheme: PropTypes.string,
   currentTitle: PropTypes.string,
   onSetIsReady: PropTypes.func,
   onLoadRequest: PropTypes.func,
   assetsPath: PropTypes.string,
   onSetAssetsPath: PropTypes.func,
-  authenticated: PropTypes.bool,
-  userToken: PropTypes.string,
+  username: PropTypes.string,
+  token: PropTypes.string,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -176,8 +203,8 @@ export default connect(
     currentTheme: getTheme(state),
     currentTitle: getTitle(state),
     assetsPath: getAssetsPath(state),
-    authenticated: state.keycloak.authenticated,
-    userToken: state.keycloak.userToken.cern_upn,
+    username: state.keycloak.userToken.cern_upn,
+    token: state.keycloak.instance.token,
   }),
   mapDispatchToProps,
 )(LandingPage);

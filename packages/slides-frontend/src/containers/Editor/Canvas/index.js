@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Deck } from 'spectacle';
 import createTheme from 'spectacle/lib/themes/default';
 import history from '../../../utils/history';
-import axios from 'axios';
+import { deletePresentationFolder } from '../../../utils/requests';
 
 import {
   getTheme,
@@ -43,7 +43,7 @@ function Canvas({ title, theme, DeckOfSlides, assetsPath, backgroundColor, usern
   useEffect(() => {
     window.onbeforeunload = e => {
       e.preventDefault();
-      deletePresentationFolder().then(res => {
+      deletePresentationFolder(assetsPath, username, title, token).then(res => {
         // and navigate to home page
         if (res.status === 200) {
           console.log("Successful deletion in Server");
@@ -53,33 +53,6 @@ function Canvas({ title, theme, DeckOfSlides, assetsPath, backgroundColor, usern
       return ('Are you sure you want to reload?')
     }
   })
-
-  // delete the presentation Folder from backend
-  const deletePresentationFolder = () => {
-    const url = `${assetsPath}/image/${username}/${title}`;
-    // console.log('url in deleter is ', url);
-    return axios.delete(url, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-  };
-
-  // useEffect(() => {
-  //   window.onunload = e => {
-  //     console.log("I am now unloading")
-
-  //     e.preventDefault();
-  //     // so delete the user's folder from server
-  //     deletePresentationFolder().then(res => {
-  //       // and navigate to home page
-  //       if (res.status === 200) {
-  //         console.log("Successful deletion in Server");
-  //         history.push(`/`);
-  //       }
-  //     })
-  //   }
-  // })
 
   return (
     <div>

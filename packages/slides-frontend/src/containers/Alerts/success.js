@@ -3,7 +3,7 @@ import withReactContent from 'sweetalert2-react-content';
 
 const MySwal = withReactContent(Swal);
 
-export default function saveSuccess() {
+export default function success(successMessage) {
   const Toast = MySwal.mixin({
     toast: true,
     position: 'top-end',
@@ -17,6 +17,6 @@ export default function saveSuccess() {
   });
   Toast.fire({
     icon: 'success',
-    title: 'Your work has been saved',
+    title: successMessage,
   });
 }

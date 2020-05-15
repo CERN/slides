@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { post } from 'axios';
 import { saveAs } from 'file-saver';
 import {
   setSaveRequest,
@@ -12,9 +11,10 @@ import {
 } from '../redux-store/PresentationReducer/selectors';
 import history from '../../utils/history';
 
-import AlertForSaving from './AlertForSaving';
-import saveSuccess from './AlertForSaving/saveSuccess';
-import saveFail from './AlertForSaving/saveFail';
+import AlertForSaving from '../Alerts/AlertForSaving';
+import success from '../Alerts/success';
+import fail from '../Alerts/fail';
+import { savePresentation, renamePresentation } from '../../utils/requests';
 const zip = require('jszip')();
 
 // i first need to init and load
@@ -38,20 +38,12 @@ frontend uses saveas to give the blob to the user
 */
 
 // returns true or false if everything with the renaming in the background was successful
-async function renamePresentation(assetsPath, username, oldTitle, newTitle, token) {
+async function renamePres(assetsPath, username, oldTitle, newTitle, token) {
   if (oldTitle === newTitle) {
     // then no rename
     return true;
   }
-  const renaming = post(`${assetsPath}/presentation/rename`, {
-    username,
-    oldTitle,
-    newTitle,
-  }, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-    }
-  }).then(res => {
+  const renaming = renamePresentation(assetsPath, username, oldTitle, newTitle, token).then(res => {
     if (res.data === 'Already Exists') {
       // already exists
       return false;
@@ -63,22 +55,12 @@ async function renamePresentation(assetsPath, username, oldTitle, newTitle, toke
 
 async function sendSaveRequest(assetsPath, stateStringified, newTitle, token, user) {
   const url = `${assetsPath}/presentation/save`;
-  post(
-    url,
-    { state: JSON.parse(stateStringified), username: user },
-    {
-      headers: {
-        Accept: 'application/slides',
-        Authorization: `Bearer ${token}`,
-      },
-      responseType: 'arraybuffer',
-    },
-  )
+  savePresentation(url, stateStringified, user, token)
     .then(response => response.status === 200 && response.data)
     .then(fileAsBuffer => {
       // create the alert so the user can select a filename
       // make a toast here that is successful
-      saveSuccess();
+      success('Your work has been saved');
       // here i have an arraybuffer
       const blob = new Blob([fileAsBuffer]);
       return saveAs(blob, `${newTitle}.slides`);
@@ -88,7 +70,7 @@ async function sendSaveRequest(assetsPath, stateStringified, newTitle, token, us
       // i couldn't make the blob in the backend
       // create an alert for the user
       // `${newTitle}.slides file creation failed...`
-      saveFail(`${newTitle}.slides file creation failed...`);
+      fail(`${newTitle}.slides file creation failed...`);
     });
 }
 
@@ -140,10 +122,10 @@ function SavePresentation({
         return;
       }
       // check if I can rename in the background first
-      renamePresentation(assetsPath, user, title, newTitle, token).then(res => {
+      renamePres(assetsPath, user, title, newTitle, token).then(res => {
         if (!res) {
           // failed
-          saveFail('A Presentation with the same name already exists');
+          fail('A Presentation with the same name already exists');
           onSaveRequest();
         } else {
           // set new filename as title in the presentation

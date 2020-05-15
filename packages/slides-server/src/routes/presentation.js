@@ -120,6 +120,7 @@ router.post('/rename', (req, res) => {
   const { username, oldTitle, newTitle } = req.body;
   fs.pathExists(`${uploadsFolder}/${username}/${oldTitle}`).then(oldExists => {
     if (!oldExists) {
+      // check this again 
       res.status(200).send('Success');
     } else {
       fs.pathExists(`${uploadsFolder}/${username}/${newTitle}`).then(
@@ -137,6 +138,17 @@ router.post('/rename', (req, res) => {
       );
     }
   });
+});
+
+router.post('/titleCheck', (req, res) => { 
+  const { username, title } = req.body;
+  fs.pathExists(`${uploadsFolder}/${username}/${title}`).then(titleExists => {
+    if (titleExists) {
+      res.status(409).send('Conflict: title already exists');
+    } else {
+      res.status(200).send('Success: title can be used');
+    }
+   })
 });
 
 export default router;

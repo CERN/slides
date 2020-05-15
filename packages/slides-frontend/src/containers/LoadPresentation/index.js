@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { post } from 'axios';
+import { uploadPresentation } from '../../utils/requests';
 import { useDropzone } from 'react-dropzone';
 import { Modal, Button, Icon } from 'semantic-ui-react';
 import {
@@ -65,23 +65,10 @@ function LoadPresentation({
   // server extracts, saves the images
   // send as response the stringified state
   // frontend sets the state that it got using a redux dispatch action
-  const presentationUpload = () => {
-    const url = `${assetsPath}/presentation/load`;
-    const formData = new FormData();
-    formData.append('username', username);
-    formData.append('file', acceptedFiles[0]);
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data',
-        Authorization: `Bearer ${token}`
-      },
-    };
-    return post(url, formData, config);
-  };
   const sendLoadRequest = e => {
     setLoading(true);
     e.preventDefault();
-    presentationUpload().then(response => {
+    uploadPresentation(assetsPath, username, acceptedFiles, token).then(response => {
       // extract the state information and call the loadstate action to copy the whole obj to the current state
       onLoadDeckState(response.data.state.deck);
       onLoadState(response.data.state.presentation);
@@ -91,6 +78,7 @@ function LoadPresentation({
       // now that the request is done I can say I am ready for and can move from landing page
       onLoadRequest();
       onSetIsReady();
+      setLoading(false);
     }).catch(err => {
       console.log("Something went wrong", err)
       // fail screen
