@@ -31,7 +31,7 @@ import {
 } from '../../redux-store/PresentationReducer/selectors';
 import './index.css';
 import history from '../../../utils/history';
-import fail from '../../Alerts/fail';
+import warning from '../../Alerts/warning';
 
 const themeOptions = [
   {
@@ -81,17 +81,14 @@ function LandingPage({
 
   const [title, setTi] = useState(currentTitle);
   const [theme, setTh] = useState(currentTheme);
-  const [loadingIndicator, setLoading] = useState(false);
-  const [badTitle, setBadTitle] = useState(false);
-  
+  const [loadingIndicator, setLoading] = useState(false);  
 
   const clickHandlerNew = () => {
     // first check in server if title is good
     setLoading(true);
     if (title === '') {
-      setBadTitle(true);
       // alert for bad title
-      fail("Title can't be empty!");
+      warning("Title can't be empty!");
       setLoading(false);
       return;
     }
@@ -104,14 +101,12 @@ function LandingPage({
         history.push(`/${user}/${title}/edit/`);
         // ready
         onSetIsReady();
-        setBadTitle(false);
       }
       setLoading(false);
     }).catch(err => {
       console.log('error in title is', err);
-      setBadTitle(true);
       // alert for bad title
-      fail('Presentation with the same title already exists!')
+      warning('Presentation with the same title already exists!')
       setLoading(false);  
     })
   };
@@ -143,7 +138,6 @@ function LandingPage({
                   className="spacing"
                   placeholder="Presentation Title"
                   fluid
-                  error={badTitle}
                   onChange={settingTitle}
                 />
                 <Select
