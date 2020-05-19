@@ -77,19 +77,20 @@ export function Dropzone({
     e.preventDefault();
     setLoading(true);
     // Upload Files in the server
-    uploadImage(assetsPath, username, title, files, token);
-    // Save images in Redux Store
-    // find md5 of the file and append name
-    files.forEach(f => {
-      const bmf = new BMF();
-      bmf.md5(f, (err, hash) => {
-        onAddImage(`${hash}_${f.name}`);
+    uploadImage(assetsPath, username, title, files, token).then(res => {
+      // Save images in Redux Store
+      // find md5 of the file and append name
+      files.forEach(f => {
+        const bmf = new BMF();
+        bmf.md5(f, (err, hash) => {
+          onAddImage(`${hash}_${f.name}`);
+        });
       });
-    });
-    // destroy the reference to all of the files
-    files.forEach(file => URL.revokeObjectURL(file.preview));
-    // done! So notify Redux Store
-    onImageRequest();
+      // destroy the reference to all of the files
+      files.forEach(file => URL.revokeObjectURL(file.preview));
+      // done! So notify Redux Store
+      onImageRequest();
+    })
   };
 
   const onCancelHandler = e => {
@@ -108,7 +109,7 @@ export function Dropzone({
       <Button color="red" onClick={onCancelHandler}>
         <Icon name="remove" /> Cancel
       </Button>
-      <Button color="green" onClick={onUploadHandler} loading={loadingIndicator}>
+      <Button disabled={!files.length} color="green" onClick={onUploadHandler} loading={loadingIndicator}>
         <Icon name="checkmark" /> Upload
       </Button>
     </div>

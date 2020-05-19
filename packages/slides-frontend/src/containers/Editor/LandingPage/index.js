@@ -59,11 +59,11 @@ const themeOptions = [
     text: 'CERN 5',
     value: 'CERN 5',
   },
-  {
-    key: 'CERN 6',
-    text: 'CERN 6',
-    value: 'CERN 6',
-  },
+  // {
+  //   key: 'CERN 6',
+  //   text: 'CERN 6',
+  //   value: 'CERN 6',
+  // },
 ];
 
 function LandingPage({

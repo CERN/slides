@@ -100,7 +100,7 @@ function LoadPresentation({
   return (
     <div className="loadPresentation">
       <Modal dimmer="blurring" open={loadRequest}>
-        <Modal.Header>Load Presentation</Modal.Header>
+        <Modal.Header>Upload Presentation</Modal.Header>
         <Modal.Content>
           <div className="dropzone">
             <div {...getRootProps({ style })}>
@@ -117,7 +117,7 @@ function LoadPresentation({
           <Button color="red" onClick={onCancelHandler}>
             <Icon name="remove" /> Cancel
           </Button>
-          <Button color="green" onClick={sendLoadRequest} loading={loadingIndicator} >
+          <Button disabled={!acceptedFiles.length} color="green" onClick={sendLoadRequest} loading={loadingIndicator} >
             <Icon name="checkmark" /> Upload
           </Button>
         </Modal.Actions>
