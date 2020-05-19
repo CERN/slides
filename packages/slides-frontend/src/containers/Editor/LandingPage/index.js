@@ -116,8 +116,8 @@ function LandingPage({
     onLoadRequest();
     // load component will take over and load content
   };
-
-  const settingTitle = (e, { value }) => setTi(value);
+  // this .trim() removes trailing whitespaces from both ends of the string
+  const settingTitle = (e, { value }) => setTi(value.trim());
   const settingTheme = (e, { value }) => setTh(value);
 
   // set the assetsFolder, where images will be, in the redux store
