@@ -34,7 +34,7 @@ build_frontend_docker:
     TO: ${CI_REGISTRY_IMAGE}/frontend:${DEV_TAG}
     DOCKER_FILE: frontend.Dockerfile
   only:
-    - deployment
+    - master
 
 build_backend_docker:
   <<: *docker_definition
@@ -42,7 +42,7 @@ build_backend_docker:
     TO: ${CI_REGISTRY_IMAGE}/backend:${DEV_TAG}
     DOCKER_FILE: backend.Dockerfile
   only:
-    - deployment
+    - master
 
 deploy_frontend:
   <<: *deploy_definition
@@ -56,7 +56,7 @@ deploy_frontend:
     name: staging
     url: https://slides.web.cern.ch
   only:
-    - deployment
+    - master
 
 deploy_backend:
   <<: *deploy_definition
@@ -72,4 +72,4 @@ deploy_backend:
     url: https://slides-backend.web.cern.ch
     # url: https://backend-slides.app.cern.ch
   only:
-    - deployment
+    - master
