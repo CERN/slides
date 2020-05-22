@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Deck } from 'spectacle';
-import createTheme from 'spectacle/lib/themes/default';
+import createTheme from 'spectacle/lib/themes/default/index';
 import history from '../../../utils/history';
 import { deletePresentationFolder } from '../../../utils/requests';
 

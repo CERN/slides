@@ -43,6 +43,7 @@ ReactDOM.render(
         refresh={false}
         keycloakParams={{
           onLoad: "login-required",
+          promiseType: "native",
           flow: "implicit"
         }}
       >

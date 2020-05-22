@@ -13,7 +13,6 @@ import {
   Grid,
   Divider,
 } from 'semantic-ui-react';
-
 import config from '../../../config';
 
 import {
@@ -22,6 +21,7 @@ import {
   setLoadRequest,
   setIsReady,
   setAssetsPath,
+  setBackgroundColor,
 } from '../../redux-store/PresentationReducer/actions';
 
 import {
@@ -59,11 +59,11 @@ const themeOptions = [
     text: 'CERN 5',
     value: 'CERN 5',
   },
-  // {
-  //   key: 'CERN 6',
-  //   text: 'CERN 6',
-  //   value: 'CERN 6',
-  // },
+  {
+    key: 'CERN 6',
+    text: 'CERN 6',
+    value: 'CERN 6',
+  },
 ];
 
 function LandingPage({
@@ -76,7 +76,8 @@ function LandingPage({
   assetsPath,
   onSetAssetsPath,
   username,
-  token
+  token,
+  onSetBackgroundColor
 }) {
 
   const [title, setTi] = useState(currentTitle);
@@ -97,6 +98,12 @@ function LandingPage({
         // all went good
         onSetTitle(title);
         onSetTheme(theme);
+        if (theme === 'CERN 5' || theme === 'CERN 6') {
+          onSetBackgroundColor('#FFFFFF'); // make background white in theme 5 and 6
+        }
+        else {
+          onSetBackgroundColor('#0053A1');
+        }
         const user = username;
         history.push(`/${user}/${title}/edit/`);
         // ready
@@ -139,8 +146,9 @@ function LandingPage({
                   placeholder="Presentation Title"
                   fluid
                   onChange={settingTitle}
-                />
-                <Select
+                  />
+                  {/* make changes here */}
+                <Select 
                   className="spacing"
                   placeholder="Select Theme"
                   fluid
@@ -180,6 +188,7 @@ LandingPage.propTypes = {
   onSetAssetsPath: PropTypes.func,
   username: PropTypes.string,
   token: PropTypes.string,
+  onSetBackgroundColor: PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -189,6 +198,7 @@ export function mapDispatchToProps(dispatch) {
     onLoadRequest: () => dispatch(setLoadRequest(true)),
     onSetIsReady: () => dispatch(setIsReady(true)),
     onSetAssetsPath: path => dispatch(setAssetsPath(path)),
+    onSetBackgroundColor: color => dispatch(setBackgroundColor(color)),
   };
 }
 

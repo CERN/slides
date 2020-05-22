@@ -1,4 +1,4 @@
-// it will be listening for stylerequest and will open a modal to select a background color
+// it will be listening for styleRequest and will open a modal to select a background color
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -12,7 +12,6 @@ import {
   getStyleRequest,
   getBackgroundColor,
 } from '../redux-store/PresentationReducer/selectors';
-import './index.css';
 
 const allColors = [
   { color: '#0053A1', title: 'CERN' }, // added CERN's default official color

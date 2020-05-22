@@ -28,7 +28,7 @@
     "extract-zip": "^2.0.0",
     "fs": "0.0.1-security",
     "fs-extra": "^9.0.0",
-    "keycloak-connect": "^10.0.0",
+    "keycloak-connect": "^10.0.1",
     "uuid": "^3.3.2",
     "zip-folder": "^1.0.0"
   }

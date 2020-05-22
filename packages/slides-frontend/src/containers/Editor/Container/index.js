@@ -12,6 +12,7 @@ import LoadPresentation from '../../LoadPresentation';
 import { getIsReady } from '../../redux-store/PresentationReducer/selectors';
 import Upload from '../components/image/Upload';
 import StyleComponent from '../../StyleComponent';
+import ThemeSelector from '../../ThemeSelector';
 
 export function Container({ isReady }) {
   return (
@@ -24,7 +25,8 @@ export function Container({ isReady }) {
             <SavePresentation />
             <LoadPresentation />
             <Upload />
-            <StyleComponent />
+          <StyleComponent />
+          <ThemeSelector />
           </div>
         ) : (
           <div className="themeSelector">

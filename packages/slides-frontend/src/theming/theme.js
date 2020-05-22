@@ -1,34 +1,18 @@
-const logoPrimaryColor = require('../images/PNG/Logo-Outline-web-White@200.png');
+const logoPrimaryColor = require('../images/Logo-Outline-web-White@200.png');
 const logoITDEP = require('../images/logoITdep.png');
 
 const defaultTheme = {
-  // Defined as usual, like in spectacle-boilerplate
-  // images: {
-  //   // cernLogo,
-  //   // logoSecondaryColor,
-  //   // logoPrimaryMono,
-  //   logoPrimaryColor,
-  // },
-  // These can be mapped to slide props: {...theme.slideDefaults}
   slideDefaults: {
     transition: ['fade'],
     bgColor: 'secondary',
     textColor: 'primary',
   },
-  // Renders your logo in the bottom left corner
-  // logoSettings: {
-  //   bgImage: logoPrimaryColor,
-  //   bgSize: '4em',
-  //   bgRepeat: 'no-repeat',
-  //   bgPosition: '3% 97%',
-  // },
   headingDefaults: {
     caps: true,
     textColor: 'primary',
     size: 6,
     margin: '0 0 15px 0',
   },
-  // Create a deck theme: createTheme(themeConfig, fontConfig)
   themeConfig: {
     primary: '#0053A1',
     secondary: '#0053A1',
@@ -166,7 +150,7 @@ const defineTheming = selectionTheme => {
           bgImage: logoITDEP,
           bgSize: '18em',
           bgRepeat: 'no-repeat',
-          bgPosition: '2% 98%',
+          bgPosition: '0% 100%',
         },
         headingDefaults: {
           caps: true,
@@ -198,7 +182,7 @@ const defineTheming = selectionTheme => {
           bgImage: logoITDEP,
           bgSize: '18em',
           bgRepeat: 'no-repeat',
-          bgPosition: '2% 98%',
+          bgPosition: '0% 100%',
         },
         headingDefaults: {
           caps: true,

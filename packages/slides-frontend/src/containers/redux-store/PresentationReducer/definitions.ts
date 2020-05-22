@@ -11,6 +11,7 @@ export const initialState = {
     saveRequest: false,
     loadRequest: false,
     styleRequest: false,
+    themeRequest: false,
 }
 
 export type presentationState = typeof initialState;

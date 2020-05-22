@@ -6,11 +6,12 @@ import {
   setSaveRequest,
   setStyleRequest,
   setLoadRequest,
+  themeRequest,
 } from '../../redux-store/PresentationReducer/actions';
 
 import './index.css';
 
-function Settings({ onSaveRequest, onStyleRequest, onLoadRequest }) {
+function Settings({ onSaveRequest, onStyleRequest, onLoadRequest, onThemeRequest }) {
   const onClickHandler = item => {
     switch (item) {
       case 'cloud upload':
@@ -21,6 +22,9 @@ function Settings({ onSaveRequest, onStyleRequest, onLoadRequest }) {
         break;
       case 'paint brush':
         onStyleRequest();
+        break;
+      case 'theme':
+        onThemeRequest();
         break;
       default:
         break;
@@ -45,6 +49,7 @@ function Settings({ onSaveRequest, onStyleRequest, onLoadRequest }) {
         {/* {Item('play', 'Present (Ctrl+E)')} */}
         {/* {Item('setting', 'Presentation Settings')} */}
         {Item('paint brush', 'Change Background Color')}
+        {Item('theme', 'Change Theme')}
         {/* {Item('ordered list', 'Arrange Slides')} */}
         {/* {Item('time', 'Revision history')} */}
         {Item('cloud upload', 'Upload existing presentation')}
@@ -66,6 +71,7 @@ Settings.propTypes = {
   onSaveRequest: PropTypes.func,
   onStyleRequest: PropTypes.func,
   onLoadRequest: PropTypes.func,
+  onThemeRequest: PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -73,6 +79,7 @@ export function mapDispatchToProps(dispatch) {
     onSaveRequest: () => dispatch(setSaveRequest(true)),
     onStyleRequest: () => dispatch(setStyleRequest(true)),
     onLoadRequest: () => dispatch(setLoadRequest(true)),
+    onThemeRequest: () => dispatch(themeRequest(true)),
   };
 }
 
