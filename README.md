@@ -1,4 +1,6 @@
-<img src="https://cds.cern.ch/images/CERN-PHOTO-201802-030-10/file?size=medium" alt="CERN" align="center" width="600" />
+<div align="center">
+  <img src="https://cds.cern.ch/images/CERN-PHOTO-201802-030-10/file?size=medium" alt="CERN" width="600" />
+</div>
 
 **Slides** is:
  * **slides-creator** application
@@ -7,7 +9,7 @@
  * **made at CERN**, [the place where the web was born](https://home.cern/science/computing/birth-web)!
 
 <div align="center">
-  <sub>Created by <a href="https://twitter.com/aristofanischionis">Aristofanis Chionis</a> and maintained with ❤️ by CERN.</sub>
+  <sub>Created by <a href="https://aristofanischionis.github.io/">Aristofanis Chionis</a> and maintained with ❤️ by CERN.</sub>
 </div>
 
 ## Features
