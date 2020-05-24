@@ -24,8 +24,8 @@ _Not Ready for Production_
 
 ## Documentation
 
-- [**An Introductory Guide to `Slides`**](docs/general/introduction.md): An introduction for newcomers.
-- [Overview](docs/general): A short overview of the functionality.
+- [**Documentation for `Slides`**](https://slides.docs.cern.ch/).
+<!-- - [Overview](docs/general): A short overview of the functionality. -->
 
 ## Contributors
 
