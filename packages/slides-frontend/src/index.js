@@ -20,7 +20,7 @@ import KeycloakWrapper from "@authzsvc/keycloak-js-react";
 import Keycloak from "keycloak-js";
 
 import configureStore from './configureStore';
-import * as cfg from './conf';
+import * as cfg from './authConfig';
 
 // Import Semantic-ui styles
 import 'semantic-ui-css/semantic.min.css';
@@ -40,11 +40,11 @@ ReactDOM.render(
             clientId: cfg.keycloakClientId
           })
         }
-        refresh={false}
+        refresh={true}
         keycloakParams={{
           onLoad: "login-required",
           promiseType: "native",
-          flow: "implicit"
+          flow: "standard"
         }}
       >
         <App />
