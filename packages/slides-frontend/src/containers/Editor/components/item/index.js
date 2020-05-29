@@ -21,13 +21,13 @@ import {
   removeItem,
   changeItemPosition,
   changeItemSize,
-  setEditMode,
   editData,
   toggleFocus,
 } from '../../../redux-store/DeckReducer/actions';
 import {
   getAssetsPath,
   getTitle,
+  getPresentationMode,
 } from '../../../redux-store/PresentationReducer/selectors';
 import { getCurrentSlide } from '../../../redux-store/DeckReducer/selectors';
 import Text from '../text';
@@ -40,13 +40,13 @@ function Item({
   onChangePosition,
   onChangeSize,
   assetsPath,
-  onSetEditMode,
   currentSlide,
   onEditData,
   title,
   username,
   onToggleFocus,
   token,
+  presentationMode,
 }) {
   const itemRef = useRef(null);
 
@@ -54,9 +54,9 @@ function Item({
   const ItemComponent = type === 'TEXT' ? Text : Image;
 
   const deleter = e => {
-    console.log("hello from deleterrr")
     e.preventDefault(); // super IMPORTANT here otherwise it propagates the event
     // send a delete in Redux
+    if (presentationMode) return;
     if (type === 'TEXT' && itemObj.Edit) {
       // text in edit mode so don't delete it
       return;
@@ -69,6 +69,7 @@ function Item({
   };
 
   const singleClick = e => {
+    if (presentationMode) return;
     if (itemRef.current.contains(e.target)) {
       // inside click
       itemRef.current.focus();
@@ -82,7 +83,8 @@ function Item({
     itemRef.current.blur();
     onToggleFocus(ID, false);
   };
-
+  
+  // disable when presentation
   useEffect(() => {
     document.addEventListener('mousedown', singleClick);
     return () => {
@@ -90,13 +92,20 @@ function Item({
     };
   });
 
+  // in case of Presentation Mode I want to disable deleting and blue border
   return (
-    <div ref={itemRef} className="item-style">
-      <KeyboardEventHandler
-        handleKeys={['backspace', 'del']}
-        onKeyEvent={(key, e) => Focused && deleter(e)}
-      />
-      <ItemComponent ID={ID} />
+    <div>
+      {presentationMode ? (
+        <ItemComponent ID={ID} />
+      ): (
+        <div ref={itemRef} className="item-style">
+          <KeyboardEventHandler
+            handleKeys={['backspace', 'del']}
+            onKeyEvent={(key, e) => Focused && deleter(e)}
+          />
+          <ItemComponent ID={ID} />
+        </div>
+      )}
     </div>
   );
 }
@@ -107,13 +116,13 @@ Item.propTypes = {
   onRemoveItem: PropTypes.func,
   onChangePosition: PropTypes.func,
   onChangeSize: PropTypes.func,
-  onSetEditMode: PropTypes.func,
   currentSlide: PropTypes.number,
   onEditData: PropTypes.func,
   username: PropTypes.string,
   title: PropTypes.string,
   onToggleFocus: PropTypes.func,
   token: PropTypes.string,
+  presentationMode: PropTypes.bool,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -122,7 +131,6 @@ export function mapDispatchToProps(dispatch) {
       dispatch(changeItemPosition(id, position)),
     onChangeSize: (id, position) => dispatch(changeItemSize(id, position)),
     onRemoveItem: id => dispatch(removeItem(id)),
-    onSetEditMode: (id, edit) => dispatch(setEditMode(id, edit)),
     onEditData: (id, data) => dispatch(editData(id, data)),
     onToggleFocus: (id, focus) => dispatch(toggleFocus(id, focus)),
   };
@@ -135,6 +143,7 @@ export default connect(
     title: getTitle(state),
     username: state.keycloak.userToken.cern_upn,
     token: state.keycloak.instance.token,
+    presentationMode: getPresentationMode(state),
   }),
   mapDispatchToProps,
 )(Item);

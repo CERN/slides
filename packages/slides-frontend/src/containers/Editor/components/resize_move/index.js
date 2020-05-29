@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 
 import MyItem from '../item';
 import { getItems } from '../../../redux-store/DeckReducer/selectors';
+import { getPresentationMode } from '../../../redux-store/PresentationReducer/selectors';
+
 import {
   changeItemPosition,
   changeItemSize,
@@ -59,6 +61,7 @@ function MoveResize({
   onChangePosition,
   onChangeSize,
   onSetEditMode,
+  presentationMode,
 }) {
   const [coordinate, setCoordinate] = useState({
     x: item.Position.x,
@@ -90,6 +93,8 @@ function MoveResize({
   };
 
   const handler = () => {
+    // if in presentation Mode you can't change the editing of an item
+    if (presentationMode) return;
     if (item.type === 'TEXT' && !item.Edit) {
       onSetEditMode(ID, true);
     }
@@ -98,6 +103,8 @@ function MoveResize({
   const movableItemRender = () => (
     <Reactable
       draggable={{
+        // if I am in presentation Mode don't let user mode items around
+        enabled: !presentationMode,
         onmove: e => {
           setCoordinate(prev => ({
             ...prev,
@@ -117,6 +124,8 @@ function MoveResize({
         ],
       }}
       resizable={{
+        // if I am in presentation Mode don't let user mode items around
+        enabled: !presentationMode,
         edges: { left: true, right: true, bottom: true, top: true },
         // preserveAspectRatio: true,
         onmove: e => {
@@ -176,6 +185,7 @@ MoveResize.propTypes = {
   onChangePosition: PropTypes.func,
   onChangeSize: PropTypes.func,
   onSetEditMode: PropTypes.func,
+  presentationMode: PropTypes.bool,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -190,6 +200,7 @@ export function mapDispatchToProps(dispatch) {
 export default connect(
   (state, ownProps) => ({
     item: getItems(state).find(itm => itm.ID === ownProps.ID),
+    presentationMode: getPresentationMode(state),
   }),
   mapDispatchToProps,
 )(MoveResize);

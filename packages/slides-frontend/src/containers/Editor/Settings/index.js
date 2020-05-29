@@ -2,16 +2,26 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Menu, Icon, Popup } from 'semantic-ui-react';
+import history from '../../../utils/history';
 import {
   setSaveRequest,
   setStyleRequest,
   setLoadRequest,
   themeRequest,
+  setPresentationMode,
 } from '../../redux-store/PresentationReducer/actions';
-
+import { getTitle } from '../../redux-store/PresentationReducer/selectors';
 import './index.css';
 
-function Settings({ onSaveRequest, onStyleRequest, onLoadRequest, onThemeRequest }) {
+function Settings({
+  onSaveRequest,
+  onStyleRequest,
+  onLoadRequest,
+  onThemeRequest,
+  username,
+  title,
+  onSetPresentationMode
+}) {
   const onClickHandler = item => {
     switch (item) {
       case 'cloud upload':
@@ -25,6 +35,13 @@ function Settings({ onSaveRequest, onStyleRequest, onLoadRequest, onThemeRequest
         break;
       case 'theme':
         onThemeRequest();
+        break;
+      case 'eye':
+        onSetPresentationMode();
+        history.push(`/present/${username}/${title}/`);
+        break;
+      case 'cloud download':
+        console.log("export pdf button");
         break;
       default:
         break;
@@ -43,25 +60,15 @@ function Settings({ onSaveRequest, onStyleRequest, onLoadRequest, onThemeRequest
   return (
     <div className="settings">
       <Menu inverted vertical fluid icon="labeled">
-        {Item('eye', 'Slideshow (pending)')}
-        {/* {Item('undo', 'Undo (Ctrl+Z)')} */}
+        {Item('eye', 'Slideshow')}
         {Item('save', 'Save Presentation')}
         {/* {Item('play', 'Present (Ctrl+E)')} */}
         {/* {Item('setting', 'Presentation Settings')} */}
         {Item('paint brush', 'Change Background Color')}
         {Item('theme', 'Change Theme')}
         {/* {Item('ordered list', 'Arrange Slides')} */}
-        {/* {Item('time', 'Revision history')} */}
         {Item('cloud upload', 'Upload existing presentation')}
         {Item('cloud download', 'Export as PDF (pending)')}
-        {/* {Item('image', 'Media')} */}
-        {/* {Item('share alternate', 'Share')} */}
-        {/* {Item('ellipsis vertical')} */}
-        {/* have to make a popup specially for this one, https://react.semantic-ui.com/modules/popup/#usage-nested */}
-        {/* <Menu.Item className="lastitem"> */}
-        {/* same for this one */}
-        {/* <Icon name="content" /> */}
-        {/* </Menu.Item> */}
       </Menu>
     </div>
   );
@@ -72,6 +79,9 @@ Settings.propTypes = {
   onStyleRequest: PropTypes.func,
   onLoadRequest: PropTypes.func,
   onThemeRequest: PropTypes.func,
+  username: PropTypes.string,
+  title: PropTypes.string,
+  onSetPresentationMode: PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -80,10 +90,14 @@ export function mapDispatchToProps(dispatch) {
     onStyleRequest: () => dispatch(setStyleRequest(true)),
     onLoadRequest: () => dispatch(setLoadRequest(true)),
     onThemeRequest: () => dispatch(themeRequest(true)),
+    onSetPresentationMode: () => dispatch(setPresentationMode(true)),
   };
 }
 
 export default connect(
-  null,
+  state => ({
+    username: state.keycloak.userToken.cern_upn,
+    title: getTitle(state),
+  }),
   mapDispatchToProps,
 )(Settings);

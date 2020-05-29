@@ -12,8 +12,11 @@ import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Container from '../Editor/Container';
+import Homepage from '../Editor/Homepage';
 import { Loader } from 'semantic-ui-react';
 import GlobalStyle from '../../global-styles';
+import Presentation from '../Editor/Presentation';
+import NotFoundPage from '../NotFoundPage';
 
 function App ({authenticated}) {
   return (
@@ -22,7 +25,10 @@ function App ({authenticated}) {
         (
           <div>
             <Switch>
-              <Route path="/" component={Container} />
+              <Route path="/edit" component={Container} />
+              <Route path="/present" component={Presentation} />
+              <Route exact path="/" component={Homepage} />
+              <Route path="*" component={NotFoundPage} />
             </Switch>
             <GlobalStyle />
           </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -6,15 +6,21 @@ import './index.css';
 import Settings from '../Settings';
 import Canvas from '../Canvas';
 import SideBar from '../SideBar';
-import LandingPage from '../LandingPage';
 import SavePresentation from '../../SavePresentation';
 import LoadPresentation from '../../LoadPresentation';
 import { getIsReady } from '../../redux-store/PresentationReducer/selectors';
+import { setPresentationMode } from '../../redux-store/PresentationReducer/actions';
 import Upload from '../components/image/Upload';
 import StyleComponent from '../../StyleComponent';
 import ThemeSelector from '../../ThemeSelector';
+import PageNotFound from '../../NotFoundPage';
 
-export function Container({ isReady }) {
+export function Container({ isReady, onSetPresentationMode }) {
+
+  useEffect(() => {
+    onSetPresentationMode();
+  });
+
   return (
       <div>
         {isReady ? (
@@ -25,16 +31,12 @@ export function Container({ isReady }) {
             <SavePresentation />
             <LoadPresentation />
             <Upload />
-          <StyleComponent />
-          <ThemeSelector />
+            <StyleComponent />
+            <ThemeSelector />
           </div>
-        ) : (
-          <div className="themeSelector">
-            <div className="inside">
-              <LandingPage />
-              <LoadPresentation />
-            </div>
-          </div>
+        ) :
+        (
+          <PageNotFound />
         )}
       </div>
   );
@@ -42,11 +44,18 @@ export function Container({ isReady }) {
 
 Container.propTypes = {
   isReady: PropTypes.bool,
+  onSetPresentationMode: PropTypes.func,
 };
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onSetPresentationMode: () => dispatch(setPresentationMode(false)),
+  };
+}
 
 export default connect(
   state => ({
     isReady: getIsReady(state),
   }),
-  null,
+  mapDispatchToProps,
 )(Container);

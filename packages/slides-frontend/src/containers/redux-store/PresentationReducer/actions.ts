@@ -10,6 +10,7 @@ import {
   STYLE_REQUEST,
   BACKGROUND_COLOR,
   THEME_REQUEST,
+  PRESENTATION_MODE,
 } from './constants';
 
 export const setTheme = (theme: string) => ({
@@ -68,10 +69,15 @@ export const themeRequest = (request: boolean) => ({
   request,
 }) as const;
 
+export const setPresentationMode = (mode: boolean) => ({
+  type: PRESENTATION_MODE,
+  mode,
+}) as const;
 
 export type Action = ReturnType<
- typeof setTheme | typeof setTitle |
- typeof uploadImageRequest | typeof setAssetsPath | typeof themeRequest |
- typeof setSaveRequest | typeof setLoadRequest | typeof loadState |
- typeof setIsReady | typeof setStyleRequest | typeof setBackgroundColor
+  typeof setTheme | typeof setTitle |
+  typeof uploadImageRequest | typeof setAssetsPath | typeof themeRequest |
+  typeof setSaveRequest | typeof setLoadRequest | typeof loadState |
+  typeof setIsReady | typeof setStyleRequest | typeof setBackgroundColor |
+  typeof setPresentationMode
 >

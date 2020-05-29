@@ -12,6 +12,7 @@ import {
   STYLE_REQUEST,
   BACKGROUND_COLOR,
   THEME_REQUEST,
+  PRESENTATION_MODE,
 } from './constants';
 import { Action } from './actions';
 
@@ -58,6 +59,9 @@ const PresentationReducer = (state: presentationState=initialState, action: Acti
         break;
       case THEME_REQUEST:
         draft.themeRequest = action.request;
+        break;
+      case PRESENTATION_MODE:
+        draft.presentationMode = action.mode;
         break;
     }
   });

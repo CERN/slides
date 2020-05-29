@@ -134,7 +134,7 @@ function SavePresentation({
           const newObj = JSON.parse(stateStringified);
           newObj.presentation.title = newTitle;
           newObj.deck.currentSlide = 0;
-          // newObj.router.location.pathname = `/${user}/${newTitle}/edit/`;
+          // newObj.router.location.pathname = `/edit/${user}/${newTitle}/`;
           delete newObj.keycloak; 
           delete newObj.router;
           const newStateStringified = JSON.stringify(newObj);
@@ -143,7 +143,7 @@ function SavePresentation({
             () => {
               onSaveRequest();
               // push the new title in the URL bar
-              history.push(`/${user}/${newTitle}/edit/`);
+              history.push(`/edit/${user}/${newTitle}/`);
             },
           );
         }

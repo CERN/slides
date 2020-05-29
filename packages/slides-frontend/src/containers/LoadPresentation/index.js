@@ -74,7 +74,7 @@ function LoadPresentation({
       onLoadState(response.data.state.presentation);
       // set url
       const { title } = response.data.state.presentation;
-      history.push(`/${username}/${title}/edit/`);
+      history.push(`/edit/${username}/${title}/`);
       // now that the request is done I can say I am ready for and can move from landing page
       onLoadRequest();
       onSetIsReady();

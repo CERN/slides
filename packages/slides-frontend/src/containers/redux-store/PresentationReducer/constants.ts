@@ -9,3 +9,4 @@ export const LOAD_STATE = 'Slides/Presentation/LOAD_STATE';
 export const STYLE_REQUEST = 'Slides/Presentation/STYLE_REQUEST';
 export const BACKGROUND_COLOR = 'Slides/Presentation/BACKGROUND_COLOR';
 export const THEME_REQUEST = 'Slides/Presentation/THEME_REQUEST';
+export const PRESENTATION_MODE = 'Slides/Presentation/PRESENTATION_MODE';
