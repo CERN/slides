@@ -20,7 +20,7 @@ function SaveButton({ saveHandler }) {
   return (
     <Popup
       trigger={
-        <Button compact basic size="small" icon="save" onClick={saveHandler} />
+        <Button compact basic size="small" icon="save" color="black" onClick={saveHandler} />
       }
       mouseEnterDelay={300} // ?! not very important just an effect to delay the showing of the popup
       content="Save Text!"

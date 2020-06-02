@@ -19,7 +19,6 @@ import {
   setLoadRequest,
   setIsReady,
   setAssetsPath,
-  setBackgroundColor,
 } from '../../redux-store/PresentationReducer/actions';
 
 import {

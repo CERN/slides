@@ -18,6 +18,8 @@ import GlobalStyle from '../../global-styles';
 import Presentation from '../Editor/Presentation';
 import NotFoundPage from '../NotFoundPage';
 
+// Migrate to new Version of Spectacle
+
 function App ({authenticated}) {
   return (
     <div>

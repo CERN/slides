@@ -49,6 +49,7 @@ function ThemeSelector({ themeRequest, onThemeRequest, onSetTheme, onSetBackgrou
 
     const Item = (name, src) => (
         <Card raised onClick={() => handleClickTheme(name)} >
+            <Card.Header content={name} textAlign="center"/>
             <Image src={src} size="huge"/>
         </Card>
     );
