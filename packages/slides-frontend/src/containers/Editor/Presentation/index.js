@@ -36,8 +36,8 @@ function Presentation({ isReady, DeckOfSlides, title, theme, backgroundColor }) 
                         transition={['zoom', 'slide']}
                         transitionDuration={500}
                         theme={myTheme}
-                        progress="pacman"
-                        showFullscreenControl={true}
+                        progress="number"
+                        showFullscreenControl={false}
                         // controls={false} // show or hide the move buttons
                     >
                         {DeckOfSlides.map(item => (
