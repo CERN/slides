@@ -21,11 +21,11 @@ const restrictSizeParameters = type =>
     type === 'TEXT' ?
       ({
         min: { width: 500, height: 80 },
-        max: { width: 800, height: 400 },
+        // max: { width: 800, height: 400 },
       }) :
       ({
         min: { width: 100, height: 80 },
-        max: { width: 1000, height: 800 },
+        // max: { width: 1000, height: 800 },
       })
   );
 

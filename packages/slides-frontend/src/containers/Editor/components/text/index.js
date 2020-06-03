@@ -10,7 +10,6 @@ import './index.css';
 const Text = ({ ID, itemsArray, presentationMode }) => {
   const item = itemsArray.find(itm => itm.ID === ID);
   const { Edit, Data } = item;
-  console.log("My edit isssssssss", Edit)
   // in Presentation Mode the text shouldn't be editable any more
   return (
     <div>

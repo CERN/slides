@@ -10,10 +10,7 @@ export default function RenderHtml({ text }) {
   if (test === '') {
     txt = '<p>Double Click to Edit</p>';
   }
-  //  if in html you find txt that has <p>
-  // if (txt)
-  // if(txt.)
-  // console.log("In render html text is", txt);
+  
   return <div className="bigger-text">{ReactHtmlParser(txt)}</div>;
 }
 

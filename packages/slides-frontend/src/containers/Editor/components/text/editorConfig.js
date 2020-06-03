@@ -16,6 +16,9 @@ export const editorConfig = {
     'remove',
     'history',
   ],
+  inline: {
+    options: ['bold', 'italic', 'underline', 'strikethrough'],
+  },
   blockType: {
     options: ['Normal', 'H1', 'H2', 'H3', 'H4'],
   },

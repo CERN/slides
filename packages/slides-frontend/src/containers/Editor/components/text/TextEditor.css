@@ -11,4 +11,7 @@
     /* line-height: 1.5 !important; */
     line-height: normal !important;
     /* height: 10em; */
+    /* font-family: 'Courier New'; this changes only the the style in the editor */
 }
+
+/* editorClassName */

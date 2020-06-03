@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const deletePresentationFolder = (assetsPath, username, title, token) => {
     const url = `${assetsPath}/image/${username}/${title}`;
-    console.log("in deletePresentationFolder", url)
     return axios.delete(url, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -27,7 +26,6 @@ const uploadImage = (assetsPath, username, title, files, token) => {
   
 const deleteImage = (assetsPath, username, title, src, token) => {
     const url = `${assetsPath}/image/${username}/${title}/${src}`;
-    console.log("deleter Image bla")
     return axios.delete(url, {
       headers: {
         Authorization: `Bearer ${token}`

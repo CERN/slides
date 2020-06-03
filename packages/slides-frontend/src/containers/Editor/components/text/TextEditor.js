@@ -60,12 +60,15 @@ const TextEditor = ({
       ContentState.createFromBlockArray(contentBlock.contentBlocks),
     ),
   );
-
+  // const defaultEditorState = {
+  //   'font-family': 'Courier New',
+  // }
   // add support for Ctrl+s or Cmd+s for saving the text
   // docs: https://stackoverflow.com/questions/42311815/how-to-create-custom-key-bindings-in-draft-js
   return (
     <div>
       <Editor
+        // defaultEditorState={defaultEditorState}
         editorState={editorState}
         toolbar={editorConfig}
         placeholder="start typing - don’t forget to save"
