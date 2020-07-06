@@ -2,6 +2,7 @@
 set -e
 
 # Takes the project name as a parameter and allows the default account to create and modify the docker registry of the Openshift project
+
 project=$(oc project -q);
 echo "Project: ${project}";
 oc policy add-role-to-user admin "system:serviceaccount:${project}:default"

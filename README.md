@@ -11,7 +11,8 @@
 
 ## Documentation
 
-- [**Documentation for `Slides`**](https://slides.docs.cern.ch/).
+- [**Documentation for the Slides' App**](https://slides.docs.cern.ch/).
+- [**Admin Documentation for the Slides' App**](https://slides-admin.docs.cern.ch/).
 <!-- - [Overview](docs/general): A short overview of the functionality. -->
 
 ## Contributors

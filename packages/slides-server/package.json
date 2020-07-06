@@ -3,18 +3,29 @@
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "start:dev": "NODE_ENV=development node -r esm ./src/index.js",
-    "start:prod": "NODE_ENV=production node -r esm ./src/index.js",
-    "test": "echo \"No test specified\" && exit 0"
+  "engines": {
+    "node": ">=8.10.0"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "scripts": {
+    "start:dev": "NODE_ENV=development node -r esm ./src/index.js",
+    "start:prod": "NODE_ENV=production node -r esm ./src/index.js",
+    "lint": "eslint .",
+    "precommit": "lint-staged"
+  },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.9.6"
+    "@babel/preset-env": "^7.9.6",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.4.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "lint-staged": "^10.2.11",
+    "prettier": "^2.0.5"
   },
   "dependencies": {
     "axios": "^0.19.2",

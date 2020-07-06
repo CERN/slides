@@ -12,6 +12,7 @@ token=${args[1]}
 
 
 # Generate the secret (make sure to `oc login` into your Openshift project first)
+
 auth=$(echo -n "${user}:${token}" | base64 -w 0)
 dockercfg=$(echo "{\"auths\": {\"gitlab-registry.cern.ch\": {\"auth\": \"${auth}\"}, \"gitlab.cern.ch\": {\"auth\": \"${auth}\"}}}")
 

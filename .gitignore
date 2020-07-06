@@ -13,3 +13,4 @@ dump.rdb
 .env
 *.env
 Dockerfile
+*.sh

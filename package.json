@@ -1,4 +1,18 @@
 {
+    "name": "slides",
     "private": true,
-    "workspaces": ["packages/*"]
+    "version": "0.0.1",
+    "author": "CERN",
+    "workspaces": [
+        "packages/*"
+    ],
+    "devDependencies": {
+        "husky": "^4.2.5",
+        "lerna": "^3.22.1"
+    },
+    "husky": {
+        "hooks": {
+          "pre-commit": "lerna run --concurrency 1 --stream precommit --since HEAD --exclude-dependents"
+        }
+    }
 }

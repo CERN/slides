@@ -16,6 +16,7 @@ import { keycloakReducer as keycloak } from "@authzsvc/keycloak-js-react";
 export default function createReducer(injectedReducers = {}) {
   const rootReducer = combineReducers({
     keycloak,
+
     presentation: presentationReducer,
     deck: deckReducer,
     router: connectRouter(history),
