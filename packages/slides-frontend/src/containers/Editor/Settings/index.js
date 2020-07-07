@@ -1,7 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import { Menu, Icon, Popup } from 'semantic-ui-react';
+import {Menu, Icon, Popup} from 'semantic-ui-react';
 import history from '../../../utils/history';
 import {
   setSaveRequest,
@@ -10,7 +10,7 @@ import {
   themeRequest,
   setPresentationMode,
 } from '../../redux-store/PresentationReducer/actions';
-import { getTitle } from '../../redux-store/PresentationReducer/selectors';
+import {getTitle} from '../../redux-store/PresentationReducer/selectors';
 import './index.css';
 
 function Settings({
@@ -20,7 +20,7 @@ function Settings({
   onThemeRequest,
   username,
   title,
-  onSetPresentationMode
+  onSetPresentationMode,
 }) {
   const onClickHandler = item => {
     switch (item) {
@@ -41,7 +41,7 @@ function Settings({
         history.push(`/present/${username}/${title}/`);
         break;
       case 'cloud download':
-        console.log("export pdf button");
+        console.log('export pdf button');
         break;
       default:
         break;
@@ -99,5 +99,5 @@ export default connect(
     username: state.keycloak.userToken.cern_upn,
     title: getTitle(state),
   }),
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Settings);

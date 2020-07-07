@@ -1,26 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Menu, Icon } from 'semantic-ui-react';
-import {
-  addSlide,
-  removeSlide,
-  addItem,
-} from '../../redux-store/DeckReducer/actions';
-import { uploadImageRequest } from '../../redux-store/PresentationReducer/actions';
-import { getCurrentSlide } from '../../redux-store/DeckReducer/selectors';
+import {Menu, Icon} from 'semantic-ui-react';
+import {addSlide, removeSlide, addItem} from '../../redux-store/DeckReducer/actions';
+import {uploadImageRequest} from '../../redux-store/PresentationReducer/actions';
+import {getCurrentSlide} from '../../redux-store/DeckReducer/selectors';
 import './index.css';
-import { ItemTypes } from '../../redux-store/DeckReducer/definitions';
+import {ItemTypes} from '../../redux-store/DeckReducer/definitions';
 // when i render SideBar onClick they will render something in the middle
 
-function SideBar({
-  onAddSlide,
-  onRemoveSlide,
-  onAddText,
-  currentSlide,
-  onAddImage,
-}) {
+function SideBar({onAddSlide, onRemoveSlide, onAddText, currentSlide, onAddImage}) {
   const addingSlide = () => {
     onAddSlide();
     window.location = `#/${currentSlide + 1}`; // because slides here are starting from 1
@@ -67,7 +57,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onAddSlide: () => dispatch(addSlide()),
     onRemoveSlide: () => dispatch(removeSlide()),
-    onAddText: () => dispatch(addItem({ type: ItemTypes.TEXT })),
+    onAddText: () => dispatch(addItem({type: ItemTypes.TEXT})),
     onAddImage: () => dispatch(uploadImageRequest(true)),
   };
 }
@@ -76,5 +66,5 @@ export default connect(
   state => ({
     currentSlide: getCurrentSlide(state),
   }),
-  mapDispatchToProps,
+  mapDispatchToProps
 )(SideBar);

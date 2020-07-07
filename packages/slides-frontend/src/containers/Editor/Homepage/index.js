@@ -7,10 +7,10 @@ import './index.css';
 function Homepage() {
   return (
     <div className="themeSelector">
-        <div className="inside">
-            <LandingPage />
-            <LoadPresentation />
-        </div>
+      <div className="inside">
+        <LandingPage />
+        <LoadPresentation />
+      </div>
     </div>
   );
 }

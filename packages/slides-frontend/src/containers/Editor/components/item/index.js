@@ -11,11 +11,11 @@
 // its parent component is an array of them
 // i have only one array of elements in the redux but has a type  text/image
 // depending on that the obj is different and will be rendered differently
-import React, { useRef, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, {useRef, useEffect} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
-import { deleteImage } from '../../../../utils/requests';
+import {deleteImage} from '../../../../utils/requests';
 
 import {
   removeItem,
@@ -29,7 +29,7 @@ import {
   getTitle,
   getPresentationMode,
 } from '../../../redux-store/PresentationReducer/selectors';
-import { getCurrentSlide } from '../../../redux-store/DeckReducer/selectors';
+import {getCurrentSlide} from '../../../redux-store/DeckReducer/selectors';
 import Text from '../text';
 import Image from '../image';
 import './index.css';
@@ -50,7 +50,7 @@ function Item({
 }) {
   const itemRef = useRef(null);
 
-  const { type, ID, Focused } = itemObj;
+  const {type, ID, Focused} = itemObj;
   const ItemComponent = type === 'TEXT' ? Text : Image;
 
   const deleter = e => {
@@ -83,7 +83,7 @@ function Item({
     itemRef.current.blur();
     onToggleFocus(ID, false);
   };
-  
+
   // disable when presentation
   useEffect(() => {
     document.addEventListener('mousedown', singleClick);
@@ -97,7 +97,7 @@ function Item({
     <div>
       {presentationMode ? (
         <ItemComponent ID={ID} />
-      ): (
+      ) : (
         <div ref={itemRef} className="item-style">
           <KeyboardEventHandler
             handleKeys={['backspace', 'del']}
@@ -127,8 +127,7 @@ Item.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onChangePosition: (id, position) =>
-      dispatch(changeItemPosition(id, position)),
+    onChangePosition: (id, position) => dispatch(changeItemPosition(id, position)),
     onChangeSize: (id, position) => dispatch(changeItemSize(id, position)),
     onRemoveItem: id => dispatch(removeItem(id)),
     onEditData: (id, data) => dispatch(editData(id, data)),
@@ -145,5 +144,5 @@ export default connect(
     token: state.keycloak.instance.token,
     presentationMode: getPresentationMode(state),
   }),
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Item);

@@ -4,7 +4,7 @@ import withReactContent from 'sweetalert2-react-content';
 const MySwal = withReactContent(Swal);
 
 export default async function AlertForSaving(filename) {
-  const { value: newFileName } = await MySwal.fire({
+  const {value: newFileName} = await MySwal.fire({
     titleText: 'Save as...',
     input: 'text',
     inputAttributes: {

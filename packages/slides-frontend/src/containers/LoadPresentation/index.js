@@ -1,26 +1,13 @@
-import React, { useMemo, useState } from 'react';
-import { connect } from 'react-redux';
+import React, {useMemo, useState} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import { uploadPresentation } from '../../utils/requests';
-import { useDropzone } from 'react-dropzone';
-import { Modal, Button, Icon } from 'semantic-ui-react';
-import {
-  getLoadRequest,
-  getAssetsPath,
-} from '../redux-store/PresentationReducer/selectors';
-import {
-  setLoadRequest,
-  loadState,
-  setIsReady,
-} from '../redux-store/PresentationReducer/actions';
-import { loadDeckState } from '../redux-store/DeckReducer/actions';
-import {
-  baseStyle,
-  activeStyle,
-  acceptStyle,
-  rejectStyle,
-  thumbsContainer,
-} from '../Editor/styles';
+import {uploadPresentation} from '../../utils/requests';
+import {useDropzone} from 'react-dropzone';
+import {Modal, Button, Icon} from 'semantic-ui-react';
+import {getLoadRequest, getAssetsPath} from '../redux-store/PresentationReducer/selectors';
+import {setLoadRequest, loadState, setIsReady} from '../redux-store/PresentationReducer/actions';
+import {loadDeckState} from '../redux-store/DeckReducer/actions';
+import {baseStyle, activeStyle, acceptStyle, rejectStyle, thumbsContainer} from '../Editor/styles';
 import history from '../../utils/history';
 import './index.css';
 // load will be a post request
@@ -57,7 +44,7 @@ function LoadPresentation({
       ...(isDragAccept ? acceptStyle : {}),
       ...(isDragReject ? rejectStyle : {}),
     }),
-    [isDragActive, isDragAccept, isDragReject],
+    [isDragActive, isDragAccept, isDragReject]
   );
   // use a load endpoint in the server
   // so get the .slides
@@ -68,21 +55,23 @@ function LoadPresentation({
   const sendLoadRequest = e => {
     setLoading(true);
     e.preventDefault();
-    uploadPresentation(assetsPath, username, acceptedFiles, token).then(response => {
-      // extract the state information and call the loadstate action to copy the whole obj to the current state
-      onLoadDeckState(response.data.state.deck);
-      onLoadState(response.data.state.presentation);
-      // set url
-      const { title } = response.data.state.presentation;
-      history.push(`/edit/${username}/${title}/`);
-      // now that the request is done I can say I am ready for and can move from landing page
-      onLoadRequest();
-      onSetIsReady();
-      setLoading(false);
-    }).catch(err => {
-      console.log("Something went wrong", err)
-      // fail screen
-    })
+    uploadPresentation(assetsPath, username, acceptedFiles, token)
+      .then(response => {
+        // extract the state information and call the loadstate action to copy the whole obj to the current state
+        onLoadDeckState(response.data.state.deck);
+        onLoadState(response.data.state.presentation);
+        // set url
+        const {title} = response.data.state.presentation;
+        history.push(`/edit/${username}/${title}/`);
+        // now that the request is done I can say I am ready for and can move from landing page
+        onLoadRequest();
+        onSetIsReady();
+        setLoading(false);
+      })
+      .catch(err => {
+        console.log('Something went wrong', err);
+        // fail screen
+      });
   };
   const onCancelHandler = e => {
     e.preventDefault();
@@ -103,11 +92,9 @@ function LoadPresentation({
         <Modal.Header>Upload Presentation</Modal.Header>
         <Modal.Content>
           <div className="dropzone">
-            <div {...getRootProps({ style })}>
+            <div {...getRootProps({style})}>
               <input {...getInputProps()} />
-              <p>
-                Drag 'n' drop a presentation file here, or click to select file
-              </p>
+              <p>Drag 'n' drop a presentation file here, or click to select file</p>
               <em>(Only *.slides presentations will be accepted)</em>
             </div>
             <aside style={thumbsContainer}>{acceptedFilesItems}</aside>
@@ -117,7 +104,12 @@ function LoadPresentation({
           <Button color="red" onClick={onCancelHandler}>
             <Icon name="remove" /> Cancel
           </Button>
-          <Button disabled={!acceptedFiles.length} color="green" onClick={sendLoadRequest} loading={loadingIndicator} >
+          <Button
+            disabled={!acceptedFiles.length}
+            color="green"
+            onClick={sendLoadRequest}
+            loading={loadingIndicator}
+          >
             <Icon name="checkmark" /> Upload
           </Button>
         </Modal.Actions>
@@ -153,5 +145,5 @@ export default connect(
     token: state.keycloak.instance.token,
     username: state.keycloak.userToken.cern_upn,
   }),
-  mapDispatchToProps,
+  mapDispatchToProps
 )(LoadPresentation);

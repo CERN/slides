@@ -6,18 +6,18 @@
  */
 
 // Needed for redux-saga es6 generator support
-import "core-js/stable";
-import "regenerator-runtime/runtime";
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 // Import all the third party stuff
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
+import {Provider} from 'react-redux';
+import {ConnectedRouter} from 'connected-react-router';
 import history from './utils/history';
 // Import root app
 import App from './containers/App';
-import KeycloakWrapper from "@authzsvc/keycloak-js-react";
-import Keycloak from "keycloak-js";
+import KeycloakWrapper from '@authzsvc/keycloak-js-react';
+import Keycloak from 'keycloak-js';
 
 import configureStore from './configureStore';
 import * as cfg from './authConfig';
@@ -37,19 +37,19 @@ ReactDOM.render(
           new Keycloak({
             url: cfg.keycloakUrl,
             realm: cfg.keycloakRealm,
-            clientId: cfg.keycloakClientId
+            clientId: cfg.keycloakClientId,
           })
         }
         refresh={true}
         keycloakParams={{
-          onLoad: "login-required",
-          promiseType: "native",
-          flow: "standard"
+          onLoad: 'login-required',
+          promiseType: 'native',
+          flow: 'standard',
         }}
       >
         <App />
       </KeycloakWrapper>
     </ConnectedRouter>
   </Provider>,
-  MOUNT_NODE,
+  MOUNT_NODE
 );

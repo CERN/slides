@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import { Slide } from 'spectacle';
+/* eslint-disable react/display-name */
+import React, {Component} from 'react';
+import {Slide} from 'spectacle';
 import PropTypes from 'prop-types';
 import getTheme from './theme';
 

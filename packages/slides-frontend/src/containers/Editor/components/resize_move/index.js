@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import reactable from 'reactablejs';
 import interact from 'interactjs';
 
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 
 import MyItem from '../item';
-import { getItems } from '../../../redux-store/DeckReducer/selectors';
-import { getPresentationMode } from '../../../redux-store/PresentationReducer/selectors';
+import {getItems} from '../../../redux-store/DeckReducer/selectors';
+import {getPresentationMode} from '../../../redux-store/PresentationReducer/selectors';
 
 import {
   changeItemPosition,
@@ -17,20 +17,18 @@ import {
 
 // min height, min width
 const restrictSizeParameters = type =>
-  (
-    type === 'TEXT' ?
-      ({
-        min: { width: 500, height: 80 },
+  type === 'TEXT'
+    ? {
+        min: {width: 500, height: 80},
         // max: { width: 800, height: 400 },
-      }) :
-      ({
-        min: { width: 100, height: 80 },
+      }
+    : {
+        min: {width: 100, height: 80},
         // max: { width: 1000, height: 800 },
-      })
-  );
+      };
 
 // : x,y: 350, 330 for middle
-const Core = ({ x, y, width, height, getRef, item }) => (
+const Core = ({x, y, width, height, getRef, item}) => (
   <div
     style={{
       // amazing how much this helps in consistent position of elements (absolute)
@@ -55,14 +53,7 @@ const Core = ({ x, y, width, height, getRef, item }) => (
 
 const Reactable = reactable(Core);
 
-function MoveResize({
-  ID,
-  item,
-  onChangePosition,
-  onChangeSize,
-  onSetEditMode,
-  presentationMode,
-}) {
+function MoveResize({ID, item, onChangePosition, onChangeSize, onSetEditMode, presentationMode}) {
   const [coordinate, setCoordinate] = useState({
     x: item.Position.x,
     y: item.Position.y,
@@ -83,7 +74,7 @@ function MoveResize({
   };
 
   const onResizeStop = e => {
-    const { width, height } = e.rect;
+    const {width, height} = e.rect;
     console.log('Resize Stopped', width, height);
     onDragStop(e);
     onChangeSize(ID, {
@@ -126,11 +117,11 @@ function MoveResize({
       resizable={{
         // if I am in presentation Mode don't let user mode items around
         enabled: !presentationMode,
-        edges: { left: true, right: true, bottom: true, top: true },
+        edges: {left: true, right: true, bottom: true, top: true},
         // preserveAspectRatio: true,
         onmove: e => {
-          const { width, height } = e.rect;
-          const { left, top } = e.deltaRect;
+          const {width, height} = e.rect;
+          const {left, top} = e.deltaRect;
           setCoordinate(prev => ({
             x: prev.x + left,
             y: prev.y + top,
@@ -147,7 +138,7 @@ function MoveResize({
             endOnly: true,
             // hold: 1000
           }),
-          interact.modifiers.restrictSize(restrictSizeParameters(item.type))
+          interact.modifiers.restrictSize(restrictSizeParameters(item.type)),
         ],
       }}
       {...coordinate}
@@ -190,8 +181,7 @@ MoveResize.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onChangePosition: (id, position) =>
-      dispatch(changeItemPosition(id, position)),
+    onChangePosition: (id, position) => dispatch(changeItemPosition(id, position)),
     onChangeSize: (id, position) => dispatch(changeItemSize(id, position)),
     onSetEditMode: (id, edit) => dispatch(setEditMode(id, edit)),
   };
@@ -202,5 +192,5 @@ export default connect(
     item: getItems(state).find(itm => itm.ID === ownProps.ID),
     presentationMode: getPresentationMode(state),
   }),
-  mapDispatchToProps,
+  mapDispatchToProps
 )(MoveResize);

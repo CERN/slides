@@ -1,11 +1,11 @@
-import React, { useRef, useEffect } from 'react';
+import React, {useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
-import { connect } from 'react-redux';
-import { Deck } from 'spectacle';
+import {Helmet} from 'react-helmet';
+import {connect} from 'react-redux';
+import {Deck} from 'spectacle';
 import createTheme from 'spectacle/lib/themes/default/index';
 import history from '../../../utils/history';
-import { deletePresentationFolder } from '../../../utils/requests';
+import {deletePresentationFolder} from '../../../utils/requests';
 
 import {
   getTheme,
@@ -14,13 +14,13 @@ import {
   getBackgroundColor,
 } from '../../redux-store/PresentationReducer/selectors';
 
-import { getDeck } from '../../redux-store/DeckReducer/selectors';
+import {getDeck} from '../../redux-store/DeckReducer/selectors';
 
 import MySlide from '../MySlide';
 import './index.css';
 import getterTheme from '../../../theming/theme';
 
-function Canvas({ title, theme, DeckOfSlides, assetsPath, backgroundColor, username, token }) {
+function Canvas({title, theme, DeckOfSlides, assetsPath, backgroundColor, username, token}) {
   const deck = useRef();
   const themeObj = getterTheme(theme);
   // change fontconfig from here
@@ -46,13 +46,13 @@ function Canvas({ title, theme, DeckOfSlides, assetsPath, backgroundColor, usern
       deletePresentationFolder(assetsPath, username, title, token).then(res => {
         // and navigate to home page
         if (res.status === 200) {
-          console.log("Successful deletion in Server");
+          console.log('Successful deletion in Server');
           history.push(`/`);
         }
-      })
-      return ('Are you sure you want to reload?')
-    }
-  })
+      });
+      return 'Are you sure you want to reload?';
+    };
+  });
 
   return (
     <div>
@@ -98,5 +98,5 @@ export default connect(
     username: state.keycloak.userToken.cern_upn,
     token: state.keycloak.instance.token,
   }),
-  null,
+  null
 )(Canvas);

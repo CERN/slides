@@ -1,17 +1,8 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { titleCheck } from '../../../utils/requests';
-import {
-  Button,
-  Form,
-  Header,
-  Image,
-  Segment,
-  Input,
-  Grid,
-  Divider,
-} from 'semantic-ui-react';
+import {connect} from 'react-redux';
+import {titleCheck} from '../../../utils/requests';
+import {Button, Form, Header, Image, Segment, Input, Grid, Divider} from 'semantic-ui-react';
 import config from '../../../config';
 
 import {
@@ -21,10 +12,7 @@ import {
   setAssetsPath,
 } from '../../redux-store/PresentationReducer/actions';
 
-import {
-  getTitle,
-  getAssetsPath,
-} from '../../redux-store/PresentationReducer/selectors';
+import {getTitle, getAssetsPath} from '../../redux-store/PresentationReducer/selectors';
 
 import './index.css';
 import history from '../../../utils/history';
@@ -40,9 +28,8 @@ function LandingPage({
   username,
   token,
 }) {
-
   const [title, setTi] = useState(currentTitle);
-  const [loadingIndicator, setLoading] = useState(false);  
+  const [loadingIndicator, setLoading] = useState(false);
 
   const clickHandlerNew = () => {
     // first check in server if title is good
@@ -53,22 +40,24 @@ function LandingPage({
       setLoading(false);
       return;
     }
-    titleCheck(assetsPath, username, title, token).then(res => {
-      if (res.status === 200) {
-        // all went good
-        onSetTitle(title);
-        const user = username;
-        history.push(`/edit/${user}/${title}/`);
-        // ready
-        onSetIsReady();
-      }
-      setLoading(false);
-    }).catch(err => {
-      console.log('error in title is', err);
-      // alert for bad title
-      warning('Presentation with the same title already exists!')
-      setLoading(false);  
-    })
+    titleCheck(assetsPath, username, title, token)
+      .then(res => {
+        if (res.status === 200) {
+          // all went good
+          onSetTitle(title);
+          const user = username;
+          history.push(`/edit/${user}/${title}/`);
+          // ready
+          onSetIsReady();
+        }
+        setLoading(false);
+      })
+      .catch(err => {
+        console.log('error in title is', err);
+        // alert for bad title
+        warning('Presentation with the same title already exists!');
+        setLoading(false);
+      });
   };
 
   const clickHandlerLoad = () => {
@@ -77,45 +66,49 @@ function LandingPage({
     // load component will take over and load content
   };
   // this .trim() removes trailing whitespaces from both ends of the string
-  const settingTitle = (e, { value }) => setTi(value.trim());
+  const settingTitle = (e, {value}) => setTi(value.trim());
 
   // set the assetsFolder, where images will be, in the redux store
   if (assetsPath === '') onSetAssetsPath(config.assetsPath);
   // if isAuthenticated render else Loading...
   return (
     <div className="landing-page">
-      <Image src={`${config.assetsPath}/public/Logo-Outline-web-White@200.png`} className="image" centered/>
+      <Image
+        src={`${config.assetsPath}/public/Logo-Outline-web-White@200.png`}
+        className="image"
+        centered
+      />
       <Segment compact>
-      <Grid relaxed='very' stackable columns={2}>
-        <Grid.Row>
-          <Grid.Column>
-            <Header className="white" as="h2" content="Start New Presentation" />
-            <Form size="large">
-              <Segment>
+        <Grid relaxed="very" stackable columns={2}>
+          <Grid.Row>
+            <Grid.Column>
+              <Header className="white" as="h2" content="Start New Presentation" />
+              <Form size="large">
+                <Segment>
                   {/* Don't leave it empty, don't have default */}
-                <Input
-                  className="spacing"
-                  placeholder="Presentation Title"
-                  fluid
-                  onChange={settingTitle}
+                  <Input
+                    className="spacing"
+                    placeholder="Presentation Title"
+                    fluid
+                    onChange={settingTitle}
                   />
-                <Button color="blue" onClick={clickHandlerNew} loading={loadingIndicator}>
-                  <Button.Content visible>Let's GO!</Button.Content>
-                </Button>
-              </Segment>
-            </Form>
-          </Grid.Column>
-          {/* here i go to the next thing */}
-          <Grid.Column>
-            <Header className="white" as="h2" content="Edit Existing Presentation" />
-            <Button color="blue" onClick={clickHandlerLoad}>
-              <Button.Content visible>Upload!</Button.Content>
-            </Button>
-          </Grid.Column>
-          {/* this width makes the Header text take all the required space to be inline */}
-        </Grid.Row>
-      </Grid>
-      <Divider vertical>Or</Divider>
+                  <Button color="blue" onClick={clickHandlerNew} loading={loadingIndicator}>
+                    <Button.Content visible>Let's GO!</Button.Content>
+                  </Button>
+                </Segment>
+              </Form>
+            </Grid.Column>
+            {/* here i go to the next thing */}
+            <Grid.Column>
+              <Header className="white" as="h2" content="Edit Existing Presentation" />
+              <Button color="blue" onClick={clickHandlerLoad}>
+                <Button.Content visible>Upload!</Button.Content>
+              </Button>
+            </Grid.Column>
+            {/* this width makes the Header text take all the required space to be inline */}
+          </Grid.Row>
+        </Grid>
+        <Divider vertical>Or</Divider>
       </Segment>
     </div>
   );
@@ -148,5 +141,5 @@ export default connect(
     username: state.keycloak.userToken.cern_upn,
     token: state.keycloak.instance.token,
   }),
-  mapDispatchToProps,
+  mapDispatchToProps
 )(LandingPage);

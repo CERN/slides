@@ -1,20 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import { saveAs } from 'file-saver';
-import {
-  setSaveRequest,
-  setTitle,
-} from '../redux-store/PresentationReducer/actions';
-import {
-  getTitle,
-} from '../redux-store/PresentationReducer/selectors';
+import {saveAs} from 'file-saver';
+import {setSaveRequest, setTitle} from '../redux-store/PresentationReducer/actions';
+import {getTitle} from '../redux-store/PresentationReducer/selectors';
 import history from '../../utils/history';
 
 import AlertForSaving from '../Alerts/AlertForSaving';
 import success from '../Alerts/success';
 import fail from '../Alerts/fail';
-import { savePresentation, renamePresentation } from '../../utils/requests';
+import {savePresentation, renamePresentation} from '../../utils/requests';
 const zip = require('jszip')();
 
 // i first need to init and load
@@ -74,18 +69,11 @@ async function sendSaveRequest(assetsPath, stateStringified, newTitle, token, us
     });
 }
 
-function SavePresentation({
-  stateStringified,
-  onSaveRequest,
-  title,
-  onSetTitle,
-  user,
-  token,
-}) {
+function SavePresentation({stateStringified, onSaveRequest, title, onSetTitle, user, token}) {
   // use a save endpoint in the server
   // title and uuid and savereq can be extracted from state
   const obj = JSON.parse(stateStringified);
-  const { assetsPath, saveRequest } = obj.presentation;
+  const {assetsPath, saveRequest} = obj.presentation;
 
   // it is not working it gives the backend an empty formdata
   const sendToPhoenix = () => {
@@ -107,7 +95,7 @@ function SavePresentation({
 
         window.parent.postMessage(
           req,
-          '*', // consider changing '*' to specific target
+          '*' // consider changing '*' to specific target
         );
         onSaveRequest();
       });
@@ -135,17 +123,15 @@ function SavePresentation({
           newObj.presentation.title = newTitle;
           newObj.deck.currentSlide = 0;
           // newObj.router.location.pathname = `/edit/${user}/${newTitle}/`;
-          delete newObj.keycloak; 
+          delete newObj.keycloak;
           delete newObj.router;
           const newStateStringified = JSON.stringify(newObj);
-          console.log("newStateStringified", newStateStringified)
-          sendSaveRequest(assetsPath, newStateStringified, newTitle, token, user).then(
-            () => {
-              onSaveRequest();
-              // push the new title in the URL bar
-              history.push(`/edit/${user}/${newTitle}/`);
-            },
-          );
+          console.log('newStateStringified', newStateStringified);
+          sendSaveRequest(assetsPath, newStateStringified, newTitle, token, user).then(() => {
+            onSaveRequest();
+            // push the new title in the URL bar
+            history.push(`/edit/${user}/${newTitle}/`);
+          });
         }
       });
     });
@@ -187,7 +173,7 @@ export default connect(
     user: state.keycloak.userToken.cern_upn,
     token: state.keycloak.instance.token,
   }),
-  mapDispatchToProps,
+  mapDispatchToProps
 )(SavePresentation);
 
 // const sendToUser = () => {

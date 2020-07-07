@@ -1,4 +1,4 @@
-module.exports = (req,res,next) => {
-    // console.log("Passed the authentication");
-    next();
-}
+module.exports = (req, res, next) => {
+  // console.log("Passed the authentication");
+  next()                               ;
+};

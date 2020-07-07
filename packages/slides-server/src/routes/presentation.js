@@ -1,8 +1,8 @@
-import { Router } from 'express';
+import {Router} from 'express';
 const zipFolder = require('zip-folder');
 const extract = require('extract-zip');
 const fs = require('fs-extra');
-const { uploadsFolder } = require('../config');
+const {uploadsFolder} = require('../config');
 
 const router = Router();
 
@@ -11,15 +11,15 @@ router.post('/save', (req, res) => {
   // username, title, all the state stringified
   // I know where the assets are located
   // so now in the public/username/ folder put: JSON of state, assets folder
-  const { state, username } = req.body;
+  const {state, username} = req.body;
   // sanitize state
   // get state as obj, JSON parsed from frontend
   // FIX STATE SANITIZER
   // const newState = stateSanitizer(state);
   //
   // const obj = JSON.parse(newState);
-  const obj = { ...state };
-  const { title } = obj.presentation;
+  const obj = {...state};
+  const {title} = obj.presentation;
   const presentationName = `${uploadsFolder}/${username}/${title}`;
 
   const tmp = `${uploadsFolder}/${username}/${title}/tmp`;
@@ -31,10 +31,7 @@ router.post('/save', (req, res) => {
     // check if the assets folder exists, if not it is created
     fs.ensureDirSync(`${uploadsFolder}/${username}/${title}/assets`);
     // copy assets folder
-    fs.copySync(
-      `${uploadsFolder}/${username}/${title}/assets`,
-      `${tmp}/assets`,
-    );
+    fs.copySync(`${uploadsFolder}/${username}/${title}/assets`, `${tmp}/assets`);
     // zip it and rename
     zipFolder(`${tmp}`, `${presentationName}.slides`, err => {
       if (!err) {
@@ -54,7 +51,7 @@ router.post('/save', (req, res) => {
   }
 });
 
-router.post('/load', async (req, res) => { 
+router.post('/load', async (req, res) => {
   if (req.files === null) {
     return res.status(400).json({
       msg: 'No file uploaded',
@@ -65,7 +62,7 @@ router.post('/load', async (req, res) => {
       msg: 'No username given',
     });
   }
-  const { file } = req.files;
+  const {file} = req.files;
   const username = req.body.username;
   const tmpFolder = `${uploadsFolder}/tmp-folder`;
   // check if exists, then do nothing otherwise create
@@ -84,20 +81,15 @@ router.post('/load', async (req, res) => {
   fs.emptyDirSync(`${extractFolder}/assets`);
   // get the files
   try {
-    await extract(tmpNameForDotSlides, { dir: extractFolder });
+    await extract(tmpNameForDotSlides, {dir: extractFolder});
     // read the JSON
-    const reduxStateOBJ = fs.readJsonSync(
-      `${extractFolder}/presentation.JSON`,
-    );
+    const reduxStateOBJ = fs.readJsonSync(`${extractFolder}/presentation.JSON`);
     // extract title
-    const { title } = reduxStateOBJ.presentation;
+    const {title} = reduxStateOBJ.presentation;
     // move assets in the user's assets folder
     fs.emptyDirSync(`${uploadsFolder}/${username}/${title}/assets`);
     // copy the images to appropriate folder
-    fs.copySync(
-      `${extractFolder}/assets`,
-      `${uploadsFolder}/${username}/${title}/assets`,
-    );
+    fs.copySync(`${extractFolder}/assets`, `${uploadsFolder}/${username}/${title}/assets`);
     // return the redux state
     // SANITIZE html in load as well
     res.json({
@@ -112,43 +104,41 @@ router.post('/load', async (req, res) => {
       console.log('An error has occured', err);
       return res.status(500).send(err);
     }
-  };
+  }
 });
 
 router.post('/rename', (req, res) => {
   // take the old and replace it with the new name
-  const { username, oldTitle, newTitle } = req.body;
+  const {username, oldTitle, newTitle} = req.body;
   fs.pathExists(`${uploadsFolder}/${username}/${oldTitle}`).then(oldExists => {
     if (!oldExists) {
-      // check this again 
+      // check this again
       res.status(200).send('Success');
     } else {
-      fs.pathExists(`${uploadsFolder}/${username}/${newTitle}`).then(
-        newExists => {
-          if (!newExists) {
-            fs.moveSync(
-              `${uploadsFolder}/${username}/${oldTitle}`,
-              `${uploadsFolder}/${username}/${newTitle}`,
-            );
-            res.status(200).send('Success');
-          } else {
-            res.status(400).send('Already Exists'); // status 400, means that is obvious client's fault
-          }
-        },
-      );
+      fs.pathExists(`${uploadsFolder}/${username}/${newTitle}`).then(newExists => {
+        if (!newExists) {
+          fs.moveSync(
+            `${uploadsFolder}/${username}/${oldTitle}`,
+            `${uploadsFolder}/${username}/${newTitle}`
+          );
+          res.status(200).send('Success');
+        } else {
+          res.status(400).send('Already Exists'); // status 400, means that is obvious client's fault
+        }
+      });
     }
   });
 });
 
-router.post('/titleCheck', (req, res) => { 
-  const { username, title } = req.body;
+router.post('/titleCheck', (req, res) => {
+  const {username, title} = req.body;
   fs.pathExists(`${uploadsFolder}/${username}/${title}`).then(titleExists => {
     if (titleExists) {
       res.status(409).send('Conflict: title already exists');
     } else {
       res.status(200).send('Success: title can be used');
     }
-   })
+  });
 });
 
 export default router;

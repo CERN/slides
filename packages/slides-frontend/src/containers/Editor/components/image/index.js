@@ -1,21 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import {
-  getAssetsPath,
-  getTitle,
-} from '../../../redux-store/PresentationReducer/selectors';
-import { getItems } from '../../../redux-store/DeckReducer/selectors';
+import {connect} from 'react-redux';
+import {getAssetsPath, getTitle} from '../../../redux-store/PresentationReducer/selectors';
+import {getItems} from '../../../redux-store/DeckReducer/selectors';
 import './index.css';
 
-const MyImage = ({ ID, itemsArray, assetsPath, username, title }) => {
+const MyImage = ({ID, itemsArray, assetsPath, username, title}) => {
   const item = itemsArray.find(itm => itm.ID === ID);
   const imageSrc = `${assetsPath}/static/${username}/${title}/assets/${item.Src}`;
 
   return (
     <div className="img-style">
       <img src={imageSrc} alt="" />
-    </div>    
+    </div>
   );
 };
 

@@ -1,21 +1,17 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import {connect} from 'react-redux';
+import {Editor} from 'react-draft-wysiwyg';
+import {EditorState, convertToRaw, ContentState} from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
-import { Button, Popup } from 'semantic-ui-react';
-import {
-  editData,
-  setEditMode,
-  toggleFocus,
-} from '../../../redux-store/DeckReducer/actions';
-import { editorConfig } from './editorConfig';
+import {Button, Popup} from 'semantic-ui-react';
+import {editData, setEditMode, toggleFocus} from '../../../redux-store/DeckReducer/actions';
+import {editorConfig} from './editorConfig';
 import './TextEditor.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-function SaveButton({ saveHandler }) {
+function SaveButton({saveHandler}) {
   // add Custom Save button in the toolbar of draft.js
   return (
     <Popup
@@ -32,13 +28,7 @@ SaveButton.propTypes = {
   saveHandler: PropTypes.func,
 };
 
-const TextEditor = ({
-  initialData,
-  ID,
-  onEditData,
-  onSetEditMode,
-  onToggleFocus,
-}) => {
+const TextEditor = ({initialData, ID, onEditData, onSetEditMode, onToggleFocus}) => {
   const saveHandler = () => {
     const myhtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
     // save in redux state
@@ -56,9 +46,7 @@ const TextEditor = ({
   };
   const contentBlock = htmlToDraft(initialData);
   const [editorState, setEditorState] = useState(
-    EditorState.createWithContent(
-      ContentState.createFromBlockArray(contentBlock.contentBlocks),
-    ),
+    EditorState.createWithContent(ContentState.createFromBlockArray(contentBlock.contentBlocks))
   );
   // const defaultEditorState = {
   //   'font-family': 'Courier New',
@@ -98,7 +86,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(TextEditor);
+export default connect(null, mapDispatchToProps)(TextEditor);

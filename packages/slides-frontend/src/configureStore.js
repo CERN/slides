@@ -2,8 +2,8 @@
  * Create the store with dynamic reducers
  */
 
-import { createStore, applyMiddleware, compose } from 'redux';
-import { routerMiddleware } from 'connected-react-router';
+import {createStore, applyMiddleware, compose} from 'redux';
+import {routerMiddleware} from 'connected-react-router';
 import createReducer from './reducers';
 
 export default function configureStore(initialState = {}, history) {
@@ -17,18 +17,13 @@ export default function configureStore(initialState = {}, history) {
       composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({});
   }
 
-
   // Create the store with two middlewares
   // 2. routerMiddleware: Syncs the location/URL path to the state
   const middlewares = [routerMiddleware(history)];
 
   const enhancers = [applyMiddleware(...middlewares)];
 
-  const store = createStore(
-    createReducer(),
-    initialState,
-    composeEnhancers(...enhancers),
-  );
+  const store = createStore(createReducer(), initialState, composeEnhancers(...enhancers));
 
   // Extensions
   store.injectedReducers = {}; // Reducer registry

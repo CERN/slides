@@ -1,11 +1,11 @@
-import { Router } from 'express';
+import {Router} from 'express';
 const wopiServerFiles = 'http://localhost:8443/wopi/files/';
 const axios = require('axios');
 
 const router = Router();
 
 router.get('/phoenix/wopi/start', (req, res) => {
-  const { accessToken, inode, username } = req.query;
+  const {accessToken, inode, username} = req.query;
   console.log('accessToken and inode ', accessToken, inode);
   // accessToken, inode, username
   // now i have to make the getfile info, getfile wopi requests, and after that i set all the parameters like the redux state and images and im ready to roll

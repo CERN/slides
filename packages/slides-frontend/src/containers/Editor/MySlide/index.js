@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import StandardSlide from '../../../theming/StandardSlide';
-import { getTheme } from '../../redux-store/PresentationReducer/selectors';
-import { getItems } from '../../redux-store/DeckReducer/selectors';
+import {getTheme} from '../../redux-store/PresentationReducer/selectors';
+import {getItems} from '../../redux-store/DeckReducer/selectors';
 import MoveResize from '../components/resize_move';
 
-function MySlide({ theme, itemsArray }) {
+function MySlide({theme, itemsArray}) {
   const StandardSlideTemplate = StandardSlide(theme);
 
   return (
@@ -28,5 +28,5 @@ export default connect(
     theme: getTheme(state),
     itemsArray: getItems(state),
   }),
-  null,
+  null
 )(MySlide);

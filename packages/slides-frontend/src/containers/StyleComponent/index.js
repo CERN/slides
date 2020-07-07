@@ -1,20 +1,14 @@
 // it will be listening for styleRequest and will open a modal to select a background color
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, {useState} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import { SketchPicker } from 'react-color';
-import { Modal, Button, Icon } from 'semantic-ui-react';
-import {
-  setStyleRequest,
-  setBackgroundColor,
-} from '../redux-store/PresentationReducer/actions';
-import {
-  getStyleRequest,
-  getBackgroundColor,
-} from '../redux-store/PresentationReducer/selectors';
+import {SketchPicker} from 'react-color';
+import {Modal, Button, Icon} from 'semantic-ui-react';
+import {setStyleRequest, setBackgroundColor} from '../redux-store/PresentationReducer/actions';
+import {getStyleRequest, getBackgroundColor} from '../redux-store/PresentationReducer/selectors';
 
 const allColors = [
-  { color: '#0053A1', title: 'CERN' }, // added CERN's default official color
+  {color: '#0053A1', title: 'CERN'}, // added CERN's default official color
   '#D0021B',
   '#F5A623',
   '#F8E71C',
@@ -32,12 +26,7 @@ const allColors = [
   '#FFFFFF',
 ];
 
-function StyleComponent({
-  styleRequest,
-  onStyleRequest,
-  onColorChange,
-  style,
-}) {
+function StyleComponent({styleRequest, onStyleRequest, onColorChange, style}) {
   const [backgroundColor, _setBackgroundColor] = useState(style);
   const handleChangeColor = color => {
     _setBackgroundColor(color.hex);
@@ -95,5 +84,5 @@ export default connect(
     styleRequest: getStyleRequest(state),
     style: getBackgroundColor(state),
   }),
-  mapDispatchToProps,
+  mapDispatchToProps
 )(StyleComponent);

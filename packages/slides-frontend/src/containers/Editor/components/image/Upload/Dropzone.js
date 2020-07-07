@@ -1,17 +1,14 @@
-import React, { useState, useMemo } from 'react';
-import { connect } from 'react-redux';
-import { useDropzone } from 'react-dropzone';
+import React, {useState, useMemo} from 'react';
+import {connect} from 'react-redux';
+import {useDropzone} from 'react-dropzone';
 import PropTypes from 'prop-types';
-import { Button, Icon } from 'semantic-ui-react';
-import { uploadImage } from '../../../../../utils/requests';
+import {Button, Icon} from 'semantic-ui-react';
+import {uploadImage} from '../../../../../utils/requests';
 import BMF from 'browser-md5-file';
-import {
-  getAssetsPath,
-  getTitle,
-} from '../../../../redux-store/PresentationReducer/selectors';
-import { addItem } from '../../../../redux-store/DeckReducer/actions';
-import { uploadImageRequest } from '../../../../redux-store/PresentationReducer/actions';
-import { ItemTypes } from '../../../../redux-store/DeckReducer/definitions';
+import {getAssetsPath, getTitle} from '../../../../redux-store/PresentationReducer/selectors';
+import {addItem} from '../../../../redux-store/DeckReducer/actions';
+import {uploadImageRequest} from '../../../../redux-store/PresentationReducer/actions';
+import {ItemTypes} from '../../../../redux-store/DeckReducer/definitions';
 
 import './Dropzone.css';
 import {
@@ -26,31 +23,18 @@ import {
 } from '../../../styles';
 // Add notification and check System
 
-export function Dropzone({
-  onImageRequest,
-  onAddImage,
-  assetsPath,
-  username,
-  title,
-  token,
-}) {
+export function Dropzone({onImageRequest, onAddImage, assetsPath, username, title, token}) {
   const [files, setFiles] = useState([]);
   const [loadingIndicator, setLoading] = useState(false);
-  const {
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    isDragAccept,
-    isDragReject,
-  } = useDropzone({
+  const {getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject} = useDropzone({
     accept: 'image/*',
     onDrop: acceptedFiles => {
       setFiles(
         acceptedFiles.map(file =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
-          }),
-        ),
+          })
+        )
       );
     },
   });
@@ -58,7 +42,7 @@ export function Dropzone({
   const thumbs = files.map(file => (
     <div style={thumb} key={file.name}>
       <div style={thumbInner}>
-        <img src={file.preview} style={img} alt='preview'/>
+        <img src={file.preview} style={img} alt="preview" />
       </div>
     </div>
   ));
@@ -70,7 +54,7 @@ export function Dropzone({
       ...(isDragAccept ? acceptStyle : {}),
       ...(isDragReject ? rejectStyle : {}),
     }),
-    [isDragActive, isDragAccept, isDragReject],
+    [isDragActive, isDragAccept, isDragReject]
   );
 
   const onUploadHandler = e => {
@@ -90,7 +74,7 @@ export function Dropzone({
       files.forEach(file => URL.revokeObjectURL(file.preview));
       // done! So notify Redux Store
       onImageRequest();
-    })
+    });
   };
 
   const onCancelHandler = e => {
@@ -101,7 +85,7 @@ export function Dropzone({
 
   return (
     <div className="dropzone">
-      <div {...getRootProps({ style })}>
+      <div {...getRootProps({style})}>
         <input {...getInputProps()} />
         <p>Drag 'n' drop an Image here, or click to select from files</p>
       </div>
@@ -109,7 +93,12 @@ export function Dropzone({
       <Button color="red" onClick={onCancelHandler}>
         <Icon name="remove" /> Cancel
       </Button>
-      <Button disabled={!files.length} color="green" onClick={onUploadHandler} loading={loadingIndicator}>
+      <Button
+        disabled={!files.length}
+        color="green"
+        onClick={onUploadHandler}
+        loading={loadingIndicator}
+      >
         <Icon name="checkmark" /> Upload
       </Button>
     </div>
@@ -128,7 +117,7 @@ Dropzone.propTypes = {
 function mapDispatchToProps(dispatch) {
   return {
     onImageRequest: () => dispatch(uploadImageRequest(false)),
-    onAddImage: src => dispatch(addItem({ type: ItemTypes.IMAGE, src })),
+    onAddImage: src => dispatch(addItem({type: ItemTypes.IMAGE, src})),
   };
 }
 
@@ -139,5 +128,5 @@ export default connect(
     title: getTitle(state),
     token: state.keycloak.instance.token,
   }),
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Dropzone);

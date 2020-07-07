@@ -1,7 +1,7 @@
-import { Router } from 'express';
+import {Router} from 'express';
 const fs = require('fs-extra');
-const { resolve } = require('path');
-const { uploadsFolder } = require('../config');
+const {resolve} = require('path');
+const {uploadsFolder} = require('../config');
 
 const router = Router();
 
@@ -12,13 +12,11 @@ router.post('/upload', (req, res) => {
     });
   }
   // uploadsfolder/user/presentationName/assets/hash_filename
-  const { file } = req.files;
-  const { username, title } = req.body;
+  const {file} = req.files;
+  const {username, title} = req.body;
   // this makes the dir if it doesn't exist else does nothing
   fs.ensureDirSync(`${uploadsFolder}/${username}/${title}/assets`);
-  const imageNameToStore = `${uploadsFolder}/${username}/${title}/assets/${
-    file.md5
-  }_${file.name}`;
+  const imageNameToStore = `${uploadsFolder}/${username}/${title}/assets/${file.md5}_${file.name}`;
   file.mv(imageNameToStore, err => {
     if (err) {
       console.error(err);
@@ -33,7 +31,7 @@ router.post('/upload', (req, res) => {
 });
 
 router.delete('/:username/:title/:id', (req, res) => {
-  const { id, username, title } = req.params;
+  const {id, username, title} = req.params;
   const imageName = `${uploadsFolder}/${username}/${title}/assets/${id}`;
   // delete image file
   if (fs.existsSync(imageName)) {
@@ -47,7 +45,7 @@ router.delete('/:username/:title/:id', (req, res) => {
 });
 
 router.delete('/:username/:title', (req, res) => {
-  const { username, title } = req.params;
+  const {username, title} = req.params;
   const userFolder = `${uploadsFolder}/${username}`;
   const presentationFolder = `${userFolder}/${title}`;
   // delete the presentation with title: 'title'
@@ -56,7 +54,7 @@ router.delete('/:username/:title', (req, res) => {
     // delete the whole folder 'username' (only if there are no more presentations inside)
     // fs.readdirSync(userFolder)[0] === '.DS_Store', only for MacOS
     if (!fs.readdirSync(userFolder).length) {
-      fs.removeSync(userFolder)
+      fs.removeSync(userFolder);
     }
     res.json({
       state: 'Successful',
@@ -64,6 +62,6 @@ router.delete('/:username/:title', (req, res) => {
   } else {
     res.status(404).send('Folder does not exist');
   }
-})
+});
 
 export default router;

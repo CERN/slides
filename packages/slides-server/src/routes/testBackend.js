@@ -1,10 +1,10 @@
-import { Router } from 'express';
+import {Router} from 'express';
 const router = Router();
-const { uploadsFolder } = require('../config');
+const {uploadsFolder} = require('../config');
 
-const { exec } = require('child_process');
+const {exec} = require('child_process');
 function OsFunc() {
-  this.execCommand = function(cmd, callback) {
+  this.execCommand = function (cmd, callback) {
     exec(cmd, (error, stdout, stderr) => {
       if (error) {
         console.error(`exec error: ${error}`);
@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
         uploadsFolder,
         currentls: current,
         lsroot,
-      }),
+      })
     );
   });
 });

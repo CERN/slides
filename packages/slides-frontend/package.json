@@ -116,7 +116,7 @@
     "start:prod": "serve -s build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint .",
+    "format": "prettier-eslint --write \"$PWD/{,!(node_modules)/**/}*.{js,jsx}\"",
     "precommit": "lint-staged"
   },
   "eslintConfig": {
