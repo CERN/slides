@@ -1,3 +1,5 @@
 {
-  "extends": ["eslint:recommended", "plugin:react/recommended"]
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "parser": "babel-eslint",
+  "browser": true // this is to allow window, console keywords, without saying that they are undefined
 }
