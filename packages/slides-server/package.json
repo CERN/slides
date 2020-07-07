@@ -12,8 +12,7 @@
   "scripts": {
     "start:dev": "NODE_ENV=development node -r esm ./src/index.js",
     "start:prod": "NODE_ENV=production node -r esm ./src/index.js",
-    "format": "prettier-eslint --write \"$PWD/{,!(node_modules)/**/}*.{js,jsx}\"",
-    "precommit": "lint-staged"
+    "format": "prettier-eslint --write \"$PWD/{,!(node_modules)/**/}*.{js,jsx}\""
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -24,7 +23,6 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "lint-staged": "^10.2.11",
     "prettier": "^2.0.5",
     "prettier-eslint-cli": "^5.0.0"
   },
