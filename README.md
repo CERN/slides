@@ -1,6 +1,7 @@
 <div align="center">
-  <img src="https://directory.web.cern.ch/img/cern-logo-blue.png" alt="CERN" width="600" />
+  <img src="https://directory.web.cern.ch/img/cern-logo-blue.png" alt="CERN" width="200" />
 </div>
+
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 
 **CERN Slides' App** is:
