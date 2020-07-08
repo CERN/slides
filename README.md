@@ -1,13 +1,13 @@
 <div align="center">
-  <img src="https://cds.cern.ch/images/CERN-PHOTO-201802-030-10/file?size=medium" alt="CERN" width="600" />
+  <img src="https://directory.web.cern.ch/img/cern-logo-blue.png" alt="CERN" width="600" />
 </div>
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 
 **CERN Slides' App** is:
  * **slides-creator** application
  * fully **web-based**
  * **Open source**
  * **made at CERN**, [the place where the web was born](https://home.cern/science/computing/birth-web)!
-
 
 ## Documentation
 

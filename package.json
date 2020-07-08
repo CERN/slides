@@ -10,9 +10,13 @@
         "husky": "^4.2.5",
         "lerna": "^3.22.1"
     },
+    "scripts":{
+        "start:dev": "lerna run start:dev",
+        "format": "lerna run format"
+    },
     "husky": {
         "hooks": {
-            "pre-commit": "lerna run format"
+            "pre-commit": "yarn format"
         }
     }
 }
