@@ -206,7 +206,9 @@ const defineTheming = selectionTheme => {
   }
 };
 
-const getTheme = selectionTheme => defineTheming(selectionTheme);
+// selectionTheme
+
+const getTheme = selectionTheme => defineTheming('cern');
 export default getTheme;
 
 /*

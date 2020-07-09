@@ -46,9 +46,9 @@ function LandingPage({
           // all went good
           onSetTitle(title);
           const user = username;
-          history.push(`/edit/${user}/${title}/`);
           // ready
           onSetIsReady();
+          history.push(`/edit/${user}/${title}?slide=0&slideElement=-1`);
         }
         setLoading(false);
       })
