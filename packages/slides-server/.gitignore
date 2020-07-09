@@ -1,5 +1,4 @@
 logfile
 .env
 node_modules/
-# production
-
+Slides-storage
