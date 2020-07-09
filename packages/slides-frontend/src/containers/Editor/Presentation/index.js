@@ -10,7 +10,6 @@ import {
 import {getDeck} from '../../redux-store/DeckReducer/selectors';
 import {Helmet} from 'react-helmet';
 
-import './index.css';
 import {Deck} from 'spectacle';
 import MySlide from '../MySlide';
 import createTheme from 'spectacle/lib/themes/default/index';

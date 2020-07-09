@@ -9,6 +9,7 @@ import {
   setLoadRequest,
   themeRequest,
   setPresentationMode,
+  setExportMode,
 } from '../../redux-store/PresentationReducer/actions';
 import {getTitle} from '../../redux-store/PresentationReducer/selectors';
 import './index.css';
@@ -21,6 +22,7 @@ function Settings({
   username,
   title,
   onSetPresentationMode,
+  onSetExportMode
 }) {
   const onClickHandler = item => {
     switch (item) {
@@ -41,7 +43,10 @@ function Settings({
         history.push(`/present/${username}/${title}/`);
         break;
       case 'cloud download':
-        console.log('export pdf button');
+        onSetExportMode();
+        // this makes everything stop moving and be deletable, exactly like in presentation Mode
+        onSetPresentationMode();
+        history.push(`/export/${username}/${title}?export&print`);
         break;
       default:
         break;
@@ -82,6 +87,7 @@ Settings.propTypes = {
   username: PropTypes.string,
   title: PropTypes.string,
   onSetPresentationMode: PropTypes.func,
+  onSetExportMode: PropTypes.func
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -91,6 +97,7 @@ export function mapDispatchToProps(dispatch) {
     onLoadRequest: () => dispatch(setLoadRequest(true)),
     onThemeRequest: () => dispatch(themeRequest(true)),
     onSetPresentationMode: () => dispatch(setPresentationMode(true)),
+    onSetExportMode: () => dispatch(setExportMode(true))
   };
 }
 

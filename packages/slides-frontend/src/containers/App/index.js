@@ -12,10 +12,11 @@ import {Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import Container from '../Editor/Container';
+import Presentation from '../Editor/Presentation';
+import Export from '../Editor/Export';
 import Homepage from '../Editor/Homepage';
 import {Loader} from 'semantic-ui-react';
 import GlobalStyle from '../../global-styles';
-import Presentation from '../Editor/Presentation';
 import NotFoundPage from '../NotFoundPage';
 
 // Migrate to new Version of Spectacle
@@ -28,6 +29,7 @@ function App({authenticated}) {
           <Switch>
             <Route path="/edit" component={Container} />
             <Route path="/present" component={Presentation} />
+            <Route path="/export" component={Export} />
             <Route exact path="/" component={Homepage} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
