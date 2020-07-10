@@ -81,9 +81,9 @@ function Canvas({title, theme, DeckOfSlides, assetsPath, backgroundColor, userna
       bottom={0}
       width={1}
     >
-      <Box padding="3em">
-        <Progress />
-      </Box>
+      <Box margin={0, 2}>
+      {currentSlide + 1} / {DeckOfSlides.length}
+    </Box>
     </FlexBox>
   );
 

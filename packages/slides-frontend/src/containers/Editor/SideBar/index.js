@@ -13,16 +13,19 @@ import history from '../../../utils/history';
 
 function SideBar({onAddSlide, onRemoveSlide, onAddText, currentSlide, onAddImage}) {
 
+  // apparently pushing like that in history simply doesn't work
+  // the arrow keys emit some other event for going back and forth
+  // this event has to be found and used here and also in the actions in the reducer to update the currentSlide properly
   const addingSlide = () => {
     onAddSlide();
-    history.push(`?slide=${currentSlide + 1}&slideElement=-1`);
+    // history.push(`?slide=${currentSlide + 1}&slideElement=-1`);
   };
 
   const removingSlide = () => {
     onRemoveSlide();
-    if (currentSlide === 0) {
-      history.push(`?slide=0&slideElement=-1`);
-    } else history.push(`?slide=${currentSlide - 1}&slideElement=-1`);
+    // if (currentSlide === 0) {
+    //   history.push(`?slide=0&slideElement=-1`);
+    // } else history.push(`?slide=${currentSlide - 1}&slideElement=-1`);
   };
 
   return (
