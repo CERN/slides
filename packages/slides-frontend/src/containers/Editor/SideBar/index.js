@@ -8,19 +8,23 @@ import {uploadImageRequest} from '../../redux-store/PresentationReducer/actions'
 import {getCurrentSlide} from '../../redux-store/DeckReducer/selectors';
 import './index.css';
 import {ItemTypes} from '../../redux-store/DeckReducer/definitions';
+import history from '../../../utils/history';
 // when i render SideBar onClick they will render something in the middle
 
 function SideBar({onAddSlide, onRemoveSlide, onAddText, currentSlide, onAddImage}) {
+
   const addingSlide = () => {
     onAddSlide();
-    window.location = `#/${currentSlide + 1}`; // because slides here are starting from 1
+    history.push(`?slide=${currentSlide + 1}&slideElement=-1`);
   };
+
   const removingSlide = () => {
     onRemoveSlide();
     if (currentSlide === 0) {
-      window.location = `#/${0}`;
-    } else window.location = `#/${currentSlide - 1}`;
+      history.push(`?slide=0&slideElement=-1`);
+    } else history.push(`?slide=${currentSlide - 1}&slideElement=-1`);
   };
+
   return (
     <div className="sidebar">
       <Menu vertical inverted fluid icon="labeled">

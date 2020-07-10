@@ -2,7 +2,7 @@ import React, {useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Helmet} from 'react-helmet';
 import {connect} from 'react-redux';
-import {Deck, Slide} from 'spectacle';
+import {FlexBox, Box, FullScreen, Progress, Deck, Slide} from 'spectacle';
 // import createTheme from 'spectacle/lib/themes/default/index';
 import history from '../../../utils/history';
 import {deletePresentationFolder} from '../../../utils/requests';
@@ -14,13 +14,14 @@ import {
   getBackgroundColor,
 } from '../../redux-store/PresentationReducer/selectors';
 
-import {getDeck} from '../../redux-store/DeckReducer/selectors';
+import {getDeck, getCurrentSlide} from '../../redux-store/DeckReducer/selectors';
+import MoveResize from '../components/resize_move';
 
 import MySlide from '../MySlide';
 import './index.css';
 // import getterTheme from '../../../theming/theme';
 
-function Canvas({title, theme, DeckOfSlides, assetsPath, backgroundColor, username, token}) {
+function Canvas({title, theme, DeckOfSlides, assetsPath, backgroundColor, username, token, currentSlide}) {
   const deck = useRef();
   // const myTheme = getterTheme(theme);
   // change fontconfig from here
@@ -45,9 +46,18 @@ function Canvas({title, theme, DeckOfSlides, assetsPath, backgroundColor, userna
   }
   // // now make the check if it is cern 3,4,5 then add intro and end slide
   // // use this hook to be able to move to next previous slide in adding removing slides
-  useEffect(() => {
-    // window.slideCount = deck.current.props.children.length;
-  });
+  // useEffect(() => {
+  //   window.slideCount = deck.current.props.children.length;
+  // });
+ // somehow try to sync in the new version what is seen with the URL
+ // the location change is not triggered always but only when adding a new slide
+ // thus leading to not changing the currentSlide when user uses the arrow keys
+  const slidesArray = () =>
+    DeckOfSlides.map(item => (
+      <Slide>
+        <MySlide key={item.ID}/>
+      </Slide>
+    ))
 
   // catch reload event
   useEffect(() => {
@@ -63,7 +73,20 @@ function Canvas({title, theme, DeckOfSlides, assetsPath, backgroundColor, userna
       return 'Are you sure you want to reload?';
     };
   });
-  console.log("DeckOfSlides: ", DeckOfSlides)
+
+  const template = () => (
+      <FlexBox
+      justifyContent="space-between"
+      position="absolute"
+      bottom={0}
+      width={1}
+    >
+      <Box padding="3em">
+        <Progress />
+      </Box>
+    </FlexBox>
+  );
+
   return (
     <div>
       <Helmet>
@@ -72,18 +95,17 @@ function Canvas({title, theme, DeckOfSlides, assetsPath, backgroundColor, userna
       <div className="deck">
         <Deck
           ref={deck}
-          transition={['zoom', 'slide']}
-          transitionDuration={500}
+          // transition={['zoom', 'slide']}
+          // transitionDuration={500}
           theme={myTheme}
-          progress="number"
-          showFullscreenControl={false}
-          // controls={false} // show or hide the move buttons
+          // progress="number"
+          animationsWhenGoingBack
+          keyboardControls="arrows"
+          // template={template}
+          template={template}
+          // showFullscreenControl={false}
         >
-          {/* {DeckOfSlides.map(item => (
-            <MySlide key={item.ID} />
-          ))} */}
-          {/* this actually makes it work, I have to find a way to create the <Slide /> components and the theming */}
-          <Slide />
+        {slidesArray()}
         </Deck>
       </div>
     </div>
@@ -98,6 +120,7 @@ Canvas.propTypes = {
   backgroundColor: PropTypes.string,
   username: PropTypes.string,
   token: PropTypes.string,
+  currentSlide: PropTypes.number,
 };
 
 export default connect(
@@ -107,6 +130,7 @@ export default connect(
     DeckOfSlides: getDeck(state),
     assetsPath: getAssetsPath(state),
     backgroundColor: getBackgroundColor(state),
+    currentSlide: getCurrentSlide(state),
     username: state.keycloak.userToken.cern_upn,
     token: state.keycloak.instance.token,
   }),

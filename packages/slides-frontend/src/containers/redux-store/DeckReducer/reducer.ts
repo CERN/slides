@@ -48,7 +48,13 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
         break;
       }
       case CHANGE_SLIDE: {
-        draft.currentSlide = Number(action.payload.location.hash.substr(2));
+        // this regular expression matches the slide number in the url
+        // this number is stored as the current slide number
+        const regExp = new RegExp(/=\d*&/);
+        const stringWithSlideNumber = regExp.exec(action.payload.location.search);
+        if(stringWithSlideNumber){
+          draft.currentSlide = Number(stringWithSlideNumber[0].slice(1, -1));
+        }
         break;
       }
       case ADD_ITEM: {
