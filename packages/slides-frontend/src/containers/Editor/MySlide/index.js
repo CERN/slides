@@ -5,20 +5,16 @@ import StandardSlide from '../../../theming/StandardSlide';
 import {getTheme} from '../../redux-store/PresentationReducer/selectors';
 import {getItems} from '../../redux-store/DeckReducer/selectors';
 import MoveResize from '../components/resize_move';
-import { Slide, Text } from 'spectacle';
 
 function MySlide({theme, itemsArray}) {
-  // const StandardSlideTemplate = StandardSlide(theme);
-  console.log("itemsArray", itemsArray)
+  const StandardSlideTemplate = StandardSlide(theme);
+
   return (
-    // <Slide>
-      // <Text>blabla</Text>
-    // {/* </Slide> */}
-    // <Slide>
-      itemsArray.map(itm => (
+    <StandardSlideTemplate>
+      {itemsArray.map(itm => (
         <MoveResize key={itm.ID} ID={itm.ID} />
-      ))
-    // </Slide>
+      ))}
+    </StandardSlideTemplate>
   );
 }
 

@@ -10,10 +10,10 @@ import {
 import {getDeck} from '../../redux-store/DeckReducer/selectors';
 import {Helmet} from 'react-helmet';
 import history from '../../../utils/history';
-import {Deck, Slide} from 'spectacle';
+import {Deck} from 'spectacle';
 import MySlide from '../MySlide';
-// import createTheme from 'spectacle/lib/themes/default/index';
-// import getterTheme from '../../../theming/theme';
+import createTheme from 'spectacle/lib/themes/default/index';
+import getterTheme from '../../../theming/theme';
 import PageNotFound from '../../NotFoundPage';
 
 /*
@@ -23,18 +23,17 @@ import PageNotFound from '../../NotFoundPage';
 */
 
 function Export({isReady, DeckOfSlides, title, theme, backgroundColor}) {
-    // const themeObj = getterTheme(theme);
-    // // change fontconfig from here
-    // const newTheme = {
-    //   ...themeObj,
-    //   themeConfig: {
-    //     ...themeObj.themeConfig,
-    //     secondary: backgroundColor,
-    //   },
-    // };
+    const themeObj = getterTheme(theme);
+    // change fontconfig from here
+    const newTheme = {
+      ...themeObj,
+      themeConfig: {
+        ...themeObj.themeConfig,
+        secondary: backgroundColor,
+      },
+    };
 
-    // const myTheme = createTheme(newTheme.themeConfig, newTheme.fontConfig);
-    const myTheme = {}
+    const myTheme = createTheme(newTheme.themeConfig, newTheme.fontConfig);
     return (
       <div>
         {isReady ? (
@@ -48,15 +47,13 @@ function Export({isReady, DeckOfSlides, title, theme, backgroundColor}) {
               theme={myTheme}
               progress="number"
               showFullscreenControl={false}
-              // history={history}
+                // history={history}
                 // disableKeyboardControls={true}
                 // controls={false} // show or hide the move buttons
             >
-              {/* {DeckOfSlides.map(item => (
+              {DeckOfSlides.map(item => (
                 <MySlide key={item.ID} />
-              ))} */}
-              <Slide />
-              <Slide />
+              ))}
             </Deck>
           </div>
         ) : (

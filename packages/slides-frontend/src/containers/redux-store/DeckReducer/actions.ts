@@ -25,15 +25,12 @@ export const removeSlide = () =>({
 export const changeSlide = (
     payload: {
         action: string,
+        isFirstRendering: boolean,
         location: {
+            hash: string,
             pathname: string,
             search: string,
-            hash: string,
-            key: string
-        },
-        query: {
-            slide: string,
-            slideElement: string
+            state: any
         }
     }) => ({
     type: CHANGE_SLIDE,

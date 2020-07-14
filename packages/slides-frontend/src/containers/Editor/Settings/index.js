@@ -46,7 +46,7 @@ function Settings({
         onSetExportMode();
         // this makes everything stop moving and be deletable, exactly like in presentation Mode
         onSetPresentationMode();
-        history.push(`/export/${username}/${title}?slide=0&slideElement=-1&exportMode=true`);
+        history.push(`/export/${username}/${title}?export&print`);
         break;
       default:
         break;
