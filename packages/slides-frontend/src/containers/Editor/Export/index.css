@@ -1,0 +1,4 @@
+/* Overwriting this is a hack to show all slides instead of only the first one */
+.spectacle-slide {
+    position: relative !important;
+}
