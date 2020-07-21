@@ -12,8 +12,6 @@ import {
   SET_EDIT_MODE,
   LOAD_DECK_STATE,
   TOGGLE_FOCUS,
-  FORCE_CHANGE_SLIDE,
-  CURRENT_SLIDE_0,
 } from './constants';
 import { Item, newItem, ItemTypes, Text, Deck, Slide} from './definitions';
 
@@ -51,28 +49,6 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
       }
       case CHANGE_SLIDE: {
         draft.currentSlide = Number(action.payload.location.hash.substr(2));
-        break;
-      }
-      case FORCE_CHANGE_SLIDE: {
-        // the second part of the evaluation is to stop if an array has 3 items, [0, 1, 2] to 
-        // get currentSlide = 3
-        if (action.direction === "UP") {
-          if (draft.slides.length - 1 > draft.currentSlide) {
-            draft.currentSlide = draft.currentSlide + 1;
-          }
-        }
-        else if (action.direction === "DOWN") {
-          if (draft.currentSlide > 0) {
-            draft.currentSlide = draft.currentSlide - 1;
-          }
-        }
-        else {
-          alert('Error in FORCE_CHANGE_SLIDE')
-        }
-        break;
-      }
-      case CURRENT_SLIDE_0: {
-        draft.currentSlide = 0;
         break;
       }
       case ADD_ITEM: {

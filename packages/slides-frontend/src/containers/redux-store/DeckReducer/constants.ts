@@ -1,8 +1,6 @@
 export const ADD_SLIDE = 'Slides/Presentation/ADD_SLIDE';
 export const REMOVE_SLIDE = 'Slides/Presentation/REMOVE_SLIDE';
 export const CHANGE_SLIDE = '@@router/LOCATION_CHANGE';
-export const FORCE_CHANGE_SLIDE = 'Slides/Presentation/FORCE_CHANGE_SLIDE';
-export const CURRENT_SLIDE_0 = 'Slides/Presentation/CURRENT_SLIDE_0';
 
 export const ADD_ITEM = 'Slides/Presentation/ADD_ITEM';
 export const REMOVE_ITEM = 'Slides/Presentation/REMOVE_ITEM';

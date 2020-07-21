@@ -4,9 +4,7 @@ import {connect} from 'react-redux';
 import StandardSlide from '../../../theming/StandardSlide';
 import {getTheme, getAssetsPath, getTitle} from '../../redux-store/PresentationReducer/selectors';
 import {getDeck} from '../../redux-store/DeckReducer/selectors';
-import { Slide, Text } from 'spectacle';
 import RenderHtml from '../components/text/RenderHtml';
-import MyImage from '../components/image';
 import './index.css';
 
 const Core = ({ x, y, width, height, item, assetsPath, username, title }) => (

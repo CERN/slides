@@ -10,8 +10,6 @@ import {
     SET_EDIT_MODE,
     LOAD_DECK_STATE,
     TOGGLE_FOCUS,
-    FORCE_CHANGE_SLIDE,
-    CURRENT_SLIDE_0,
 } from './constants';
 
 import { position, size, Item, Deck } from './definitions';
@@ -84,18 +82,10 @@ export const toggleFocus = (id: string, focus: boolean) => ({
     focus,
 }) as const;
 
-export const forceChangeSlide = (direction: string) => ({
-    type: FORCE_CHANGE_SLIDE,
-    direction,
-}) as const;
-
-export const currentSlide0 = () => ({
-    type: CURRENT_SLIDE_0,
-}) as const;
 
 export type Action = ReturnType<
  typeof addSlide | typeof removeSlide | typeof changeSlide |
  typeof addItem | typeof removeItem | typeof changeItemPosition |
  typeof changeItemSize | typeof editData | typeof setEditMode | typeof loadDeckState |
- typeof toggleFocus | typeof forceChangeSlide | typeof currentSlide0
+ typeof toggleFocus
 >

@@ -12,7 +12,7 @@ import history from '../../../utils/history';
 import {Deck} from 'spectacle';
 import createTheme from 'spectacle/lib/themes/default/index';
 import getterTheme from '../../../theming/theme';
-import PageNotFound from '../../NotFoundPage';
+// import PageNotFound from '../../NotFoundPage';
 import MyExportedSlides from './MyExportedSlides';
 import './index.css';
 
@@ -36,7 +36,7 @@ function Export({isReady, title, theme, backgroundColor}) {
   const myTheme = createTheme(newTheme.themeConfig, newTheme.fontConfig);
     return (
       <div>
-        {isReady ? (
+        {/* {isReady ? ( */}
           <div>
             <Helmet>
               <title>Export: {title}</title>
@@ -54,9 +54,11 @@ function Export({isReady, title, theme, backgroundColor}) {
               <MyExportedSlides />
             </Deck>
           </div>
-        ) : (
-          <PageNotFound />
-        )}
+        )
+          {/* // : (
+          // <PageNotFound />
+          // )
+        } */}
       </div>
     );
   }
