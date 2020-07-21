@@ -54,11 +54,17 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
         break;
       }
       case FORCE_CHANGE_SLIDE: {
+        // the second part of the evaluation is to stop if an array has 3 items, [0, 1, 2] to 
+        // get currentSlide = 3
         if (action.direction === "UP") {
-          draft.currentSlide = draft.currentSlide + 1;
+          if (draft.slides.length - 1 > draft.currentSlide) {
+            draft.currentSlide = draft.currentSlide + 1;
+          }
         }
-        else if (action.direction === "DOWN" && draft.currentSlide > 0) {
-          draft.currentSlide = draft.currentSlide - 1;
+        else if (action.direction === "DOWN") {
+          if (draft.currentSlide > 0) {
+            draft.currentSlide = draft.currentSlide - 1;
+          }
         }
         else {
           alert('Error in FORCE_CHANGE_SLIDE')

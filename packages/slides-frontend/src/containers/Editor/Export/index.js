@@ -15,7 +15,6 @@ import getterTheme from '../../../theming/theme';
 import PageNotFound from '../../NotFoundPage';
 import MyExportedSlides from './MyExportedSlides';
 import './index.css';
-import { currentSlide0 } from '../../redux-store/DeckReducer/actions';
 
 /*
     Update spectacle
@@ -23,7 +22,7 @@ import { currentSlide0 } from '../../redux-store/DeckReducer/actions';
     Update the way of exporting PDFs because it works better in the latest version
 */
 
-function Export({isReady, title, theme, backgroundColor, onCurrentSlide0}) {
+function Export({isReady, title, theme, backgroundColor}) {
   const themeObj = getterTheme(theme);
   // change fontconfig from here
   const newTheme = {
@@ -34,7 +33,6 @@ function Export({isReady, title, theme, backgroundColor, onCurrentSlide0}) {
     },
   };
 
-  // onCurrentSlide0();
   const myTheme = createTheme(newTheme.themeConfig, newTheme.fontConfig);
     return (
       <div>
@@ -53,7 +51,6 @@ function Export({isReady, title, theme, backgroundColor, onCurrentSlide0}) {
             >
             {/* Inside here have a function that statically return
              the array of slides and array of elements of each slide */}
-              {/* before everything else I should put currentSlide to 0 */}
               <MyExportedSlides />
             </Deck>
           </div>
@@ -69,15 +66,7 @@ function Export({isReady, title, theme, backgroundColor, onCurrentSlide0}) {
     title: PropTypes.string,
     theme: PropTypes.string,
     backgroundColor: PropTypes.string,
-    onCurrentSlide0: PropTypes.func,
   };
-
-  export function mapDispatchToProps(dispatch) {
-    return {
-      onCurrentSlide0: () => dispatch(currentSlide0()),
-    };
-  }
-
 
   export default connect(
     state => ({
@@ -86,5 +75,5 @@ function Export({isReady, title, theme, backgroundColor, onCurrentSlide0}) {
       theme: getTheme(state),
       backgroundColor: getBackgroundColor(state),
     }),
-    mapDispatchToProps,
+    null,
   )(Export);

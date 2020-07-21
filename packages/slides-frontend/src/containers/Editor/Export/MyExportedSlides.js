@@ -2,28 +2,59 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import StandardSlide from '../../../theming/StandardSlide';
-import {getTheme} from '../../redux-store/PresentationReducer/selectors';
+import {getTheme, getAssetsPath, getTitle} from '../../redux-store/PresentationReducer/selectors';
 import {getDeck} from '../../redux-store/DeckReducer/selectors';
-import MoveResize from '../components/resize_move';
-import { forceChangeSlide } from '../../redux-store/DeckReducer/actions';
 import { Slide, Text } from 'spectacle';
+import RenderHtml from '../components/text/RenderHtml';
+import MyImage from '../components/image';
+import './index.css';
 
-function MyExportedSlides({theme, DeckOfSlides, onForceChangeSlide}) {
+const Core = ({ x, y, width, height, item, assetsPath, username, title }) => (
+  <div
+    style={{
+      position: 'absolute',
+      left: x,
+      top: y,
+      width,
+      height,
+      boxSizing: 'border-box',
+      display: 'inline-block',
+    }}
+  >
+    {item.type === 'TEXT' ? (
+      // the item is text so use the renderHTML 
+      <RenderHtml text={item.Data} />
+    ): (
+      // if it is an image
+      <div className="img-style">
+        <img src={`${assetsPath}/static/${username}/${title}/assets/${item.Src}`} alt="" />
+      </div>
+    )}
+  </div>
+)
+
+
+
+function MyExportedSlides({theme, DeckOfSlides, assetsPath, username, title}) {
   const StandardSlideTemplate = StandardSlide(theme);
     return (
       <>
         {DeckOfSlides.map(slide => (
           <>
-            {/* <StandardSlideTemplate key={slide.ID}>
-                {slide.itemsArray.map(itm =>
-                    <MoveResize key={itm.ID} ID={itm.ID} />   
-                )}
-            </StandardSlideTemplate> */}
             <StandardSlideTemplate key={slide.ID}>
-              <Text>{slide.ID}</Text> 
-              {/* the issue is with the move resize that needs to get the current items and uses the currentSlide */}
-              {/* I have to think of a clever workaround */}
-              {/* the current approach works and gives all slides correctly with their correct slide ID */}
+              {slide.itemsArray.map(itm =>
+                <Core
+                  key={itm.ID}
+                  x={itm.Position.x}
+                  y={itm.Position.y}
+                  width={itm.Size.width}
+                  height={itm.Size.height}
+                  item={itm}
+                  assetsPath={assetsPath}
+                  username={username}
+                  title={title}
+                />
+              )}
             </StandardSlideTemplate>
           </>
         ))}
@@ -34,19 +65,18 @@ function MyExportedSlides({theme, DeckOfSlides, onForceChangeSlide}) {
 MyExportedSlides.propTypes = {
   theme: PropTypes.string.isRequired,
   DeckOfSlides: PropTypes.array,
-  onForceChangeSlide: PropTypes.func,
+  assetsPath: PropTypes.string,
+  username: PropTypes.string,
+  title: PropTypes.string,
 };
-
-export function mapDispatchToProps(dispatch) {
-  return {
-    onForceChangeSlide: () => dispatch(forceChangeSlide("UP")),
-  };
-}
 
 export default connect(
   state => ({
     theme: getTheme(state),
     DeckOfSlides: getDeck(state),
+    assetsPath: getAssetsPath(state),
+    username: state.keycloak.userToken.cern_upn,
+    title: getTitle(state),
   }),
-  mapDispatchToProps,
+  null,
 )(MyExportedSlides);
