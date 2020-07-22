@@ -12,3 +12,7 @@ div.img-style img {
     height: 100%;
     width: 100%; */
 }
+
+.swal2-content {
+    text-align: left !important;
+}
