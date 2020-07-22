@@ -21,5 +21,4 @@
 <!-- ALL-CONTRIBUTORS-LIST:START -->
 <!-- prettier-ignore -->
 <table><tr><td align="center"><a href="https://aristofanischionis.github.io/"><img src="https://avatars.githubusercontent.com/aristofanischionis" width="80px;" alt="Aristofanis Chionis"/><br /><sub><b>Aristofanis Chionis</b></sub></a><br /><a href="https://github.com/aristofanischionis/slides/commits?author=aristofanischionis" title="Code">💻</a> <a href="https://github.com/aristofanischionis/slides/commits?author=aristofanischionis" title="Documentation">📖</a></td></tr></table>
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
