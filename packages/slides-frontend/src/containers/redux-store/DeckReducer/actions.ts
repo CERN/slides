@@ -82,6 +82,7 @@ export const toggleFocus = (id: string, focus: boolean) => ({
     focus,
 }) as const;
 
+
 export type Action = ReturnType<
  typeof addSlide | typeof removeSlide | typeof changeSlide |
  typeof addItem | typeof removeItem | typeof changeItemPosition |

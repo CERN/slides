@@ -1,0 +1,18 @@
+/* Overwriting this is a hack to show all slides instead of only the first one */
+.spectacle-slide {
+    position: relative !important;
+}
+
+div.img-style img {
+    max-width: 100%;
+    max-height: 100%;
+    /* height: auto;
+    width:auto; */
+    /* display: flex;
+    height: 100%;
+    width: 100%; */
+}
+
+.swal2-content {
+    text-align: left !important;
+}

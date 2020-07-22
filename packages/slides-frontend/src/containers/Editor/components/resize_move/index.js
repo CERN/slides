@@ -53,7 +53,8 @@ const Core = ({x, y, width, height, getRef, item}) => (
 
 const Reactable = reactable(Core);
 
-function MoveResize({ID, item, onChangePosition, onChangeSize, onSetEditMode, presentationMode}) {
+function MoveResize({ ID, item, onChangePosition, onChangeSize, onSetEditMode, presentationMode }) {
+  console.log("the item in move resize is: ", item)
   const [coordinate, setCoordinate] = useState({
     x: item.Position.x,
     y: item.Position.y,
@@ -147,7 +148,7 @@ function MoveResize({ID, item, onChangePosition, onChangeSize, onSetEditMode, pr
   );
 
   const textEditModeRender = () => <Reactable {...coordinate} item={item} />;
-  // console.log('my coordinates are:', coordinate);
+
   return (
     <div>
       {editMode(item.type, item.Edit) ? (
