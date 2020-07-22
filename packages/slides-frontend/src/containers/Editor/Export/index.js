@@ -7,6 +7,7 @@ import {
   getTheme,
   getBackgroundColor,
 } from '../../redux-store/PresentationReducer/selectors';
+import {getDeck} from '../../redux-store/DeckReducer/selectors';
 import {Helmet} from 'react-helmet';
 import history from '../../../utils/history';
 import {Deck} from 'spectacle';
@@ -23,7 +24,7 @@ import './index.css';
     Update the way of exporting PDFs because it works better in the latest version
 */
 
-function Export({isReady, title, theme, backgroundColor}) {
+function Export({isReady, title, theme, backgroundColor, DeckOfSlides}) {
   const themeObj = getterTheme(theme);
   // change fontconfig from here
   const newTheme = {
@@ -34,6 +35,9 @@ function Export({isReady, title, theme, backgroundColor}) {
     },
   };
 
+  // In history I check if there is a second slide or not
+  // if there is we need the history in order to get all the slides
+  // if it's only 1 slide then no history needed
   const myTheme = createTheme(newTheme.themeConfig, newTheme.fontConfig);
     return (
       <div>
@@ -47,7 +51,7 @@ function Export({isReady, title, theme, backgroundColor}) {
               theme={myTheme}
               progress="none"
               showFullscreenControl={false}
-              history={history}
+              history={DeckOfSlides.length > 1 ? history : null}
               disableKeyboardControls={true}
               controls={false}
             >
@@ -69,6 +73,7 @@ function Export({isReady, title, theme, backgroundColor}) {
     title: PropTypes.string,
     theme: PropTypes.string,
     backgroundColor: PropTypes.string,
+    DeckOfSlides: PropTypes.array,
   };
 
   export default connect(
@@ -77,6 +82,7 @@ function Export({isReady, title, theme, backgroundColor}) {
       title: getTitle(state),
       theme: getTheme(state),
       backgroundColor: getBackgroundColor(state),
+      DeckOfSlides: getDeck(state),
     }),
     null,
   )(Export);

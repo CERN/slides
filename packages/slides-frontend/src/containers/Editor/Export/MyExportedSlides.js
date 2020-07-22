@@ -35,29 +35,29 @@ const Core = ({ x, y, width, height, item, assetsPath, username, title }) => (
 
 function MyExportedSlides({theme, DeckOfSlides, assetsPath, username, title}) {
   const StandardSlideTemplate = StandardSlide(theme);
-    return (
-      <>
-        {DeckOfSlides.map(slide => (
-          <>
-            <StandardSlideTemplate key={slide.ID}>
-              {slide.itemsArray.map(itm =>
-                <Core
-                  key={itm.ID}
-                  x={itm.Position.x}
-                  y={itm.Position.y}
-                  width={itm.Size.width}
-                  height={itm.Size.height}
-                  item={itm}
-                  assetsPath={assetsPath}
-                  username={username}
-                  title={title}
-                />
-              )}
-            </StandardSlideTemplate>
-          </>
-        ))}
-      </>
-    );
+  return (
+    <>
+      {DeckOfSlides.map(slide => (
+        <>
+          <StandardSlideTemplate key={slide.ID}>
+            {slide.itemsArray.map(itm =>
+              <Core
+                key={itm.ID}
+                x={itm.Position.x}
+                y={itm.Position.y}
+                width={itm.Size.width}
+                height={itm.Size.height}
+                item={itm}
+                assetsPath={assetsPath}
+                username={username}
+                title={title}
+              />
+            )}
+          </StandardSlideTemplate>
+        </>
+      ))}
+    </>
+  );
 }
 
 MyExportedSlides.propTypes = {

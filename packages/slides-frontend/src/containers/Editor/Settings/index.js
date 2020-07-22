@@ -73,7 +73,7 @@ function Settings({
         {Item('theme', 'Change Theme')}
         {/* {Item('ordered list', 'Arrange Slides')} */}
         {Item('cloud upload', 'Upload existing presentation')}
-        {Item('cloud download', 'Export as PDF (pending)')}
+        {Item('cloud download', 'Export as PDF (beta)')}
       </Menu>
     </div>
   );
