@@ -11,6 +11,7 @@ import {
   BACKGROUND_COLOR,
   THEME_REQUEST,
   PRESENTATION_MODE,
+  EXPORT_MODE
 } from './constants';
 
 export const setTheme = (theme: string) => ({
@@ -74,10 +75,16 @@ export const setPresentationMode = (mode: boolean) => ({
   mode,
 }) as const;
 
+export const setExportMode = (mode: boolean) => ({
+  type: EXPORT_MODE,
+  mode,
+}) as const;
+
+
 export type Action = ReturnType<
   typeof setTheme | typeof setTitle |
   typeof uploadImageRequest | typeof setAssetsPath | typeof themeRequest |
   typeof setSaveRequest | typeof setLoadRequest | typeof loadState |
   typeof setIsReady | typeof setStyleRequest | typeof setBackgroundColor |
-  typeof setPresentationMode
+  typeof setPresentationMode | typeof setExportMode
 >

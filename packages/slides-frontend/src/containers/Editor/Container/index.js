@@ -9,15 +9,16 @@ import SideBar from '../SideBar';
 import SavePresentation from '../../SavePresentation';
 import LoadPresentation from '../../LoadPresentation';
 import {getIsReady} from '../../redux-store/PresentationReducer/selectors';
-import {setPresentationMode} from '../../redux-store/PresentationReducer/actions';
+import {setPresentationMode, setExportMode} from '../../redux-store/PresentationReducer/actions';
 import Upload from '../components/image/Upload';
 import StyleComponent from '../../StyleComponent';
 import ThemeSelector from '../../ThemeSelector';
 import PageNotFound from '../../NotFoundPage';
 
-export function Container({isReady, onSetPresentationMode}) {
+export function Container({isReady, onSetPresentationMode, onSetExportMode}) {
   useEffect(() => {
     onSetPresentationMode();
+    onSetExportMode();
   });
 
   return (
@@ -43,11 +44,13 @@ export function Container({isReady, onSetPresentationMode}) {
 Container.propTypes = {
   isReady: PropTypes.bool,
   onSetPresentationMode: PropTypes.func,
+  onSetExportMode: PropTypes.func
 };
 
 function mapDispatchToProps(dispatch) {
   return {
     onSetPresentationMode: () => dispatch(setPresentationMode(false)),
+    onSetExportMode: () => dispatch(setExportMode(false))
   };
 }
 

@@ -19,6 +19,8 @@ const getStyleRequest = (state: { presentation: presentationState; }) => state.p
 const getBackgroundColor = (state: { presentation: presentationState; }) => state.presentation.backgroundColor;
 const getThemeRequest = (state: { presentation: presentationState; }) => state.presentation.themeRequest;
 const getPresentationMode = (state: { presentation: presentationState; }) => state.presentation.presentationMode;
+const getExportMode = (state: { presentation: presentationState; }) => state.presentation.exportMode;
+
 
 export {
   getTheme,
@@ -32,4 +34,5 @@ export {
   getBackgroundColor,
   getThemeRequest,
   getPresentationMode,
+  getExportMode
 };

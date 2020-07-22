@@ -13,6 +13,7 @@ import {
   BACKGROUND_COLOR,
   THEME_REQUEST,
   PRESENTATION_MODE,
+  EXPORT_MODE
 } from './constants';
 import { Action } from './actions';
 
@@ -62,6 +63,9 @@ const PresentationReducer = (state: presentationState=initialState, action: Acti
         break;
       case PRESENTATION_MODE:
         draft.presentationMode = action.mode;
+        break;
+      case EXPORT_MODE:
+        draft.exportMode = action.mode;
         break;
     }
   });
