@@ -51,7 +51,27 @@ function Canvas({
     }).then(() => {
       console.log('Reveal.js is initialized');
     });
-  });
+  }, []);
+
+  // useEffect(() => {
+  //   //   //   window.slideCount = deck.current.props.children.length;
+  //   // get the hash from reveal API to know how many sections are in the deck
+  //   console.log("======", Reveal.getTotalSlides())
+
+  //   });
+
+  const slides = () =>
+    DeckOfSlides.map(item => (
+      <section>
+        {/* <MySlide key={item.ID}/>
+        {item} */}
+        hello!
+      </section>
+    ));
+
+
+
+
 
   return (
     <div>
@@ -61,7 +81,7 @@ function Canvas({
       <div className="deck">
         <div className="reveal">
           <div className="slides">
-            <section>
+            {/* <section>
               <h2>First Horizontal Slide 🐟</h2>
             </section>
             <section>
@@ -70,7 +90,8 @@ function Canvas({
             </section>
             <section>Third slide!!!!!!!!!!!!!!!</section>
             <section>Fourth slide!!!!!!!!!!!!!!!</section>
-            <section>Fifth slide!!!!!!!!!!!!!!!</section>
+            <section>Fifth slide!!!!!!!!!!!!!!!</section> */}
+            {slides()}
           </div>
         </div>
       </div>
@@ -78,30 +99,7 @@ function Canvas({
   );
 }
 
-// function Canvas({title, theme, DeckOfSlides, assetsPath, backgroundColor, username, token, currentSlide}) {
-//   const deck = useRef();
-//   // const myTheme = getterTheme(theme);
-//   // change fontconfig from here
-//   // const newTheme = {
-//   //   ...themeObj,
-//   //   themeConfig: {
-//   //     ...themeObj.themeConfig,
-//   //     secondary: backgroundColor,
-//   //   },
-//   // };
 
-//   // const myTheme = createTheme(newTheme.themeConfig, newTheme.fontConfig);
-//   const myTheme = {
-//     colors: {
-//       primary: '#f00',
-//       secondary: '#00f'
-//     },
-//     fontSizes: {
-//       header: '64px',
-//       paragraph: '28px'
-//     }
-//   }
-//   // // now make the check if it is cern 3,4,5 then add intro and end slide
 //   // // use this hook to be able to move to next previous slide in adding removing slides
 //   // useEffect(() => {
 //   //   window.slideCount = deck.current.props.children.length;

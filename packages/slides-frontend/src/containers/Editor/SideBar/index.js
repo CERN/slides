@@ -9,6 +9,7 @@ import {getCurrentSlide} from '../../redux-store/DeckReducer/selectors';
 import './index.css';
 import {ItemTypes} from '../../redux-store/DeckReducer/definitions';
 import history from '../../../utils/history';
+import Reveal from 'reveal.js';
 // when i render SideBar onClick they will render something in the middle
 
 function SideBar({onAddSlide, onRemoveSlide, onAddText, currentSlide, onAddImage}) {
@@ -17,11 +18,13 @@ function SideBar({onAddSlide, onRemoveSlide, onAddText, currentSlide, onAddImage
   // this event has to be found and used here and also in the actions in the reducer to update the currentSlide properly
   const addingSlide = () => {
     onAddSlide();
-    // history.push(`?slide=${currentSlide + 1}&slideElement=-1`);
+    Reveal.next();
+    // Reveal.sync();
   };
 
   const removingSlide = () => {
     onRemoveSlide();
+    Reveal.prev();
     // if (currentSlide === 0) {
     //   history.push(`?slide=0&slideElement=-1`);
     // } else history.push(`?slide=${currentSlide - 1}&slideElement=-1`);
