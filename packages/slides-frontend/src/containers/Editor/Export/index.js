@@ -23,64 +23,64 @@ import PageNotFound from '../../NotFoundPage';
 */
 
 function Export({isReady, DeckOfSlides, title, theme, backgroundColor}) {
-    // const themeObj = getterTheme(theme);
-    // // change fontconfig from here
-    // const newTheme = {
-    //   ...themeObj,
-    //   themeConfig: {
-    //     ...themeObj.themeConfig,
-    //     secondary: backgroundColor,
-    //   },
-    // };
+  // const themeObj = getterTheme(theme);
+  // // change fontconfig from here
+  // const newTheme = {
+  //   ...themeObj,
+  //   themeConfig: {
+  //     ...themeObj.themeConfig,
+  //     secondary: backgroundColor,
+  //   },
+  // };
 
-    // const myTheme = createTheme(newTheme.themeConfig, newTheme.fontConfig);
-    const myTheme = {}
-    return (
-      <div>
-        {isReady ? (
-          <div>
-            <Helmet>
-              <title>Export: {title}</title>
-            </Helmet>
-            <Deck
-              transition={['zoom', 'slide']}
-              transitionDuration={500}
-              theme={myTheme}
-              progress="number"
-              showFullscreenControl={false}
-              // history={history}
-                // disableKeyboardControls={true}
-                // controls={false} // show or hide the move buttons
-            >
-              {/* {DeckOfSlides.map(item => (
+  // const myTheme = createTheme(newTheme.themeConfig, newTheme.fontConfig);
+  const myTheme = {};
+  return (
+    <div>
+      {isReady ? (
+        <div>
+          <Helmet>
+            <title>Export: {title}</title>
+          </Helmet>
+          <Deck
+            transition={['zoom', 'slide']}
+            transitionDuration={500}
+            theme={myTheme}
+            progress="number"
+            showFullscreenControl={false}
+            // history={history}
+            // disableKeyboardControls={true}
+            // controls={false} // show or hide the move buttons
+          >
+            {/* {DeckOfSlides.map(item => (
                 <MySlide key={item.ID} />
               ))} */}
-              <Slide />
-              <Slide />
-            </Deck>
-          </div>
-        ) : (
-          <PageNotFound />
-        )}
-      </div>
-    );
-  }
+            <Slide />
+            <Slide />
+          </Deck>
+        </div>
+      ) : (
+        <PageNotFound />
+      )}
+    </div>
+  );
+}
 
-  Export.propTypes = {
-    isReady: PropTypes.bool,
-    DeckOfSlides: PropTypes.array,
-    title: PropTypes.string,
-    theme: PropTypes.string,
-    backgroundColor: PropTypes.string,
-  };
+Export.propTypes = {
+  isReady: PropTypes.bool,
+  DeckOfSlides: PropTypes.array,
+  title: PropTypes.string,
+  theme: PropTypes.string,
+  backgroundColor: PropTypes.string,
+};
 
-  export default connect(
-    state => ({
-      isReady: getIsReady(state),
-      DeckOfSlides: getDeck(state),
-      title: getTitle(state),
-      theme: getTheme(state),
-      backgroundColor: getBackgroundColor(state),
-    }),
-    null
-  )(Export);
+export default connect(
+  state => ({
+    isReady: getIsReady(state),
+    DeckOfSlides: getDeck(state),
+    title: getTitle(state),
+    theme: getTheme(state),
+    backgroundColor: getBackgroundColor(state),
+  }),
+  null
+)(Export);

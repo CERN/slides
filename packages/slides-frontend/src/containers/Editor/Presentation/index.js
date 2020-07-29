@@ -29,7 +29,7 @@ function Presentation({isReady, DeckOfSlides, title, theme, backgroundColor}) {
   // };
 
   // const myTheme = createTheme(newTheme.themeConfig, newTheme.fontConfig);
-  const myTheme = {}
+  const myTheme = {};
   return (
     <div>
       {isReady ? (

@@ -23,7 +23,16 @@ import 'reveal.js/dist/reveal.css';
 // import 'reveal.js/dist/theme/beige.css';
 import '../../../theming/cern3.css';
 
-function Canvas({title, theme, DeckOfSlides, assetsPath, backgroundColor, username, token, currentSlide}) {
+function Canvas({
+  title,
+  theme,
+  DeckOfSlides,
+  assetsPath,
+  backgroundColor,
+  username,
+  token,
+  currentSlide,
+}) {
   useEffect(() => {
     Reveal.initialize({
       showSlideNumber: 'all',
@@ -39,9 +48,8 @@ function Canvas({title, theme, DeckOfSlides, assetsPath, backgroundColor, userna
       // Transition style for full page slide backgrounds
       backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
     }).then(() => {
-      console.log("Reveal.js is initialized");
+      console.log('Reveal.js is initialized');
     });
-
   });
 
   return (
@@ -50,25 +58,23 @@ function Canvas({title, theme, DeckOfSlides, assetsPath, backgroundColor, userna
         <title>Edit: {title}</title>
       </Helmet>
       <div className="deck">
-          <div className="reveal">
-            <div className="slides">
-              <section><h2>First Horizontal Slide 🐟</h2></section>
-              <section>
-                <section>
-                  Second slide
-                </section>
-                <section>
-                  The only vertical slide!
-                </section>
-              </section>
-              <section>Third slide!!!!!!!!!!!!!!!</section>
-              <section>Fourth slide!!!!!!!!!!!!!!!</section>
-              <section>Fifth slide!!!!!!!!!!!!!!!</section>
-            </div>
+        <div className="reveal">
+          <div className="slides">
+            <section>
+              <h2>First Horizontal Slide 🐟</h2>
+            </section>
+            <section>
+              <section>Second slide</section>
+              <section>The only vertical slide!</section>
+            </section>
+            <section>Third slide!!!!!!!!!!!!!!!</section>
+            <section>Fourth slide!!!!!!!!!!!!!!!</section>
+            <section>Fifth slide!!!!!!!!!!!!!!!</section>
           </div>
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
 // function Canvas({title, theme, DeckOfSlides, assetsPath, backgroundColor, username, token, currentSlide}) {

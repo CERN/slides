@@ -12,7 +12,6 @@ import history from '../../../utils/history';
 // when i render SideBar onClick they will render something in the middle
 
 function SideBar({onAddSlide, onRemoveSlide, onAddText, currentSlide, onAddImage}) {
-
   // apparently pushing like that in history simply doesn't work
   // the arrow keys emit some other event for going back and forth
   // this event has to be found and used here and also in the actions in the reducer to update the currentSlide properly
