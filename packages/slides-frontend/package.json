@@ -39,6 +39,7 @@
     "reactablejs": "^0.2.0",
     "redux": "4.0.5",
     "redux-devtools-extension": "^2.13.8",
+    "reveal.js": "^4.0.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.2",
     "source-map-loader": "^0.2.4",

@@ -14820,6 +14820,11 @@ reusify@^1.0.4:
   resolved "https://cern-nexus.web.cern.ch/repository/npm-group/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
+reveal.js@^4.0.2:
+  version "4.0.2"
+  resolved "https://cern-nexus.web.cern.ch/repository/npm-group/reveal.js/-/reveal.js-4.0.2.tgz#2e5e9f8ed0fa239924b448f21d4238c5aa6e852e"
+  integrity sha512-LWZSUenufF1gpD7npxJ7KfoQQFKgc1D6XrLTFgKlwWNP1BQ74hT48KONFWMAw+8R/QUeaScCLCLrBVHDfFIEiw==
+
 rework-visit@1.0.0:
   version "1.0.0"
   resolved "https://cern-nexus.web.cern.ch/repository/npm-group/rework-visit/-/rework-visit-1.0.0.tgz#9945b2803f219e2f7aca00adb8bc9f640f842c9a"
