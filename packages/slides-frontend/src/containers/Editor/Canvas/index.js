@@ -69,10 +69,6 @@ function Canvas({
       </section>
     ));
 
-
-
-
-
   return (
     <div>
       <Helmet>
@@ -98,7 +94,6 @@ function Canvas({
     </div>
   );
 }
-
 
 //   // // use this hook to be able to move to next previous slide in adding removing slides
 //   // useEffect(() => {
