@@ -2,7 +2,7 @@
  * CERN theme for reveal.js.
  * Author: Emmanuel Ormancey
  */
-@import url(../../lib/font/league-gothic/league-gothic.css);
+/* @import url(https://allfont.net/allfont.css?fonts=league-gothic); */
 @import url(https://framework.web.cern.ch/framework/2.0/fonts/PTSansWeb/PTSansWeb.css);
 /**
  * CERN Colors
@@ -35,11 +35,10 @@ html * {
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
-body {
-  background: #fff;
-  background-color: #fff; }
 
 .reveal {
+  background: #fff;
+  background-color: #fff;
   font-family: "PT Sans", sans-serif;
   font-size: 32px;
   font-weight: normal;

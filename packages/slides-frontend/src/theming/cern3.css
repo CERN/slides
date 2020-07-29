@@ -32,11 +32,10 @@ html * {
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
-.reveal {
-  background: #0053A1;
-  background-color: #0053A1; }
 
 .reveal {
+  background: #0053A1;
+  background-color: #0053A1;
   font-family: "Roboto Slab", serif !important;
   font-size: 32px;
   font-weight: normal;

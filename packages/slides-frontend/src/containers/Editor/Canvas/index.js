@@ -21,7 +21,8 @@ import './index.css';
 import Reveal from 'reveal.js';
 import 'reveal.js/dist/reveal.css';
 // import 'reveal.js/dist/theme/beige.css';
-import '../../../theming/cern3.css';
+import '../../../theming/cern.css';
+// cern themes work perfectly like in codimd
 
 function Canvas({
   title,
