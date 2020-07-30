@@ -25,6 +25,7 @@ function SideBar({onAddSlide, onRemoveSlide, onAddText, currentSlide, onAddImage
   const removingSlide = () => {
     onRemoveSlide();
     Reveal.prev();
+    // Reveal.sync();
     // if (currentSlide === 0) {
     //   history.push(`?slide=0&slideElement=-1`);
     // } else history.push(`?slide=${currentSlide - 1}&slideElement=-1`);

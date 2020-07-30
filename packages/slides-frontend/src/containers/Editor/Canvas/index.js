@@ -38,10 +38,13 @@ function Canvas({
     Reveal.initialize({
       showSlideNumber: 'all',
       hash: true,
+      // numbering starts from 1 in the hash to match the slide number in buttom right
+      hashOneBasedIndex: true,
       respondToHashChanges: true,
       history: true,
       keyboard: true,
       embedded: true,
+      slideNumber: true,
       // Transition style
       transition: 'slide', // none/fade/slide/convex/concave/zoom
       // Transition speed
@@ -53,20 +56,17 @@ function Canvas({
     });
   }, []);
 
-  // useEffect(() => {
-  //   //   //   window.slideCount = deck.current.props.children.length;
-  //   // get the hash from reveal API to know how many sections are in the deck
-  //   console.log("======", Reveal.getTotalSlides())
-
-  //   });
+  useEffect(() => {
+    //   //   window.slideCount = deck.current.props.children.length;
+    // get the hash from reveal API to know how many sections are in the deck
+    console.log("======", Reveal.getTotalSlides())
+    console.log("--------", window.location.hash)
+    // window.location.hash = `#/${Reveal.getTotalSlides()}`
+    });
 
   const slides = () =>
     DeckOfSlides.map(item => (
-      <section>
-        {/* <MySlide key={item.ID}/>
-        {item} */}
-        hello!
-      </section>
+        <MySlide key={item.ID}/>
     ));
 
   return (
