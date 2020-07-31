@@ -56,18 +56,22 @@ function Canvas({
     });
   }, []);
 
-  useEffect(() => {
-    //   //   window.slideCount = deck.current.props.children.length;
-    // get the hash from reveal API to know how many sections are in the deck
-    console.log("======", Reveal.getTotalSlides())
-    console.log("--------", window.location.hash)
-    // window.location.hash = `#/${Reveal.getTotalSlides()}`
-    });
+  // useEffect(() => {
+  //   //   //   window.slideCount = deck.current.props.children.length;
+  //   // get the hash from reveal API to know how many sections are in the deck
+  //   console.log("======", Reveal.getTotalSlides())
+  //   console.log("--------", window.location.hash)
+  //   // window.location.hash = `#/${Reveal.getTotalSlides()}`
+  //   // Reveal.getCurrentSlide()
+  //   });
 
-  const slides = () =>
-    DeckOfSlides.map(item => (
+  const slides = () => {
+    return (
+      DeckOfSlides.map(item => (
         <MySlide key={item.ID}/>
-    ));
+      ))
+    )
+  }
 
   return (
     <div>

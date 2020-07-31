@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {Menu, Icon, Popup} from 'semantic-ui-react';
+import { Menu, Icon, Popup } from 'semantic-ui-react';
+import Reveal from 'reveal.js';
 import history from '../../../utils/history';
 import {
   setSaveRequest,
@@ -46,7 +47,10 @@ function Settings({
         onSetExportMode();
         // this makes everything stop moving and be deletable, exactly like in presentation Mode
         onSetPresentationMode();
-        history.push(`/export/${username}/${title}?slide=0&slideElement=-1&exportMode=true`);
+        history.push(`/export/${username}/${title}?print-pdf`);
+        break;
+      case 'minus':
+        Reveal.toggleOverview();
         break;
       default:
         break;
@@ -74,6 +78,7 @@ function Settings({
         {/* {Item('ordered list', 'Arrange Slides')} */}
         {Item('cloud upload', 'Upload existing presentation')}
         {Item('cloud download', 'Export as PDF (pending)')}
+        {Item('minus', 'See the Presentation Overview')}
       </Menu>
     </div>
   );

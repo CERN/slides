@@ -19,6 +19,11 @@ function SideBar({onAddSlide, onRemoveSlide, onAddText, currentSlide, onAddImage
   const addingSlide = () => {
     onAddSlide();
     Reveal.next();
+    // if (currentSlide === 0) {
+    //   Reveal.next();
+    // }
+    // Reveal.slide( indexh, indexv, indexf );
+    // history.push(`#/${currentSlide+2}`)
     // Reveal.sync();
   };
 
@@ -27,8 +32,10 @@ function SideBar({onAddSlide, onRemoveSlide, onAddText, currentSlide, onAddImage
     Reveal.prev();
     // Reveal.sync();
     // if (currentSlide === 0) {
-    //   history.push(`?slide=0&slideElement=-1`);
-    // } else history.push(`?slide=${currentSlide - 1}&slideElement=-1`);
+      // history.push(`?slide=0&slideElement=-1`);
+    // } else {
+      // history.push(`?slide=${currentSlide - 1}&slideElement=-1`);
+    // }
   };
 
   return (
