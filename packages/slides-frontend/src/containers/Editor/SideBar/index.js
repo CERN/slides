@@ -18,24 +18,18 @@ function SideBar({onAddSlide, onRemoveSlide, onAddText, currentSlide, onAddImage
   // this event has to be found and used here and also in the actions in the reducer to update the currentSlide properly
   const addingSlide = () => {
     onAddSlide();
+    // window.location = `#/${currentSlide + 1}`; // because slides here are starting from 1
     Reveal.next();
-    // if (currentSlide === 0) {
-    //   Reveal.next();
-    // }
-    // Reveal.slide( indexh, indexv, indexf );
-    // history.push(`#/${currentSlide+2}`)
-    // Reveal.sync();
+    console.log('adding slide reveal.next executessss');
+    Reveal.sync();
   };
 
   const removingSlide = () => {
     onRemoveSlide();
-    Reveal.prev();
-    // Reveal.sync();
-    // if (currentSlide === 0) {
-      // history.push(`?slide=0&slideElement=-1`);
-    // } else {
-      // history.push(`?slide=${currentSlide - 1}&slideElement=-1`);
-    // }
+    if (currentSlide === 0) {
+      Reveal.slide(0);
+    } else Reveal.prev();
+    Reveal.sync();
   };
 
   return (

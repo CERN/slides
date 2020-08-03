@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import { Menu, Icon, Popup } from 'semantic-ui-react';
+import {Menu, Icon, Popup} from 'semantic-ui-react';
 import Reveal from 'reveal.js';
 import history from '../../../utils/history';
 import {

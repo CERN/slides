@@ -56,22 +56,21 @@ function Canvas({
     });
   }, []);
 
-  // useEffect(() => {
-  //   //   //   window.slideCount = deck.current.props.children.length;
-  //   // get the hash from reveal API to know how many sections are in the deck
-  //   console.log("======", Reveal.getTotalSlides())
-  //   console.log("--------", window.location.hash)
-  //   // window.location.hash = `#/${Reveal.getTotalSlides()}`
-  //   // Reveal.getCurrentSlide()
-  //   });
-
   const slides = () => {
     return (
-      DeckOfSlides.map(item => (
-        <MySlide key={item.ID}/>
-      ))
-    )
-  }
+      <>
+        {DeckOfSlides.map((item, i) => (
+          <>
+            {DeckOfSlides[i + 1] ? (
+              <MySlide key={item.ID} last={false} />
+            ) : (
+              <MySlide key={item.ID} last={true} />
+            )}
+          </>
+        ))}
+      </>
+    );
+  };
 
   return (
     <div>
@@ -80,38 +79,12 @@ function Canvas({
       </Helmet>
       <div className="deck">
         <div className="reveal">
-          <div className="slides">
-            {/* <section>
-              <h2>First Horizontal Slide 🐟</h2>
-            </section>
-            <section>
-              <section>Second slide</section>
-              <section>The only vertical slide!</section>
-            </section>
-            <section>Third slide!!!!!!!!!!!!!!!</section>
-            <section>Fourth slide!!!!!!!!!!!!!!!</section>
-            <section>Fifth slide!!!!!!!!!!!!!!!</section> */}
-            {slides()}
-          </div>
+          <div className="slides">{slides()}</div>
         </div>
       </div>
     </div>
   );
 }
-
-//   // // use this hook to be able to move to next previous slide in adding removing slides
-//   // useEffect(() => {
-//   //   window.slideCount = deck.current.props.children.length;
-//   // });
-//  // somehow try to sync in the new version what is seen with the URL
-//  // the location change is not triggered always but only when adding a new slide
-//  // thus leading to not changing the currentSlide when user uses the arrow keys
-//   const slidesArray = () =>
-//     DeckOfSlides.map(item => (
-//       <Slide>
-//         <MySlide key={item.ID}/>
-//       </Slide>
-//     ))
 
 //   // catch reload event
 //   useEffect(() => {
@@ -127,41 +100,6 @@ function Canvas({
 //       return 'Are you sure you want to reload?';
 //     };
 //   });
-
-//   const template = () => (
-//       <FlexBox
-//       justifyContent="space-between"
-//       position="absolute"
-//       bottom={0}
-//       width={1}
-//     >
-//       <Box margin={0, 2}>
-//       {currentSlide + 1} / {DeckOfSlides.length}
-//     </Box>
-//     </FlexBox>
-//   );
-
-//   return (
-//     <div>
-//       <Helmet>
-//         <title>Edit: {title}</title>
-//       </Helmet>
-//       <div className="deck">
-//         <Deck
-//           ref={deck}
-//           // transition={['zoom', 'slide']}
-//           // transitionDuration={500}
-//           theme={myTheme}
-//           animationsWhenGoingBack
-//           keyboardControls="arrows"
-//           template={template}
-//         >
-//         {slidesArray()}
-//         </Deck>
-//       </div>
-//     </div>
-//   );
-// }
 
 Canvas.propTypes = {
   title: PropTypes.string,

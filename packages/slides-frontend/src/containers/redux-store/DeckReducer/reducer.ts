@@ -36,13 +36,11 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
           itemsArray: [], // add a box that can be image or text
         }
         draft.slides.splice(draft.currentSlide + 1, 0, slide);
-        // draft.currentSlide = draft.currentSlide + 1;
         break;
       }
       case REMOVE_SLIDE: {
         if (draft.slides.length > 1) {
           draft.slides.splice(draft.currentSlide, 1);
-          // draft.currentSlide = draft.currentSlide - 1;
           // eslint-disable-next-line no-alert
         } else alert('Not possible to remove the only slide');
         break;
@@ -51,6 +49,7 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
         // this regular expression matches the slide number in the url
         // this number is stored as the current slide number
         // because the hash has base 1 starts from 1 but the array from 0
+        console.log("in change slide......", action.payload)
         if (Number(action.payload.location.hash.substr(2)) && Number(action.payload.location.hash.substr(2)) > 0) {
           draft.currentSlide = Number(action.payload.location.hash.substr(2)) - 1;
         }

@@ -4,16 +4,20 @@ import {connect} from 'react-redux';
 import {getItems} from '../../redux-store/DeckReducer/selectors';
 import MoveResize from '../components/resize_move';
 
-function MySlide({itemsArray}) {
+function MySlide({itemsArray, last}) {
   return (
-    <section>
-      {itemsArray.map(itm => <MoveResize key={itm.ID} ID={itm.ID} />)}
+    <section className={last ? 'present' : 'past'}>
+      {itemsArray.map(itm => (
+        <MoveResize key={itm.ID} ID={itm.ID} />
+      ))}
     </section>
   );
 }
+// last slide should not have the navigation to right button
 
 MySlide.propTypes = {
   itemsArray: PropTypes.array,
+  last: PropTypes.bool,
 };
 
 export default connect(

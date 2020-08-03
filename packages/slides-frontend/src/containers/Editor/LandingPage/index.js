@@ -49,7 +49,6 @@ function LandingPage({
           // ready
           onSetIsReady();
           history.push(`/edit/${user}/${title}`);
-          // history.push(`/edit/${user}/${title}?slide=0&slideElement=-1`);
         }
         setLoading(false);
       })
