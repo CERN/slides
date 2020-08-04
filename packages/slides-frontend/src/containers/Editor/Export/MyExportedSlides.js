@@ -7,7 +7,7 @@ import {getDeck} from '../../redux-store/DeckReducer/selectors';
 import RenderHtml from '../components/text/RenderHtml';
 import './index.css';
 
-const Core = ({ x, y, width, height, item, assetsPath, username, title }) => (
+const Core = ({x, y, width, height, item, assetsPath, username, title}) => (
   <div
     style={{
       position: 'absolute',
@@ -20,18 +20,16 @@ const Core = ({ x, y, width, height, item, assetsPath, username, title }) => (
     }}
   >
     {item.type === 'TEXT' ? (
-      // the item is text so use the renderHTML 
+      // the item is text so use the renderHTML
       <RenderHtml text={item.Data} />
-    ): (
+    ) : (
       // if it is an image
       <div className="img-style">
         <img src={`${assetsPath}/static/${username}/${title}/assets/${item.Src}`} alt="" />
       </div>
     )}
   </div>
-)
-
-
+);
 
 function MyExportedSlides({theme, DeckOfSlides, assetsPath, username, title}) {
   const StandardSlideTemplate = StandardSlide(theme);
@@ -40,7 +38,7 @@ function MyExportedSlides({theme, DeckOfSlides, assetsPath, username, title}) {
       {DeckOfSlides.map(slide => (
         <>
           <StandardSlideTemplate key={slide.ID}>
-            {slide.itemsArray.map(itm =>
+            {slide.itemsArray.map(itm => (
               <Core
                 key={itm.ID}
                 x={itm.Position.x}
@@ -52,7 +50,7 @@ function MyExportedSlides({theme, DeckOfSlides, assetsPath, username, title}) {
                 username={username}
                 title={title}
               />
-            )}
+            ))}
           </StandardSlideTemplate>
         </>
       ))}
@@ -76,5 +74,5 @@ export default connect(
     username: state.keycloak.userToken.cern_upn,
     title: getTitle(state),
   }),
-  null,
+  null
 )(MyExportedSlides);

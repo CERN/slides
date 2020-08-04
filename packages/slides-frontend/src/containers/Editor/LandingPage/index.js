@@ -74,41 +74,55 @@ function LandingPage({
   return (
     <div className="landing-page">
       <Image
-        src={`${config.assetsPath}/public/Logo-Outline-web-White@200.png`}
+        alt="CERN_Slides_App_logo_by_L.Zacharova_and_D.Taborsky"
+        src={`${config.assetsPath}/public/Slides-S.png`}
         className="image"
         centered
       />
-      <Segment compact>
-        <Grid relaxed="very" stackable columns={2}>
-          <Grid.Row>
-            <Grid.Column>
-              <Header className="white" as="h2" content="Start New Presentation" />
-              <Form size="large">
-                <Segment>
-                  {/* Don't leave it empty, don't have default */}
-                  <Input
-                    className="spacing"
-                    placeholder="Presentation Title"
-                    fluid
-                    onChange={settingTitle}
-                  />
-                  <Button color="blue" onClick={clickHandlerNew} loading={loadingIndicator}>
-                    <Button.Content visible>Let's GO!</Button.Content>
-                  </Button>
-                </Segment>
-              </Form>
-            </Grid.Column>
-            {/* here i go to the next thing */}
-            <Grid.Column>
-              <Header className="white" as="h2" content="Edit Existing Presentation" />
-              <Button color="blue" onClick={clickHandlerLoad}>
-                <Button.Content visible>Upload!</Button.Content>
-              </Button>
-            </Grid.Column>
-            {/* this width makes the Header text take all the required space to be inline */}
-          </Grid.Row>
-        </Grid>
-        <Divider vertical>Or</Divider>
+      <Segment placeholder>
+        <Segment.Inline>
+          <Grid relaxed="very" stackable columns={2}>
+            <Grid.Row>
+              <Grid.Column>
+                <Header className="white" as="h2" content="Start New Presentation" />
+                <Form size="large">
+                  <Segment>
+                    <Input
+                      className="spacing"
+                      placeholder="Presentation Title"
+                      fluid
+                      onChange={settingTitle}
+                    />
+                    <Button color="blue" onClick={clickHandlerNew} loading={loadingIndicator}>
+                      <Button.Content visible>Let's GO!</Button.Content>
+                    </Button>
+                  </Segment>
+                </Form>
+              </Grid.Column>
+              <Grid.Column>
+                <Header className="white" as="h2" content="Edit Existing Presentation" />
+                <Button color="blue" onClick={clickHandlerLoad}>
+                  <Button.Content visible>Upload!</Button.Content>
+                </Button>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+          <Divider vertical>Or</Divider>
+        </Segment.Inline>
+      </Segment>
+      <Segment inverted vertical style={{margin: '50em 2em 3em'}}>
+        <Image
+          alt="CERN logo"
+          src={`${config.assetsPath}/public/Logo-Outline-web-White@200.png`}
+          size="mini"
+          floated="left"
+          verticalAlign="middle"
+        />
+        <span style={{left: '4em', position: 'absolute', top: '2.3em'}}>
+          <a href="https://home.cern/" target="_blank" title="CERN - Birthplace of the Web">
+            CERN Copyright
+          </a>
+        </span>
       </Segment>
     </div>
   );
