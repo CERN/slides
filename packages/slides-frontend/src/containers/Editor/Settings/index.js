@@ -22,7 +22,7 @@ function Settings({
   username,
   title,
   onSetPresentationMode,
-  onSetExportMode
+  onSetExportMode,
 }) {
   const onClickHandler = item => {
     switch (item) {
@@ -87,7 +87,7 @@ Settings.propTypes = {
   username: PropTypes.string,
   title: PropTypes.string,
   onSetPresentationMode: PropTypes.func,
-  onSetExportMode: PropTypes.func
+  onSetExportMode: PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -97,7 +97,7 @@ export function mapDispatchToProps(dispatch) {
     onLoadRequest: () => dispatch(setLoadRequest(true)),
     onThemeRequest: () => dispatch(themeRequest(true)),
     onSetPresentationMode: () => dispatch(setPresentationMode(true)),
-    onSetExportMode: () => dispatch(setExportMode(true))
+    onSetExportMode: () => dispatch(setExportMode(true)),
   };
 }
 

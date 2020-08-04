@@ -2,22 +2,15 @@
   margin-bottom: 0.5em !important;
 }
 
-.grid {
-  /* background-color: #0053A1; */
-  /* height: 100vh; */
-}
-
 .ui.grid {
   margin: 0 !important;
 }
 
 .image {
-  height: 10em;
-  width: 10em;
+  height: 15em;
+  width: 15em;
   margin-top: 1em;
   margin-bottom: 1em;
-  /* max-height: 60em; */
-  /* max-width: 60em !important; */
 }
 
 .landing-page {
@@ -26,9 +19,6 @@
   width: 100%;
 }
 
-/* .segment {
-  background-color: #0053A1 !important;
-} */
 .ui.segment {
   background-color: #0053A1 !important;
   box-shadow: 0 0 0 0 !important;
@@ -37,4 +27,25 @@
 
 .ui.divider {
   color: white !important;
+}
+
+a:link {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:visited {
+  color: white;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:hover {
+  color: #0d71bb;
+  background-color: transparent;
+  text-decoration: underline;
+}
+a:active {
+  color: white;
+  background-color: transparent;
+  text-decoration: underline;
 }

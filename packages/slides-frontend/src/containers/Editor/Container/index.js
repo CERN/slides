@@ -44,13 +44,13 @@ export function Container({isReady, onSetPresentationMode, onSetExportMode}) {
 Container.propTypes = {
   isReady: PropTypes.bool,
   onSetPresentationMode: PropTypes.func,
-  onSetExportMode: PropTypes.func
+  onSetExportMode: PropTypes.func,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
     onSetPresentationMode: () => dispatch(setPresentationMode(false)),
-    onSetExportMode: () => dispatch(setExportMode(false))
+    onSetExportMode: () => dispatch(setExportMode(false)),
   };
 }
 
