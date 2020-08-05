@@ -59,14 +59,8 @@ function Canvas({
   const slides = () => {
     return (
       <>
-        {DeckOfSlides.map((item, i) => (
-          <>
-            {DeckOfSlides[i + 1] ? (
-              <MySlide key={item.ID} last={false} />
-            ) : (
-              <MySlide key={item.ID} last={true} />
-            )}
-          </>
+        {DeckOfSlides.map(item => (
+          <MySlide key={item.ID} />
         ))}
       </>
     );

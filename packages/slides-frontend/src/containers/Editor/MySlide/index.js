@@ -4,9 +4,9 @@ import {connect} from 'react-redux';
 import {getItems} from '../../redux-store/DeckReducer/selectors';
 import MoveResize from '../components/resize_move';
 
-function MySlide({itemsArray, last}) {
+function MySlide({itemsArray}) {
   return (
-    <section className={last ? 'present' : 'past'}>
+    <section>
       {itemsArray.map(itm => (
         <MoveResize key={itm.ID} ID={itm.ID} />
       ))}
@@ -17,7 +17,6 @@ function MySlide({itemsArray, last}) {
 
 MySlide.propTypes = {
   itemsArray: PropTypes.array,
-  last: PropTypes.bool,
 };
 
 export default connect(
