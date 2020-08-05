@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import express from 'express';
 
 import routes from './routes';
+import path from 'path';
 const fileUpload = require('express-fileupload');
 
 /* AUTHENTICATION */
@@ -54,13 +55,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 // Application-Level Middleware
 app.use(userKeycloak.middleware());
+
+// static HTML showing the available routes
+app.get('/', (req, res) => res.sendFile(path.join(__dirname + '/../public/intro.html')));
+
 // serve static images from the uploads folder
 // I don't use userKeycloak.protect() here, so the pictures are open to the public
 app.use('/static', express.static(uploadsFolder));
 // serve Slides' assets
 app.use('/public', express.static(`${__dirname}/../public`));
-// Routes
 
+// Routes
 app.use('/image', userKeycloak.protect(), passedAuth, routes.image);
 app.use('/presentation', userKeycloak.protect(), passedAuth, routes.presentation);
 app.use('/test', userKeycloak.protect(), passedAuth, routes.testBackend);
