@@ -116,10 +116,9 @@ function LandingPage({
           src={`${config.assetsPath}/public/Logo-Outline-web-White@200.png`}
           size="mini"
           floated="left"
-          // verticalAlign="middle"
         />
         <span className="copyright-text">
-          <a href="https://home.cern/" target="_blank" rel="noopener noreferrer" title="CERN - Birthplace of the Web">
+          <a href="https://home.cern/" target="_blank" rel="noopener noreferrer" title="CERN - Birthplace of the Web" style={{ color: "white" }}>
             CERN Copyright
           </a>
         </span>
