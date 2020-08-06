@@ -110,20 +110,20 @@ function LandingPage({
           <Divider vertical>Or</Divider>
         </Segment.Inline>
       </Segment>
-      <Segment inverted vertical style={{margin: '50em 2em 3em'}}>
+      <div className="footer">
         <Image
           alt="CERN logo"
           src={`${config.assetsPath}/public/Logo-Outline-web-White@200.png`}
           size="mini"
           floated="left"
-          verticalAlign="middle"
+          // verticalAlign="middle"
         />
-        <span style={{left: '4em', position: 'absolute', top: '2.3em'}}>
+        <span className="copyright-text">
           <a href="https://home.cern/" target="_blank" title="CERN - Birthplace of the Web">
             CERN Copyright
           </a>
         </span>
-      </Segment>
+      </div>
     </div>
   );
 }

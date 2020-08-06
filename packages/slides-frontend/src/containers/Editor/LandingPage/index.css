@@ -7,8 +7,8 @@
 }
 
 .image {
-  height: 15em;
-  width: 15em;
+  height: 11%;
+  width: 11%;
   margin-top: 1em;
   margin-bottom: 1em;
 }
@@ -48,4 +48,18 @@ a:active {
   color: white;
   background-color: transparent;
   text-decoration: underline;
+}
+
+.footer {
+  position: fixed;
+  left: 1%;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  text-align: left;
+}
+
+.copyright-text {
+  position: relative;
+  top: 1.2em;
 }
