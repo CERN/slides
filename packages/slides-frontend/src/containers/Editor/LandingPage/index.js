@@ -119,7 +119,7 @@ function LandingPage({
           // verticalAlign="middle"
         />
         <span className="copyright-text">
-          <a href="https://home.cern/" target="_blank" title="CERN - Birthplace of the Web">
+          <a href="https://home.cern/" target="_blank" rel="noopener noreferrer" title="CERN - Birthplace of the Web">
             CERN Copyright
           </a>
         </span>
