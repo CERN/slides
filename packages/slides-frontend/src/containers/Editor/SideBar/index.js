@@ -3,14 +3,14 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {Menu, Icon} from 'semantic-ui-react';
-import {addSlide, removeSlide, addItem} from '../../redux-store/DeckReducer/actions';
+import {addSlide, removeSlide, addItem, cloneSlide} from '../../redux-store/DeckReducer/actions';
 import {uploadImageRequest} from '../../redux-store/PresentationReducer/actions';
 import {getCurrentSlide} from '../../redux-store/DeckReducer/selectors';
 import './index.css';
 import {ItemTypes} from '../../redux-store/DeckReducer/definitions';
 // when i render SideBar onClick they will render something in the middle
 
-function SideBar({onAddSlide, onRemoveSlide, onAddText, currentSlide, onAddImage}) {
+function SideBar({onAddSlide, onRemoveSlide, onAddText, currentSlide, onAddImage, onCloneSlide}) {
   const addingSlide = () => {
     onAddSlide();
     window.location = `#/${currentSlide + 1}`; // because slides here are starting from 1
@@ -24,6 +24,10 @@ function SideBar({onAddSlide, onRemoveSlide, onAddText, currentSlide, onAddImage
   return (
     <div className="sidebar">
       <Menu vertical inverted fluid icon="labeled">
+        <Menu.Item name="CloneSlide" onClick={onCloneSlide}>
+          <Icon name="clone" />
+          Clone Slide
+        </Menu.Item>
         <Menu.Item name="AddSlide" onClick={addingSlide}>
           <Icon name="plus" />
           Add a New Slide
@@ -59,6 +63,7 @@ function mapDispatchToProps(dispatch) {
     onRemoveSlide: () => dispatch(removeSlide()),
     onAddText: () => dispatch(addItem({type: ItemTypes.TEXT})),
     onAddImage: () => dispatch(uploadImageRequest(true)),
+    onCloneSlide: () => dispatch(cloneSlide()),
   };
 }
 

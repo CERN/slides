@@ -1,6 +1,7 @@
 import {
     ADD_SLIDE,
     REMOVE_SLIDE,
+    CLONE_SLIDE,
     CHANGE_SLIDE,
     ADD_ITEM,
     REMOVE_ITEM,
@@ -20,6 +21,10 @@ export const addSlide = () => ({
 
 export const removeSlide = () =>({
     type: REMOVE_SLIDE,
+}) as const;
+
+export const cloneSlide = () => ({
+    type: CLONE_SLIDE,
 }) as const;
 
 export const changeSlide = (
@@ -83,9 +88,9 @@ export const toggleFocus = (id: string, focus: boolean) => ({
 }) as const;
 
 
+
 export type Action = ReturnType<
- typeof addSlide | typeof removeSlide | typeof changeSlide |
- typeof addItem | typeof removeItem | typeof changeItemPosition |
- typeof changeItemSize | typeof editData | typeof setEditMode | typeof loadDeckState |
- typeof toggleFocus
+ typeof addSlide | typeof removeSlide | typeof cloneSlide | typeof changeSlide |
+ typeof addItem | typeof removeItem | typeof changeItemPosition | typeof changeItemSize |
+ typeof editData | typeof setEditMode | typeof loadDeckState | typeof toggleFocus
 >

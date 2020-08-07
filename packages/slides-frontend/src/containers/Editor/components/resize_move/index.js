@@ -15,6 +15,9 @@ import {
   setEditMode,
 } from '../../../redux-store/DeckReducer/actions';
 
+// instead of x, y I should have % percentages
+
+
 // min height, min width
 const restrictSizeParameters = type =>
   type === 'TEXT'

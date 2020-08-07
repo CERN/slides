@@ -12,6 +12,7 @@ import {
   SET_EDIT_MODE,
   LOAD_DECK_STATE,
   TOGGLE_FOCUS,
+  CLONE_SLIDE,
 } from './constants';
 import { Item, newItem, ItemTypes, Text, Deck, Slide} from './definitions';
 
@@ -37,6 +38,29 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
           ID: uuidv4(),
           itemsArray: [], // add a box that can be image or text
         }
+
+        // this code is to add two text Boxes by default in any new slide
+        // START
+        const TitleBox = {
+          type: ItemTypes.TEXT,
+        }
+        const DescriptionBox = {
+          type: ItemTypes.TEXT,
+        }
+        const itm1: Item = newItem(TitleBox);
+        const itm2: Item = newItem(DescriptionBox);
+        
+        itm1.Position = {
+          x: 100,
+          y: 100,
+        }
+        itm1.Size = {
+          width: 500,
+          height: 100,
+        }
+        slide.itemsArray.push(itm1);
+        slide.itemsArray.push(itm2);
+        // END
         draft.slides.splice(draft.currentSlide + 1, 0, slide);
         break;
       }
@@ -45,6 +69,31 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
           draft.slides.splice(draft.currentSlide, 1);
           // eslint-disable-next-line no-alert
         } else alert('Not possible to remove the only slide');
+        break;
+      }
+      case CLONE_SLIDE: {
+        // create a new blank slide
+        let slide:Slide = {
+          ID: uuidv4(),
+          itemsArray: [],
+        }
+        // with a loop over the current itemsArray, create and push newItems in the new itemsArray
+        slide.itemsArray = draft.slides[draft.currentSlide].itemsArray.map(currentItem => {
+          console.log("itemmmmmmmmmmmmm", currentItem)
+          const itemObj: Item = newItem(currentItem);
+          console.log(" the itemobj isssssssss", itemObj)
+          // change size and position
+          itemObj.Size = currentItem.Size;
+          itemObj.Position = currentItem.Position;
+          // !!if text change data as well!!
+          // if (itemObj.type === ItemTypes.TEXT) {
+          //   itemObj.Data = currentItem.Data;
+          // }
+          return itemObj;
+        })
+
+        // push the cloned slide in the slides array
+        draft.slides.splice(draft.currentSlide + 1, 0, slide);
         break;
       }
       case CHANGE_SLIDE: {

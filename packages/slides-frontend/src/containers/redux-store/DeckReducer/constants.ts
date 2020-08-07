@@ -1,5 +1,6 @@
 export const ADD_SLIDE = 'Slides/Presentation/ADD_SLIDE';
 export const REMOVE_SLIDE = 'Slides/Presentation/REMOVE_SLIDE';
+export const CLONE_SLIDE = 'Slides/Presentation/CLONE_SLIDE';
 export const CHANGE_SLIDE = '@@router/LOCATION_CHANGE';
 
 export const ADD_ITEM = 'Slides/Presentation/ADD_ITEM';

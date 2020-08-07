@@ -68,8 +68,8 @@ export const newItem = (obj: any): Item => {
       case ItemTypes.TEXT:
         return new Text();
       case ItemTypes.IMAGE:
-        const { src } = obj;
-        return new Image(src);
+        const { Src } = obj;
+        return new Image(Src);
       default:
         throw new Error('Object type is not TEXT neither IMAGE');
     }
