@@ -14,7 +14,7 @@ import {
   TOGGLE_FOCUS,
   CLONE_SLIDE,
 } from './constants';
-import { Item, newItem, ItemTypes, Text, Deck, Slide} from './definitions';
+import { Item, newItem, ItemTypes, Text, Image, Deck, Slide} from './definitions';
 
 const uuidv4 = require("uuid/v4");
 
@@ -93,16 +93,22 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
         }
         // with a loop over the current itemsArray, create and push newItems in the new itemsArray
         slide.itemsArray = draft.slides[draft.currentSlide].itemsArray.map(currentItem => {
-          console.log("itemmmmmmmmmmmmm", currentItem)
-          const itemObj: Item = newItem(currentItem);
-          console.log(" the itemobj isssssssss", itemObj)
+          const copyObj = JSON.parse(JSON.stringify(currentItem));
+          if(copyObj.type === ItemTypes.TEXT) {
+            const itemObj: Text = new Text();
+            itemObj.Data = copyObj.Data;
+            // change size and position
+            itemObj.Size = copyObj.Size;
+            itemObj.Position = copyObj.Position;
+            return itemObj;
+          }
+
+          // if it is IMAGE
+          const { Src } = copyObj;
+          const itemObj: Image = new Image(Src);
           // change size and position
-          itemObj.Size = currentItem.Size;
-          itemObj.Position = currentItem.Position;
-          // !!if text change data as well!!
-          // if (itemObj.type === ItemTypes.TEXT) {
-          //   itemObj.Data = currentItem.Data;
-          // }
+          itemObj.Size = copyObj.Size;
+          itemObj.Position = copyObj.Position;
           return itemObj;
         })
 

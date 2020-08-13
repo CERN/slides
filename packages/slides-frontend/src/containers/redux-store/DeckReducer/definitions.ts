@@ -43,10 +43,10 @@ export class Text extends baseItem {
 export class Image extends baseItem {
     readonly type: string
     Src: string
-    constructor(src: string){
+    constructor(Src: string){
       super();
       this.type = ItemTypes.IMAGE;
-      this.Src = src;
+      this.Src = Src;
       this.Size = { width: 0.20, height: 0.55 };
     }
   }
