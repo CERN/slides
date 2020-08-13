@@ -13,7 +13,7 @@ import {ItemTypes} from '../../redux-store/DeckReducer/definitions';
 function SideBar({onAddSlide, onRemoveSlide, onAddText, currentSlide, onAddImage, onCloneSlide}) {
   const addingSlide = () => {
     onAddSlide();
-    window.location = `#/${currentSlide + 1}`; // because slides here are starting from 1
+    window.location = `#/${currentSlide + 1}`;
   };
   const removingSlide = () => {
     onRemoveSlide();
@@ -21,10 +21,14 @@ function SideBar({onAddSlide, onRemoveSlide, onAddText, currentSlide, onAddImage
       window.location = `#/${0}`;
     } else window.location = `#/${currentSlide - 1}`;
   };
+  const cloningSlide = () => {
+    onCloneSlide();
+    window.location = `#/${currentSlide + 1}`;
+  };
   return (
     <div className="sidebar">
       <Menu vertical inverted fluid icon="labeled">
-        <Menu.Item name="CloneSlide" onClick={onCloneSlide}>
+        <Menu.Item name="CloneSlide" onClick={cloningSlide}>
           <Icon name="clone" />
           Clone Slide
         </Menu.Item>

@@ -17,7 +17,6 @@ import {
 
 // instead of x, y I should have % percentages
 
-
 // min height, min width
 const restrictSizeParameters = type =>
   type === 'TEXT'
@@ -56,24 +55,29 @@ const Core = ({x, y, width, height, getRef, item}) => (
 
 const Reactable = reactable(Core);
 
+// utils to transform between percentages and pixels
+const getPercentage = (px, screenAttribute) => px / screenAttribute;
+const getPixels = (percentage, screenAttribute) => percentage * screenAttribute;
+
 function MoveResize({ID, item, onChangePosition, onChangeSize, onSetEditMode, presentationMode}) {
   console.log('the item in move resize is: ', item);
   const [coordinate, setCoordinate] = useState({
-    x: item.Position.x,
-    y: item.Position.y,
-    width: item.Size.width,
-    height: item.Size.height,
+    x: getPixels(item.Position.x, window.innerWidth),
+    y: getPixels(item.Position.y, window.innerHeight),
+    width: getPixels(item.Size.width, window.innerWidth),
+    height: getPixels(item.Size.height, window.innerHeight),
   });
 
   const editMode = (type, edit) => type === 'TEXT' && edit;
 
   const onDragStop = e => {
+    console.log('coordinate::::::::', coordinate);
     const x = e.client.x - e.clientX0 + coordinate.x;
     const y = e.client.y - e.clientY0 + coordinate.y;
     console.log('Drag Stopped', x, y);
     onChangePosition(ID, {
-      x,
-      y,
+      x: getPercentage(x, window.innerWidth),
+      y: getPercentage(y, window.innerHeight),
     });
   };
 
@@ -82,8 +86,8 @@ function MoveResize({ID, item, onChangePosition, onChangeSize, onSetEditMode, pr
     console.log('Resize Stopped', width, height);
     onDragStop(e);
     onChangeSize(ID, {
-      width,
-      height,
+      width: getPercentage(width, window.innerWidth),
+      height: getPercentage(height, window.innerHeight),
     });
   };
 

@@ -21,7 +21,7 @@ class baseItem {
     Focused: boolean
     constructor(){
       this.ID = uuidv4();
-      this.Position= {x: 0, y: 0};
+      this.Position= {x: 0.10, y: 0.20};
       this.Size = { width: 0, height: 0 };
       this.Focused = false;
     }
@@ -36,7 +36,7 @@ export class Text extends baseItem {
       this.type = ItemTypes.TEXT
       this.Data = "<p></p>\n";
       this.Edit = false;
-      this.Size = { width: 500, height: 80 };
+      this.Size = { width: 0.25, height: 0.08 };
     }
   }
 
@@ -47,7 +47,7 @@ export class Image extends baseItem {
       super();
       this.type = ItemTypes.IMAGE;
       this.Src = src;
-      this.Size = { width: 500, height: 300 };
+      this.Size = { width: 0.20, height: 0.55 };
     }
   }
 

@@ -118,7 +118,13 @@ function LandingPage({
           floated="left"
         />
         <span className="copyright-text">
-          <a href="https://home.cern/" target="_blank" rel="noopener noreferrer" title="CERN - Birthplace of the Web" style={{ color: "white" }}>
+          <a
+            href="https://home.cern/"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="CERN - Birthplace of the Web"
+            style={{color: 'white'}}
+          >
             CERN Copyright
           </a>
         </span>

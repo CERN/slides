@@ -49,14 +49,28 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
         }
         const itm1: Item = newItem(TitleBox);
         const itm2: Item = newItem(DescriptionBox);
-        
+
+        // itm1 - Title
         itm1.Position = {
-          x: 100,
-          y: 100,
+          x: 0.30,
+          y: 0.20,
         }
         itm1.Size = {
-          width: 500,
-          height: 100,
+          width: 0.25,
+          height: 0.05,
+        }
+
+        // itm2 - Description
+        // this weird number comes from this calculation: title's med is: 30 + 25/2 = 42.5
+        // to reach this percentage and have the texts inline, the description's x + width/2 = 42.5
+        // width/2 is 20so x is 22.5 or 0.225
+        itm2.Position = {
+          x: 0.225,
+          y: 0.30,
+        }
+        itm2.Size = {
+          width: 0.40,
+          height: 0.40,
         }
         slide.itemsArray.push(itm1);
         slide.itemsArray.push(itm2);

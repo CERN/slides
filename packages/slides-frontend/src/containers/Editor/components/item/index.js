@@ -17,19 +17,12 @@ import PropTypes from 'prop-types';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
 import {deleteImage} from '../../../../utils/requests';
 
-import {
-  removeItem,
-  changeItemPosition,
-  changeItemSize,
-  editData,
-  toggleFocus,
-} from '../../../redux-store/DeckReducer/actions';
+import {removeItem, toggleFocus} from '../../../redux-store/DeckReducer/actions';
 import {
   getAssetsPath,
   getTitle,
   getPresentationMode,
 } from '../../../redux-store/PresentationReducer/selectors';
-import {getCurrentSlide} from '../../../redux-store/DeckReducer/selectors';
 import Text from '../text';
 import Image from '../image';
 import './index.css';
@@ -37,11 +30,7 @@ import './index.css';
 function Item({
   itemObj,
   onRemoveItem,
-  onChangePosition,
-  onChangeSize,
   assetsPath,
-  currentSlide,
-  onEditData,
   title,
   username,
   onToggleFocus,
@@ -114,10 +103,6 @@ Item.propTypes = {
   itemObj: PropTypes.object,
   assetsPath: PropTypes.string,
   onRemoveItem: PropTypes.func,
-  onChangePosition: PropTypes.func,
-  onChangeSize: PropTypes.func,
-  currentSlide: PropTypes.number,
-  onEditData: PropTypes.func,
   username: PropTypes.string,
   title: PropTypes.string,
   onToggleFocus: PropTypes.func,
@@ -127,10 +112,7 @@ Item.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onChangePosition: (id, position) => dispatch(changeItemPosition(id, position)),
-    onChangeSize: (id, position) => dispatch(changeItemSize(id, position)),
     onRemoveItem: id => dispatch(removeItem(id)),
-    onEditData: (id, data) => dispatch(editData(id, data)),
     onToggleFocus: (id, focus) => dispatch(toggleFocus(id, focus)),
   };
 }
@@ -138,7 +120,6 @@ export function mapDispatchToProps(dispatch) {
 export default connect(
   state => ({
     assetsPath: getAssetsPath(state),
-    currentSlide: getCurrentSlide(state),
     title: getTitle(state),
     username: state.keycloak.userToken.cern_upn,
     token: state.keycloak.instance.token,
