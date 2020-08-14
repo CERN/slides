@@ -4,20 +4,27 @@ import reactable from 'reactablejs';
 import interact from 'interactjs';
 
 import {connect} from 'react-redux';
+import { Label }  from 'semantic-ui-react'
 
-import MyItem from '../item';
 import {getItems} from '../../../redux-store/DeckReducer/selectors';
-import {getPresentationMode} from '../../../redux-store/PresentationReducer/selectors';
-
+import Text from '../text';
+import Image from '../image';
+import {deleteImage} from '../../../../utils/requests';
+import {removeItem} from '../../../redux-store/DeckReducer/actions';
 import {
   changeItemPosition,
   changeItemSize,
   setEditMode,
 } from '../../../redux-store/DeckReducer/actions';
+import {
+  getAssetsPath,
+  getTitle,
+  getPresentationMode,
+} from '../../../redux-store/PresentationReducer/selectors';
 import './index.css';
 
 // instead of x, y I should have % percentages
-
+const editMode = (type, edit) => type === 'TEXT' && edit;
 // min height, min width
 const restrictSizeParameters = type =>
   type === 'TEXT'
@@ -31,24 +38,61 @@ const restrictSizeParameters = type =>
       };
 
 // : x,y: 350, 330 for middle
-const Core = ({x, y, width, height, getRef, item}) => (
-  <div
-    style={{
-      // amazing how much this helps in consistent position of elements (absolute)
-      position: 'absolute',
-      left: x,
-      top: y,
-      width,
-      height,
-      boxSizing: 'border-box',
-      display: 'inline-block',
-    }}
-    className="item-style"
-    ref={getRef}
-  >
-    <MyItem itemObj={item} />
-  </div>
-);
+const Core = ({
+  x,
+  y,
+  width,
+  height,
+  getRef,
+  item,
+  assetsPath,
+  onRemoveItem,
+  username,
+  title,
+  token,
+  presentationMode
+}) => {
+  const ItemComponent = item.type === 'TEXT' ? Text : Image;
+  const [closeIconShown, setCloseIconShown] = useState(false);
+  const deleter = e => {
+    // send a delete in Redux
+    if (presentationMode) return;
+    if (item.type === 'TEXT' && item.Edit) {
+      // text in edit mode so don't delete it
+      return;
+    }
+    onRemoveItem(item.ID);
+    // send a delete in Server if it is an Image
+    if (item.type === 'IMAGE') {
+      deleteImage(assetsPath, username, title, item.Src, token);
+    }
+  };
+
+  return (
+    <div
+      style={{
+        // amazing how much this helps in consistent position of elements (absolute)
+        position: 'absolute',
+        left: x,
+        top: y,
+        width,
+        height,
+        boxSizing: 'border-box',
+        display: 'inline-block',
+      }}
+      className="item-style"
+      ref={getRef}
+      onMouseEnter={() => setCloseIconShown(true)}
+      onMouseLeave={() => setCloseIconShown(false)}
+    >
+      {/* presentation mode and edit mode no close icon */}
+      {/* deleter of icon */}
+      {closeIconShown && !editMode(item.type, item.Edit) && !presentationMode && (
+        <Label as='a' corner='right' icon='close' onClick={deleter} />
+      )}
+      <ItemComponent ID={item.ID}/>
+    </div>
+)};
 
 const Reactable = reactable(Core);
 
@@ -56,8 +100,19 @@ const Reactable = reactable(Core);
 const getPercentage = (px, screenAttribute) => px / screenAttribute;
 const getPixels = (percentage, screenAttribute) => percentage * screenAttribute;
 
-function MoveResize({ID, item, onChangePosition, onChangeSize, onSetEditMode, presentationMode}) {
-  console.log('the item in move resize is: ', item);
+function MoveResize({
+  ID,
+  item,
+  onChangePosition,
+  onChangeSize,
+  onSetEditMode,
+  presentationMode,
+  assetsPath,
+  onRemoveItem,
+  username,
+  title,
+  token
+}) {
   const [coordinate, setCoordinate] = useState({
     x: getPixels(item.Position.x, window.innerWidth),
     y: getPixels(item.Position.y, window.innerHeight),
@@ -65,7 +120,7 @@ function MoveResize({ID, item, onChangePosition, onChangeSize, onSetEditMode, pr
     height: getPixels(item.Size.height, window.innerHeight),
   });
 
-  const editMode = (type, edit) => type === 'TEXT' && edit;
+  // const editMode = (type, edit) => type === 'TEXT' && edit;
 
   const onDragStop = e => {
     console.log('coordinate::::::::', coordinate);
@@ -148,17 +203,33 @@ function MoveResize({ID, item, onChangePosition, onChangeSize, onSetEditMode, pr
       }}
       {...coordinate}
       item={item}
+      assetsPath={assetsPath}
+      onRemoveItem={onRemoveItem}
+      username={username}
+      title={title}
+      token={token}
+      presentationMode={presentationMode}
     />
   );
 
-  const textEditModeRender = () => <Reactable {...coordinate} item={item} />;
+  const textEditModeRender = () =>
+  <Reactable
+    {...coordinate}
+    item={item}
+    assetsPath={assetsPath}
+    onRemoveItem={onRemoveItem}
+    username={username}
+    title={title}
+    token={token}
+    presentationMode={presentationMode}
+  />;
 
   return (
     <div>
       {editMode(item.type, item.Edit) ? (
         <div>{textEditModeRender()}</div>
       ) : (
-        <div id={item.ID} onDoubleClick={handler}>
+        <div id={ID} onDoubleClick={handler}>
           {movableItemRender()}
         </div>
       )}
@@ -173,6 +244,12 @@ Core.propTypes = {
   height: PropTypes.number,
   getRef: PropTypes.any,
   item: PropTypes.object,
+  assetsPath: PropTypes.string,
+  onRemoveItem: PropTypes.func,
+  username: PropTypes.string,
+  title: PropTypes.string,
+  token: PropTypes.string,
+  presentationMode: PropTypes.bool,
 };
 
 MoveResize.propTypes = {
@@ -182,10 +259,16 @@ MoveResize.propTypes = {
   onChangeSize: PropTypes.func,
   onSetEditMode: PropTypes.func,
   presentationMode: PropTypes.bool,
+  assetsPath: PropTypes.string,
+  onRemoveItem: PropTypes.func,
+  username: PropTypes.string,
+  title: PropTypes.string,
+  token: PropTypes.string,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
+    onRemoveItem: id => dispatch(removeItem(id)),
     onChangePosition: (id, position) => dispatch(changeItemPosition(id, position)),
     onChangeSize: (id, position) => dispatch(changeItemSize(id, position)),
     onSetEditMode: (id, edit) => dispatch(setEditMode(id, edit)),
@@ -196,6 +279,10 @@ export default connect(
   (state, ownProps) => ({
     item: getItems(state).find(itm => itm.ID === ownProps.ID),
     presentationMode: getPresentationMode(state),
+    assetsPath: getAssetsPath(state),
+    title: getTitle(state),
+    username: state.keycloak.userToken.cern_upn,
+    token: state.keycloak.instance.token,
   }),
   mapDispatchToProps
 )(MoveResize);

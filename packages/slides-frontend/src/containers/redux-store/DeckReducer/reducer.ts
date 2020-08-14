@@ -11,7 +11,6 @@ import {
   EDIT_DATA,
   SET_EDIT_MODE,
   LOAD_DECK_STATE,
-  TOGGLE_FOCUS,
   CLONE_SLIDE,
 } from './constants';
 import { Item, newItem, ItemTypes, Text, Image, Deck, Slide} from './definitions';
@@ -173,12 +172,6 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
           ...action.state,
         }
         Object.assign(draft, newDeckState);
-        break;
-      }
-      case TOGGLE_FOCUS: {
-        const ind: number = draft.slides[draft.currentSlide].itemsArray.findIndex((itm: Item) => itm.ID === action.id);
-        if (ind === -1) break;
-        draft.slides[draft.currentSlide].itemsArray[ind].Focused = action.focus;
         break;
       }
     }

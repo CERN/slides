@@ -18,12 +18,10 @@ class baseItem {
     ID: string
     Position: position
     Size: size
-    Focused: boolean
     constructor(){
       this.ID = uuidv4();
       this.Position= {x: 0, y: 0};
       this.Size = { width: 0, height: 0 };
-      this.Focused = false;
     }
 }
 

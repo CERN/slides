@@ -10,7 +10,6 @@ import {
     EDIT_DATA,
     SET_EDIT_MODE,
     LOAD_DECK_STATE,
-    TOGGLE_FOCUS,
 } from './constants';
 
 import { position, size, Item, Deck } from './definitions';
@@ -81,16 +80,8 @@ export const loadDeckState = (state: Deck) => ({
     state,
 }) as const;
 
-export const toggleFocus = (id: string, focus: boolean) => ({
-    type: TOGGLE_FOCUS,
-    id,
-    focus,
-}) as const;
-
-
-
 export type Action = ReturnType<
  typeof addSlide | typeof removeSlide | typeof cloneSlide | typeof changeSlide |
  typeof addItem | typeof removeItem | typeof changeItemPosition | typeof changeItemSize |
- typeof editData | typeof setEditMode | typeof loadDeckState | typeof toggleFocus
+ typeof editData | typeof setEditMode | typeof loadDeckState
 >
