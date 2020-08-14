@@ -2,10 +2,8 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import reactable from 'reactablejs';
 import interact from 'interactjs';
-
 import {connect} from 'react-redux';
 import { Label }  from 'semantic-ui-react'
-
 import {getItems} from '../../../redux-store/DeckReducer/selectors';
 import Text from '../text';
 import Image from '../image';
@@ -50,7 +48,8 @@ const Core = ({
   username,
   title,
   token,
-  presentationMode
+  presentationMode,
+  slidesStringified
 }) => {
   const ItemComponent = item.type === 'TEXT' ? Text : Image;
   const [closeIconShown, setCloseIconShown] = useState(false);
@@ -61,11 +60,11 @@ const Core = ({
       // text in edit mode so don't delete it
       return;
     }
-    onRemoveItem(item.ID);
     // send a delete in Server if it is an Image
     if (item.type === 'IMAGE') {
-      deleteImage(assetsPath, username, title, item.Src, token);
+      deleteImage(assetsPath, username, title, item.Src, token, slidesStringified);
     }
+    onRemoveItem(item.ID);
   };
 
   return (
@@ -111,7 +110,8 @@ function MoveResize({
   onRemoveItem,
   username,
   title,
-  token
+  token,
+  slidesStringified
 }) {
   const [coordinate, setCoordinate] = useState({
     x: getPixels(item.Position.x, window.innerWidth),
@@ -209,6 +209,7 @@ function MoveResize({
       title={title}
       token={token}
       presentationMode={presentationMode}
+      slidesStringified={slidesStringified}
     />
   );
 
@@ -222,6 +223,7 @@ function MoveResize({
     title={title}
     token={token}
     presentationMode={presentationMode}
+    slidesStringified={slidesStringified}
   />;
 
   return (
@@ -250,6 +252,7 @@ Core.propTypes = {
   title: PropTypes.string,
   token: PropTypes.string,
   presentationMode: PropTypes.bool,
+  slidesStringified: PropTypes.string,
 };
 
 MoveResize.propTypes = {
@@ -264,6 +267,7 @@ MoveResize.propTypes = {
   username: PropTypes.string,
   title: PropTypes.string,
   token: PropTypes.string,
+  slidesStringified: PropTypes.string,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -283,6 +287,8 @@ export default connect(
     title: getTitle(state),
     username: state.keycloak.userToken.cern_upn,
     token: state.keycloak.instance.token,
+    slidesStringified: JSON.stringify(state.deck.slides),
+    // this makes the string way smaller and so way faster to search for the image name in the deleter
   }),
   mapDispatchToProps
 )(MoveResize);
