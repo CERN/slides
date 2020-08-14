@@ -14,6 +14,7 @@ import {
   changeItemSize,
   setEditMode,
 } from '../../../redux-store/DeckReducer/actions';
+import './index.css';
 
 // instead of x, y I should have % percentages
 
@@ -39,14 +40,10 @@ const Core = ({x, y, width, height, getRef, item}) => (
       top: y,
       width,
       height,
-      // border: '1px solid black',
       boxSizing: 'border-box',
       display: 'inline-block',
-      // 'vertical-align': 'middle',
-      // padding: 0,
-      // display: 'block',
-      // overflow: 'hidden',
     }}
+    className="item-style"
     ref={getRef}
   >
     <MyItem itemObj={item} />

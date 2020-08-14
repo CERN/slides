@@ -37,7 +37,7 @@ export class Text extends baseItem {
       this.Data = "<p></p>\n";
       this.Edit = false;
       this.Position= {x: 0.30, y: 0.40};
-      this.Size = { width: 0.25, height: 0.08 };
+      this.Size = { width: 0.25, height: 0.05 };
     }
   }
 

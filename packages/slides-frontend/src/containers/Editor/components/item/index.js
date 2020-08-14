@@ -25,7 +25,6 @@ import {
 } from '../../../redux-store/PresentationReducer/selectors';
 import Text from '../text';
 import Image from '../image';
-import './index.css';
 
 function Item({
   itemObj,
@@ -87,7 +86,7 @@ function Item({
       {presentationMode ? (
         <ItemComponent ID={ID} />
       ) : (
-        <div ref={itemRef} className="item-style">
+        <div ref={itemRef}>
           <KeyboardEventHandler
             handleKeys={['backspace', 'del']}
             onKeyEvent={(key, e) => Focused && deleter(e)}
