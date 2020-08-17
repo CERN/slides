@@ -79,6 +79,8 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
       }
       case REMOVE_SLIDE: {
         if (draft.slides.length > 1) {
+          // check for deleting pictures from backend
+
           draft.slides.splice(draft.currentSlide, 1);
           // eslint-disable-next-line no-alert
         } else alert('Not possible to remove the only slide');
