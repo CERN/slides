@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import reactable from 'reactablejs';
 import interact from 'interactjs';
 import {connect} from 'react-redux';
-import { Label }  from 'semantic-ui-react'
+import {Label}  from 'semantic-ui-react'
 import {getItems} from '../../../redux-store/DeckReducer/selectors';
 import Text from '../text';
 import Image from '../image';

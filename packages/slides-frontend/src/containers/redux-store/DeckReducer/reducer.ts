@@ -1,4 +1,5 @@
 import produce from 'immer';
+import { deepCopyFunction } from '../../../utils/helperFunctions';
 import { Action } from './actions';
 import {
   ADD_SLIDE,
@@ -28,6 +29,41 @@ export const newSlide:Slide = {
 }
 initialDeck.slides.push(newSlide);
 
+const addTwoBoxes = (slide:Slide) => {
+  const TitleBox = {
+    type: ItemTypes.TEXT,
+  }
+  const DescriptionBox = {
+    type: ItemTypes.TEXT,
+  }
+  const itm1: Item = newItem(TitleBox);
+  const itm2: Item = newItem(DescriptionBox);
+
+  // itm1 - Title
+  itm1.Position = {
+    x: 0.30,
+    y: 0.20,
+  }
+  itm1.Size = {
+    width: 0.25,
+    height: 0.05,
+  }
+
+  // itm2 - Description
+  // this weird number comes from this calculation: title's med is: 30 + 25/2 = 42.5
+  // to reach this percentage and have the texts inline, the description's x + width/2 = 42.5
+  // width/2 is 20so x is 22.5 or 0.225
+  itm2.Position = {
+    x: 0.225,
+    y: 0.30,
+  }
+  itm2.Size = {
+    width: 0.40,
+    height: 0.40,
+  }
+  slide.itemsArray.push(itm1, itm2);
+}
+
 const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
   produce(state, (draft:Deck) => {
     // eslint-disable-next-line no-console
@@ -37,43 +73,7 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
           ID: uuidv4(),
           itemsArray: [], // add a box that can be image or text
         }
-
-        // this code is to add two text Boxes by default in any new slide
-        // START
-        const TitleBox = {
-          type: ItemTypes.TEXT,
-        }
-        const DescriptionBox = {
-          type: ItemTypes.TEXT,
-        }
-        const itm1: Item = newItem(TitleBox);
-        const itm2: Item = newItem(DescriptionBox);
-
-        // itm1 - Title
-        itm1.Position = {
-          x: 0.30,
-          y: 0.20,
-        }
-        itm1.Size = {
-          width: 0.25,
-          height: 0.05,
-        }
-
-        // itm2 - Description
-        // this weird number comes from this calculation: title's med is: 30 + 25/2 = 42.5
-        // to reach this percentage and have the texts inline, the description's x + width/2 = 42.5
-        // width/2 is 20so x is 22.5 or 0.225
-        itm2.Position = {
-          x: 0.225,
-          y: 0.30,
-        }
-        itm2.Size = {
-          width: 0.40,
-          height: 0.40,
-        }
-        slide.itemsArray.push(itm1);
-        slide.itemsArray.push(itm2);
-        // END
+        addTwoBoxes(slide);
         draft.slides.splice(draft.currentSlide + 1, 0, slide);
         break;
       }
@@ -90,27 +90,10 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
           ID: uuidv4(),
           itemsArray: [],
         }
-        // with a loop over the current itemsArray, create and push newItems in the new itemsArray
         slide.itemsArray = draft.slides[draft.currentSlide].itemsArray.map(currentItem => {
-          const copyObj = JSON.parse(JSON.stringify(currentItem));
-          if(copyObj.type === ItemTypes.TEXT) {
-            const itemObj: Text = new Text();
-            itemObj.Data = copyObj.Data;
-            // change size and position
-            itemObj.Size = copyObj.Size;
-            itemObj.Position = copyObj.Position;
-            return itemObj;
-          }
-
-          // if it is IMAGE
-          const { Src } = copyObj;
-          const itemObj: Image = new Image(Src);
-          // change size and position
-          itemObj.Size = copyObj.Size;
-          itemObj.Position = copyObj.Position;
-          return itemObj;
-        })
-
+          const copyObj: Item = deepCopyFunction(currentItem);
+          return copyObj;
+        });
         // push the cloned slide in the slides array
         draft.slides.splice(draft.currentSlide + 1, 0, slide);
         break;
