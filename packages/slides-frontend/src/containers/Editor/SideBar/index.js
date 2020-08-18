@@ -49,7 +49,7 @@ function SideBar({
     window.location = `#/${currentSlide + 1}`;
   };
   return (
-    <div className="sidebar">
+    <div id="_sidebar" className="sidebar">
       <Menu vertical inverted fluid icon="labeled">
         <Menu.Item name="CloneSlide" onClick={cloningSlide}>
           <Icon name="clone" />

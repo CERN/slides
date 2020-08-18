@@ -126,7 +126,7 @@ function SavePresentation({stateStringified, onSaveRequest, title, onSetTitle, u
           delete newObj.keycloak;
           delete newObj.router;
           const newStateStringified = JSON.stringify(newObj);
-          console.log('newStateStringified', newStateStringified);
+          // console.log('newStateStringified', newStateStringified);
           sendSaveRequest(assetsPath, newStateStringified, newTitle, token, user).then(() => {
             onSaveRequest();
             // push the new title in the URL bar
