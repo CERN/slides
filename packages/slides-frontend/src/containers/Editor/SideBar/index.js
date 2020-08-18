@@ -4,18 +4,41 @@ import PropTypes from 'prop-types';
 
 import {Menu, Icon} from 'semantic-ui-react';
 import {addSlide, removeSlide, addItem, cloneSlide} from '../../redux-store/DeckReducer/actions';
+import {getCurrentSlide, getItems} from '../../redux-store/DeckReducer/selectors';
 import {uploadImageRequest} from '../../redux-store/PresentationReducer/actions';
-import {getCurrentSlide} from '../../redux-store/DeckReducer/selectors';
-import './index.css';
+import {getAssetsPath, getTitle} from '../../redux-store/PresentationReducer/selectors';
+import {deleteImage} from '../../../utils/requests';
 import {ItemTypes} from '../../redux-store/DeckReducer/definitions';
+import './index.css';
 // when i render SideBar onClick they will render something in the middle
 
-function SideBar({onAddSlide, onRemoveSlide, onAddText, currentSlide, onAddImage, onCloneSlide}) {
+function SideBar({
+  onAddSlide,
+  onRemoveSlide,
+  onAddText,
+  currentSlide,
+  onAddImage,
+  onCloneSlide,
+  itemsArray,
+  assetsPath,
+  username,
+  title,
+  token,
+  slidesStringified
+  }) {
+
   const addingSlide = () => {
     onAddSlide();
     window.location = `#/${currentSlide + 1}`;
   };
+
   const removingSlide = () => {
+    // check if pictures should be deleted from backend
+    itemsArray.map(item => {
+      if (item.type === 'IMAGE') {
+        deleteImage(assetsPath, username, title, item.Src, token, slidesStringified);
+      }
+    })
     onRemoveSlide();
     if (currentSlide === 0) {
       window.location = `#/${0}`;
@@ -59,6 +82,12 @@ SideBar.propTypes = {
   onAddText: PropTypes.func,
   onAddImage: PropTypes.func,
   currentSlide: PropTypes.number,
+  itemsArray: PropTypes.array,
+  assetsPath: PropTypes.string,
+  username: PropTypes.string,
+  title: PropTypes.string,
+  token: PropTypes.string,
+  slidesStringified: PropTypes.string,
 };
 
 function mapDispatchToProps(dispatch) {
@@ -74,6 +103,12 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   state => ({
     currentSlide: getCurrentSlide(state),
+    itemsArray: getItems(state),
+    assetsPath: getAssetsPath(state),
+    title: getTitle(state),
+    username: state.keycloak.userToken.cern_upn,
+    token: state.keycloak.instance.token,
+    slidesStringified: JSON.stringify(state.deck.slides),
   }),
   mapDispatchToProps
 )(SideBar);

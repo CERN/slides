@@ -14,10 +14,9 @@ import {
   LOAD_DECK_STATE,
   CLONE_SLIDE,
 } from './constants';
-import { Item, newItem, ItemTypes, Text, Image, Deck, Slide} from './definitions';
+import { Item, newItem, ItemTypes, Text, Deck, Slide} from './definitions';
 
 const uuidv4 = require("uuid/v4");
-
 
 export let initialDeck:Deck = {
   currentSlide: 0,
@@ -79,8 +78,6 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
       }
       case REMOVE_SLIDE: {
         if (draft.slides.length > 1) {
-          // check for deleting pictures from backend
-
           draft.slides.splice(draft.currentSlide, 1);
           // eslint-disable-next-line no-alert
         } else alert('Not possible to remove the only slide');
