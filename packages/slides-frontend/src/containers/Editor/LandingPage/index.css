@@ -29,27 +29,6 @@
   color: white !important;
 }
 
-a:link {
-  color: white;
-  background-color: transparent;
-  text-decoration: none;
-}
-a:visited {
-  color: white;
-  background-color: transparent;
-  text-decoration: none;
-}
-a:hover {
-  color: #0d71bb;
-  background-color: transparent;
-  text-decoration: underline;
-}
-a:active {
-  color: white;
-  background-color: transparent;
-  text-decoration: underline;
-}
-
 .footer {
   position: fixed;
   left: 1%;

@@ -1,4 +1,5 @@
 import produce from 'immer';
+import { deepCopyFunction } from '../../../utils/helperFunctions';
 import { Action } from './actions';
 import {
   ADD_SLIDE,
@@ -11,12 +12,11 @@ import {
   EDIT_DATA,
   SET_EDIT_MODE,
   LOAD_DECK_STATE,
-  TOGGLE_FOCUS,
+  CLONE_SLIDE,
 } from './constants';
 import { Item, newItem, ItemTypes, Text, Deck, Slide} from './definitions';
 
 const uuidv4 = require("uuid/v4");
-
 
 export let initialDeck:Deck = {
   currentSlide: 0,
@@ -28,6 +28,41 @@ export const newSlide:Slide = {
 }
 initialDeck.slides.push(newSlide);
 
+const addTwoBoxes = (slide:Slide) => {
+  const TitleBox = {
+    type: ItemTypes.TEXT,
+  }
+  const DescriptionBox = {
+    type: ItemTypes.TEXT,
+  }
+  const itm1: Item = newItem(TitleBox);
+  const itm2: Item = newItem(DescriptionBox);
+
+  // itm1 - Title
+  itm1.Position = {
+    x: 0.30,
+    y: 0.20,
+  }
+  itm1.Size = {
+    width: 0.25,
+    height: 0.05,
+  }
+
+  // itm2 - Description
+  // this weird number comes from this calculation: title's med is: 30 + 25/2 = 42.5
+  // to reach this percentage and have the texts inline, the description's x + width/2 = 42.5
+  // width/2 is 20so x is 22.5 or 0.225
+  itm2.Position = {
+    x: 0.225,
+    y: 0.30,
+  }
+  itm2.Size = {
+    width: 0.40,
+    height: 0.40,
+  }
+  slide.itemsArray.push(itm1, itm2);
+}
+
 const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
   produce(state, (draft:Deck) => {
     // eslint-disable-next-line no-console
@@ -37,6 +72,7 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
           ID: uuidv4(),
           itemsArray: [], // add a box that can be image or text
         }
+        addTwoBoxes(slide);
         draft.slides.splice(draft.currentSlide + 1, 0, slide);
         break;
       }
@@ -45,6 +81,19 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
           draft.slides.splice(draft.currentSlide, 1);
           // eslint-disable-next-line no-alert
         } else alert('Not possible to remove the only slide');
+        break;
+      }
+      case CLONE_SLIDE: {
+        // create a new blank slide
+        let slide:Slide = {
+          ID: uuidv4(),
+          itemsArray: [],
+        }
+        slide.itemsArray = draft.slides[draft.currentSlide].itemsArray.map(currentItem => {
+          return deepCopyFunction(currentItem);
+        });
+        // push the cloned slide in the slides array
+        draft.slides.splice(draft.currentSlide + 1, 0, slide);
         break;
       }
       case CHANGE_SLIDE: {
@@ -104,12 +153,6 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
           ...action.state,
         }
         Object.assign(draft, newDeckState);
-        break;
-      }
-      case TOGGLE_FOCUS: {
-        const ind: number = draft.slides[draft.currentSlide].itemsArray.findIndex((itm: Item) => itm.ID === action.id);
-        if (ind === -1) break;
-        draft.slides[draft.currentSlide].itemsArray[ind].Focused = action.focus;
         break;
       }
     }
