@@ -90,8 +90,7 @@ const DeckState = (state: Deck = initialDeck, action: Action): Deck =>
           itemsArray: [],
         }
         slide.itemsArray = draft.slides[draft.currentSlide].itemsArray.map(currentItem => {
-          const copyObj: Item = deepCopyFunction(currentItem);
-          return copyObj;
+          return deepCopyFunction(currentItem);
         });
         // push the cloned slide in the slides array
         draft.slides.splice(draft.currentSlide + 1, 0, slide);

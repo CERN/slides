@@ -4,7 +4,7 @@
 
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 
-**CERN Slides' App** is:
+**CERN Slides App** is:
  * **slides-creator** application
  * fully **web-based**
  * **Open source**
@@ -12,8 +12,8 @@
 
 ## Documentation
 
-- [**Documentation for the Slides' App**](https://slides.docs.cern.ch/).
-- [**Admin Documentation for the Slides' App**](https://slides-admin.docs.cern.ch/).
+- [**Documentation for the Slides App**](https://slides.docs.cern.ch/).
+- [**Admin Documentation for the Slides App**](https://slides-admin.docs.cern.ch/).
 <!-- - [Overview](docs/general): A short overview of the functionality. -->
 
 ## Contributors

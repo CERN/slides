@@ -24,7 +24,7 @@ function SideBar({
   username,
   title,
   token,
-  slidesStringified
+  slides
   }) {
 
   const addingSlide = () => {
@@ -34,9 +34,9 @@ function SideBar({
 
   const removingSlide = () => {
     // check if pictures should be deleted from backend
-    itemsArray.map(item => {
+    itemsArray.forEach(item => {
       if (item.type === 'IMAGE') {
-        deleteImage(assetsPath, username, title, item.Src, token, slidesStringified);
+        deleteImage(assetsPath, username, title, item.Src, token, slides);
       }
     })
     onRemoveSlide();
@@ -87,7 +87,7 @@ SideBar.propTypes = {
   username: PropTypes.string,
   title: PropTypes.string,
   token: PropTypes.string,
-  slidesStringified: PropTypes.string,
+  slides: PropTypes.array,
 };
 
 function mapDispatchToProps(dispatch) {
@@ -108,7 +108,7 @@ export default connect(
     title: getTitle(state),
     username: state.keycloak.userToken.cern_upn,
     token: state.keycloak.instance.token,
-    slidesStringified: JSON.stringify(state.deck.slides),
+    slides: state.deck.slides,
   }),
   mapDispatchToProps
 )(SideBar);

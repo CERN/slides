@@ -1,1 +1,1 @@
-# This is the CERN Slides' App frontend code
+# This is the CERN Slides App frontend code

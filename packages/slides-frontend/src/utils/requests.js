@@ -25,10 +25,10 @@ const uploadImage = (assetsPath, username, title, files, token) => {
   return axios.post(url, formData, config);
 };
 
-const deleteImage = (assetsPath, username, title, src, token, slidesStringified) => {
+const deleteImage = (assetsPath, username, title, src, token, slides) => {
   const url = `${assetsPath}/image/${username}/${title}/${src}`;
   // only if it the function return true then delete from backend
-  if (canDeleteImageFromBackend(src, slidesStringified)){
+  if (canDeleteImageFromBackend(src, slides)){
     return axios.delete(url, {
       headers: {
         Authorization: `Bearer ${token}`,

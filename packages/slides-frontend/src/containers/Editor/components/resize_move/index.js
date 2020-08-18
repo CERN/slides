@@ -49,7 +49,7 @@ const Core = ({
   title,
   token,
   presentationMode,
-  slidesStringified
+  slides
 }) => {
   const ItemComponent = item.type === 'TEXT' ? Text : Image;
   const [closeIconShown, setCloseIconShown] = useState(false);
@@ -62,7 +62,7 @@ const Core = ({
     }
     // send a delete in Server if it is an Image
     if (item.type === 'IMAGE') {
-      deleteImage(assetsPath, username, title, item.Src, token, slidesStringified);
+      deleteImage(assetsPath, username, title, item.Src, token, slides);
     }
     onRemoveItem(item.ID);
   };
@@ -111,7 +111,7 @@ function MoveResize({
   username,
   title,
   token,
-  slidesStringified
+  slides
 }) {
   const [coordinate, setCoordinate] = useState({
     x: getPixels(item.Position.x, window.innerWidth),
@@ -209,7 +209,7 @@ function MoveResize({
       title={title}
       token={token}
       presentationMode={presentationMode}
-      slidesStringified={slidesStringified}
+      slides={slides}
     />
   );
 
@@ -223,7 +223,7 @@ function MoveResize({
     title={title}
     token={token}
     presentationMode={presentationMode}
-    slidesStringified={slidesStringified}
+    slides={slides}
   />;
 
   return (
@@ -252,7 +252,7 @@ Core.propTypes = {
   title: PropTypes.string,
   token: PropTypes.string,
   presentationMode: PropTypes.bool,
-  slidesStringified: PropTypes.string,
+  slides: PropTypes.array,
 };
 
 MoveResize.propTypes = {
@@ -267,7 +267,7 @@ MoveResize.propTypes = {
   username: PropTypes.string,
   title: PropTypes.string,
   token: PropTypes.string,
-  slidesStringified: PropTypes.string,
+  slides: PropTypes.array,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -287,7 +287,7 @@ export default connect(
     title: getTitle(state),
     username: state.keycloak.userToken.cern_upn,
     token: state.keycloak.instance.token,
-    slidesStringified: JSON.stringify(state.deck.slides),
+    slides: state.deck.slides,
     // this makes the string way smaller and so way faster to search for the image name in the deleter
   }),
   mapDispatchToProps
