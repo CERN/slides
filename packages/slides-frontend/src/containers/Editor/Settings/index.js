@@ -63,7 +63,7 @@ function Settings({
     </Menu.Item>
   );
   return (
-    <div id="_settings" className="settings">
+    <div id="settings" className="settings">
       <Menu inverted vertical fluid icon="labeled">
         {Item('eye', 'Slideshow')}
         {Item('save', 'Save Presentation')}
