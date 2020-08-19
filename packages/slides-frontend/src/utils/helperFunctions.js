@@ -23,7 +23,21 @@ const deepCopyFunction = inObject => {
     return outObject;
 }
 
+// utils to transform between percentages and pixels
+const getPercentage = (px, screenAttribute) => px / screenAttribute;
+
+const getPixels = (percentage, screenAttribute) => percentage * screenAttribute;
+
+const getBarsWidth = () => document.getElementById("sidebar").offsetWidth + document.getElementById("settings").offsetWidth;
+
+const getWidthInEditMode = () => window.innerWidth - getBarsWidth();
+
+const getWidth = presentationMode => presentationMode ? window.innerWidth : getWidthInEditMode();
+
 export {
     canDeleteImageFromBackend,
     deepCopyFunction,
+    getPercentage,
+    getPixels,
+    getWidth
 };

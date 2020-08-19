@@ -5,6 +5,7 @@ import StandardSlide from '../../../theming/StandardSlide';
 import {getTheme, getAssetsPath, getTitle} from '../../redux-store/PresentationReducer/selectors';
 import {getDeck} from '../../redux-store/DeckReducer/selectors';
 import RenderHtml from '../components/text/RenderHtml';
+import {getPixels} from '../../../utils/helperFunctions';
 import './index.css';
 
 const Core = ({x, y, width, height, item, assetsPath, username, title}) => (
@@ -38,14 +39,14 @@ function MyExportedSlides({theme, DeckOfSlides, assetsPath, username, title}) {
       {DeckOfSlides.map(slide => (
         <>
           <StandardSlideTemplate key={slide.ID}>
-            {slide.itemsArray.map(itm => (
+            {slide.itemsArray.map(item => (
               <Core
-                key={itm.ID}
-                x={itm.Position.x}
-                y={itm.Position.y}
-                width={itm.Size.width}
-                height={itm.Size.height}
-                item={itm}
+                key={item.ID}
+                x={getPixels(item.Position.x, window.innerWidth)}
+                y={getPixels(item.Position.y, window.innerHeight)}
+                width={getPixels(item.Size.width, window.innerWidth)}
+                height={getPixels(item.Size.height, window.innerHeight)}
+                item={item}
                 assetsPath={assetsPath}
                 username={username}
                 title={title}

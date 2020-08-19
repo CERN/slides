@@ -64,7 +64,6 @@ async function sendSaveRequest(assetsPath, stateStringified, newTitle, token, us
       console.log(error);
       // i couldn't make the blob in the backend
       // create an alert for the user
-      // `${newTitle}.slides file creation failed...`
       fail(`${newTitle}.slides file creation failed...`);
     });
 }
@@ -122,11 +121,9 @@ function SavePresentation({stateStringified, onSaveRequest, title, onSetTitle, u
           const newObj = JSON.parse(stateStringified);
           newObj.presentation.title = newTitle;
           newObj.deck.currentSlide = 0;
-          // newObj.router.location.pathname = `/edit/${user}/${newTitle}/`;
           delete newObj.keycloak;
           delete newObj.router;
           const newStateStringified = JSON.stringify(newObj);
-          console.log('newStateStringified', newStateStringified);
           sendSaveRequest(assetsPath, newStateStringified, newTitle, token, user).then(() => {
             onSaveRequest();
             // push the new title in the URL bar

@@ -8,6 +8,7 @@ import {getItems} from '../../../redux-store/DeckReducer/selectors';
 import Text from '../text';
 import Image from '../image';
 import {deleteImage} from '../../../../utils/requests';
+import {getPercentage, getPixels, getWidth} from '../../../../utils/helperFunctions';
 import {removeItem} from '../../../redux-store/DeckReducer/actions';
 import {
   changeItemPosition,
@@ -79,7 +80,7 @@ const Core = ({
         boxSizing: 'border-box',
         display: 'inline-block',
       }}
-      className="item-style"
+      className={!presentationMode ? "item-style" : undefined}
       ref={getRef}
       onMouseEnter={() => setCloseIconShown(true)}
       onMouseLeave={() => setCloseIconShown(false)}
@@ -94,10 +95,6 @@ const Core = ({
 )};
 
 const Reactable = reactable(Core);
-
-// utils to transform between percentages and pixels
-const getPercentage = (px, screenAttribute) => px / screenAttribute;
-const getPixels = (percentage, screenAttribute) => percentage * screenAttribute;
 
 function MoveResize({
   ID,
@@ -114,9 +111,9 @@ function MoveResize({
   slides
 }) {
   const [coordinate, setCoordinate] = useState({
-    x: getPixels(item.Position.x, window.innerWidth),
+    x: getPixels(item.Position.x, getWidth(presentationMode)),
     y: getPixels(item.Position.y, window.innerHeight),
-    width: getPixels(item.Size.width, window.innerWidth),
+    width: getPixels(item.Size.width, getWidth(presentationMode)),
     height: getPixels(item.Size.height, window.innerHeight),
   });
 
@@ -128,7 +125,7 @@ function MoveResize({
     const y = e.client.y - e.clientY0 + coordinate.y;
     console.log('Drag Stopped', x, y);
     onChangePosition(ID, {
-      x: getPercentage(x, window.innerWidth),
+      x: getPercentage(x, getWidth(presentationMode)),
       y: getPercentage(y, window.innerHeight),
     });
   };
@@ -138,7 +135,7 @@ function MoveResize({
     console.log('Resize Stopped', width, height);
     onDragStop(e);
     onChangeSize(ID, {
-      width: getPercentage(width, window.innerWidth),
+      width: getPercentage(width, getWidth(presentationMode)),
       height: getPercentage(height, window.innerHeight),
     });
   };
