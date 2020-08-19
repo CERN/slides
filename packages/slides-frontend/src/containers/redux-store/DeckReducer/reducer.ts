@@ -22,10 +22,22 @@ export let initialDeck:Deck = {
   currentSlide: 0,
   slides: [],
 }
+
 export const newSlide:Slide = {
   ID: uuidv4(),
   itemsArray: [],
 }
+
+const initialText:Text = {
+  type: ItemTypes.TEXT,
+  ID: uuidv4(),
+  Position: { x: 0.35, y: 0.33 },
+  Size: { width: 0.25, height: 0.27 },
+  Data: '<p style="text-align:center;"><span style="font-size: 90px;">TITLE</span></p> <p style="text-align:center;"><span style="font-size: 50px;">Author</span></p> <p style="text-align:center;"><span style="font-size: 50px;">Date</span></p> ',
+  Edit: false
+}
+
+newSlide.itemsArray.push(initialText);
 initialDeck.slides.push(newSlide);
 
 const addTwoBoxes = (slide:Slide) => {
