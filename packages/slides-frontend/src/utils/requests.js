@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { canDeleteImageFromBackend } from './helperFunctions';
 
 const deletePresentationFolder = (assetsPath, username, title, token) => {
   const url = `${assetsPath}/image/${username}/${title}`;
@@ -24,13 +25,17 @@ const uploadImage = (assetsPath, username, title, files, token) => {
   return axios.post(url, formData, config);
 };
 
-const deleteImage = (assetsPath, username, title, src, token) => {
+const deleteImage = (assetsPath, username, title, src, token, slides) => {
   const url = `${assetsPath}/image/${username}/${title}/${src}`;
-  return axios.delete(url, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  // only if it the function return true then delete from backend
+  if (canDeleteImageFromBackend(src, slides)){
+    return axios.delete(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  return;
 };
 
 // check if title is good?!

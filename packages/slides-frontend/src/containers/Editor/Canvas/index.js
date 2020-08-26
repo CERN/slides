@@ -1,10 +1,9 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Helmet} from 'react-helmet';
 import {connect} from 'react-redux';
-import {FlexBox, Box, FullScreen, Progress, Deck, Slide} from 'spectacle';
-import history from '../../../utils/history';
-import {deletePresentationFolder} from '../../../utils/requests';
+// import history from '../../../utils/history';
+// import {deletePresentationFolder} from '../../../utils/requests';
 
 import {
   getTheme,
@@ -13,8 +12,7 @@ import {
   getBackgroundColor,
 } from '../../redux-store/PresentationReducer/selectors';
 
-import {getDeck, getCurrentSlide} from '../../redux-store/DeckReducer/selectors';
-import MoveResize from '../components/resize_move';
+import {getDeck} from '../../redux-store/DeckReducer/selectors';
 
 import MySlide from '../MySlide';
 import './index.css';
@@ -103,7 +101,6 @@ Canvas.propTypes = {
   backgroundColor: PropTypes.string,
   username: PropTypes.string,
   token: PropTypes.string,
-  currentSlide: PropTypes.number,
 };
 
 export default connect(
@@ -113,7 +110,6 @@ export default connect(
     DeckOfSlides: getDeck(state),
     assetsPath: getAssetsPath(state),
     backgroundColor: getBackgroundColor(state),
-    currentSlide: getCurrentSlide(state),
     username: state.keycloak.userToken.cern_upn,
     token: state.keycloak.instance.token,
   }),

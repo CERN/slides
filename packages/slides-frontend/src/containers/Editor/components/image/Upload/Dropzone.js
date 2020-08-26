@@ -117,7 +117,7 @@ Dropzone.propTypes = {
 function mapDispatchToProps(dispatch) {
   return {
     onImageRequest: () => dispatch(uploadImageRequest(false)),
-    onAddImage: src => dispatch(addItem({type: ItemTypes.IMAGE, src})),
+    onAddImage: Src => dispatch(addItem({type: ItemTypes.IMAGE, Src})),
   };
 }
 

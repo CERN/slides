@@ -1,6 +1,7 @@
 import {
     ADD_SLIDE,
     REMOVE_SLIDE,
+    CLONE_SLIDE,
     CHANGE_SLIDE,
     ADD_ITEM,
     REMOVE_ITEM,
@@ -9,7 +10,6 @@ import {
     EDIT_DATA,
     SET_EDIT_MODE,
     LOAD_DECK_STATE,
-    TOGGLE_FOCUS,
 } from './constants';
 
 import { position, size, Item, Deck } from './definitions';
@@ -22,18 +22,19 @@ export const removeSlide = () =>({
     type: REMOVE_SLIDE,
 }) as const;
 
+export const cloneSlide = () => ({
+    type: CLONE_SLIDE,
+}) as const;
+
 export const changeSlide = (
     payload: {
         action: string,
+        isFirstRendering: boolean,
         location: {
+            hash: string,
             pathname: string,
             search: string,
-            hash: string,
-            key: string
-        },
-        query: {
-            slide: string,
-            slideElement: string
+            state: any
         }
     }) => ({
     type: CHANGE_SLIDE,
@@ -79,15 +80,8 @@ export const loadDeckState = (state: Deck) => ({
     state,
 }) as const;
 
-export const toggleFocus = (id: string, focus: boolean) => ({
-    type: TOGGLE_FOCUS,
-    id,
-    focus,
-}) as const;
-
 export type Action = ReturnType<
- typeof addSlide | typeof removeSlide | typeof changeSlide |
- typeof addItem | typeof removeItem | typeof changeItemPosition |
- typeof changeItemSize | typeof editData | typeof setEditMode | typeof loadDeckState |
- typeof toggleFocus
+ typeof addSlide | typeof removeSlide | typeof cloneSlide | typeof changeSlide |
+ typeof addItem | typeof removeItem | typeof changeItemPosition | typeof changeItemSize |
+ typeof editData | typeof setEditMode | typeof loadDeckState
 >

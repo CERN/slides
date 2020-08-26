@@ -2,19 +2,28 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import reactable from 'reactablejs';
 import interact from 'interactjs';
-
 import {connect} from 'react-redux';
-
-import MyItem from '../item';
+import {Label}  from 'semantic-ui-react'
 import {getItems} from '../../../redux-store/DeckReducer/selectors';
-import {getPresentationMode} from '../../../redux-store/PresentationReducer/selectors';
-
+import Text from '../text';
+import Image from '../image';
+import {deleteImage} from '../../../../utils/requests';
+import {getPercentage, getPixels, getWidth} from '../../../../utils/helperFunctions';
+import {removeItem} from '../../../redux-store/DeckReducer/actions';
 import {
   changeItemPosition,
   changeItemSize,
   setEditMode,
 } from '../../../redux-store/DeckReducer/actions';
+import {
+  getAssetsPath,
+  getTitle,
+  getPresentationMode,
+} from '../../../redux-store/PresentationReducer/selectors';
+import './index.css';
 
+// instead of x, y I should have % percentages
+const editMode = (type, edit) => type === 'TEXT' && edit;
 // min height, min width
 const restrictSizeParameters = type =>
   type === 'TEXT'
@@ -28,48 +37,96 @@ const restrictSizeParameters = type =>
       };
 
 // : x,y: 350, 330 for middle
-const Core = ({x, y, width, height, getRef, item}) => (
-  <div
-    style={{
-      // amazing how much this helps in consistent position of elements (absolute)
-      position: 'absolute',
-      left: x,
-      top: y,
-      width,
-      height,
-      // border: '1px solid black',
-      boxSizing: 'border-box',
-      display: 'inline-block',
-      // 'vertical-align': 'middle',
-      // padding: 0,
-      // display: 'block',
-      // overflow: 'hidden',
-    }}
-    ref={getRef}
-  >
-    <MyItem itemObj={item} />
-  </div>
-);
+const Core = ({
+  x,
+  y,
+  width,
+  height,
+  getRef,
+  item,
+  assetsPath,
+  onRemoveItem,
+  username,
+  title,
+  token,
+  presentationMode,
+  slides
+}) => {
+  const ItemComponent = item.type === 'TEXT' ? Text : Image;
+  const [closeIconShown, setCloseIconShown] = useState(false);
+  const deleter = e => {
+    // send a delete in Redux
+    if (presentationMode) return;
+    if (item.type === 'TEXT' && item.Edit) {
+      // text in edit mode so don't delete it
+      return;
+    }
+    // send a delete in Server if it is an Image
+    if (item.type === 'IMAGE') {
+      deleteImage(assetsPath, username, title, item.Src, token, slides);
+    }
+    onRemoveItem(item.ID);
+  };
+
+  return (
+    <div
+      style={{
+        // amazing how much this helps in consistent position of elements (absolute)
+        position: 'absolute',
+        left: x,
+        top: y,
+        width,
+        height,
+        boxSizing: 'border-box',
+        display: 'inline-block',
+      }}
+      className={!presentationMode ? "item-style" : undefined}
+      ref={getRef}
+      onMouseEnter={() => setCloseIconShown(true)}
+      onMouseLeave={() => setCloseIconShown(false)}
+    >
+      {/* presentation mode and edit mode no close icon */}
+      {/* deleter of icon */}
+      {closeIconShown && !editMode(item.type, item.Edit) && !presentationMode && (
+        <Label as='a' corner='right' icon='close' onClick={deleter} />
+      )}
+      <ItemComponent ID={item.ID}/>
+    </div>
+)};
 
 const Reactable = reactable(Core);
 
-function MoveResize({ID, item, onChangePosition, onChangeSize, onSetEditMode, presentationMode}) {
+function MoveResize({
+  ID,
+  item,
+  onChangePosition,
+  onChangeSize,
+  onSetEditMode,
+  presentationMode,
+  assetsPath,
+  onRemoveItem,
+  username,
+  title,
+  token,
+  slides
+}) {
   const [coordinate, setCoordinate] = useState({
-    x: item.Position.x,
-    y: item.Position.y,
-    width: item.Size.width,
-    height: item.Size.height,
+    x: getPixels(item.Position.x, getWidth(presentationMode)),
+    y: getPixels(item.Position.y, window.innerHeight),
+    width: getPixels(item.Size.width, getWidth(presentationMode)),
+    height: getPixels(item.Size.height, window.innerHeight),
   });
 
-  const editMode = (type, edit) => type === 'TEXT' && edit;
+  // const editMode = (type, edit) => type === 'TEXT' && edit;
 
   const onDragStop = e => {
+    console.log('coordinate:', coordinate);
     const x = e.client.x - e.clientX0 + coordinate.x;
     const y = e.client.y - e.clientY0 + coordinate.y;
     console.log('Drag Stopped', x, y);
     onChangePosition(ID, {
-      x,
-      y,
+      x: getPercentage(x, getWidth(presentationMode)),
+      y: getPercentage(y, window.innerHeight),
     });
   };
 
@@ -78,8 +135,8 @@ function MoveResize({ID, item, onChangePosition, onChangeSize, onSetEditMode, pr
     console.log('Resize Stopped', width, height);
     onDragStop(e);
     onChangeSize(ID, {
-      width,
-      height,
+      width: getPercentage(width, getWidth(presentationMode)),
+      height: getPercentage(height, window.innerHeight),
     });
   };
 
@@ -143,17 +200,35 @@ function MoveResize({ID, item, onChangePosition, onChangeSize, onSetEditMode, pr
       }}
       {...coordinate}
       item={item}
+      assetsPath={assetsPath}
+      onRemoveItem={onRemoveItem}
+      username={username}
+      title={title}
+      token={token}
+      presentationMode={presentationMode}
+      slides={slides}
     />
   );
 
-  const textEditModeRender = () => <Reactable {...coordinate} item={item} />;
-  // console.log('my coordinates are:', coordinate);
+  const textEditModeRender = () =>
+  <Reactable
+    {...coordinate}
+    item={item}
+    assetsPath={assetsPath}
+    onRemoveItem={onRemoveItem}
+    username={username}
+    title={title}
+    token={token}
+    presentationMode={presentationMode}
+    slides={slides}
+  />;
+
   return (
     <div>
       {editMode(item.type, item.Edit) ? (
         <div>{textEditModeRender()}</div>
       ) : (
-        <div id={item.ID} onDoubleClick={handler}>
+        <div id={ID} onDoubleClick={handler}>
           {movableItemRender()}
         </div>
       )}
@@ -168,6 +243,13 @@ Core.propTypes = {
   height: PropTypes.number,
   getRef: PropTypes.any,
   item: PropTypes.object,
+  assetsPath: PropTypes.string,
+  onRemoveItem: PropTypes.func,
+  username: PropTypes.string,
+  title: PropTypes.string,
+  token: PropTypes.string,
+  presentationMode: PropTypes.bool,
+  slides: PropTypes.array,
 };
 
 MoveResize.propTypes = {
@@ -177,10 +259,17 @@ MoveResize.propTypes = {
   onChangeSize: PropTypes.func,
   onSetEditMode: PropTypes.func,
   presentationMode: PropTypes.bool,
+  assetsPath: PropTypes.string,
+  onRemoveItem: PropTypes.func,
+  username: PropTypes.string,
+  title: PropTypes.string,
+  token: PropTypes.string,
+  slides: PropTypes.array,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
+    onRemoveItem: id => dispatch(removeItem(id)),
     onChangePosition: (id, position) => dispatch(changeItemPosition(id, position)),
     onChangeSize: (id, position) => dispatch(changeItemSize(id, position)),
     onSetEditMode: (id, edit) => dispatch(setEditMode(id, edit)),
@@ -191,6 +280,12 @@ export default connect(
   (state, ownProps) => ({
     item: getItems(state).find(itm => itm.ID === ownProps.ID),
     presentationMode: getPresentationMode(state),
+    assetsPath: getAssetsPath(state),
+    title: getTitle(state),
+    username: state.keycloak.userToken.cern_upn,
+    token: state.keycloak.instance.token,
+    slides: state.deck.slides,
+    // this makes the string way smaller and so way faster to search for the image name in the deleter
   }),
   mapDispatchToProps
 )(MoveResize);

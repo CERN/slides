@@ -11,10 +11,12 @@ import {getDeck} from '../../redux-store/DeckReducer/selectors';
 import {Helmet} from 'react-helmet';
 import history from '../../../utils/history';
 import {Deck, Slide} from 'spectacle';
-import MySlide from '../MySlide';
 // import createTheme from 'spectacle/lib/themes/default/index';
 // import getterTheme from '../../../theming/theme';
 import PageNotFound from '../../NotFoundPage';
+// import MyExportedSlides from './MyExportedSlides';
+import exportPDFinfo from './alerting';
+import './index.css';
 
 /*
     Update spectacle
@@ -42,19 +44,20 @@ function Export({isReady, DeckOfSlides, title, theme, backgroundColor}) {
           <Helmet>
             <title>Export: {title}</title>
           </Helmet>
+          {exportPDFinfo()}
           <Deck
-            transition={['zoom', 'slide']}
-            transitionDuration={500}
             theme={myTheme}
-            progress="number"
+            progress="none"
             showFullscreenControl={false}
-            // history={history}
-            // disableKeyboardControls={true}
-            // controls={false} // show or hide the move buttons
+            history={DeckOfSlides.length > 1 ? history : null}
+            disableKeyboardControls={true}
+            controls={false}
+
           >
             {/* {DeckOfSlides.map(item => (
                 <MySlide key={item.ID} />
               ))} */}
+              {/* <MyExportedSlides /> */}
             <Slide />
             <Slide />
           </Deck>

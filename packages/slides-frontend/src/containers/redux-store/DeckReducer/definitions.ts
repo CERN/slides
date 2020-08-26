@@ -18,12 +18,10 @@ class baseItem {
     ID: string
     Position: position
     Size: size
-    Focused: boolean
-    constructor(){
+    constructor() {
       this.ID = uuidv4();
-      this.Position= {x: 0, y: 0};
+      this.Position= { x: 0, y: 0 };
       this.Size = { width: 0, height: 0 };
-      this.Focused = false;
     }
 }
 
@@ -31,23 +29,25 @@ export class Text extends baseItem {
     readonly type: string
     Data: string
     Edit: boolean
-    constructor(){
+    constructor() {
       super();
       this.type = ItemTypes.TEXT
       this.Data = "<p></p>\n";
       this.Edit = false;
-      this.Size = { width: 500, height: 80 };
+      this.Position= { x: 0.30, y: 0.40 };
+      this.Size = { width: 0.25, height: 0.05 };
     }
   }
 
 export class Image extends baseItem {
     readonly type: string
     Src: string
-    constructor(src: string){
+    constructor(Src: string) {
       super();
       this.type = ItemTypes.IMAGE;
-      this.Src = src;
-      this.Size = { width: 500, height: 300 };
+      this.Src = Src;
+      this.Position= { x: 0.30, y: 0.25 };
+      this.Size = { width: 0.20, height: 0.55 };
     }
   }
 
@@ -64,12 +64,12 @@ export type Deck = {
 }
 
 export const newItem = (obj: any): Item => {
-    switch(obj.type){
+    switch (obj.type) {
       case ItemTypes.TEXT:
         return new Text();
       case ItemTypes.IMAGE:
-        const { src } = obj;
-        return new Image(src);
+        const { Src } = obj;
+        return new Image(Src);
       default:
         throw new Error('Object type is not TEXT neither IMAGE');
     }

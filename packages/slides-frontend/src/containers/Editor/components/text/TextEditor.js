@@ -6,7 +6,7 @@ import {EditorState, convertToRaw, ContentState} from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import {Button, Popup} from 'semantic-ui-react';
-import {editData, setEditMode, toggleFocus} from '../../../redux-store/DeckReducer/actions';
+import {editData, setEditMode} from '../../../redux-store/DeckReducer/actions';
 import {editorConfig} from './editorConfig';
 import './TextEditor.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -28,15 +28,13 @@ SaveButton.propTypes = {
   saveHandler: PropTypes.func,
 };
 
-const TextEditor = ({initialData, ID, onEditData, onSetEditMode, onToggleFocus}) => {
+const TextEditor = ({initialData, ID, onEditData, onSetEditMode}) => {
   const saveHandler = () => {
     const myhtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
     // save in redux state
     onEditData(ID, myhtml);
     // turn edit mode off
     onSetEditMode(ID, false);
-    // focus off
-    // onToggleFocus(ID, false);
   };
 
   const handleEditorChange = newState => {
@@ -75,14 +73,12 @@ TextEditor.propTypes = {
   ID: PropTypes.string,
   onEditData: PropTypes.func,
   onSetEditMode: PropTypes.func,
-  onToggleFocus: PropTypes.func,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
     onEditData: (id, data) => dispatch(editData(id, data)),
     onSetEditMode: (id, edit) => dispatch(setEditMode(id, edit)),
-    onToggleFocus: (id, focus) => dispatch(toggleFocus(id, focus)),
   };
 }
 

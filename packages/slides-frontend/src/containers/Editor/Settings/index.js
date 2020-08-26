@@ -51,6 +51,7 @@ function Settings({
         break;
       case 'minus':
         Reveal.toggleOverview();
+        // history.push(`/export/${username}/${title}?print-pdf`);
         break;
       default:
         break;
@@ -67,7 +68,7 @@ function Settings({
     </Menu.Item>
   );
   return (
-    <div className="settings">
+    <div id="settings" className="settings">
       <Menu inverted vertical fluid icon="labeled">
         {Item('eye', 'Slideshow')}
         {Item('save', 'Save Presentation')}
@@ -77,7 +78,7 @@ function Settings({
         {Item('theme', 'Change Theme')}
         {/* {Item('ordered list', 'Arrange Slides')} */}
         {Item('cloud upload', 'Upload existing presentation')}
-        {Item('cloud download', 'Export as PDF (pending)')}
+        {Item('cloud download', 'Export as PDF (beta)')}
         {Item('minus', 'See the Presentation Overview')}
       </Menu>
     </div>
