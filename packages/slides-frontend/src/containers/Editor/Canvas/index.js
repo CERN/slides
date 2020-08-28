@@ -42,6 +42,7 @@ function Canvas({
       history: true,
       keyboard: true,
       embedded: true,
+      disableLayout: true,
       slideNumber: true,
       // Transition style
       transition: 'slide', // none/fade/slide/convex/concave/zoom
