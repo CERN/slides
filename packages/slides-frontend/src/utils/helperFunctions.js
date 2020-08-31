@@ -32,12 +32,11 @@ const getPixels = (percentage, screenAttribute) => percentage * screenAttribute;
 // here there was a problem, and the getElementById was not working properly when the app was starting, after this, it works,
 // seems like the sidebar and settings bar take time to load...
 const getBarsWidth = () => {
-    if(document.getElementById("sidebar") && document.getElementById("settings")) {
-        console.log("sidebar...offsetWidth...", document.getElementById("sidebar").offsetWidth)
-        console.log("settings...offsetWidth...", document.getElementById("settings").offsetWidth)
-        return document.getElementById("sidebar").offsetWidth + document.getElementById("settings").offsetWidth;
-    }
-    return 100;
+    window.onload = function(){
+        const result = document.getElementById("sidebar").offsetWidth + document.getElementById("settings").offsetWidth;
+        console.log("result issssss", result)
+    };
+    return 400
 }
 
 const getWidthInEditMode = () => window.innerWidth - getBarsWidth();

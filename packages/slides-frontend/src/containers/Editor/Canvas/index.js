@@ -15,8 +15,8 @@ import {
 import {getDeck} from '../../redux-store/DeckReducer/selectors';
 
 import MySlide from '../MySlide';
-import './index.css';
 import Reveal from 'reveal.js';
+import './index.css';
 import 'reveal.js/dist/reveal.css';
 // import 'reveal.js/dist/theme/beige.css';
 import '../../../theming/cern.css';
@@ -71,7 +71,7 @@ function Canvas({
         <title>Edit: {title}</title>
       </Helmet>
       <div className="deck">
-        <div className="reveal">
+        <div className="reveal deck1">
           <div className="slides">{slides()}</div>
         </div>
       </div>

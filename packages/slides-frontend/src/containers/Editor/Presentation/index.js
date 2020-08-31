@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {
@@ -9,14 +9,24 @@ import {
 } from '../../redux-store/PresentationReducer/selectors';
 import {getDeck} from '../../redux-store/DeckReducer/selectors';
 import {Helmet} from 'react-helmet';
-
-import {Deck} from 'spectacle';
 import MySlide from '../MySlide';
-
+import './index.css';
 import PageNotFound from '../../NotFoundPage';
+import Reveal from 'reveal.js';
+import 'reveal.js/dist/reveal.css';
+import '../../../theming/cern.css';
 
 function Presentation({isReady, DeckOfSlides, title, theme, backgroundColor}) {
-  const myTheme = {};
+  const slides = () => {
+    return (
+      <>
+        {DeckOfSlides.map(item => (
+          <MySlide key={item.ID} />
+        ))}
+      </>
+    );
+  };
+
   return (
     <div>
       {isReady ? (
@@ -24,18 +34,11 @@ function Presentation({isReady, DeckOfSlides, title, theme, backgroundColor}) {
           <Helmet>
             <title>Present: {title}</title>
           </Helmet>
-          <Deck
-            transition={['zoom', 'slide']}
-            transitionDuration={500}
-            theme={myTheme}
-            progress="number"
-            showFullscreenControl={false}
-            // controls={false} // show or hide the move buttons
-          >
-            {DeckOfSlides.map(item => (
-              <MySlide key={item.ID} />
-            ))}
-          </Deck>
+          <div className="presentation-deck">
+            <div className="reveal">
+              <div className="slides">{slides()}</div>
+            </div>
+          </div>
         </div>
       ) : (
         <PageNotFound />

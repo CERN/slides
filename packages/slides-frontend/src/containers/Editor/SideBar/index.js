@@ -32,7 +32,6 @@ function SideBar({
   // this event has to be found and used here and also in the actions in the reducer to update the currentSlide properly
   const addingSlide = () => {
     onAddSlide();
-
     setTimeout(() => {
       Reveal.next();
       Reveal.sync();
@@ -55,10 +54,13 @@ function SideBar({
       }
     })
     setTimeout(() => {
-      if (currentSlide > 0) {
+      // if it is slide 4 I will navigate to slide 3 and delete the 4
+      // if it is slide 0, I will remove it and re-navigate to slide 0
+      if (currentSlide !== 0) {
         Reveal.prev();
       }
       onRemoveSlide();
+      // renavigate to slide 0 or update reveal I think is with sync okay
       Reveal.sync();
     }, 0);
   };

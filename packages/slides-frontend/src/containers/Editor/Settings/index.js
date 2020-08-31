@@ -76,7 +76,7 @@ function Settings({
         {/* {Item('setting', 'Presentation Settings')} */}
         {Item('paint brush', 'Change Background Color')}
         {Item('theme', 'Change Theme')}
-        {/* {Item('ordered list', 'Arrange Slides')} */}
+        {/* {Item('ordered list', 'Arrange Slides)} */}
         {Item('cloud upload', 'Upload existing presentation')}
         {Item('cloud download', 'Export as PDF (beta)')}
         {Item('minus', 'See the Presentation Overview')}

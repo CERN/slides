@@ -62,7 +62,7 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname + '/../public/intro.
 // serve static images from the uploads folder
 // I don't use userKeycloak.protect() here, so the pictures are open to the public
 app.use('/static', express.static(uploadsFolder));
-// serve Slides' assets
+// serve Slides assets
 app.use('/public', express.static(`${__dirname}/../public`));
 
 // Routes
