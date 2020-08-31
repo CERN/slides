@@ -46,6 +46,12 @@ function SideBar({
     }, 0);
   };
 
+
+
+  // there is only one case
+  // when I am in slide 0 and want to delete it
+  // I have to differentiate it from when we are on slide no 1 and want to delete this one
+
   const removingSlide = () => {
     // check if pictures should be deleted from backend
     itemsArray.forEach(item => {
@@ -53,16 +59,22 @@ function SideBar({
         deleteImage(assetsPath, username, title, item.Src, token, slides);
       }
     })
+
+    // the slide number before it changes due to slide transition
+    let slideNo = 0;
+    if (currentSlide !== 0) {
+      slideNo = currentSlide;
+      Reveal.prev();
+    }
+
     setTimeout(() => {
-      // if it is slide 4 I will navigate to slide 3 and delete the 4
-      // if it is slide 0, I will remove it and re-navigate to slide 0
-      if (currentSlide !== 0) {
-        Reveal.prev();
-      }
-      onRemoveSlide();
-      // renavigate to slide 0 or update reveal I think is with sync okay
-      Reveal.sync();
+      // delete the correct slide, the one selected by the user,
+      // regardless if the transition to the previous slide happened or not
+      onRemoveSlide(slideNo);
     }, 0);
+
+    // sync with Reveal
+    Reveal.sync();
   };
 
   return (
@@ -110,7 +122,7 @@ SideBar.propTypes = {
 function mapDispatchToProps(dispatch) {
   return {
     onAddSlide: () => dispatch(addSlide()),
-    onRemoveSlide: () => dispatch(removeSlide()),
+    onRemoveSlide: slideNo => dispatch(removeSlide(slideNo)),
     onAddText: () => dispatch(addItem({type: ItemTypes.TEXT})),
     onAddImage: () => dispatch(uploadImageRequest(true)),
     onCloneSlide: () => dispatch(cloneSlide()),
