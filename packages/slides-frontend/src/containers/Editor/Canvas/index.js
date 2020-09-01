@@ -2,8 +2,8 @@ import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Helmet} from 'react-helmet';
 import {connect} from 'react-redux';
-// import history from '../../../utils/history';
-// import {deletePresentationFolder} from '../../../utils/requests';
+import history from '../../../utils/history';
+import {deletePresentationFolder} from '../../../utils/requests';
 
 import {
   getTheme,
@@ -55,6 +55,21 @@ function Canvas({
     });
   }, []);
 
+  // catch reload event
+  useEffect(() => {
+    window.onbeforeunload = e => {
+      e.preventDefault();
+      deletePresentationFolder(assetsPath, username, title, token).then(res => {
+        // and navigate to home page
+        if (res.status === 200) {
+          console.log('Successful deletion in Server');
+          history.push(`/`);
+        }
+      });
+      return 'Are you sure you want to reload?';
+    };
+  });
+
   const slides = () => {
     return (
       <>
@@ -78,21 +93,6 @@ function Canvas({
     </div>
   );
 }
-
-//   // catch reload event
-//   useEffect(() => {
-//     window.onbeforeunload = e => {
-//       e.preventDefault();
-//       deletePresentationFolder(assetsPath, username, title, token).then(res => {
-//         // and navigate to home page
-//         if (res.status === 200) {
-//           console.log('Successful deletion in Server');
-//           history.push(`/`);
-//         }
-//       });
-//       return 'Are you sure you want to reload?';
-//     };
-//   });
 
 Canvas.propTypes = {
   title: PropTypes.string,

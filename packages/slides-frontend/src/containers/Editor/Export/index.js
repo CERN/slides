@@ -52,12 +52,11 @@ function Export({isReady, DeckOfSlides, title, theme, backgroundColor}) {
             history={DeckOfSlides.length > 1 ? history : null}
             disableKeyboardControls={true}
             controls={false}
-
           >
             {/* {DeckOfSlides.map(item => (
                 <MySlide key={item.ID} />
               ))} */}
-              {/* <MyExportedSlides /> */}
+            {/* <MyExportedSlides /> */}
             <Slide />
             <Slide />
           </Deck>

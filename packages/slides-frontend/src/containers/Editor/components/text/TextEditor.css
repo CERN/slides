@@ -15,3 +15,7 @@
 }
 
 /* editorClassName */
+
+.reveal section img {
+    border: none !important;
+}

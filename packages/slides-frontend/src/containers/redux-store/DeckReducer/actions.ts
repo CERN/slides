@@ -18,9 +18,9 @@ export const addSlide = () => ({
     type: ADD_SLIDE,
 }) as const;
 
-export const removeSlide = (slideNo: number) =>({
+export const removeSlide = (index: number) =>({
     type: REMOVE_SLIDE,
-    slideNo,
+    index,
 }) as const;
 
 export const cloneSlide = () => ({

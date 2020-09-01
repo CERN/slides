@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import reactable from 'reactablejs';
 import interact from 'interactjs';
 import {connect} from 'react-redux';
-import {Label}  from 'semantic-ui-react'
+import {Label} from 'semantic-ui-react';
 import {getItems} from '../../../redux-store/DeckReducer/selectors';
 import Text from '../text';
 import Image from '../image';
@@ -50,7 +50,7 @@ const Core = ({
   title,
   token,
   presentationMode,
-  slides
+  slides,
 }) => {
   const ItemComponent = item.type === 'TEXT' ? Text : Image;
   const [closeIconShown, setCloseIconShown] = useState(false);
@@ -80,7 +80,7 @@ const Core = ({
         boxSizing: 'border-box',
         display: 'inline-block',
       }}
-      className={!presentationMode ? "item-style" : undefined}
+      className={!presentationMode ? 'item-style' : undefined}
       ref={getRef}
       onMouseEnter={() => setCloseIconShown(true)}
       onMouseLeave={() => setCloseIconShown(false)}
@@ -88,11 +88,12 @@ const Core = ({
       {/* presentation mode and edit mode no close icon */}
       {/* deleter of icon */}
       {closeIconShown && !editMode(item.type, item.Edit) && !presentationMode && (
-        <Label as='a' corner='right' icon='close' onClick={deleter} />
+        <Label as="a" corner="right" icon="close" onClick={deleter} />
       )}
-      <ItemComponent ID={item.ID}/>
+      <ItemComponent ID={item.ID} />
     </div>
-)};
+  );
+};
 
 const Reactable = reactable(Core);
 
@@ -108,7 +109,7 @@ function MoveResize({
   username,
   title,
   token,
-  slides
+  slides,
 }) {
   const [coordinate, setCoordinate] = useState({
     x: getPixels(item.Position.x, getWidth(presentationMode)),
@@ -210,18 +211,19 @@ function MoveResize({
     />
   );
 
-  const textEditModeRender = () =>
-  <Reactable
-    {...coordinate}
-    item={item}
-    assetsPath={assetsPath}
-    onRemoveItem={onRemoveItem}
-    username={username}
-    title={title}
-    token={token}
-    presentationMode={presentationMode}
-    slides={slides}
-  />;
+  const textEditModeRender = () => (
+    <Reactable
+      {...coordinate}
+      item={item}
+      assetsPath={assetsPath}
+      onRemoveItem={onRemoveItem}
+      username={username}
+      title={title}
+      token={token}
+      presentationMode={presentationMode}
+      slides={slides}
+    />
+  );
 
   return (
     <div>

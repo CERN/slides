@@ -25,8 +25,8 @@ function SideBar({
   username,
   title,
   token,
-  slides
-  }) {
+  slides,
+}) {
   // apparently pushing like that in history simply doesn't work
   // the arrow keys emit some other event for going back and forth
   // this event has to be found and used here and also in the actions in the reducer to update the currentSlide properly
@@ -46,8 +46,6 @@ function SideBar({
     }, 0);
   };
 
-
-
   // there is only one case
   // when I am in slide 0 and want to delete it
   // I have to differentiate it from when we are on slide no 1 and want to delete this one
@@ -58,21 +56,21 @@ function SideBar({
       if (item.type === ItemTypes.IMAGE) {
         deleteImage(assetsPath, username, title, item.Src, token, slides);
       }
-    })
-
-    // the slide number before it changes due to slide transition
-    let slideNo = 0;
-    if (currentSlide !== 0) {
-      slideNo = currentSlide;
-      Reveal.prev();
-    }
+    });
 
     setTimeout(() => {
+      // the slide number before it changes due to slide transition
+      const slideIndex = currentSlide;
+      if (slideIndex !== 0) {
+        Reveal.prev();
+      }
       // delete the correct slide, the one selected by the user,
       // regardless if the transition to the previous slide happened or not
-      onRemoveSlide(slideNo);
+      onRemoveSlide(slideIndex);
+      if (slideIndex === 0) {
+        Reveal.slide(0);
+      }
     }, 0);
-
     // sync with Reveal
     Reveal.sync();
   };
@@ -122,7 +120,7 @@ SideBar.propTypes = {
 function mapDispatchToProps(dispatch) {
   return {
     onAddSlide: () => dispatch(addSlide()),
-    onRemoveSlide: slideNo => dispatch(removeSlide(slideNo)),
+    onRemoveSlide: index => dispatch(removeSlide(index)),
     onAddText: () => dispatch(addItem({type: ItemTypes.TEXT})),
     onAddImage: () => dispatch(uploadImageRequest(true)),
     onCloneSlide: () => dispatch(cloneSlide()),
