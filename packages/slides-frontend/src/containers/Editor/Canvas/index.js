@@ -86,7 +86,7 @@ function Canvas({
         <title>Edit: {title}</title>
       </Helmet>
       <div className="deck">
-        <div className="reveal deck1">
+        <div className="reveal">
           <div className="slides">{slides()}</div>
         </div>
       </div>

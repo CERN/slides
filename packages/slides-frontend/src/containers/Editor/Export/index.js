@@ -1,6 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import {Redirect} from 'react-router-dom';
+
 import {
   getIsReady,
   getTitle,
@@ -13,7 +15,6 @@ import history from '../../../utils/history';
 import {Deck, Slide} from 'spectacle';
 // import createTheme from 'spectacle/lib/themes/default/index';
 // import getterTheme from '../../../theming/theme';
-import PageNotFound from '../../NotFoundPage';
 // import MyExportedSlides from './MyExportedSlides';
 import exportPDFinfo from './alerting';
 import './index.css';
@@ -62,7 +63,7 @@ function Export({isReady, DeckOfSlides, title, theme, backgroundColor}) {
           </Deck>
         </div>
       ) : (
-        <PageNotFound />
+        <Redirect to="/" />
       )}
     </div>
   );

@@ -1,4 +1,6 @@
-import React, {useEffect} from 'react';
+import React from 'react';
+import {Redirect} from 'react-router-dom';
+
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {
@@ -11,8 +13,7 @@ import {getDeck} from '../../redux-store/DeckReducer/selectors';
 import {Helmet} from 'react-helmet';
 import MySlide from '../MySlide';
 import './index.css';
-import PageNotFound from '../../NotFoundPage';
-import Reveal from 'reveal.js';
+// import Reveal from 'reveal.js';
 import 'reveal.js/dist/reveal.css';
 import '../../../theming/cern.css';
 
@@ -41,7 +42,7 @@ function Presentation({isReady, DeckOfSlides, title, theme, backgroundColor}) {
           </div>
         </div>
       ) : (
-        <PageNotFound />
+        <Redirect to="/" />
       )}
     </div>
   );
