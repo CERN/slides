@@ -74,15 +74,16 @@ function Canvas({
       </>
     );
   };
-  // "reveal cern3"
+
   const revealTheme = `reveal ${theme}`;
+
   return (
     <div>
       <Helmet>
         <title>Edit: {title}</title>
       </Helmet>
       <div className="deck">
-        <div className={revealTheme}>
+        <div className={revealTheme} style={{background: backgroundColor}}>
           <div className="slides">{slides()}</div>
         </div>
       </div>
