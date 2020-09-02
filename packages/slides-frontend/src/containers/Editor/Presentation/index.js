@@ -15,7 +15,6 @@ import MySlide from '../MySlide';
 import './index.css';
 // import Reveal from 'reveal.js';
 import 'reveal.js/dist/reveal.css';
-import '../../../theming/cern.css';
 
 function Presentation({isReady, DeckOfSlides, title, theme, backgroundColor}) {
   const slides = () => {

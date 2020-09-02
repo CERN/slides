@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
-
 import './index.css';
 import Settings from '../Settings';
 import Canvas from '../Canvas';
@@ -15,6 +14,14 @@ import Upload from '../components/image/Upload';
 import StyleComponent from '../../StyleComponent';
 import ThemeSelector from '../../ThemeSelector';
 import {Loader} from 'semantic-ui-react';
+// IMPORT ALL OF THE CERN THEMES CSS HERE
+import '../../../theming/cern.css';
+import '../../../theming/cern2.css';
+import '../../../theming/cern3.css';
+import '../../../theming/cern4.css';
+import '../../../theming/cern5.css';
+import '../../../theming/cern6.css';
+// FINISH IMPORTING THEMES
 
 export function Container({isReady, onSetPresentationMode, onSetExportMode, title}) {
   useEffect(() => {

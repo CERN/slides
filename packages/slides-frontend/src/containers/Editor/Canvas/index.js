@@ -4,22 +4,17 @@ import {Helmet} from 'react-helmet';
 import {connect} from 'react-redux';
 import history from '../../../utils/history';
 import {deletePresentationFolder} from '../../../utils/requests';
-
 import {
   getTheme,
   getTitle,
   getAssetsPath,
   getBackgroundColor,
 } from '../../redux-store/PresentationReducer/selectors';
-
 import {getDeck} from '../../redux-store/DeckReducer/selectors';
-
 import MySlide from '../MySlide';
 import Reveal from 'reveal.js';
 import './index.css';
 import 'reveal.js/dist/reveal.css';
-// import 'reveal.js/dist/theme/beige.css';
-import '../../../theming/cern.css';
 // cern themes work perfectly like in codimd
 
 function Canvas({
@@ -79,14 +74,15 @@ function Canvas({
       </>
     );
   };
-
+  // "reveal cern3"
+  const revealTheme = `reveal ${theme}`;
   return (
     <div>
       <Helmet>
         <title>Edit: {title}</title>
       </Helmet>
       <div className="deck">
-        <div className="reveal">
+        <div className={revealTheme}>
           <div className="slides">{slides()}</div>
         </div>
       </div>

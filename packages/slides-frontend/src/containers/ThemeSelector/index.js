@@ -14,27 +14,27 @@ const baseUrl = `${config.assetsPath}/public/themes`;
 
 const items = [
   {
-    name: 'CERN 1',
+    name: 'cern',
     src: `${baseUrl}/cern1.png`,
   },
   {
-    name: 'CERN 2',
+    name: 'cern2',
     src: `${baseUrl}/cern2.png`,
   },
   {
-    name: 'CERN 3',
+    name: 'cern3',
     src: `${baseUrl}/cern3.png`,
   },
   {
-    name: 'CERN 4',
+    name: 'cern4',
     src: `${baseUrl}/cern4.png`,
   },
   {
-    name: 'CERN 5',
+    name: 'cern5',
     src: `${baseUrl}/cern5.png`,
   },
   {
-    name: 'CERN 6',
+    name: 'cern6',
     src: `${baseUrl}/cern6.png`,
   },
 ];
@@ -42,7 +42,7 @@ const items = [
 function ThemeSelector({themeRequest, onThemeRequest, onSetTheme, onSetBackgroundColor}) {
   const handleClickTheme = name => {
     onSetTheme(name);
-    if (name === 'CERN 5' || name === 'CERN 6') {
+    if (name === 'cern5' || name === 'cern6') {
       onSetBackgroundColor('#FFFFFF'); // make background white in theme 5 and 6
     } else {
       onSetBackgroundColor('#0053A1');
