@@ -1,3 +1,5 @@
+## 2024-12-05 This project has been archived
+
 <div align="center">
   <img src="https://slides-backend.web.cern.ch/public/Slides-S.png" alt="CERN_Slides_App_logo_by_L.Zacharova_and_D.Taborsky" width="200" />
 </div>
